@@ -19,8 +19,15 @@ agent-action/
 ├── CHANGELOG.md                 Codebook version history
 ├── CONTRIBUTING.md              How to propose extensions (governance)
 ├── skill/
-│   ├── prompt.md                Skill prompt template
-│   └── report_template.html     HTML output template
+│   ├── SKILL.md                 Skill prompt (Claude Code skill format)
+│   ├── assets/
+│   │   ├── template.html        Interactive HTML report template
+│   │   └── example_pylint_5859.json  Worked example trajectory
+│   ├── references/
+│   │   └── codebook.md          Codebook the Skill loads at runtime
+│   └── scripts/
+│       ├── parse_trajectory.py  Stage 1: raw trajectory → annotated skeleton
+│       └── render_artifact.py   Stage 4: annotated JSON → HTML artifact
 ├── data/
 │   ├── kappa_human_human.csv    Phase 2 human–human reliability data
 │   └── kappa_human_judge.csv    Operational-layer human–LLM reliability data
@@ -32,13 +39,15 @@ agent-action/
 
 ## Quick start
 
-> The Skill in `skill/prompt.md` is designed to run on Claude. Any sufficiently capable LLM that can follow a long structured prompt should also work with minor adaptation.
+The Skill is registered with [Claude Code](https://claude.com/claude-code) under the name `swe-agent-trajectory-analyzer`. To use it:
 
-1. Normalize your trajectory into a sequence of `(observation, thought, action)` triples (one per turn).
-2. Load `codebook.md` and `skill/prompt.md` into a Claude conversation.
-3. Provide the trajectory; the Skill will emit per-turn category + sub-action labels with verbatim quote evidence and render them through `skill/report_template.html`.
+1. Drop a raw trajectory (`.traj` JSON file or pasted log) into your working directory.
+2. Ask Claude: *"Analyze this trajectory with the swe-agent-trajectory-analyzer skill."*
+3. The Skill walks four stages — parse, phase-label, annotate, render — and emits a self-contained interactive HTML report (pie chart of action types, per-turn timeline, quote-grounded evidence panel).
 
-A worked end-to-end example is available under [`case_studies/case1_three_agents/`](case_studies/case1_three_agents/).
+A worked example trajectory is included at [`skill/assets/example_pylint_5859.json`](skill/assets/example_pylint_5859.json). See [`skill/SKILL.md`](skill/SKILL.md) for the full Skill prompt and [`skill/README.md`](skill/README.md) for the layout.
+
+> **Codebook versions.** The repository's canonical [`codebook.md`](codebook.md) is the **v1.0 paper snapshot** (11 categories). The Skill currently loads its own reference codebook at [`skill/references/codebook.md`](skill/references/codebook.md), which is a 9-category earlier draft with hex-color metadata used for chart styling. Re-aligning the Skill to the v1.0 codebook is tracked as a v1.1 task.
 
 ## Citation
 
