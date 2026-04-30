@@ -36,8 +36,8 @@
         },
         {
           "quote": "creating a new Python script that includes the comments",
-          "grp": "Reasoning",
-          "sub": "Generating",
+          "grp": "Generating",
+          "sub": "Generate",
           "leaf": "Generate initial codes"
         },
         {
@@ -142,7 +142,7 @@
       "quotes": [
         {
           "quote": "did not work as expected",
-          "grp": "Reflection",
+          "grp": "Reflecting",
           "sub": "Reflecting from in-episode error",
           "leaf": "Detect failed action"
         },
@@ -154,8 +154,8 @@
         },
         {
           "quote": "enclose the search term in quotes",
-          "grp": "Reasoning",
-          "sub": "Generating",
+          "grp": "Generating",
+          "sub": "Generate",
           "leaf": "Propose action candidate (incorrect remedy)"
         }
       ]
@@ -171,13 +171,13 @@
       "quotes": [
         {
           "quote": "issue persists",
-          "grp": "Reflection",
+          "grp": "Reflecting",
           "sub": "Reflecting with external feedback",
           "leaf": "Detect prior fix did not work"
         },
         {
           "quote": "use a different search term",
-          "grp": "DecisionMaking",
+          "grp": "Deciding",
           "sub": "Make a decision",
           "leaf": "Pick alternative strategy"
         },
@@ -314,8 +314,8 @@
         },
         {
           "quote": "removing the word boundary and allowing the tag to be followed by any non-word character or the end of the string",
-          "grp": "Reasoning",
-          "sub": "Generating",
+          "grp": "Generating",
+          "sub": "Generate",
           "leaf": "Generate initial fix candidate"
         },
         {

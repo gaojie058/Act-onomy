@@ -20,4 +20,8 @@ Grounding, Planning, Reasoning, Retrieval, Memory, Generating, Evaluating, Decid
 
 **Snapshot.** Frozen at [`codebook.v1.0.md`](codebook.v1.0.md).
 
-**Known divergence.** The Skill at [`skill/SKILL.md`](skill/SKILL.md) still loads an earlier 9-category codebook from [`skill/references/codebook.md`](skill/references/codebook.md). Re-aligning the Skill to the v1.0 11-category codebook (adding Generating and Learning, dropping the `DecisionMaking` key in favor of `Deciding`, and migrating the chart's color palette) is the v1.1 task.
+**Skill alignment (post-initial-release).** The Skill's reference codebook at [`skill/references/codebook.md`](skill/references/codebook.md) and the rendering pipeline (template, palette, example trajectory) were updated in-tree to match the v1.0 vocabulary:
+
+- added `Generating` (amber `#c08030`) and `Learning` (wine `#8a3a4a`) as new top-level groups;
+- renamed `Reflection` → `Reflecting` and `DecisionMaking` → `Deciding` across the Skill prompt, render script, HTML template, CSS, and worked example;
+- moved the previously-misclassified `Generating` subgroup out from under `Reasoning` and into the new top-level `Generating` group, with subgroup `Generate` (matching the paper).

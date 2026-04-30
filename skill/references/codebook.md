@@ -2,7 +2,9 @@
 
 This codebook defines the action taxonomy used to annotate agent trajectories. Each codebook tag has three levels: **Group** › **Subgroup** › **Leaf action**. When annotating a thought, ground each label to a specific quoted phrase from the verbatim thought text.
 
-This codebook is adapted from the Action Space Codebook used in agent behaviour research. It is **non-exhaustive** — when a phrase clearly fits a group's spirit but no listed leaf matches, you may write a new leaf label that follows the same naming style ("verb-phrase capturing the cognitive move").
+This file is the **operational mirror** of the canonical `codebook.md` at the repository root (paper v1.0, 11 top-level groups). It carries the additional palette metadata and the empirically-extra leaves accumulated during real annotation runs that the paper appendix does not enumerate. The two files are kept in sync: any change to the canonical codebook should be reflected here, and any new leaf added during annotation should be promoted into the canonical codebook before the next versioned release.
+
+The codebook is **non-exhaustive** — when a phrase clearly fits a group's spirit but no listed leaf matches, you may write a new leaf label that follows the same naming style ("verb-phrase capturing the cognitive move").
 
 ---
 
@@ -10,28 +12,25 @@ This codebook is adapted from the Action Space Codebook used in agent behaviour 
 
 | Group | Hex | Semantic core |
 |---|---|---|
-| Reasoning | `#5b4a8a` (purple) | Internal cognition: analysing, diagnosing, generating, comparing, inferring, ranking, filtering, decomposing |
-| Executing | `#2d5a3d` (green) | Externalised action: running commands, applying patches, terminating |
-| Evaluating | `#1a5878` (blue) | Checking outputs against criteria, metrics, gold, goals |
-| Reflection | `#b8451a` (orange) | Detecting and recovering from failures, in-episode error correction |
-| Retrieval | `#6b5b3a` (olive) | Pulling info from environment, docs, knowledge, errors, memory |
-| Grounding | `#8a4a6a` (mauve) | Interacting with users, physical world, digital interfaces, peer agents |
-| Planning | `#2d4a6a` (navy) | Decomposing tasks, formulating workflows, selecting strategies |
-| Memory | `#6a5a3a` (warm grey) | Storing, reading, discarding, converting working/episodic/semantic memory |
-| DecisionMaking | `#4a4a5a` (slate) | Picking among options, accepting/rejecting, generating multiple candidates |
+| Reasoning   | `#5b4a8a` (purple)        | Internal cognition: analysing, diagnosing, comparing, inferring, ranking, filtering, decomposing, synthesizing |
+| Generating  | `#c08030` (amber)         | Producing new artifacts *de novo*: requirements, candidate moves, initial codes |
+| Executing   | `#2d5a3d` (green)         | Externalised action: running commands, applying patches, terminating |
+| Evaluating  | `#1a5878` (blue)          | Checking outputs against criteria, metrics, gold, goals |
+| Reflecting  | `#b8451a` (orange)        | Detecting and recovering from failures, in-episode error correction |
+| Learning    | `#8a3a4a` (wine)          | Persistent change to policy, prompts, code, weights, or knowledge |
+| Retrieval   | `#6b5b3a` (olive)         | Pulling info from environment, docs, knowledge, errors, memory |
+| Grounding   | `#8a4a6a` (mauve)         | Interacting with users, physical world, digital interfaces, peer agents |
+| Planning    | `#2d4a6a` (navy)          | Decomposing tasks, formulating workflows, selecting strategies |
+| Memory      | `#6a5a3a` (warm grey)     | Storing, reading, discarding, converting working/episodic/semantic memory |
+| Deciding    | `#4a4a5a` (slate)         | Picking among options, accepting/rejecting, generating multiple candidates |
 
-Note: in code/CSS the group key `DecisionMaking` is one word (no space, no hyphen), but the **display name** is `Decision-Making`. The template handles this conversion automatically.
+The group keys above are the exact strings the renderer consumes (no spaces, no hyphens). They are also the display names; the template no longer rewrites any of them.
 
 ---
 
 ## Group: Reasoning
 
 Internal cognition. Most thoughts contain at least one Reasoning tag.
-
-### Subgroup: Generating
-- **Generate initial codes** — drafting code, scripts, or text content
-- **Propose action candidates** — brainstorming possible next moves
-- **Generate requirements** — auto-generating user-facing requirements
 
 ### Subgroup: Distilling
 - **Summarize recent observations and trajectories** — condensing flood of info into key takeaways
@@ -82,6 +81,17 @@ Internal cognition. Most thoughts contain at least one Reasoning tag.
 ### Subgroup: Aggregating
 - **Aggregate multiple candidate outputs** — combine tool predictions
 - **Representative value from multi-source data** — summarise numerical data
+
+---
+
+## Group: Generating
+
+Producing new artifacts *de novo*. Distinct from Reasoning, which transforms information already present.
+
+### Subgroup: Generate
+- **Generate initial codes** — drafting code, scripts, or text content
+- **Propose action candidates** — brainstorming possible next moves
+- **Generate requirements** — auto-generating user-facing requirements
 
 ---
 
@@ -147,9 +157,9 @@ Checking outputs against criteria.
 
 ---
 
-## Group: Reflection
+## Group: Reflecting
 
-Detecting and recovering from failures.
+Detecting and recovering from failures within an episode. Steers subsequent steps without changing the agent's policy persistently — see Learning for that.
 
 ### Subgroup: Reflecting on failures (overall goal)
 - **Analyze stuck/failed state vs ground truth**
@@ -180,6 +190,40 @@ Detecting and recovering from failures.
 
 ### Subgroup: Reflect through self-monitoring
 - **Self-monitoring** — explicit reasoning before issuing commands
+
+---
+
+## Group: Learning
+
+Persistently changes the agent's policy, prompts, code, weights, or knowledge so future behaviour differs. Distinct from Reflecting, which steers within an episode and leaves no permanent trace.
+
+### Subgroup: Learning decision-making
+- **From random pick to scored selection** — improve the decision process itself
+
+### Subgroup: Learning reasoning
+- **Utilize subtask-specific LLMs** — specialise smaller models per subtask
+- **Update reasoning via prompt update** — rewrite the agent's own prompt template
+
+### Subgroup: Learning grounding
+- **Update grounding via code-based skills** — improve code that interacts with the outside world
+
+### Subgroup: Learning knowledge
+- **Update the source code as procedural memory** — self-patch the agent's source
+- **Update semantic memory with knowledge** — integrate a new error type into the repository
+
+### Subgroup: Learning LLM parameters
+- **Update parametric policy** — train weights for similar tasks
+- **Update LLM parameters via SL/RL/RLHF** — supervised, RL, or human-feedback updates
+
+### Subgroup: Learning retrieval skills
+- **Update retrieval procedures** — better keyword strategies, smarter ranking
+
+### Subgroup: Learning instructions
+- **Infer instructions from input–output examples** — extract rule from i/o examples
+
+### Subgroup: Self-improving
+- **Generate-then-train on best outputs** — sample, pick best, train on those
+- **Self-correct step implementation** — modify step implementation based on error message
 
 ---
 
@@ -288,7 +332,7 @@ Storing, reading, discarding working/episodic/semantic memory.
 
 ---
 
-## Group: DecisionMaking
+## Group: Deciding
 
 Picking among options, accepting/rejecting, generating multiple candidates.
 
@@ -328,6 +372,7 @@ Picking among options, accepting/rejecting, generating multiple candidates.
 
 **Common patterns to watch for**:
 - A thought that starts with phase transition ("The next step is to...") usually has a Planning tag.
-- A thought that contains an error reflection ("This did not work...") usually has a Reflection tag.
-- A thought that proposes a code change ("We can do this by...") usually has a Reasoning › Generating tag.
+- A thought that contains an error reflection ("This did not work...") usually has a Reflecting tag.
+- A thought that proposes a code change ("We can do this by...") usually has a Generating tag (new artifact) or Reasoning tag (transformation of existing info).
 - The actual command-issuing clause ("Let's run pylint...", "Let's edit...") often anchors an Executing tag.
+- A thought that updates the agent's prompt, weights, or saved knowledge ("we'll add this to the skill library") anchors a Learning tag — distinct from Reflecting, which only steers the current episode.

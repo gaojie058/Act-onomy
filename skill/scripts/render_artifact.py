@@ -96,19 +96,23 @@ from pathlib import Path
 
 # ============ GROUP COLOUR PALETTE ============
 # Must match the CSS variables in the template.
+# 11-category v1.0 codebook (paper-aligned).
 GROUP_COLOURS = {
-    "Reasoning":      "#5b4a8a",
-    "Executing":      "#2d5a3d",
-    "Evaluating":     "#1a5878",
-    "Reflection":     "#b8451a",
-    "Retrieval":      "#6b5b3a",
-    "Grounding":      "#8a4a6a",
-    "Planning":       "#2d4a6a",
-    "Memory":         "#6a5a3a",
-    "DecisionMaking": "#4a4a5a",
+    "Reasoning":  "#5b4a8a",
+    "Generating": "#c08030",
+    "Executing":  "#2d5a3d",
+    "Evaluating": "#1a5878",
+    "Reflecting": "#b8451a",
+    "Learning":   "#8a3a4a",
+    "Retrieval":  "#6b5b3a",
+    "Grounding":  "#8a4a6a",
+    "Planning":   "#2d4a6a",
+    "Memory":     "#6a5a3a",
+    "Deciding":   "#4a4a5a",
 }
 
-GROUP_DISPLAY_NAMES = {"DecisionMaking": "Decision-Making"}
+# Group keys are now their own display names; no rewriting needed.
+GROUP_DISPLAY_NAMES = {}
 
 VALID_PHASES = {"reproduce", "localize", "edit", "recover", "verify", "submit", "other"}
 VALID_QUOTE_TARGETS = {"thought", "action", "both"}

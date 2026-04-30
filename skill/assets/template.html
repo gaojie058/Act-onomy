@@ -26,12 +26,16 @@
 
   --grp-Reasoning: #5b4a8a;
   --grp-Reasoning-bg: rgba(91, 74, 138, 0.13);
+  --grp-Generating: #c08030;
+  --grp-Generating-bg: rgba(192, 128, 48, 0.13);
   --grp-Executing: #2d5a3d;
   --grp-Executing-bg: rgba(45, 90, 61, 0.13);
   --grp-Evaluating: #1a5878;
   --grp-Evaluating-bg: rgba(26, 88, 120, 0.13);
-  --grp-Reflection: #b8451a;
-  --grp-Reflection-bg: rgba(184, 69, 26, 0.15);
+  --grp-Reflecting: #b8451a;
+  --grp-Reflecting-bg: rgba(184, 69, 26, 0.15);
+  --grp-Learning: #8a3a4a;
+  --grp-Learning-bg: rgba(138, 58, 74, 0.13);
   --grp-Retrieval: #6b5b3a;
   --grp-Retrieval-bg: rgba(107, 91, 58, 0.13);
   --grp-Grounding: #8a4a6a;
@@ -40,8 +44,8 @@
   --grp-Planning-bg: rgba(45, 74, 106, 0.13);
   --grp-Memory: #6a5a3a;
   --grp-Memory-bg: rgba(106, 90, 58, 0.13);
-  --grp-DecisionMaking: #4a4a5a;
-  --grp-DecisionMaking-bg: rgba(74, 74, 90, 0.13);
+  --grp-Deciding: #4a4a5a;
+  --grp-Deciding-bg: rgba(74, 74, 90, 0.13);
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -700,15 +704,17 @@ aside.codebook-panel::-webkit-scrollbar-thumb { background: var(--rule); border-
   color: var(--ink-mute);
   padding: 0 4px;
 }
-.sig-chip.grp-Reasoning      { color: var(--grp-Reasoning);      background: var(--grp-Reasoning-bg);      border-color: var(--grp-Reasoning); }
-.sig-chip.grp-Executing      { color: var(--grp-Executing);      background: var(--grp-Executing-bg);      border-color: var(--grp-Executing); }
-.sig-chip.grp-Evaluating     { color: var(--grp-Evaluating);     background: var(--grp-Evaluating-bg);     border-color: var(--grp-Evaluating); }
-.sig-chip.grp-Reflection     { color: var(--grp-Reflection);     background: var(--grp-Reflection-bg);     border-color: var(--grp-Reflection); }
-.sig-chip.grp-Retrieval      { color: var(--grp-Retrieval);      background: var(--grp-Retrieval-bg);      border-color: var(--grp-Retrieval); }
-.sig-chip.grp-Grounding      { color: var(--grp-Grounding);      background: var(--grp-Grounding-bg);      border-color: var(--grp-Grounding); }
-.sig-chip.grp-Planning       { color: var(--grp-Planning);       background: var(--grp-Planning-bg);       border-color: var(--grp-Planning); }
-.sig-chip.grp-Memory         { color: var(--grp-Memory);         background: var(--grp-Memory-bg);         border-color: var(--grp-Memory); }
-.sig-chip.grp-DecisionMaking { color: var(--grp-DecisionMaking); background: var(--grp-DecisionMaking-bg); border-color: var(--grp-DecisionMaking); }
+.sig-chip.grp-Reasoning  { color: var(--grp-Reasoning);  background: var(--grp-Reasoning-bg);  border-color: var(--grp-Reasoning); }
+.sig-chip.grp-Generating { color: var(--grp-Generating); background: var(--grp-Generating-bg); border-color: var(--grp-Generating); }
+.sig-chip.grp-Executing  { color: var(--grp-Executing);  background: var(--grp-Executing-bg);  border-color: var(--grp-Executing); }
+.sig-chip.grp-Evaluating { color: var(--grp-Evaluating); background: var(--grp-Evaluating-bg); border-color: var(--grp-Evaluating); }
+.sig-chip.grp-Reflecting { color: var(--grp-Reflecting); background: var(--grp-Reflecting-bg); border-color: var(--grp-Reflecting); }
+.sig-chip.grp-Learning   { color: var(--grp-Learning);   background: var(--grp-Learning-bg);   border-color: var(--grp-Learning); }
+.sig-chip.grp-Retrieval  { color: var(--grp-Retrieval);  background: var(--grp-Retrieval-bg);  border-color: var(--grp-Retrieval); }
+.sig-chip.grp-Grounding  { color: var(--grp-Grounding);  background: var(--grp-Grounding-bg);  border-color: var(--grp-Grounding); }
+.sig-chip.grp-Planning   { color: var(--grp-Planning);   background: var(--grp-Planning-bg);   border-color: var(--grp-Planning); }
+.sig-chip.grp-Memory     { color: var(--grp-Memory);     background: var(--grp-Memory-bg);     border-color: var(--grp-Memory); }
+.sig-chip.grp-Deciding   { color: var(--grp-Deciding);   background: var(--grp-Deciding-bg);   border-color: var(--grp-Deciding); }
 
 .sig-restart-row {
   display: flex;
@@ -819,7 +825,7 @@ function buildCodebook() {
 
 const codebook = buildCodebook();
 
-const grpDisplayName = { DecisionMaking: 'Decision-Making' };
+const grpDisplayName = {};
 function displayGrp(g) { return grpDisplayName[g] || g; }
 
 function escapeHTML(s) { return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }

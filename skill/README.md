@@ -29,7 +29,12 @@ The `(observation, thought, action)` triple schema accepts trajectories from het
 
 ## Reference codebook vs. canonical codebook
 
-> **Heads-up.** [`references/codebook.md`](references/codebook.md) is the version the Skill currently loads at runtime: 9 top-level groups (Reasoning, Executing, Evaluating, Reflection, Retrieval, Grounding, Planning, Memory, DecisionMaking) with hex colors used for chart styling. The repository's canonical [`../codebook.md`](../codebook.md) is the **v1.0 paper snapshot** with 11 categories (it adds Generating and Learning). Re-aligning the Skill's reference codebook to the canonical 11-category version is tracked as a v1.1 task.
+[`references/codebook.md`](references/codebook.md) is the version the Skill loads at runtime. It mirrors the canonical [`../codebook.md`](../codebook.md) (v1.0, 11 top-level groups: Grounding, Planning, Reasoning, Generating, Retrieval, Memory, Evaluating, Deciding, Executing, Reflecting, Learning) and additionally carries:
+
+- a **palette table** that maps each group to a hex color (consumed by the renderer and the HTML template);
+- empirically-extra leaves accumulated during real annotation runs that the canonical version does not yet enumerate (e.g., `Pinpoint root cause mechanism` under Reasoning › Diagnosing).
+
+The two files are kept in sync: any change to the canonical codebook should be reflected here, and any new leaf added during annotation should be promoted into the canonical codebook before the next versioned release.
 
 ## License
 

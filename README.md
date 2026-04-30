@@ -47,7 +47,7 @@ The Skill is registered with [Claude Code](https://claude.com/claude-code) under
 
 A worked example trajectory is included at [`skill/assets/example_pylint_5859.json`](skill/assets/example_pylint_5859.json). See [`skill/SKILL.md`](skill/SKILL.md) for the full Skill prompt and [`skill/README.md`](skill/README.md) for the layout.
 
-> **Codebook versions.** The repository's canonical [`codebook.md`](codebook.md) is the **v1.0 paper snapshot** (11 categories). The Skill currently loads its own reference codebook at [`skill/references/codebook.md`](skill/references/codebook.md), which is a 9-category earlier draft with hex-color metadata used for chart styling. Re-aligning the Skill to the v1.0 codebook is tracked as a v1.1 task.
+> **Codebook versions.** The canonical [`codebook.md`](codebook.md) is the **v1.0 paper snapshot** (11 top-level categories). The Skill loads its operational mirror at [`skill/references/codebook.md`](skill/references/codebook.md), which adds a palette table and a small set of empirically-extra leaves accumulated during real annotation runs; the two files are kept in sync.
 
 ## Citation
 
