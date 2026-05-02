@@ -1,25 +1,16 @@
 # Data
 
-Labeled datasets used to compute the reliability statistics reported in the paper.
+Released datasets supporting the empirical claims in the paper. Three subdirectories, each documented in its own `README.md`:
 
-| File | Description | Used for |
+| Subdirectory | Contents | Paper section |
 |---|---|---|
-| `kappa_human_human.csv` | Author-written behavior sentences from 5 corpus papers, independently labeled by the first two authors with action and sub-action codes (multi-label allowed). | Human–human Cohen's κ at the vocabulary layer (Section 2, Phase 2). |
-| `kappa_human_judge.csv` | Held-out trajectory turns labeled independently by the first author and the AgentAction Skill. | Human–LLM-judge Cohen's κ at the operational layer (Section 3.2). |
+| [`corpus/`](corpus/) | The 927-sentence behavior-description corpus and its construction-phase audit trail (suggested code, human verdict, final code, V4 inclusion). | §2 Phase 1, Appendix C. |
+| [`reliability/`](reliability/) | Four κ datasets — for each of the two judges (discovery-judge at paper level, qualitative-analysis-judge at trace level), one human–human baseline and one human–LLM-judge comparison. | §2 Phase 2, §3.2 / Appendix F. |
+| [`saturation/`](saturation/) | Cumulative top-level / sub-action counts per paper (Figure 3), plus held-out paper proposals from the Discovery Judge. | §2 Theoretical Saturation, Appendix E Role iv. |
 
-## Schema
+## Status
 
-Both CSVs share the columns:
-
-| column | type | description |
-|---|---|---|
-| `id` | string | unique identifier for the labeled item (sentence or trajectory turn) |
-| `source` | string | paper ID for sentences (e.g., `P1`), or `<paper>:<trajectory>:<turn>` for trajectory turns |
-| `text` | string | the sentence or turn text being labeled |
-| `coder` | string | one of `human-A`, `human-B`, `skill` |
-| `category` | string | one of the 11 top-level categories |
-| `sub_actions` | string | semicolon-separated list of sub-action codes |
-| `specializations` | string | semicolon-separated list of specialization codes |
+The CSV files currently ship with **header rows only** as a schema skeleton; the actual labeled data will be populated for the camera-ready release once the paper exits double-blind review.
 
 ## License
 
