@@ -1,6 +1,6 @@
-# Skill — `swe-agent-trajectory-analyzer`
+# Skill — `qualitative-analysis-judge`
 
-This is the operational layer of AgentAction: a Claude Code Skill that takes a raw agent trajectory, grounds each turn to the codebook with verbatim quote evidence, and renders an interactive HTML report.
+This is the operational layer of Act-onomy: a Claude Code Skill that takes a raw agent trajectory, grounds each turn to the codebook with verbatim quote evidence, and renders an interactive HTML report.
 
 ## Layout
 
@@ -22,14 +22,14 @@ skill/
 This skill is registered with Claude Code. To use it:
 
 1. Place a raw trajectory (`.traj` JSON file or pasted text) in your working directory.
-2. Ask Claude: *"Analyze this trajectory with the swe-agent-trajectory-analyzer skill."*
+2. Ask Claude: *"Analyze this trajectory with the qualitative-analysis-judge skill."*
 3. The skill walks through four stages — parse, phase-label, annotate, render — emitting a self-contained HTML artifact.
 
 The `(observation, thought, action)` triple schema accepts trajectories from heterogeneous frameworks via a thin adapter (see `scripts/parse_trajectory.py`).
 
 ## Reference codebook vs. canonical codebook
 
-[`references/codebook.md`](references/codebook.md) is the version the Skill loads at runtime. It mirrors the canonical [`../codebook.md`](../codebook.md) (v1.0, 11 top-level groups: Grounding, Planning, Reasoning, Generating, Retrieval, Memory, Evaluating, Deciding, Executing, Reflecting, Learning) and additionally carries:
+[`references/codebook.md`](references/codebook.md) is the version the Skill loads at runtime. It mirrors the canonical [`../../codebook.md`](../../codebook.md) (v1.0, 11 top-level groups: Grounding, Planning, Reasoning, Generating, Retrieval, Memory, Evaluating, Deciding, Executing, Reflecting, Learning) and additionally carries:
 
 - a **palette table** that maps each group to a hex color (consumed by the renderer and the HTML template);
 - empirically-extra leaves accumulated during real annotation runs that the canonical version does not yet enumerate (e.g., `Pinpoint root cause mechanism` under Reasoning › Diagnosing).

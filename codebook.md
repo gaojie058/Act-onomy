@@ -1,8 +1,8 @@
-# AgentAction Codebook
+# Act-onomy Codebook
 
 **Version: v1.0** — initial release accompanying the NeurIPS 2026 submission.
 
-This is the canonical, machine-readable codebook consumed by the AgentAction Skill. It mirrors the snapshot reproduced in the paper's appendix; the paper version and this file are intended to be 1:1.
+This is the canonical, machine-readable codebook consumed by the Act-onomy Skill. It mirrors the snapshot reproduced in the paper's appendix; the paper version and this file are intended to be 1:1.
 
 The codebook has **three levels**:
 

@@ -1,5 +1,5 @@
 ---
-name: swe-agent-trajectory-analyzer
+name: qualitative-analysis-judge
 description: Analyze SWE-agent trajectories with quote-level codebook annotations and produce an interactive HTML report with a pie chart of action types. Use this skill whenever the user wants to analyze, annotate, visualize, or break down an agent trajectory — especially SWE-agent or SWE-bench trajectories — with phrase-level grounding to an action codebook. Trigger this for requests like "analyze this trajectory", "annotate these turns", "make a codebook breakdown", "generate a trajectory report", or whenever the user provides raw `(observation, thought, action)` data and wants structured analysis. Also trigger when the user mentions terms like "trajectory analysis", "action space codebook", "thought-action grounding", "qualitative trajectory analysis", or asks to ground codebook tags to specific quotes from agent reasoning.
 ---
 
@@ -324,7 +324,7 @@ This is your gold-standard reference for what "good" looks like.
 ## File layout
 
 ```
-swe-agent-trajectory-analyzer/
+qualitative-analysis-judge/
 ├── SKILL.md                              ← this file
 ├── references/
 │   └── codebook.md                       ← the 9-group action codebook (read in stage 3)

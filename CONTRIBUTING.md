@@ -1,6 +1,6 @@
-# Contributing to AgentAction
+# Contributing to Act-onomy
 
-AgentAction is intended to be a living artifact: as new agent designs appear, the codebook should grow rather than fork. This document specifies how to propose an extension.
+Act-onomy is intended to be a living artifact: as new agent designs appear, the codebook should grow rather than fork. This document specifies how to propose an extension.
 
 > **Note.** During NeurIPS 2026 double-blind review, this repository is private and contributions are paused. The protocol below describes how the open release will accept contributions.
 

@@ -4,9 +4,9 @@ Reproducibility artifacts for the three case studies in the paper.
 
 | Folder | Paper section | Question |
 |---|---|---|
-| [`case1_three_agents/`](case1_three_agents/) | §4.1 | Does AgentAction surface distinct behavioral profiles across agents that vary in architecture and task? |
+| [`case1_three_agents/`](case1_three_agents/) | §4.1 | Does Act-onomy surface distinct behavioral profiles across agents that vary in architecture and task? |
 | [`case2_swe_agent_two_traces/`](case2_swe_agent_two_traces/) | §4.2 | Within a single agent, does the profile bend with the task at hand (i.e., is the right unit "agent on a task" rather than "agent")? |
-| [`case3_mast_astropy/`](case3_mast_astropy/) | §4.3 | Can MAST-style failure modes (e.g., trajectory restart, step repetition) be made legible as patterns in the AgentAction-coded sequence? |
+| [`case3_mast_astropy/`](case3_mast_astropy/) | §4.3 | Can MAST-style failure modes (e.g., trajectory restart, step repetition) be made legible as patterns in the Act-onomy-coded sequence? |
 
 Each folder contains (or will contain in the camera-ready release):
 
