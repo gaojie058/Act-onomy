@@ -7,7 +7,7 @@ A community-extensible framework for describing and analyzing agent behavior at 
 Act-onomy ships three things:
 
 - A **codebook** of 10 top-level action categories (organised under 4 classes: Sense / Think / Act / Adapt) instantiated by 42 sub-actions and 120 leaf-level instances, grounded in CoALA and built via deductive coding on a 35-paper corpus (20 incorporated into the shared codebook; NeurIPS / ICML / ICLR / ACL Anthology, 2024–2026). See [`1_data/2_taxonomy/`](1_data/2_taxonomy/).
-- Two **Claude Skills** that apply the codebook to agent papers and trajectories: [`qualitative-analysis-judge/`](skill/qualitative-analysis-judge/) (LLM-judge that emits an HTML report from a raw trajectory) and [`discovery-judge/`](skill/discovery-judge/) (codebook-iteration pipeline used during taxonomy construction).
+- Two **Claude Skills** that apply the codebook to agent papers and trajectories: [`trace-analysis-judge/`](skill/trace-analysis-judge/) (LLM-judge that emits an HTML report from a raw trajectory) and [`discovery-judge/`](skill/discovery-judge/) (codebook-iteration pipeline used during taxonomy construction).
 - A **contribution protocol** that lets the codebook grow as new agent designs appear, versioned as `vX.Y`. See [`CONTRIBUTING.md`](CONTRIBUTING.md) and [`CHANGELOG.md`](CHANGELOG.md).
 
 ## Repository layout
@@ -19,7 +19,7 @@ Act-onomy/
 ├── CHANGELOG.md                 Codebook version history
 ├── CONTRIBUTING.md              How to propose extensions (governance)
 ├── skill/
-│   ├── qualitative-analysis-judge/   Trajectory → HTML report
+│   ├── trace-analysis-judge/   Trajectory → HTML report
 │   │   ├── SKILL.md             Skill prompt (Claude Code skill format)
 │   │   ├── assets/
 │   │   │   ├── template.html    Interactive HTML report template
@@ -45,13 +45,13 @@ Act-onomy/
 
 ## Quick start
 
-The Skill is registered with [Claude Code](https://claude.com/claude-code) under the name `qualitative-analysis-judge`. To use it:
+The Skill is registered with [Claude Code](https://claude.com/claude-code) under the name `trace-analysis-judge`. To use it:
 
 1. Drop a raw trajectory (`.traj` JSON file or pasted log) into your working directory.
-2. Ask Claude: *"Analyze this trajectory with the qualitative-analysis-judge skill."*
+2. Ask Claude: *"Analyze this trajectory with the trace-analysis-judge skill."*
 3. The Skill walks four stages — parse, phase-label, annotate, render — and emits a self-contained interactive HTML report (pie chart of action types, per-turn timeline, quote-grounded evidence panel).
 
-A worked example trajectory is included at [`skill/qualitative-analysis-judge/assets/example_pylint_5859.json`](skill/qualitative-analysis-judge/assets/example_pylint_5859.json). See [`skill/qualitative-analysis-judge/SKILL.md`](skill/qualitative-analysis-judge/SKILL.md) for the full Skill prompt and [`skill/qualitative-analysis-judge/README.md`](skill/qualitative-analysis-judge/README.md) for the layout.
+A worked example trajectory is included at [`skill/trace-analysis-judge/assets/example_pylint_5859.json`](skill/trace-analysis-judge/assets/example_pylint_5859.json). See [`skill/trace-analysis-judge/SKILL.md`](skill/trace-analysis-judge/SKILL.md) for the full Skill prompt and [`skill/trace-analysis-judge/README.md`](skill/trace-analysis-judge/README.md) for the layout.
 
 > **Codebook versions.** The canonical taxonomy at [`1_data/2_taxonomy/`](1_data/2_taxonomy/) is the **v4.2 snapshot** (4 Classes × 10 Actions × 42 Subactions × 120 Instances). The Skill loads its operational mirror at [`2_automatic-qualitative-analysis-tool/trace-analysis-judge/references/codebook.md`](2_automatic-qualitative-analysis-tool/trace-analysis-judge/references/codebook.md), which adds a palette table and a small set of empirically-extra leaves accumulated during real annotation runs; the two are kept in sync.
 

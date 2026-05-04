@@ -3,19 +3,19 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SWE-agent · {{INSTANCE_ID}} · Quote-grounded Annotations</title>
+<title>Trajectory · {{INSTANCE_ID}} · Quote-grounded Annotations</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg: #f4f1ea;
-  --bg-panel: #fbf9f3;
-  --ink: #1a1814;
-  --ink-soft: #5a5550;
-  --ink-mute: #8a847d;
-  --rule: #d8d2c4;
-  --rule-soft: #e8e2d3;
+  --bg: #ffffff;
+  --bg-panel: #f7f7f5;
+  --ink: #1a1a1a;
+  --ink-soft: #555555;
+  --ink-mute: #888888;
+  --rule: #e0e0e0;
+  --rule-soft: #efefef;
   --accent: #b8451a;
   --accent-soft: #f0d7c4;
   --thought: #5b4a8a;
@@ -59,9 +59,6 @@ html, body {
 }
 
 body {
-  background-image:
-    radial-gradient(circle at 20% 10%, rgba(184,69,26,0.04) 0%, transparent 40%),
-    radial-gradient(circle at 80% 90%, rgba(91,74,138,0.04) 0%, transparent 40%);
   min-height: 100vh;
 }
 
@@ -264,7 +261,7 @@ main.trajectory {
 }
 .turn-num small { font-size: 11px; font-family: 'JetBrains Mono', monospace; color: var(--ink-mute); font-weight: 400; display: block; letter-spacing: 0.1em; margin-bottom: 2px; }
 
-.turn-tag-line { font-family: 'Fraunces', serif; font-style: italic; font-size: 16px; color: var(--ink); font-weight: 500; flex: 1; }
+.turn-tag-line { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-style: normal; font-size: 15px; color: var(--ink); font-weight: 500; flex: 1; line-height: 1.45; }
 
 .turn-phase {
   font-family: 'JetBrains Mono', monospace;
@@ -294,15 +291,15 @@ main.trajectory {
 .oat-thought { border-color: var(--thought); background: rgba(91, 74, 138, 0.025); padding: 8px 14px 10px; border-radius: 0 2px 2px 0; }
 .oat-thought .lbl { color: var(--thought); }
 .oat-thought .lbl .small { opacity: 0.5; font-weight: 400; text-transform: none; letter-spacing: 0.05em; font-style: italic; }
-.thought-text { font-family: 'Fraunces', serif; font-style: italic; font-size: 14px; color: var(--ink); line-height: 1.7; letter-spacing: 0.005em; }
+.thought-text { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-style: normal; font-size: 14px; color: var(--ink); line-height: 1.65; letter-spacing: 0; }
 
 .oat-action { border-color: var(--action); }
 .oat-action .lbl { color: var(--action); }
 .oat-action .content {
   font-family: 'JetBrains Mono', monospace;
   font-size: 12.5px;
-  background: #1a1814;
-  color: #f4f1ea;
+  background: #1f1f1f;
+  color: #eaeaea;
   padding: 8px 12px;
   border-radius: 2px;
   display: block;
@@ -310,7 +307,7 @@ main.trajectory {
   white-space: pre-wrap;
   line-height: 1.5;
 }
-.oat-action .content .cmt { color: #8a847d; }
+.oat-action .content .cmt { color: #888888; }
 .oat-action .content .kw { color: #d4a574; }
 
 .content { color: var(--ink); }
@@ -736,7 +733,7 @@ aside.codebook-panel::-webkit-scrollbar-thumb { background: var(--rule); border-
 <body>
 
 <header class="masthead">
-  <div class="eyebrow">SWE-agent · Quote-grounded annotation</div>
+  <div class="eyebrow">Trajectory · Quote-grounded annotation</div>
   <h1 class="title">Trajectory <em>↔</em> Codebook</h1>
   <div class="subtitle">Each codebook tag is grounded to a specific quoted phrase from the verbatim thought text — pinning <em>what</em> in the agent's reasoning triggered <em>which</em> action category.</div>
   <div class="meta-row">

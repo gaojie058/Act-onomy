@@ -7,7 +7,7 @@ Labeled datasets used to compute the Cohen's κ statistics reported in the paper
 | Judge | Level | Item being labeled |
 |---|---|---|
 | **discovery-judge** | Paper | Sentences from agent papers, labeled with codebook tags. |
-| **qualitative-analysis-judge** | Trace | Behavior sentences already extracted from agent trajectories, labeled with codebook tags. |
+| **trace-analysis-judge** | Trace | Behavior sentences already extracted from agent trajectories, labeled with codebook tags. |
 
 For each judge, two κ comparisons are reported:
 
@@ -20,8 +20,8 @@ For each judge, two κ comparisons are reported:
 |---|---|---|---|
 | `kappa_discovery_human_human.csv` | discovery-judge | Human ↔ Human (paper sentences) | §2, Phase 2 |
 | `kappa_discovery_human_judge.csv` | discovery-judge | Human ↔ LLM judge (paper sentences) | §2, Phase 2 |
-| `kappa_qualitative_human_human.csv` | qualitative-analysis-judge | Human ↔ Human (trace behavior sentences) | §3.2 / Appendix F |
-| `kappa_qualitative_human_judge.csv` | qualitative-analysis-judge | Human ↔ LLM judge (trace behavior sentences) | §3.2 / Appendix F |
+| `kappa_qualitative_human_human.csv` | trace-analysis-judge | Human ↔ Human (trace behavior sentences) | §3.2 / Appendix F |
+| `kappa_qualitative_human_judge.csv` | trace-analysis-judge | Human ↔ LLM judge (trace behavior sentences) | §3.2 / Appendix F |
 
 Within each judge, the two files share `id` so the same items can be cross-joined for human–human vs. human–LLM analysis.
 
@@ -30,7 +30,7 @@ Within each judge, the two files share `id` so the same items can be cross-joine
 | column | type | description |
 |---|---|---|
 | `id` | string | Unique identifier for the labeled item. Paper sentences use `S<n>`; trace behavior sentences use `<paper>:<trajectory>:T<turn>`. |
-| `source` | string | Paper ID (e.g., `P1`) for discovery-judge files; `<framework>:<trajectory>` for qualitative-analysis-judge files. |
+| `source` | string | Paper ID (e.g., `P1`) for discovery-judge files; `<framework>:<trajectory>` for trace-analysis-judge files. |
 | `text` | string | The sentence being labeled. |
 | `coder` | string | One of `human-A`, `human-B`, `llm-judge`. Each file uses the subset relevant to that comparison. |
 | `category` | string | One of the 10 top-level Action categories from Codebook V4.2 (organised under 4 Classes: Sense / Think / Act / Adapt). |
@@ -44,7 +44,7 @@ Within each judge, the two files share `id` so the same items can be cross-joine
 - Human–human: `κ = 0.53` (top level), `κ = 0.48` (sub-action).
 - Human–LLM-judge: `[TODO]` at the top level, `[TODO]` at the sub-action level (paper still has placeholders).
 
-### qualitative-analysis-judge (trace level)
+### trace-analysis-judge (trace level)
 
 - Human–human: `[TODO]` (to be added).
 - Human–LLM-judge: `κ = 0.48` (paper marks this as "to be updated").

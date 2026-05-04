@@ -247,13 +247,13 @@ def make_bar_chart(group_counts, total, width=300):
             f'<rect x="0" y="{y}" width="{width}" height="{row_h}" fill="transparent"/>'
             # group name, right-aligned in the label column
             f'<text x="{label_w}" y="{y + row_h/2 + 3.5}" text-anchor="end" '
-            f'font-family="Inter, sans-serif" font-size="11" font-weight="500" fill="#1a1814">{display}</text>'
+            f'font-family="Inter, sans-serif" font-size="11" font-weight="500" fill="#1a1a1a">{display}</text>'
             # bar track (light) + filled bar (group colour)
-            f'<rect x="{bar_x}" y="{bar_y}" width="{bar_max_w:.1f}" height="{bar_h}" fill="#e8e3d7" rx="2"/>'
+            f'<rect x="{bar_x}" y="{bar_y}" width="{bar_max_w:.1f}" height="{bar_h}" fill="#efefef" rx="2"/>'
             f'<rect x="{bar_x}" y="{bar_y}" width="{bar_w:.1f}" height="{bar_h}" fill="{colour}" rx="2"/>'
             # count, right-aligned at the far right
             f'<text x="{width - 2}" y="{y + row_h/2 + 3.5}" text-anchor="end" '
-            f'font-family="JetBrains Mono, monospace" font-size="10" fill="#8a847d">{count}</text>'
+            f'font-family="JetBrains Mono, monospace" font-size="10" fill="#888888">{count}</text>'
             f'</g>'
         )
 
