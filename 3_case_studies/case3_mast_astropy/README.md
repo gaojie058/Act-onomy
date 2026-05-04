@@ -4,4 +4,4 @@ Reproduces the failure-mode pairing in §4.3 of the paper: an `astropy` debuggin
 
 The annotation runs the Skill in `action-grounded` mode because cognitive content lives in inter-agent messages rather than a shell-command surface.
 
-> **Status: placeholder.** Trajectory, Skill outputs, MAST label alignment, and the rendered report will be added alongside the camera-ready release.
+> **Status: placeholder.** Trajectory, Skill outputs, MAST label alignment, and the rendered report will be added in a forthcoming release.

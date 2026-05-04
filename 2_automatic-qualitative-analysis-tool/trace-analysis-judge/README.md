@@ -1,6 +1,6 @@
 # Skill — `qualitative-analysis-judge`
 
-This is the operational layer of Act-onomy: a Claude Code Skill that takes a raw agent trajectory, grounds each turn to the codebook with verbatim quote evidence, and renders an interactive HTML report.
+A Claude Code Skill from Act-onomy that takes a raw agent trajectory, grounds each turn to the codebook with verbatim quote evidence, and renders an interactive HTML report.
 
 ## Layout
 

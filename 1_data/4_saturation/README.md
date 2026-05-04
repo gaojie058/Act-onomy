@@ -14,7 +14,7 @@ Theoretical-saturation evidence for Codebook V4 (= v1.0): how the cumulative cou
 | column | type | description |
 |---|---|---|
 | `paper_index` | int | 1-based processing order across both sets. |
-| `paper_id` | string | `P1`–`P30` for the construction corpus; `H1`+ for held-out. |
+| `paper_id` | string | `P1`–`P35` for the construction corpus; `H1`+ for held-out. |
 | `set` | enum | `construction` or `holdout`. |
 | `n_top_level_cumulative` | int | Unique top-level categories observed up to and including this paper. |
 | `n_sub_actions_cumulative` | int | Unique sub-actions observed up to and including this paper. |

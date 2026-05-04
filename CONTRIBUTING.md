@@ -2,14 +2,14 @@
 
 Act-onomy is intended to be a living artifact: as new agent designs appear, the codebook should grow rather than fork. This document specifies how to propose an extension.
 
-> **Note.** During NeurIPS 2026 double-blind review, this repository is private and contributions are paused. The protocol below describes how the open release will accept contributions.
+> **Note.** Contributions are paused during pre-release. The protocol below describes how the open release will accept contributions.
 
 ## When to add a sub-action vs. a new top-level category
 
 Following the deductive coding procedure described in the paper:
 
 - **Add a new sub-action** when the observed behavior is functionally an instance of an existing top-level category but its surface form is not yet covered (e.g., `Annotate UI components` was added under **Grounding** after encountering P28).
-- **Add a new top-level category** only when the behavior fails the boundary tests in §3.1 of the paper against *all* existing categories. This is a much higher bar that, in our 30-paper corpus, was met during construction but not during validation. Top-level categories define the analytic vocabulary, so churning them weakens cross-paper comparability.
+- **Add a new top-level category** only when the behavior fails the boundary tests in §3.1 of the paper against *all* existing categories. This is a much higher bar that, in our 35-paper corpus (20 incorporated), was met during construction but not during validation. Top-level categories define the analytic vocabulary, so churning them weakens cross-paper comparability.
 
 ## Proposal template
 

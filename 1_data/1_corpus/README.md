@@ -1,6 +1,6 @@
 # Corpus
 
-The 927-sentence behavior-description corpus and its construction-phase audit trail. Each row records one behavior-description sentence extracted from the 30 corpus papers, together with the Discovery Judge's suggested code, the human reviewer's verdict, and whether the resulting code was retained in **Codebook V4** (= the v1.0 paper snapshot).
+The 927-sentence behavior-description corpus and its construction-phase audit trail. Each row records one behavior-description sentence extracted from the 35 corpus papers (20 incorporated into the shared codebook), together with the Discovery Judge's suggested code, the human reviewer's verdict, and whether the resulting code was retained in **Codebook V4** (= the v1.0 paper snapshot).
 
 This is the dataset behind the Phase-1 outcome reported in the paper (§2): *"Of the 927 descriptions, 741 were confirmed under existing codes and 186 surfaced 157 candidate revisions, producing Codebook V3."*
 
@@ -17,7 +17,7 @@ This is the dataset behind the Phase-1 outcome reported in the paper (§2): *"Of
 | column | type | description |
 |---|---|---|
 | `sentence_id` | string | Unique ID for the sentence (e.g., `S0001`). |
-| `paper_id` | string | Source paper ID, `P1`–`P30`. |
+| `paper_id` | string | Source paper ID, `P1`–`P35`. |
 | `sentence_text` | string | Verbatim author-written behavior-description sentence. |
 | `discovery_judge_suggested_code` | string | Code proposed by the Discovery Judge in Role ii: either an existing code from V2 / V3 or a candidate new code. |
 | `judge_evidence_quote` | string | Verbatim span from `sentence_text` the judge used as evidence. |

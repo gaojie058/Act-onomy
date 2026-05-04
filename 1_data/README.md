@@ -10,7 +10,7 @@ Released datasets supporting the empirical claims in the paper. Three subdirecto
 
 ## Status
 
-The CSV files currently ship with **header rows only** as a schema skeleton; the actual labeled data will be populated for the camera-ready release once the paper exits double-blind review.
+The CSV files currently ship with **header rows only** as a schema skeleton; the actual labeled data will be populated in a forthcoming release.
 
 ## License
 
