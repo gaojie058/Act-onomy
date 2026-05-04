@@ -1,0 +1,187 @@
+{
+  "source_pdf": "reports/codebook/Action Space Codebook (v1).pdf",
+  "version": "v1",
+  "version_note": "Manually extracted from paper. Bullet-list outline; no Verb+Noun normalization, no quoted evidence.",
+  "summary": {
+    "n_super_categories": 6,
+    "n_sub_categories": 17,
+    "n_leaves": 53
+  },
+  "super_categories": [
+    {
+      "name": "Memory",
+      "description": "Store and maintain information internally for multi-step interaction with the world.",
+      "sub_categories": [
+        {
+          "name": "Working memory",
+          "description": "Active and readily available information as symbolic variables.",
+          "leaves": [
+            {"action": "Perceptual inputs", "examples_raw": "", "papers_cited": []},
+            {"action": "Intermediate reasoning", "examples_raw": "", "papers_cited": []},
+            {"action": "Interact with long-term memories and grounding interface", "examples_raw": "", "papers_cited": []}
+          ]
+        },
+        {
+          "name": "Episodic memory",
+          "leaves": [
+            {"action": "Store experience from earlier decision cycles", "examples_raw": "Training input-output pairs\nHistory event flows\nGame trajectories from previous episodes", "papers_cited": []},
+            {"action": "Write new experiences from working to episodic memory as a form of learning", "examples_raw": "", "papers_cited": []}
+          ]
+        },
+        {
+          "name": "Semantic memory",
+          "leaves": [
+            {"action": "Stores an agent's knowledge about the world and itself", "examples_raw": "", "papers_cited": []},
+            {"action": "Write new knowledge obtained from LLM reasoning into semantic memory as a form of learning", "examples_raw": "", "papers_cited": []}
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Grounding actions",
+      "description": "Execute external actions and process environmental feedback into working memory as text.",
+      "sub_categories": [
+        {
+          "name": "Physical environments",
+          "leaves": [
+            {"action": "Process perceptual inputs into textual observations", "examples_raw": "", "papers_cited": []},
+            {"action": "Affecting the physical environments via robotic planners that take language-based commands", "examples_raw": "", "papers_cited": []},
+            {"action": "VLMs are typically used to convert images to text, providing additional context for the LLM", "examples_raw": "", "papers_cited": []}
+          ]
+        },
+        {
+          "name": "Dialogue with humans or other agents",
+          "leaves": [
+            {"action": "Accept instructions or learn from people", "examples_raw": "", "papers_cited": []},
+            {"action": "Ask for help or clarification", "examples_raw": "", "papers_cited": []},
+            {"action": "Entertain or emotionally help people", "examples_raw": "", "papers_cited": []},
+            {"action": "Investigate interaction among multiple language agents for social simulation", "examples_raw": "", "papers_cited": []},
+            {"action": "Multi-agent debate", "examples_raw": "", "papers_cited": []},
+            {"action": "Multi-agent collaborative task solving", "examples_raw": "", "papers_cited": []}
+          ]
+        },
+        {
+          "name": "Digital environment",
+          "leaves": [
+            {"action": "Interacting with games, APIs, and websites as well as general code execution", "examples_raw": "", "papers_cited": []},
+            {"action": "Cheaper and faster than physical or human interaction", "examples_raw": "", "papers_cited": []},
+            {"action": "Augmentation of external knowledge or computation, stateless digital APIs", "examples_raw": "", "papers_cited": []}
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Retrieval actions",
+      "flat": true,
+      "sub_categories": [
+        {
+          "name": "Retrieve",
+          "leaves": [
+            {"action": "Loads code-based skills from a skill library via dense retrieval to interact with the Minecraft world", "examples_raw": "", "papers_cited": []},
+            {"action": "Retrieves relevant events from episodic memory via a combination of recency, importance and relevance scores", "examples_raw": "", "papers_cited": []},
+            {"action": "Leverage library documents to assist code generation", "examples_raw": "", "papers_cited": []},
+            {"action": "Retrieving knowledge from semantic memory", "examples_raw": "", "papers_cited": []}
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Reasoning actions",
+      "description": "Process the contents of working memory to generate new information.",
+      "flat": true,
+      "sub_categories": [
+        {
+          "name": "Reason",
+          "leaves": [
+            {"action": "Reads from and writes to working memory", "examples_raw": "", "papers_cited": []},
+            {"action": "Summarize and distill insights about the most recent observation, the most recent trajectory, or information retrieved from long-term memory", "examples_raw": "", "papers_cited": []},
+            {"action": "Using the results as additional context for subsequent LLM calls", "examples_raw": "", "papers_cited": []}
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Learning actions",
+      "sub_categories": [
+        {
+          "name": "Updating episodic memory with experience",
+          "leaves": [
+            {"action": "Store episodic trajectories to update a parametric policy", "examples_raw": "", "papers_cited": []},
+            {"action": "Update a parametric policy", "examples_raw": "", "papers_cited": []},
+            {"action": "Establish a non-parametric policy", "examples_raw": "", "papers_cited": []},
+            {"action": "Added experiences in episodic memory may be retrieved later as examples and bases for reasoning or decision-making", "examples_raw": "", "papers_cited": []}
+          ]
+        },
+        {
+          "name": "Updating semantic memory with knowledge",
+          "leaves": [
+            {"action": "Reason about raw experiences and store the resulting inferences in semantic memory", "examples_raw": "", "papers_cited": []},
+            {"action": "Reflect on failed episodes and stores the results", "examples_raw": "", "papers_cited": []},
+            {"action": "Use Vision-language models to build a semantic map of the environment", "examples_raw": "", "papers_cited": []}
+          ]
+        },
+        {
+          "name": "Updating LLM parameters",
+          "leaves": [
+            {"action": "Fine-tuning during agent's lifetime via SL/imitation learning, RL from environment feedback, human feedback", "examples_raw": "", "papers_cited": []},
+            {"action": "LLM self-improvement methods, consistency to select generations to fine-tune on", "examples_raw": "", "papers_cited": []},
+            {"action": "Fine-tunes a small language model on high-scoring trajectories stored in episodic memory", "examples_raw": "", "papers_cited": []},
+            {"action": "Robust exploitation policy to reach exploration frontiers", "examples_raw": "", "papers_cited": []},
+            {"action": "Utilize smaller subtask-specific LLMs", "examples_raw": "", "papers_cited": []},
+            {"action": "Allow language agents to autonomously determine when and how to fine-tune their LLMs", "examples_raw": "", "papers_cited": []}
+          ]
+        },
+        {
+          "name": "Updating agent code (procedural memory)",
+          "description": "Update their source code, thus modifying the implementation of various procedures.",
+          "leaves": [
+            {"action": "Updating reasoning — infer prompt instructions from input-output examples", "examples_raw": "", "papers_cited": []},
+            {"action": "Prompt update can be seen as a form of learning to reason", "examples_raw": "", "papers_cited": []},
+            {"action": "Updating grounding via code-based skills", "examples_raw": "", "papers_cited": []},
+            {"action": "Maintain a curriculum library", "examples_raw": "", "papers_cited": []},
+            {"action": "Updating retrieval procedures (learn better retrieval implementations)", "examples_raw": "", "papers_cited": []},
+            {"action": "Updating learning or decision-making — learn new procedures for learning or decision-making", "examples_raw": "", "papers_cited": []}
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Decision-making",
+      "description": "How should a language agent choose which action to apply?",
+      "sub_categories": [
+        {
+          "name": "Plan — Proposal",
+          "leaves": [
+            {"action": "Generate one or more action candidates", "examples_raw": "", "papers_cited": []}
+          ]
+        },
+        {
+          "name": "Plan — Evaluate",
+          "description": "Assigns a value to each candidate.",
+          "leaves": [
+            {"action": "Heuristic rules", "examples_raw": "", "papers_cited": []},
+            {"action": "LLM values", "examples_raw": "", "papers_cited": []},
+            {"action": "Learned values", "examples_raw": "", "papers_cited": []},
+            {"action": "LLM reasoning", "examples_raw": "", "papers_cited": []},
+            {"action": "Help evaluate actions by internally simulating their grounding feedback from the external world", "examples_raw": "", "papers_cited": []}
+          ]
+        },
+        {
+          "name": "Plan — Select",
+          "leaves": [
+            {"action": "Selects one to execute or rejects them", "examples_raw": "", "papers_cited": []},
+            {"action": "Selection may occur via argmax, softmax, or an alternative such as majority vote", "examples_raw": "", "papers_cited": []}
+          ]
+        },
+        {
+          "name": "Execution",
+          "leaves": [
+            {"action": "External grounding action", "examples_raw": "", "papers_cited": []},
+            {"action": "API call", "examples_raw": "", "papers_cited": []},
+            {"action": "Internal learning action", "examples_raw": "", "papers_cited": []}
+          ]
+        }
+      ]
+    }
+  ]
+}

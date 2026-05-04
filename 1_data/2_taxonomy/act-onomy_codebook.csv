@@ -1,0 +1,230 @@
+taxonomy_code,Class,Action,Subaction,Instance,examples_raw,papers_cited,human reviewers
+T1.1.1.1,Sense,Retrieval,Retrieve,Retrieve from skill library,"Grab pre-built skill snippet (Minecraft “chop tree”)
+Find and load ready-made code snippet from pre-built library",,theory-driven
+T1.1.1.2,Sense,Retrieval,Retrieve,Retrieve from local corpus,"“diverse filetype reading; read between 1 to 15 documents and/or tables” (P2)
+""read the README file — Phase 1: read_file('reproduction_package/readme.txt')"" (P11)",P2; P11,main reviewer (human reviewer 2); human reviewer 6
+T1.1.1.3,Sense,Retrieval,Retrieve,Retrieve from external knowledge base,"“LLM which generates buggy code by integrating retrieved error slices from BugRAG as context” (P29)
+“queries BugRAG to check for existing entries” (P29)
+Recall three relevant distinct problems (P28): “Recall three (03) relevant and distinct problems (different from the user task)” (P28)",P28; P29,main reviewer (human reviewer 2)
+T1.1.1.4,Sense,Retrieval,Retrieve,Retrieve from open web,"""high reliance on web search to offload knowledge retrieval to external sources"" (P16)",P16,human reviewer 1
+T1.1.1.5,Sense,Retrieval,Retrieve,Retrieve relevant context,“LLM leverages retrieved HLS-related context to transform input C algorithms or natural language descriptions” (P29),P29,main reviewer (human reviewer 2)
+T1.2.1.1,Sense,Memory,Store Information,Store information in working memory,"Scratchpad for current inputs and intermediate results
+Quick-access buffer that holds recent inputs and intermediate results",,theory-driven
+T1.2.1.2,Sense,Memory,Store Information,Store episodic trajectories,"Record full action sequences for later training
+Save complete sequences from start to finish for training/review",,theory-driven
+T1.2.1.3,Sense,Memory,Store Information,Store knowledge in semantic memory,"Save general world facts
+Save general facts about the world, not tied to any specific event",,theory-driven
+T1.2.1.4,Sense,Memory,Store Information,Store experiences in episodic memory,"Save events as episodes
+Saves past events as personal-diary-like episodes (which game won, which plan failed)",,theory-driven
+T1.2.1.5,Sense,Memory,Store Information,Store information in long-term memory,"Store information in external storage
+""Gemini-3-Pro...initialize_memory_bank (7 times) Gemini-3-Pro...update_memory_bank (22 times)...attempts to persist state and key information externally"" (P16)",P16,human reviewer 1
+T1.2.1.6,Sense,Memory,Store Information,Maintain curriculum library,"Keep a syllabus of mastered and upcoming skills, arranged by difficulty, so the agent learns in a sensible order.",,theory-driven
+T1.2.2.1,Sense,Memory,Update Information,Update memory,"Update experiences
+refinement of memories (represented in text) as the system encounters new scenarios",,theory-driven
+T1.2.3.1,Sense,Memory,Discard information,Discard information from working memory,"Discard local memory after subtask completion (P1)
+“the local memory is discarded upon successful completion of the subtask” (P1)",P1,main reviewer (human reviewer 2)
+T1.2.3.2,Sense,Memory,Discard information,"Discard redundant game state, keep summaries","“automatic context compaction to manage thousands of reasoning steps, preserving only LLM responses and action summaries while discarding redundant game state” (P25)",P25,main reviewer (human reviewer 2)
+T1.2.4.1,Sense,Memory,Consolidate memory,Consolidate working memory into long-term memory,"Retain only successful analysis path to global memory (P1)
+This discard-after-use strategy ensures that only the clear and successful analysis path is retained in the global memory, preventing interference from the intermediate trial-and-error history and thereby maintaining a concise and efficient context for subsequent steps (P1)",P1,main reviewer (human reviewer 2)
+T1.2.4.2,Sense,Memory,Consolidate memory,Compact context window,"""automatic context compaction to manage the thousands of reasoning steps required, preserving only LLM responses and action summaries while discarding redundant game state"" (P25)",P25,main reviewer (human reviewer 2)
+T1.2.5.1,Sense,Memory,Read memory,Read from working memory,"Grab intermediate results from scratchpad
+Check the scratchpad — grab stored intermediate results and state
+“IMPLICITMEMBENCH reframes evaluation from ‘what agents recall’ to ‘what they automatically enact’.” (P12)",P12,main reviewer (human reviewer 2)
+T1.2.5.2,Sense,Memory,Read memory,Read from long-term memory,"Importance-weighted retrieval of discoveries (P25)
+“Persistent memory system storing discoveries (locations, NPCs, items, strategies) with importance-weighted retrieval” (P25)",P25,main reviewer (human reviewer 2)
+T2.1.1.1,Think,Planning,Decompose task,Decompose into subtasks,"""LLM-based planner to decompose the specified language instruction L into a sequence of subtasks S = [S0, S1, ..., Sn]"" (P34)
+“Decomposing hard problems into subproblems often makes them easier and more efficient to solve” (P17)
+“Decomposes complex user requests into manageable subtasks, an Executor that carries out the analysis by generating and running code, and an Evaluator that assesses the quality of the results” (P1)
+“formulate plans, decompose problems into sub-steps” (P2)
+todo_write tool (15 invocations by GPT-5.2) (P16)",P1; P2; P16; P17; P34,main reviewer (human reviewer 2); human reviewer 1; human reviewer 5
+T2.1.1.2,Think,Planning,Decompose task,Decompose into subgoals with success conditions,"“LLM decomposes the task into a sequence of subgoals, each paired with an executable success-condition function” (P25)",P25,main reviewer (human reviewer 2)
+T2.1.1.3,Think,Planning,Decompose task,Decompose by role specialization,"""splitting the instruction-following challenge into distinct reasoning and grounding roles handled by a reasoner agent and an actor agent"" (P34)
+""Specialists each solve a distinct task type, receiving only the relevant portion of the input"" (P17)",P17; P34,human reviewer 1; human reviewer 5
+T2.1.2.1,Think,Planning,Formulate a workflow or plan,Formulate a high-level plan,"""METRO starts with the identification of the strategic action a_i for every expert utterance u_i in transcript D"" (P10)
+""summarizing it into a high-level planning directive that emphasizes cumulative temporal effects"" (P8)",P8; P10,human reviewer 3; main reviewer (human reviewer 2)
+T2.1.2.2,Think,Planning,Formulate a workflow or plan,Formulate an analysis workflow,“the Planner accurately interprets user intent and formulates a comprehensive analysis workflow” (P1),P1,main reviewer (human reviewer 2)
+T2.1.2.3,Think,Planning,Formulate a workflow or plan,Plan navigation through environment,“planning to navigate the web; tasks require navigation through an average of 4.2 web pages” (P2),P2,main reviewer (human reviewer 2)
+T2.1.2.4,Think,Planning,Formulate a workflow or plan,Plan function or tool use,"""I can use the pandas method corr() to calculate the Pearson correlation coefficient"" (P32)",P32,human reviewer 5
+T2.1.2.5,Think,Planning,Formulate a workflow or plan,Plan Code or artifact structure,"""Planning: HTML Structure, CSS Styling, JavaScript Functionality"" (P28)",P28,main reviewer (human reviewer 2)
+T2.1.2.6,Think,Planning,Formulate a workflow or plan,Formulate plan from template,"""HLSTuner formulates a detailed plan that specifies: (1) the combination of HLS directives, (2) target code segments, and (3) the insertion actions"" (P29)",P29,main reviewer (human reviewer 2)
+T2.1.3.1,Think,Planning,Select Strategy,Select among candidate strategies,"“selects effective HLS directive combination strategies and inserts directives within the specific structure (e.g., loops and arrays)” (P29)",P29,main reviewer (human reviewer 2)
+T2.1.3.2,Think,Planning,Select Strategy,Switch to fallback strategy,"""incorporating a dummy score prediction as a fallback mechanism"" (P11)",P11,human reviewer 6
+T2.1.4.1,Think,Planning,Modify Plan,Replan dynamically based on feedback,"""RequireReplan provides the LLM-based executor with the capability to dynamically adjust the plan"" (P34)",P34,human reviewer 5
+T2.1.4.2,Think,Planning,Modify Plan,Refine Requirements,“Refine requirement based on validated test cases to ensure alignment” (P28),P28,main reviewer (human reviewer 2)
+T2.2.1.1,Think,Reasoning,Generating,Generate candidate options,"Brainstorm possible next moves
+Generate one or more possible next moves
+“Running multiple candidate pipelines for each analysis step” (P1)
+“generates solutions based on analogies to unrelated projects, which resemble few-shot prompting” (P28)
+""Fork the current generative state and generate a new parallel trajectory from this point of high uncertainty"" (P4)
+""the LLM reinterprets the actions from breadth logic...summarizing them into a concise next-step strategy"" (P8)",P1; P4; P8; P28,main reviewer (human reviewer 2); human reviewer 3
+T2.2.1.2,Think,Reasoning,Generating,Generate structured artifacts,"""Each agent then emits a set of initial codes; cluster semantically similar codes and generate preliminary themes"" (P27)
+""automatically generates candidate user-facing requirements"" (P28)
+""Create JavaScript functionality handling empty display and consecutive operator clicks"" (P28)
+“break down the given character description into multiple atomic pieces of knowledge” (P22)",P22; P27; P28,human reviewer 4; main reviewer (human reviewer 2)
+T2.2.1.3,Think,Reasoning,Generating,Generate evaluations,"“LLM Group for multifaceted evaluation generates diverse debugging instructions” (P29)
+“For every binary score z(q) i,j from the judge, there is a corresponding explanation e(q)i,j” (P3)",P3; P29,main reviewer (human reviewer 2)
+T2.2.2.1,Think,Reasoning,Analysing,Analyse artifact structure and behavior,"“Analyze frontend framework and interactive components” (P28)
+""analyzes the project's core functionalities and their interactions with UI elements by reading the source code"" (P28)",P28,main reviewer (human reviewer 2)
+T2.2.2.2,Think,Reasoning,Analysing,Detect patterns or trends in data,"“Identifying patterns, directions, or changes in data over time or across contexts” (P2)
+“Measuring relationships or associations between two or more variables” (P2)",P2,main reviewer (human reviewer 2)
+T2.2.2.3,Think,Reasoning,Analysing,Interpret meaning of artifacts,"""logical reasoning to interpret papers and code; mathematical reasoning to modify and run code; causal reasoning to infer scientific insights from results"" (P11)",P11,human reviewer 6
+T2.2.2.4,Think,Reasoning,Analysing,Classify inputs into categories,delegator can determine which of the k tasks the input string belongs to by observing only a constant number of metadata tokens (P17),P17,human reviewer 1
+T2.2.3.1,Think,Reasoning,Explaining,Explain reasoning or outcomes,"""Explain the failure from a user requirement perspective"" (P16)",P16,human reviewer 1
+T2.2.4.1,Think,Reasoning,Summarizing/Distilling,Summarize recent observations and trajectories,Condense recent observations and trajectories into key takeaways,,theory-driven
+T2.2.5.1,Think,Reasoning,Inferring,Infer hidden state from observable evidence,"Damage calculation reveals stat distributions (P25)
+“intelligently infers hidden information through game mechanics: damage calculations reveal stat distributions, move priority ordering constrains speed ranges” (P25)",P25,main reviewer (human reviewer 2)
+T2.2.5.2,Think,Reasoning,Inferring,Infer causal relationship,"Determine plausible causal factor (P2)
+“determine the most plausible event or factor accounting for this variability” (P2)",P2,main reviewer (human reviewer 2)
+T2.2.5.3,Think,Reasoning,Inferring,Infer structure from indirect evidence,"""agents must infer the directory layout by inspecting package structures and README files"" (P11)",P11,human reviewer 6
+T2.2.5.4,Think,Reasoning,Inferring,Infer errors,"M_q has the capacity to identify exactly one bug at a time (P17)
+“The analysis LLM then examines the error causes and provides debugging instructions” (P29)",P17; P29,human reviewer 1; main reviewer (human reviewer 2)
+T2.2.6.1,Think,Reasoning,Comparing & Ranking,Compare values across sources,"Quantify and compare across sources (P2)
+“Quantifying occurrences and comparing values across sources or categories” (P2)",P2,main reviewer (human reviewer 2)
+T2.2.6.2,Think,Reasoning,Comparing & Ranking,Rank items by criteria,"Order items by importance (P2)
+“Ordering items or facts based on specific criteria or importance” (P2)",P2,main reviewer (human reviewer 2)
+T2.2.7.1,Think,Reasoning,Contextualizing,Package prior reasoning as context for subsequent calls,Feed reasoning so far as context to next LLM call,,theory-driven
+T2.2.7.2,Think,Reasoning,Contextualizing,Construct structured context object,"“global interactive multi-behavior overlapping network is constructed based on the simulated behaviors of reposting and reposting with a comment, as well as following” (P21)
+“construct prompt templates for creating reader agents based on user attributes ua and user historical posts” (P21)",P21,human reviewer 4
+T2.2.7.3,Think,Reasoning,Contextualizing,Configure agent persona or role-conditioning,"“I want you to play as {role}, imitating {role}’s personality and values” (P22)
+“maintain its role-playing ability even when refusing to answer” (P22)
+“A pool of k=4 role-conditioned GPT-4o agents are each given the full interview transcript as input” (P27)
+“others may retain role-specific perspectives to support diverse theme formulation” (P27)",P22; P27,human reviewer 4; main reviewer (human reviewer 2)
+T2.2.7.4,Think,Reasoning,Contextualizing,Assign roles in a multi-agent team,"specifying a scope, or role, for an agent allows it to be treated as a computational object. map each one to an employee in a human organization (P17)
+""assembling a team of three LLM roles — analyst, coder, and tester — responsible for analysis, coding, and testing"" (P28)
+""assigns diverse roles to multiple agents to efficiently decompose complex tasks"" (P28)",P17; P28,human reviewer 1; main reviewer (human reviewer 2)
+T2.2.8.1,Think,Reasoning,Combining,Combine information from multiple sources,"“combine information from multiple sources... to produce a coherent solution” (P2)
+""the final results from all subtasks are synthesized to meet the user's requirements"" (P1)
+""Determining a representative value that summarises numerical data collected from multiple sources"" (P2)",P1; P2,main reviewer (human reviewer 2)
+T2.2.8.2,Think,Reasoning,Combining,Aggregate observations into a structured representation,"""supplementary semantic map M't, which aggregates the information from Mt over successive time steps. The intuition resembles a form of majority voting"" (P34)
+“aggregates prediction results from multiple tools to generate the final cell type labels” (P1)",P1; P34,main reviewer (human reviewer 2); human reviewer 5
+T2.2.9.1,Think,Reasoning,Filtering,Filter information by threshold,"“Selecting relevant information based on criteria, quality, or thresholds” (P2)",P2,main reviewer (human reviewer 2)
+T2.3.1.1,Think,Evaluate,Evaluating with gold,Compare against gold reference,"“we prompt LLM to review the correct HLS-C code, pairing buggy code segments with corresponding error messages to construct debugging CoT” (P29)
+“HLSFixer retests the corrected HLS design against the golden results to ensure semantic equivalence” (P29)",P29,main reviewer (human reviewer 2)
+T2.3.1.2,Think,Evaluate,Evaluating with gold,Score on gold criteria,"“The Gold Checker evaluates each annotation on three binary criteria: equivalence, completeness, and correctness, where a score of 1 indicates the criterion is met” (P28)",P28,main reviewer (human reviewer 2)
+T2.3.2.1,Think,Evaluate,Evaluating with goals/requirements/constraints,goal-completion check,"“Independently checks whether objectives are truly complete, preventing the orchestrator from advancing when the main agent incorrectly believes a task is finished” (P25)",P25,main reviewer (human reviewer 2)
+T2.3.2.2,Think,Evaluate,Evaluating with goals/requirements/constraints,Requirement-satisfaction check,“the final results from all subtasks are synthesized to meet the user's requirements” (P1),P1,main reviewer (human reviewer 2)
+T2.3.2.3,Think,Evaluate,Evaluating with goals/requirements/constraints,Constraint / budget check,"“HLSTuner enables QoR-aware reasoning to align optimization goals with hardware constraints” (P29)
+""if hardware utilization exceeds the budget"" (P29)",P29,main reviewer (human reviewer 2)
+T2.3.2.4,Think,Evaluate,Evaluating with goals/requirements/constraints,Domain-rule / best-practice check,"""codified best-practices, such as the standard order of operations (e.g., quality control must precede normalization)"" (P1)
+“Agents share project context to ensure: Cross-file consistency; Non-conflicting test-ids” (P28)
+""Detect logical errors, missing functionalities, or violations of best practices"" (P16)",P1; P16; P28,main reviewer (human reviewer 2); human reviewer 1
+T2.3.3.1,Think,Evaluate,Evaluating without ground truth,Score on quality dimensions,"“we use GPT-4o as the default evaluator, each dimension scored on a scale of 0 to 2” (P22)
+""map the agent's deliverables to a score ranging from 0 to 10"" (P16)
+""Evaluation Scores: Obtain s^(t) = (C, D, T) on the trustworthiness dimensions"" (P27)
+""the scoring agent (functioning as the judge) based on clarity, logical soundness, alignment with error messages, this agent selects the optimal suggestion"" (P29)",P16; P22; P27; P29,human reviewer 1; human reviewer 4; main reviewer (human reviewer 2)
+T2.3.3.2,Think,Evaluate,Evaluating without ground truth,Check rubric compliance,"""Verify the implementation of every item listed in {Rubrics}"" (P16)
+""list exactly which rubrics were not met"" (P16)",P16,human reviewer 1
+T2.3.3.3,Think,Evaluate,Evaluating without ground truth,Evaluate visual/behavioral correctness,"""Evaluates dynamic behavior and visual correctness based on screenshots"" (P16)
+""Analyze {Visual Assets} for UI elements, layout consistency, and text rendering"" (P16)",P16,human reviewer 1
+T2.3.3.4,Think,Evaluate,Evaluating without ground truth,Evaluate internal consistency,"“task an evaluator agent with determining whether each theme is consistent with its supporting quotes” (P27)
+“In Phase 2, they inspect the provided code for potential inconsistencies; generating a reproducibility score on a scale from 1 to 4” (P11)",P11; P27,human reviewer 6; main reviewer (human reviewer 2)
+T2.3.3.5,Think,Evaluate,Evaluating without ground truth,Evaluate intermediate results,“agents with domain expertise verify intermediate results and reduce errors” (P28),P28,main reviewer (human reviewer 2)
+T2.3.3.6,Think,Evaluate,Evaluating without ground truth,Provide qualitative judgement,"“Upon successful generation of a result, the Evaluator agent, ALLMe assesses the outcome and provides natural language feedback if it deems revisions are necessary.” (P1)",P1,main reviewer (human reviewer 2)
+T2.3.3.7,Think,Evaluate,Evaluating without ground truth,Simulate counterfactual outcomes,"Mentally simulate an alternative scenario — either before acting (imagine 'if I do X, what happens?') or post-hoc (imagine 'what would have happened if action X had been different?'). Includes counterfactual trajectory generation for causal analysis. (P33)
+""analyzing this effect necessitates counterfactual reasoning across three distinct scenarios""",P33,human reviewer 5
+T2.3.3.8,Think,Evaluate,Evaluating without ground truth,Validate predicted issues,"“The agent assesses the contextual applicability of potential bugs, reducing the probability that the LLM forcibly generates trivial results” (P29)",P29,main reviewer (human reviewer 2)
+T2.4.1.1,Think,Deciding,Make a decision,Make a decision according to memory,"The agent conditions its decisions on I, the current observation st, and a history buffer of n past state-action pairs (P5)",P5,main reviewer (human reviewer 2)
+T2.4.2.1,Think,Deciding,Pick scores,Select action by score,argmax = highest score; softmax = probabilistic sample; majority vote across evaluators,,theory-driven
+T2.4.3.1,Think,Deciding,Decide accept or not,Decline out-of-scope queries,“appropriately reject queries that exceed their knowledge boundaries or conflict with their role settings” (P22),P22,human reviewer 4
+T2.4.4.1,Think,Deciding,Decide under uncertainty,Fork trajectory at uncertainty,“Fork the current generative state and generate a new parallel trajectory from this point of high uncertainty” (P4),P4,main reviewer (human reviewer 2)
+T3.1.1.1,Act,Grounding,Interact with users,Accept instructions from humans,"Receive task or command from human user
+e.g. “book me a flight” or “translate this paragraph”
+""agent receives task queries and deliverables, completing tasks through multi-turn interactions"" (P16)
+“demonstrate clear intent understanding, partial progress” (P5)",P5; P16,main reviewer (human reviewer 2); human reviewer 1
+T3.1.1.2,Act,Grounding,Interact with users,Ask for clarification from people,"Proactively ask human when unclear
+e.g. “Which file did you mean?”",,theory-driven
+T3.1.1.3,Act,Grounding,Interact with users,Communicate task outcome natural language,"Agent informs the user: ‘Buy a nice rich navy bathing dress’ (P3)
+Agent informs the user that wifi is turned off (P3)",P3,main reviewer (human reviewer 2)
+T3.1.1.4,Act,Grounding,Interact with users,Communicate via visualization,"“CellAgent generated differential expression and marker gene visualizations, enabling intuitive interpretation of cluster identities” (P1)",P1,main reviewer (human reviewer 2)
+T3.1.1.5,Act,Grounding,Interact with users,Communicate via structured format,“generate outputs in a JSON format (or lists of JSON objects)” (P2),P2,main reviewer (human reviewer 2)
+T3.1.1.6,Act,Grounding,Interact with users,Communicate refusal/inability,"""appropriately reject queries that exceed their knowledge boundaries or conflict with their role settings"" (P22)
+recognize and refuse queries that conflict with their role knowledge"" (P22)
+""providing clear refusal responses with appropriate explanations"" (P22)",P22,human reviewer 4
+T3.1.1.7,Act,Grounding,Interact with users,Express tone to user,"“models exhibit a strong default tendency to excessively affirm, apologize, and express gratitude” (P11)",P11,human reviewer 6
+T3.1.1.8,Act,Grounding,Interact with users,Disclose self-information to user,"“identity disclosure, S2S systems often proactively mention that they are intelligent assistants (P11)",P11,human reviewer 6
+T3.1.2.1,Act,Grounding,Interact with physical environments,Perceive physical environment,"Convert images to text via VLMs
+VLM image-to-text description
+Convert sensor / image / audio readings to text
+Turn images, sounds, or sensor readings into text descriptions for text-based LLMs
+“Explore skill enhances the LLM-based executor's ability to guide the agent in room exploration by sampling navigation goals from traversable areas” (P33)
+Covert perceptual visual information to map
+“semantic mapping module receives egocentric visual observations...processed into a depth map and instance segmentation using a UNet and a MaskRCNN” (P34)",P33; P34,human reviewer 5
+T3.1.2.2,Act,Grounding,Interact with physical environments,Affect physical environments,"Send language commands to robot arm
+Move things in the real world by sending language commands to a robot arm
+""the action Play is utilized to interact with the environment or request re-planning of the current plan S"" (P34)",P34,human reviewer 5
+T3.1.3.1,Act,Grounding,Interact with digital environments,Navigate digital interfaces,"Browse websites, scroll pages, navigate menus, move within apps
+“navigate multiple websites, extract information from both structured and unstructured sources” (P2)",P2,main reviewer (human reviewer 2)
+T3.1.3.2,Act,Grounding,Interact with digital environments,Modify digital objects,"Annotate UI Components
+Add data-testid attributes (P28)
+“annotate_interactive_components(file, strategy=‘add data-testid’)” (P28)",P28,main reviewer (human reviewer 2)
+T3.1.3.3,Act,Grounding,Interact with digital environments,Issue operational commands,"Invoke structured API or data endpoint
+“Game Control: get_game_state, press_buttons, and navigate_to for direct game control” (P25)",P25,main reviewer (human reviewer 2)
+T3.1.4.1,Act,Grounding,Interact with other agents,Monitor peer agent's state or decision,"Observe another agent's chosen action before making one's own decision — a prerequisite for oversight, override, or trust-based deference in multi-agent systems. (P33)
+""observes both S_0 and A_0, and decides whether to override the AI's treatment or not""",P33,human reviewer 5
+T3.1.4.2,Act,Grounding,Interact with other agents,Receive feedback from peer agent,Evaluator provides natural-language feedback (P1),P1,main reviewer (human reviewer 2)
+T3.1.4.3,Act,Grounding,Interact with other agents,Send message to peer agent,"""agent engages in multi-turn interactions...to generate deliverables"" (P16)",P16,human reviewer 1
+T3.1.4.4,Act,Grounding,Interact with other agents,Recommend action to peer agent,"Communicate a proposed action to a peer agent for their consideration, knowing the peer may accept or override it — agent-to-agent advisory communication. (P33)
+""the AI recommends one of eight possible treatments, which is then reviewed and potentially overridden by the clinician""",P33,human reviewer 5
+T3.1.4.5,Act,Grounding,Interact with other agents,Override peer agent's decision,"Replace another agent's selected action with one's own decision — the active side of human-in-the-loop oversight or hierarchical agent control. (P33)
+""If the clinician overrides the AI, the patient outcome Y is determined by S_0 and the alternative treatment H_0 suggested by the clinician""",P33,human reviewer 5
+T3.1.4.6,Act,Grounding,Interact with other agents,Dispatch task to sub-agent,“A central orchestrator maintains a high-level route plan while dynamically dispatching sub-agents based on game context” (P25),P25,main reviewer (human reviewer 2)
+T3.1.4.7,Act,Grounding,Interact with other agents,Argue or debate with peer agent,"Multi-agent argumentation toward better answer
+Have multiple agents argue different sides to reach a better answer",,theory-driven
+T3.1.5.1,Act,Grounding,Augment with external computation,Execute code,"Test Runner detects logic inconsistencies (P28)
+Test Runner executes the script to detect logical inconsistencies or failed assertions. (P28)",P28,main reviewer (human reviewer 2)
+T3.1.5.2,Act,Grounding,Augment with external computation,Invoke specialized computation tool,"Use calculator / heavy compute tools
+Call outside tools to handle heavy math
+run_shell_command tool (425 and 362 invocations, respectively) (P16)
+""necessitates over 90 precise tool calls, significantly raising the bar"" (P16)
+""deliverables are synced to a Docker-based remote sandbox...emulates human computer operations"" (P16)",P16,human reviewer 1
+T3.1.5.3,Act,Grounding,Augment with external computation,Invoke visual inspection tool,"Zoom-in tool for region-of-interest (P4)
+“proactively invokes the Zoom-in tool for a targeted examination of the specific region of interest” (P4)",P4,main reviewer (human reviewer 2)
+T3.2.1.1,Act,Executing,Executing plan,Execute strategy,“an insertion agent executes this plan for HLS-C optimization” (P29),P29,main reviewer (human reviewer 2)
+T3.2.2.1,Act,Executing,Executing debug,Adopt debugging instructions,"“Operating under strict instruction adherence, this agent adopts the instructions to implement debugging” (P29)",P29,main reviewer (human reviewer 2)
+T3.2.2.2,Act,Executing,Executing debug,Rewrite code after bug fix,debugging specialist rewrites the entire code every time it fixes a bug (P17),P17,human reviewer 1
+T3.2.3.1,Act,Executing,Terminating,Provide final answer,"""Final Answer: The average number of lines per scene in the ep_7.csv dataset is approximately 6.02"" (p32)
+""produces a final answer and terminates the rollout; enclose it within <answer></answer> tags"" (P4)",P4; P32,main reviewer (human reviewer 2); human reviewer 5
+T3.2.3.2,Act,Executing,Terminating,Generate refusal,“providing clear refusal responses with appropriate explanations” (P22),P22,human reviewer 4
+T4.1.1.1,Adapt,Learning,Learning reasoning,Update reasoning via prompt update,"Rewrite own prompt template
+Learn a better way to reason via prompt rewrite",,theory-driven
+T4.1.2.1,Adapt,Learning,Learning grounding,Update grounding via code-based skills,"Improve web-navigation code snippets
+Write or improve code that interacts with outside world",,theory-driven
+T4.1.2.2,Adapt,Learning,Learning grounding,Update retrieval procedures,Improve how the agent searches for information,,theory-driven
+T4.1.3.1,Adapt,Learning,Learning knowledge,Update source code as procedural memory,"Self-patch agent's own source code
+Modify the agent's own source code to change behavior",,theory-driven
+T4.1.3.2,Adapt,Learning,Learning knowledge,Update semantic memory with knowledge,"Expand Error Repository with new mnemonic (P29)
+“the inspection agent identifies a new error type and integrates the slice into the error repository with a new mnemonic identifier” (P29)",P29,main reviewer (human reviewer 2)
+T4.1.3.3,Adapt,Learning,Learning knowledge,Update memory from new experiences,refinement of memories (represented in text) as the system encounters new scenarios (P17),P17,human reviewer 1
+T4.1.3.4,Adapt,Learning,Learning knowledge,Update hypothesis with new evidence,"“allowing the model to update its textual understanding, refine its hypothesis, or even trigger further visual exploration” (P4)",P4,main reviewer (human reviewer 2)
+T4.1.4.1,Adapt,Learning,Learning LLM parameters,Update parametric policy,"Change the model's internal weights through training
+Real learning by changing internal weights",,theory-driven
+T4.1.4.2,Adapt,Learning,Learning LLM parameters,Update LLM parameters via SL/RL/RLHF,"SL/RL/RLHF weight adjustment
+Use supervised, reinforcement, or human-feedback learning",,theory-driven
+T4.1.4.3,Adapt,Learning,Learning LLM parameters,Update action parameters based on feedback,"Auto-adjust params from exception info (P1)
+“automatically adjusts parameters using exception information to generate executable code” (P1)",P1,main reviewer (human reviewer 2)
+T4.1.5.1,Adapt,Learning,Learning instructions,Learning instructions,"Extract rule from examples for future use
+Look at input→output examples, figure out underlying rule",,theory-driven
+T4.2.1.1,Adapt,Reflection,Reflect on errors and failures,Diagnose failure against ground truth,"“Analyzes stuck states by comparing current situation against ground truth sources (porymap data, knowledge base) to diagnose navigation failures” (P25)",P25,main reviewer (human reviewer 2)
+T4.2.1.2,Adapt,Reflection,Reflect on errors and failures,Inspect Error Pattern,“an inspection agent examines the erroneous code and error messages parsed from the HLS tool test results” (P29),P29,main reviewer (human reviewer 2)
+T4.2.1.3,Adapt,Reflection,Reflect on errors and failures,Analyze log to formulate fix instructions,"Reasoning-to-instruction on HLS log (P29)
+“an analysis agent adopts a reasoning-to-instruction method, analyzing the HLS log to formulate error modification actions” (P29)
+""This model formulates explicit modification instructions with detailed analysis"" (P29)
+""Provide explicit instructions on what must be rectified in the next iteration"" (P16)",P16; P29,human reviewer 1; main reviewer (human reviewer 2)
+T4.2.1.4,Adapt,Reflection,Reflect on errors and failures,Reflect on failed episodes for prior knowledge,"""RequireReplan...dynamically adjust the plan, improving the robustness to exceptions"" (P26)
+""the grounded prior knowledge prevents the agents from repetitive errors and facilitates grounded exception handling"" (P34)
+“This allows the agent to learn from mistakes in realtime and avoid repeating errors before the local memory is discarded” (P1)",P1; P26; P34,main reviewer (human reviewer 2); human reviewer 5
+T4.2.1.5,Adapt,Reflection,Reflect on errors and failures,Self-Correct Step Implementation,"“Modify step implementation based on error message” (P28)
+“In case of an execution error E(ci), the Executor autonomously performs self-correction to produce a valid code version” (P1)
+“When the initial attempt fails... HLSTuner activates an iterative refinement incorporating current directives and the resulting QoR” (P29)",P1; P28; P29,main reviewer (human reviewer 2)
+T4.2.2.1,Adapt,Reflection,Reflect on self-outcomes,Self-reflect,"The results of the execution are fed back, enabling GPT-4 to refine its responses and propose further iterations"" (P32)
+""This iterative cycle continues until GPT-4 determines that the accumulated information suffices to conclusively answer the problem"" (P32)
+“This self-reflective optimization loop iterates to enhance precision, and the final results from all subtasks are synthesized” (P1)
+“the optimization process runs three iterations, each invoking a different algorithm” (P1)",P1; P32,main reviewer (human reviewer 2); human reviewer 5
+T4.2.2.2,Adapt,Reflection,Reflect on self-outcomes,Reflect on proposed fix,“reflects on the code after assuming the fix to ensure the modification is reasonable” (P29),P29,main reviewer (human reviewer 2)
+T4.2.2.3,Adapt,Reflection,Reflect on self-outcomes,Pre-action self-check,"“These steps are labeled as reflective, indicating the model is engaging in self-monitoring or explicit reasoning before issuing commands” (P1)",P1,main reviewer (human reviewer 2)
+T4.2.2.4,Adapt,Reflection,Reflect on self-outcomes,Refine Strategy Iteratively,"Iterative refinement using current QoR (P29)
+“When the initial attempt fails... HLSTuner activates an iterative refinement incorporating current directives and the resulting QoR” (P29)",P29,main reviewer (human reviewer 2)
+T4.2.3.1,Adapt,Reflection,Reflect on external feedback,Receive and integrate external feedback,"“the Evaluator agent ALLMe assesses the outcome and provides natural language feedback if it deems revisions are necessary” (P1)
+“feedback from the feedback agent is used to iteratively refine and improve the generated themes” (P27)
+""leverage feedback to markedly improve performance...feedback-driven self-correction"" (P16)
+The Evaluator drives a self-reflective optimization mechanism, which leverages automated evaluation methods for various analysis tasks to iteratively refine outcomes, replacing subjective manual assessments. (P1)",P1; P16; P27,main reviewer (human reviewer 2); human reviewer 1

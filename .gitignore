@@ -8,3 +8,6 @@ venv/
 .idea/
 .vscode/
 node_modules/
+
+# Local working notes
+TODO.md

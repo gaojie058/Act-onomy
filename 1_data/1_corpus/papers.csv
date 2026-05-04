@@ -1,0 +1,36 @@
+paper_id,title_full,primary_domain,secondary_domain,incorporated,human reviewr,reliability check
+P1,CellAgent: LLM-Driven Multi-Agent Framework for Natural Language-Based Single-Cell Analysis,LLM Agents,Single-Cell Biology Analysis,Yes,human reviewer 2 (main reviewer)
+P2,A Benchmark for Deep Information Synthesis,LLM Agents (Benchmark),Deep Information Synthesis,Yes,human reviewer 2 (main reviewer)
+P3,"Talk, Evaluate, Diagnose: User-aware Agent Evaluation with Automated Error Analysis",LLM Agents (Evaluation),User-Aware Agent Diagnosis,Yes,human reviewer 2 (main reviewer)
+P4,MedVR: Annotation-Free Medical Visual Reasoning via Agentic Reinforcement Learning,Medical AI,Visual Reasoning via RL,Yes,human reviewer 2 (main reviewer)
+P5,Computer Agent Arena: Toward Human-Centric Evaluation and Analysis of Computer-Use Agents,LLM Agents (Evaluation),Computer-Use Agents,,,Yes
+P6,The Synthetic Web: Adversarially-Curated Mini-Internets for Diagnosing Epistemic Weaknesses of Language Agents,LLM Agents (Robustness),Adversarial Web Environments,No,human reviewer 3
+P7,Verify Before You Fix: Agentic Execution Grounding for Trustworthy Cross-Language Code Analysis,Software Engineering,Cross-Language Code Analysis,No,human reviewer 3
+P8,METRO: Towards Strategy Induction from Expert Dialogue Transcripts for Non-collaborative Dialogues,LLM Agents (Dialogue),Non-Collaborative Dialogue Strategy,Yes,human reviewer 3
+P9,REPRO-Bench: Can Agentic AI Systems Assess the Reproducibility of Social Science Research?,LLM Agents (Benchmark),Scientific Reproducibility (Social Science),Yes,human reviewer 3
+P10,WorldAPIs: The World Is Worth How Many APIs? A Thought Experiment,LLM Agents (Tool Use),API Action Spaces,,,Yes
+P11,Human or Machine? A Preliminary Turing Test for Speech-to-Speech Interaction,Speech Interaction,Speech-to-Speech Turing Test,Yes,human reviewer 6
+P12,"Shuffling the Data, Extrapolating the Step: Sharper Bias In Constant Step-Size SGD",Optimization Theory,SGD Bias Analysis,No,human reviewer 6
+P13,ImplicitMemBench: Measuring Unconscious Behavioral Adaptation in Large Language Models,LLM Behavior (Benchmark),Implicit Memory / Behavioral Adaptation,Yes,human reviewer 6
+P14,GameplayQA: A Benchmarking Framework for Decision-Dense POV-Synced Multi-Video Understanding of 3D Virtual Agents,Multimodal Video Understanding,3D Virtual Agent Decision-Making,Yes,human reviewer 6
+P15,CT-Flow: Orchestrating CT Interpretation Workflow with Model Context Protocol Servers,Medical AI,CT Interpretation Workflow (MCP),,,Yes
+P16,AgencyBench: Benchmarking the Frontiers of Autonomous Agents in 1M-Token Real-World Contexts,LLM Agents (Benchmark),Long-Context Autonomous Agents (1M-token),Yes,human reviewer 1
+P17,Position: Scaling LLM Agents Requires Asymptotic Analysis with LLM Primitives,Position Paper,Asymptotic Analysis of LLM-Agent Scaling,Yes,human reviewer 1
+P18,Position: We Need An Algorithmic Understanding of Generative AI,Position Paper,Algorithmic Understanding of Generative AI,No,human reviewer 1
+P19,"A Theoretical Study of (Hyper) Self-Attention through the Lens of Interactions: Representation, Training, Generalization",Deep Learning Theory,(Hyper) Self-Attention Theory,No,human reviewer 1
+P20,SCALE: Towards Collaborative Content Analysis in Social Science with Large Language Model Agents and Human Intervention,Multi-Agent Systems,Collaborative Content Analysis (Social Science),,,Yes
+P21,My Words Imply Your Opinion: Reader Agent-Based Propagation Enhancement for Personalized Implicit Emotion Analysis,Multi-Agent Social Simulation,Reader Agents / Emotion Propagation,Yes,human reviewer 4
+P22,Tell Me What You Don't Know: Enhancing Refusal Capabilities of Role-Playing Agents via Representation Space Analysis and Editing,LLM Agents (Safety),Role-Playing Refusal Capabilities,Yes,human reviewer 4
+P23,Dynamic Personality in LLM Agents: A Framework for Evolutionary Modeling and Behavioral Analysis in the Prisoner's Dilemma,Multi-Agent Game Theory,Dynamic Personality / Prisoner's Dilemma,No,human reviewer 4
+P24,Counteractive RL: Rethinking Core Principles for Efficient and Scalable Deep Reinforcement Learning,Reinforcement Learning,Scalable Deep RL,No,human reviewer 4
+P25,The PokeAgent Challenge: Competitive and Long-Context Learning at Scale,LLM Agents (Game-Playing),Long-Context Pokemon Battles,,,Yes
+P26,"Navigating Simply, Aligning Deeply: Winning Solutions for Mouse vs. AI 2025",LLM Agents (Game-Playing),Mouse vs AI 2025 Solutions,No,human reviewer 2 (main reviewer)
+P27,Auto-TA: Towards Scalable Automated Thematic Analysis (TA) via Multi-Agent Large Language Models with Reinforcement Learning,Multi-Agent Systems,Automated Thematic Analysis (Qualitative),Yes,human reviewer 2 (main reviewer)
+P28,E2Edev: Benchmarking Large Language Models in End-to-End Software Development Task,Software Engineering,End-to-End Development Benchmark,Yes,human reviewer 2 (main reviewer)
+P29,ChatHLS: Towards Systematic Design Automation and Optimization for High-Level Synthesis,Hardware Design / EDA,High-Level Synthesis (HLS),Yes,human reviewer 2 (main reviewer)
+P30,The Curse of Diversity in Ensemble-Based Exploration,Reinforcement Learning Theory,Ensemble-Based Exploration,,,Yes
+P31,Geometric Active Exploration in Markov Decision Processes: the Benefit of Abstraction,Reinforcement Learning Theory,MDP Exploration / Abstraction,Yes,human reviewer 5
+P32,InfiAgent-DABench: Evaluating Agents on Data Analysis Tasks,LLM Agents (Benchmark),Data Analysis Tasks,Yes,human reviewer 5
+P33,Agent-Specific Effects: A Causal Effect Propagation Analysis in Multi-Agent MDPs,Reinforcement Learning Theory,Causal Effect Propagation in Multi-Agent MDPs,Yes,human reviewer 5
+P34,OPEx: A Component-Wise Analysis of LLM-Centric Agents in Embodied Instruction Following,Embodied Agents,LLM-Centric Embodied Instruction Following,Yes,human reviewer 5
+P35,SpatialBench: Can Agents Analyze Real-World Spatial Biology Data?,LLM Agents (Benchmark),Spatial Biology Data Analysis,,,Yes

@@ -1,0 +1,665 @@
+sentence_id,paper_id,sentence_text,discovery_judge_suggested_code,paper-relevance,in_v3,in_v4,in_final,reviewer_id
+S0001,P1,Planner role first parses user intent and decomposes the task into subtasks,Planning _ Parse User Intent,include,,,,human reviewer 2 (main reviewer)
+S0002,P1,decomposes the task into subtasks,Planning _ Decompose Task into Subtasks,include,,,,human reviewer 2 (main reviewer)
+S0003,P1,"identify data features, and design task plans judiciously",Reasoning _ Identify Data Features,include,,,,human reviewer 2 (main reviewer)
+S0004,P1,Planner firstly conducts higher-level planning based on user-provided data and requirements,Planning _ Formulate Workflow Plan,include,,,,human reviewer 2 (main reviewer)
+S0005,P1,pre-collected expert experience information,Reasoning _ Apply Domain Expert Knowledge,include,,,,human reviewer 2 (main reviewer)
+S0006,P1,output format set to JSON to facilitate subtask extraction,Communication _ Format Output as JSON,include,,,,human reviewer 2 (main reviewer)
+S0007,P1,Planner is also informed of the representation parsed from the data to be processed,Reasoning _ Read Data Representation,include,,,,human reviewer 2 (main reviewer)
+S0008,P1,Tool Selector first retrieves the list of all tools T and the description of the current step,Execution _ Retrieve Tool List,include,,,,human reviewer 2 (main reviewer)
+S0009,P1,Tool Selector solely responsible for selecting available tools,Execution _ Select Suitable Tools,include,,,,human reviewer 2 (main reviewer)
+S0010,P1,automatically retrieves the documentation of the tools available in this step,Execution _ Acquire Tool Documentation,include,,,,human reviewer 2 (main reviewer)
+S0011,P1,its response contains text analysis wi and the code ci,Reasoning _ Analyze Task Step,include,,,,human reviewer 2 (main reviewer)
+S0012,P1,Code Programmer responsible for generating code to complete the current task,Execution _ Generate Code,include,,,,human reviewer 2 (main reviewer)
+S0013,P1,code ci is executed in Code Sandbox,Execution _ Execute Code in Sandbox,include,,,,human reviewer 2 (main reviewer)
+S0014,P1,"memory about history code for previous steps is prompted, denoted as M, enabling the code generation process to better match the context",Reasoning _ Read History Code from Memory,include,,,,human reviewer 2 (main reviewer)
+S0015,P1,"If exceptions occur, the Code Programmer executes fixing actions to generate the rectified code",Reflection _ Fix Code on Exception,include,,,,human reviewer 2 (main reviewer)
+S0016,P1,until successful code execution is achieved,Reflection _ Re-execute Until Success,include,,,,human reviewer 2 (main reviewer)
+S0017,P1,Evaluator is tasked with assessing the results of the current step,Evaluation _ Evaluate Code Output,include,,,,human reviewer 2 (main reviewer)
+S0018,P1,"the Evaluator, integrated with GPT-4v, evaluates these plots and ranks these methods",Evaluation _ Score Visualizations via VLM,include,,,,human reviewer 2 (main reviewer)
+S0019,P1,the method with the highest score will be selected as the final output,Evaluation _ Apply Quantitative Metric,include,,,,human reviewer 2 (main reviewer)
+S0020,P1,"Evaluator, driven by GPT-4, then aggregates these annotations and determines the final cell type",Reasoning _ Aggregate Tool Outputs,include,,,,human reviewer 2 (main reviewer)
+S0021,P1,selects the optimal solution code for the current step,Evaluation _ Select Best Solution,include,,,,human reviewer 2 (main reviewer)
+S0022,P1,"based on its evaluation of results under multiple solutions, the Evaluator aggregates results to obtain the final outcome of this step",Reasoning _ Synthesize Across Subtasks,include,,,,human reviewer 2 (main reviewer)
+S0023,P1,the self-optimization process will yield three distinct batch correction results,Reflection _ Iterate Toward Quality Threshold,include,,,,human reviewer 2 (main reviewer)
+S0024,P1,Executor automatically optimizes the solutions through hyperparameter tuning,Reflection _ Tune Hyperparameters,include,,,,human reviewer 2 (main reviewer)
+S0025,P1,"or tool selection, leading to iterative improvement of outcomes",Reflection _ Re-select Tools,include,,,,human reviewer 2 (main reviewer)
+S0026,P1,global memory to store only the final code of each historical step,Others _ Store Final Code in Global Memory,include,,,,human reviewer 2 (main reviewer)
+S0027,P1,Executor maintains a local memory that only retains dialogue information within the current step,Others _ Maintain Local Dialogue Memory,include,,,,human reviewer 2 (main reviewer)
+S0028,P1,resets it when the subtask ends,Others _ Discard Local Memory on Completion,include,,,,human reviewer 2 (main reviewer)
+S0029,P1,"effectively organizes the collaboration of these expert roles, through a hierarchical decision-making framework",Communication _ Coordinate Multi-Role Workflow,include,,,,human reviewer 2 (main reviewer)
+S0030,P1,CellAgent also provides the function of generating gene expression umap plots and violin plots for users,Communication _ Visualize Results for User,include,,,,human reviewer 2 (main reviewer)
+S0031,P2,"formulate plans, decompose problems into sub-steps, select and use appropriate external tools",Planning _ Decompose Problem into Sub-steps,include,yes,yes,yes,human reviewer 2 (main reviewer)
+S0032,P2,planning to navigate the web; tasks require navigation through an average of 4.2 web pages,Planning _ Formulate Multi-step Navigation Plan,include,yes,yes,yes,human reviewer 2 (main reviewer)
+S0033,P2,"select and use appropriate external tools (e.g., document processors, code interpreters)",Planning _ Select Appropriate Tool,include,,,,human reviewer 2 (main reviewer)
+S0034,P2,combine information from multiple sources...to produce a coherent solution,Reasoning _ Synthesize Multi-source Information,include,yes,yes,yes,human reviewer 2 (main reviewer)
+S0035,P2,"Identifying patterns, directions, or changes in data over time or across contexts",Reasoning _ Detect Trend in Data,include,yes,yes,yes,human reviewer 2 (main reviewer)
+S0036,P2,Measuring relationships or associations between two or more variables,Reasoning _ Correlate Variables,include,yes,,yes,human reviewer 2 (main reviewer)
+S0037,P2,Ordering items or facts based on specific criteria or importance,Reasoning _ Rank Items by Criteria,include,yes,yes,yes,human reviewer 2 (main reviewer)
+S0038,P2,Identifying data points or patterns that significantly deviate from the norm,Reasoning _ Detect Anomalous Pattern,include,,,,human reviewer 2 (main reviewer)
+S0039,P2,Quantifying occurrences and comparing values across sources or categories,Reasoning _ Count and Compare Values,include,yes,yes,yes,human reviewer 2 (main reviewer)
+S0040,P2,"Selecting relevant information based on criteria, quality, or thresholds",Reasoning _ Filter Information by Threshold,include,yes,yes,yes,human reviewer 2 (main reviewer)
+S0041,P2,Determining a representative value that summarises numerical data collected from multiple sources,Reasoning _ Compute Aggregate Value,include,yes,yes,yes,human reviewer 2 (main reviewer)
+S0042,P2,determine the most plausible event or factor accounting for this variability,Reasoning _ Infer Causal Relationship,include,yes,yes,yes,human reviewer 2 (main reviewer)
+S0043,P2,"navigate multiple websites, extract information from both structured and unstructured sources",Execution _ Browse Web Page,include,yes,yes,yes,human reviewer 2 (main reviewer)
+S0044,P2,"web browsing, web search...are the most critical skills for retrieving the correct information",Execution _ Search Web for Information,include,,,,human reviewer 2 (main reviewer)
+S0045,P2,"Code Execution/Sandbox; smolagents expresses all actions, such as tool use, as code",Execution _ Execute Code in Sandbox,include,,,,human reviewer 2 (main reviewer)
+S0046,P2,diverse filetype reading; read between 1 to 15 documents and/or tables,Execution _ Process Diverse Document,include,yes,yes,yes,human reviewer 2 (main reviewer)
+S0047,P2,"identify target databases, API endpoints, indicator codes, and download URLs",Execution _ Call External API,include,,,,human reviewer 2 (main reviewer)
+S0048,P2,integrate intermediate results into a final solution,Execution _ Integrate Results into Solution,include,,,,human reviewer 2 (main reviewer)
+S0049,P2,leverage the LLM-as-a-judge...reporting average precision,Evaluation _ Judge Output via LLM,include,,,,human reviewer 2 (main reviewer)
+S0050,P2,evaluate intermediate step accuracy by requiring models to emit structured outputs after each decomposition sub-step,Evaluation _ Assess Intermediate Step Accuracy,include,,,,human reviewer 2 (main reviewer)
+S0051,P2,self-consistency (majority voting at N=5) yields only 5% accuracy,Evaluation _ Select Actions via Majority Voting,include,,,,human reviewer 2 (main reviewer)
+S0052,P2,Navigation errors _ when the agent fails to locate or access the correct source of information,Reflection _ Recover from Navigation Error,include,yes,yes,,human reviewer 2 (main reviewer)
+S0053,P2,"Technical Issue _ errors caused by system limitations, software bugs, or tool malfunctions",Reflection _ Handle Technical Failure,include,,,,human reviewer 2 (main reviewer)
+S0054,P2,Synthesis Error _ when the agent reaches an incorrect conclusion despite accessing the correct information,Reflection _ Diagnose Synthesis Error,include,yes,yes,,human reviewer 2 (main reviewer)
+S0055,P2,generate outputs in a JSON format (or lists of JSON objects),Communication _ Format Structured JSON Output,include,yes,yes,yes,human reviewer 2 (main reviewer)
+S0056,P2,"evaluates agents on their ability to navigate multiple websites, extract information",Communication _ Accept Research Task from Human,include,,,,human reviewer 2 (main reviewer)
+S0057,P3,we vary only the persona prompt p to generate u_expert and u_non-expert,Planning _ Adopt User Persona,include,,,,human reviewer 2 (main reviewer)
+S0058,P3,the agent did not cancel the previous flight when attempting to reschedule,Planning _ Sequence Tool Calls,include,,,,human reviewer 2 (main reviewer)
+S0059,P3,"subgoals__uch as tool signatures, and responses__s natural language grading notes",Planning _ Decompose Task into Subgoals,include,,,,human reviewer 2 (main reviewer)
+S0060,P3,Given the [Chat History] REFLECT carefully on the AI assistant's last response,Reasoning _ Reflect on Conversation State,include,,,,human reviewer 2 (main reviewer)
+S0061,P3,"Its action space includes tool use, responses to users, and internal reasoning",Reasoning _ Reason About Task State,include,,,,human reviewer 2 (main reviewer)
+S0062,P3,"For every binary score from the judge, there is a corresponding explanation",Reasoning _ Generate Scoring Explanation,include,,,,human reviewer 2 (main reviewer)
+S0063,P3,"group related error types under broader, more abstract categories to reduce redundancy",Reasoning _ Cluster Errors Semantically,include,,,,human reviewer 2 (main reviewer)
+S0064,P3,determine the most probable true error type using a majority voting approach,Reasoning _ Select Representative Error Type,include,,,,human reviewer 2 (main reviewer)
+S0065,P3,"agent intermediate trajectories show book_reservation, cancel_reservation tool calls",Execution _ Execute Tool Call,include,,,,human reviewer 2 (main reviewer)
+S0066,P3,Incorrect Flight Selection or Argument in Booking Tool,Execution _ Select Tool,include,,,,human reviewer 2 (main reviewer)
+S0067,P3,dynamically simulate the user responses in the conversation loop with the agent,Execution _ Simulate User Turn,include,,,,human reviewer 2 (main reviewer)
+S0068,P3,add the list of identified TED errors into the agent instruction without manual refinement,Execution _ Insert Error Remedies into Agent Prompt,include,,,,human reviewer 2 (main reviewer)
+S0069,P3,"LLMjudge returns 1 if the subgoal is achieved, and 0 otherwise",Evaluation _ Score Subgoal Achievement,include,,,,human reviewer 2 (main reviewer)
+S0070,P3,we run the judge multiple times and take a majority vote as the final score,Evaluation _ Aggregate Scores via Majority Vote,include,,,,human reviewer 2 (main reviewer)
+S0071,P3,evaluate the Agent Intermediate Trajectories and Agent Responses Submission to ascertain whether the subgoal has been successfully completed,Evaluation _ Assess Trajectory Evidence,include,,,,human reviewer 2 (main reviewer)
+S0072,P3,the error identification function f_iden produces a low-level error description,Evaluation _ Identify Error Pattern,include,,,,human reviewer 2 (main reviewer)
+S0073,P3,progress of the agent is defined as the proportion of subgoals achieved,Evaluation _ Compute Progress Metric,include,,,,human reviewer 2 (main reviewer)
+S0074,P3,AUC rewards agent for achieving subgoals early which is crucial for long-horizon tasks,Evaluation _ Evaluate Turn-level Efficiency,include,,,,human reviewer 2 (main reviewer)
+S0075,P3,Var[progress] captures judge's inconsistency through the variance,Evaluation _ Compute Judge Variance,include,,,,human reviewer 2 (main reviewer)
+S0076,P3,"the system is incorrectly processing it as $2,613.00 _ Error: Payment amount does not add up",Evaluation _ Validate Tool Arguments,include,,,,human reviewer 2 (main reviewer)
+S0077,P3,automated error analysis tool that analyzes the inconsistencies of the judge and agents,Reflection _ Diagnose Agent Inconsistency,include,,,,human reviewer 2 (main reviewer)
+S0078,P3,we identify the problematic subgoal to be 'Agent should cancel reservation K1NW8N',Reflection _ Identify Inconsistent Subgoal,include,,,,human reviewer 2 (main reviewer)
+S0079,P3,"After each action, the agent receives partial state information or a subsequent user utterance",Communication _ Accept Instructions from User,include,,,,human reviewer 2 (main reviewer)
+S0080,P3,"good agents ask clarifying questions when given incomplete input, while poor agents do not",Communication _ Ask Clarifying Question,include,,,,human reviewer 2 (main reviewer)
+S0081,P3,responses to users as part of agent action space,Communication _ Generate Response to User,include,,,,human reviewer 2 (main reviewer)
+S0082,P3,GENERATE the LLM-simulated user NEXT RESPONSE,Communication _ Generate User Response,include,,,,human reviewer 2 (main reviewer)
+S0083,P3,providing actionable feedback for agent improvement,Communication _ Provide Actionable Feedback,include,,,,human reviewer 2 (main reviewer)
+S0084,P3,Agent should inform the user: 'The phone number...has been updated to +10293847563',Communication _ Inform User of Task Outcome,include,,,,human reviewer 2 (main reviewer)
+S0085,P4,"Sample a batch of prompts {(Q_j, I_j)} from D _ question-image pairs from the dataset",Communication _ Accept Medical Query,include,,,,human reviewer 2 (main reviewer)
+S0086,P4,The agent processes multi-modal inputs including the question and image,Execution _ Process Multimodal Input,include,,,,human reviewer 2 (main reviewer)
+S0087,P4,"Initially, the model forms a textual hypothesis based on the global image and the query",Reasoning _ Formulate Visual Hypothesis,include,,,,human reviewer 2 (main reviewer)
+S0088,P4,first think about the reasoning process in the mind; reasoning process enclosed within <think></think> tags,Reasoning _ Generate Chain-of-Thought,include,,,,human reviewer 2 (main reviewer)
+S0089,P4,continuously monitor the token-level entropy of the policy __θ as it parameterizes a visual action,Evaluation _ Assess Visual Uncertainty,include,,,,human reviewer 2 (main reviewer)
+S0090,P4,The key signal we track is the entropy increase relative to the baseline: _H_tool = H_tool _ H_base,Evaluation _ Compute Entropy Differential,include,,,,human reviewer 2 (main reviewer)
+S0091,P4,define branch probability P_branch = P_base + γ_H_tool; Fork the current generative state and generate a new parallel trajectory,Planning _ Trigger Exploration Branch,include,,,,human reviewer 2 (main reviewer)
+S0092,P4,"For each prompt, generate additional trajectories independently from __ref until |T_j| = M",Planning _ Sample Parallel Trajectories,include,,,,human reviewer 2 (main reviewer)
+S0093,P4,identifies regions of uncertainty or high clinical relevance that necessitate closer inspection; proactively invokes the Zoom-in tool,Execution _ Select Target Region,include,,,,human reviewer 2 (main reviewer)
+S0094,P4,"When the agent's policy generates a complete Zoom-in command containing valid bounding box coordinates, an external tool is triggered",Execution _ Invoke Visual Tool,include,,,,human reviewer 2 (main reviewer)
+S0095,P4,A high-resolution patch corresponding to the specified coordinates is cropped,Execution _ Crop Image Region,include,,,,human reviewer 2 (main reviewer)
+S0096,P4,The cropped patch is subsequently processed by the same pre-trained vision encoder; generates a new set of visual tokens representing fine-grained information,Execution _ Encode Visual Tokens,include,,,,human reviewer 2 (main reviewer)
+S0097,P4,new tokens are encapsulated within special markers (<tool_response> and </tool_response>) and integrated back into the agent's context sequence,Execution _ Integrate Tool Response,include,,,,human reviewer 2 (main reviewer)
+S0098,P4,"the new, high-resolution visual information is fed back into the reasoning process, allowing the model to update its textual understanding",Reasoning _ Update Visual Understanding,include,,,,human reviewer 2 (main reviewer)
+S0099,P4,"allowing the model to update its textual understanding, refine its hypothesis, or even trigger further visual exploration",Reasoning _ Refine Diagnostic Hypothesis,include,yes,yes,yes,human reviewer 2 (main reviewer)
+S0100,P4,"By actively interrogating the visual data to resolve ambiguity and verify hypotheses, MedVR mitigates the risk of overlooking subtle pathologies",Reflection _ Self-Correct Visual Grounding,include,,,,human reviewer 2 (main reviewer)
+S0101,P4,produces a final answer and terminates the rollout; enclose it within <answer></answer> tags,Execution _ Generate Final Answer,include,yes,yes,yes,human reviewer 2 (main reviewer)
+S0102,P4,Identify the set of successful trajectories T_j+ = {_ _ T_j | R_acc(_) > 0},Evaluation _ Identify Successful Trajectories,include,,,,human reviewer 2 (main reviewer)
+S0103,P4,Generate visual footprint masks {M_k} for each __k _ T+; Aggregate masks to create a heatmap C = Σ_k M_k,Execution _ Aggregate Visual Footprints,include,,,,human reviewer 2 (main reviewer)
+S0104,P4,"Binarize heatmap to obtain consensus mask M__j(u,v) = __(C(u,v) > |T_j+|/2)",Evaluation _ Compute Consensus Mask,include,,,,human reviewer 2 (main reviewer)
+S0105,P4,"Compute IoU(M_k, M__j) _ measuring alignment between each trajectory's visual footprint and the consensus mask",Evaluation _ Compute IoU Alignment,include,,,,human reviewer 2 (main reviewer)
+S0106,P4,"Assign consensus-aligned tool reward R_tool(__k); R_tool = 1.0 if IoU > η, 0.5 otherwise",Evaluation _ Assign Tool Reward,include,,,,human reviewer 2 (main reviewer)
+S0107,P4,Compute total terminal reward R(_) = R_acc(_) + R_format(_) + __(R_acc(_)>0) · R_tool(_),Evaluation _ Compute Total Reward,include,,,,human reviewer 2 (main reviewer)
+S0108,P4,Update the policy model __θ by maximizing the Group Relative Policy Optimization (GRPO) objective,Learning _ Update Policy via RL,include,,,,human reviewer 2 (main reviewer)
+S0109,P4,"Samples where the model exhibits high confidence, defined as an accuracy of _ 7/8, are subsequently excluded",Learning _ Filter Training Samples,include,,,,human reviewer 2 (main reviewer)
+S0110,P4,"CCA distills a high-confidence, dynamic pseudo-label for visual grounding from collective agreement among successful explorations",Reasoning _ Distill Consensus Signal,include,,,,human reviewer 2 (main reviewer)
+S0111,P4,We computed the average generation entropy across different intervals of Intersection over Union (IoU) between predicted and ground-truth bounding boxes,Evaluation _ Validate Grounding Quality,include,,,,human reviewer 2 (main reviewer)
+S0112,P4,"As γ increases, the model progressively prioritizes actions that reduce predictive entropy, leading to monotonic performance improvement",Reflection _ Adapt Exploration Strategy,include,,,,human reviewer 2 (main reviewer)
+S0113,P6,an agent receives a question and can search (returning top-k results) and read articles,Execution _ Accept Task Query,not include,,,,human reviewer 3
+S0114,P6,Agents issue search queries and read articles via predefined tools,Execution _ Issue Search Query,not include,,,,human reviewer 3
+S0115,P6,full text requires explicit reading,Execution _ Read Retrieved Article,not include,,,,human reviewer 3
+S0116,P6,GPT-5: 6.45 tool calls; o3: 3.88 tool calls on average,Execution _ Issue Multiple Search Queries,not include,,,,human reviewer 3
+S0117,P6,models do not significantly increase search behavior when answers conflict,Execution _ Escalate Search on Conflict,not include,,,,human reviewer 3
+S0118,P6,most queries terminate after shallow exploration,Execution _ Terminate Search Early,not include,,,,human reviewer 3
+S0119,P6,overweight early sources even when conflicting evidence is available,Execution _ Commit to Answer Without Corroboration,not include,,,,human reviewer 3
+S0120,P6,fail to seek independent corroboration,Execution _ Seek Independent Corroboration,not include,,,,human reviewer 3
+S0121,P6,"difficulty reconciling partial, conflicting information across sources",Reasoning _ Synthesize Multi-Source Evidence,not include,,,,human reviewer 3
+S0122,P6,models over-rely on top-ranked results and fail to seek independent corroboration,Reasoning _ Anchor on Top-Ranked Result,not include,,,,human reviewer 3
+S0123,P6,Models may anchor on superficially plausible information that aligns with distributional patterns learned during pretraining,Reasoning _ Apply Pretraining Prior Knowledge,not include,,,,human reviewer 3
+S0124,P6,rank order is implicitly treated as a proxy for evidential strength,Reasoning _ Weight Evidence by Source Position,not include,,,,human reviewer 3
+S0125,P6,GPT-5 performed 162 tool calls attempting to construct a timeline of regulatory developments,Reasoning _ Construct Chronological Sequence,not include,,,,human reviewer 3
+S0126,P6,synthesize information from diverse sources,Reasoning _ Distill Key Facts from Article,not include,,,,human reviewer 3
+S0127,P6,"agents must distinguish reliable evidence from misinformation, integrate conflicting sources",Evaluation _ Detect Source Contradiction,not include,,,,human reviewer 3
+S0128,P6,43% of sites are low-credibility by design,Evaluation _ Assess Source Credibility,not include,,,,human reviewer 3
+S0129,P6,decide whether enough evidence exists before answering,Evaluation _ Evaluate Evidential Sufficiency,not include,,,,human reviewer 3
+S0130,P6,"Confidence should be a function of evidential support, not just answer plausibility",Evaluation _ Calibrate Confidence to Evidence,not include,,,,human reviewer 3
+S0131,P6,models acknowledge uncertainty but still fail to act on available evidence,Reflection _ Acknowledge Epistemic Uncertainty,not include,,,,human reviewer 3
+S0132,P6,models remain highly confident despite dramatic accuracy drops,Reflection _ Maintain Overconfident Stance,not include,,,,human reviewer 3
+S0133,P6,"Data is incomplete for a final, fully supported response",Reflection _ Suspend Response on Incomplete Data,not include,,,,human reviewer 3
+S0134,P6,returning structured outputs with answers and confidence,Communication _ Report Final Answer,not include,,,,human reviewer 3
+S0135,P6,Confidence (0-100%),Communication _ Express Stated Confidence,not include,,,,human reviewer 3
+S0136,P6,"A uniform zero-shot prompt enforces structured responses with three fields: Answer, Confidence, and Explanation",Communication _ Provide Answer Explanation,not include,,,,human reviewer 3
+S0137,P8,captures planning logic at two distinct temporal resolutions: immediate child nodes represent short-term tactical responses...while full branches encapsulate long-term strategic foresight,Planning _ Plan Multi-Turn Dialogue Strategy,include,,,,human reviewer 3
+S0138,P8,"the LLM reinterprets the actions from breadth logic...to fit the current dialogue context, summarizing them into a concise next-step strategy",Planning _ Generate Short-Term Action Suggestion,include,,,,human reviewer 3
+S0139,P8,"We identify the single branch with the highest average node value to serve as the depth logic...the LLM reinterprets this trajectory, summarizing it into a high-level planning directive",Planning _ Generate Long-Term Strategic Plan,include,,,,human reviewer 3
+S0140,P8,"we decompose each trajectory into local sub-trajectories, where each sub-trajectory represents an action path initiating from a specific dialogue state",Planning _ Decompose Trajectory into Sub-Paths,include,,,,human reviewer 3
+S0141,P8,METRO analyzes the current dialogue state and queries the Strategy Forest to retrieve the most relevant tree,Reasoning _ Read Current Dialogue State,include,,,,human reviewer 3
+S0142,P8,summarizing it into a high-level planning directive that emphasizes cumulative temporal effects,Reasoning _ Summarize Strategy Trajectory into Directive,include,,,yes,human reviewer 3
+S0143,P8,METRO induces a single reusable micro-principle in a fixed 'When...' form,Reasoning _ Distill Utterance into Reusable Micro-Principle,include,,,,human reviewer 3
+S0144,P8,METRO prompts METRO by integrating both breadth and depth planning logic derived from the retrieved tree,Reasoning _ Provide Retrieved Strategy Context to Generator,include,,,,human reviewer 3
+S0145,P8,METRO starts with the identification of the strategic action a_i for every expert utterance u_i in transcript D,Execution _ Extract Strategy Action from Utterance,include,,,yes,human reviewer 3
+S0146,P8,"Using its LLM backbone, METRO expands the strategy actions via self-reflection",Execution _ Expand Action via LLM Self-Reflection,include,,,,human reviewer 3
+S0147,P8,We convert each history d_i' into a semantic embedding Emb(d_i') to represent the dialogue state preceding utterance u_{i+1},Execution _ Embed Dialogue History into Semantic Vector,include,,,,human reviewer 3
+S0148,P8,We then apply K-Means to cluster all embeddings sourced from different transcripts,Execution _ Cluster Dialogue States via K-Means,include,,,,human reviewer 3
+S0149,P8,retrieving the single tree that exhibits the highest semantic similarity to the current state,Execution _ Retrieve Relevant Strategy Tree,include,,,,human reviewer 3
+S0150,P8,"Identical action sequences are merged to form consolidated branches (e.g., Donation information _ Foot in the door _ Emotion appeal)",Execution _ Merge Identical Action Paths into Branches,include,,,,human reviewer 3
+S0151,P8,these two suggestions are concatenated to guide METRO in generating the final response,Execution _ Generate Strategic Dialogue Response,include,,,,human reviewer 3
+S0152,P8,METRO omit the model training and directly performs retrieval augmentation during the inference to enhance its ability in non-collaborative dialogues,Execution _ Augment Response with External Strategy Knowledge,include,,,,human reviewer 3
+S0153,P8,Emotion appeal: Please elicit the specific emotions to influence the persuadee,Execution _ Deploy Emotional Appeal in Conversation,include,,,,human reviewer 3
+S0154,P8,assess the quality of the expert utterance u_i by analyzing the user's reaction u_i^usr (determined by LLM-as-judge),Evaluation _ Assess Utterance Quality via LLM-Judge,include,,,,human reviewer 3
+S0155,P8,We assign a value to every node along a branch...primarily determined by the final task outcome of the dialogues that passed through it,Evaluation _ Estimate Node Value from Task Outcome,include,,,,human reviewer 3
+S0156,P8,"our branch valuation incorporates both performance and statistical confidence via the Wilson Score Lower Bound p_lb(u) computed from (s(u), n(u))",Evaluation _ Score Branch via Confidence-Aware Statistical Bound,include,,,,human reviewer 3
+S0157,P8,"Cluster Coverage (CC), defined as the percentage of clusters containing at least one action from the method...Within-Cluster Coverage (WCC)",Evaluation _ Evaluate Action Diversity via Cluster Coverage,include,,,,human reviewer 3
+S0158,P8,"the original action a_i is flagged as a 'should-not-do' action a_i^1...When [situation], you must avoid [a_i]",Reflection _ Flag Ineffective Action as Avoidance Rule,include,,,,human reviewer 3
+S0159,P8,we perform pruning by retaining the top-K branches with the highest value. This is further optimized in practice using Beam Search,Reflection _ Prune Low-Value Branches via Beam Search,include,,,,human reviewer 3
+S0160,P8,"consecutive repeated actions are removed, a process we term Redundancy Removal",Reflection _ Remove Redundant Action Repetitions,include,,,,human reviewer 3
+S0161,P8,METRO directly induces dialogue strategies from a corpus of historical transcripts D,Communication _ Accept Task Instructions from Transcripts,include,,,,human reviewer 3
+S0162,P8,Personal-related inquiry: Please ask about the persuadee previous personal experiences relevant to charity donation,Communication _ Inquire about Persuadee's Personal Context,include,,,,human reviewer 3
+S0163,P8,strategies induced from external domains remain highly effective in the target setting,Communication _ Transfer Strategy across Dialogue Tasks,include,,,,human reviewer 3
+S0164,P8,METRO induces a Strategy Forest by constructing a state-centric tree from each cluster,Others _ Build State-Centric Strategy Tree,include,,,,human reviewer 3
+S0165,P9,agents start by developing a broad understanding of the task and the environment in Phase 1,Planning _ Decompose Task into Phases,include,,,,human reviewer 3
+S0166,P9,following a structured template built upon successful reproducibility assessment cases to improve planning,Planning _ Generate Structured Assessment Plan,include,,,,human reviewer 3
+S0167,P9,incorporating a dummy score prediction as a fallback mechanism,Planning _ Apply Fallback Strategy,include,,,yes,human reviewer 3
+S0168,P9,requiring integrated knowledge across various domains to effectively assess reproducibility,Reasoning _ Synthesize Cross-Domain Knowledge,include,,,,human reviewer 3
+S0169,P9,agents must infer the directory layout by inspecting package structures and README files,Reasoning _ Infer Directory Structure,include,,,yes,human reviewer 3
+S0170,P9,logical reasoning to interpret papers and code,Reasoning _ Apply Logical Reasoning,include,,,yes,human reviewer 3
+S0171,P9,mathematical reasoning to modify and run code,Reasoning _ Apply Mathematical Reasoning,include,,,yes,human reviewer 3
+S0172,P9,visual reasoning to examine data points,Reasoning _ Apply Visual Reasoning,include,,,,human reviewer 3
+S0173,P9,causal reasoning to infer scientific insights from results,Reasoning _ Apply Causal Reasoning,include,,,yes,human reviewer 3
+S0174,P9,categorize the sources of failure in reproducing social science papers into 4 types,Reasoning _ Diagnose Failure Source,include,,,,human reviewer 3
+S0175,P9,list all files and directories in the workspace to identify available materials,Execution _ List Available Files,include,,,,human reviewer 3
+S0176,P9,read the paper _ Phase 1: read_file('paper.pdf'),Execution _ Read Paper PDF,include,,,,human reviewer 3
+S0177,P9,read the README file _ Phase 1: read_file('reproduction_package/readme.txt'),Execution _ Read Documentation File,include,,,yes,human reviewer 3
+S0178,P9,Phase 2: Code Inspections _ read_file('main.R'),Execution _ Read Code File,include,,,,human reviewer 3
+S0179,P9,"In Phase 3, they edit and execute scripts",Execution _ Execute Reproduction Script,include,,,,human reviewer 3
+S0180,P9,Phase 3: Script Edition & Execution _ Path & Package fixes,Execution _ Fix Script Errors,include,,,,human reviewer 3
+S0181,P9,Type 3 failures occur when agents cannot correctly install libraries,Execution _ Install Required Packages,include,,,,human reviewer 3
+S0182,P9,"query_vision_language_model(prompt='Are the reproduced results consistent?', images=[<Original PNG>, <Reproduced PNG>])",Execution _ Query Vision Language Model,include,,,,human reviewer 3
+S0183,P9,"the agent is instructed to generate a valid output file, reproducibility_score.json",Execution _ Write Score Output,include,,,,human reviewer 3
+S0184,P9,"in Phase 4, they compare the execution results with the original results",Evaluation _ Compare Reproduced Results,include,,,,human reviewer 3
+S0185,P9,"In Phase 2, they inspect the provided code for potential inconsistencies",Evaluation _ Assess Code Validity,include,yes,yes,yes,human reviewer 3
+S0186,P9,generating a reproducibility score on a scale from 1 (least reproducible) to 4 (fully reproducible),Evaluation _ Score Reproducibility Level,include,,,,human reviewer 3
+S0187,P9,The output file (1) must follow the correct format and naming convention [code],Evaluation _ Validate Output Format,include,,,,human reviewer 3
+S0188,P9,identifying and evaluating discrepancies between original and reproduced results,Evaluation _ Identify Inconsistency Source,include,,,,human reviewer 3
+S0189,P9,"AutoGPT capabilities that include making long-term plans, selecting and using tools, and reflecting on past actions",Reflection _ Reflect on Past Actions,include,,,,human reviewer 3
+S0190,P9,using common error sources as few-shot examples to enhance in-context learning effectiveness,Reflection _ Learn from Error Examples,include,,,,human reviewer 3
+S0191,P9,we summarize the general workflow... categorize the sources of failure in reproducing social science papers into 4 types,Reflection _ Analyze Failure Patterns,include,,,,human reviewer 3
+S0192,P9,"agent is provided with (1) a social science paper in PDF format, (2) the corresponding reproduction package, (3) a list of major findings",Communication _ Receive Task Instructions,include,,,,human reviewer 3
+S0193,P11,enabling interaction through the primary channel of human communication__peech,Execution _ Process Perceptual Speech Input,include,,,,human reviewer 6
+S0194,P11,the whole dialogue typically lasting between 20 to 60 seconds,Communication _ Generate Spoken Response,include,,,,human reviewer 6
+S0195,P11,we assign the S2S system a concrete human role and background information via prompt,Execution _ Adopt Contextual Role,include,,,,human reviewer 6
+S0196,P11,capably retaining and referencing information within a short dialogue context,Reasoning _ Retain Dialogue Context,include,,,,human reviewer 6
+S0197,P11,ensuring smooth transitions between turns without abrupt contradictions,Reasoning _ Maintain Logical Coherence,include,,,,human reviewer 6
+S0198,P11,"models correctly articulating words, including challenging heteronyms",Execution _ Produce Accurate Pronunciation,include,,,,human reviewer 6
+S0199,P11,"Rhythm and intonation changes are mechanically regular, with few context-appropriate pauses",Execution _ Modulate Prosodic Rhythm,include,,,,human reviewer 6
+S0200,P11,"Natural pitch rise or fall when expressing questions, surprise, or emphasis",Execution _ Vary Intonation Contour,include,,,,human reviewer 6
+S0201,P11,"Stress on salient words is weak or misplaced, which is a crucial element of human communication",Execution _ Apply Lexical Stress,include,,,,human reviewer 6
+S0202,P11,Produces appropriate non-verbal sounds to express emotion,Execution _ Produce Auxiliary Vocalizations,include,,,,human reviewer 6
+S0203,P11,"Humans produce breathing sounds, saliva sounds, etc.",Execution _ Emit Micro-physiological Noise,include,,,,human reviewer 6
+S0204,P11,"linguistic imprecision (e.g., hedges like 'probably'), and self-corrections",Communication _ Use Linguistic Imprecision,include,,,,human reviewer 6
+S0205,P11,"use of fillers ('um') and micro-physiological noises (e.g., breath sounds)",Communication _ Insert Filler Words,include,,,,human reviewer 6
+S0206,P11,Uses metaphor and euphemism to convey implied meanings,Reasoning _ Use Figurative Language,include,,,,human reviewer 6
+S0207,P11,"The mix of languages is context-dependent, and the switching is smooth",Execution _ Switch Language Contextually,include,,,,human reviewer 6
+S0208,P11,"models exhibit a strong default tendency to excessively affirm, apologize, and express gratitude",Communication _ Express Sycophantic Affirmation,include,,,yes,human reviewer 6
+S0209,P11,"Conversational, flexible, and varied expression",Communication _ Generate Conversational Style Response,include,,,,human reviewer 6
+S0210,P11,S2S systems often proactively mention that they are interacting with an AI,Communication _ Disclose Identity Proactively,include,,,,human reviewer 6
+S0211,P11,Emotion in text feels authentic and resonates with natural human sentiment,Execution _ Express Textual Sentiment,include,,,,human reviewer 6
+S0212,P11,Vocal delivery conveys context-appropriate emotional cues that align with the text,Execution _ Convey Acoustic Emotion,include,,,,human reviewer 6
+S0213,P11,Prosody or tone may sound inconsistent with the intended emotion expression of the text,Execution _ Align Prosody to Sentiment,include,,,,human reviewer 6
+S0214,P11,Identify and differentiate the speech segments of Speaker A and Speaker B,Execution _ Diarize Speaker Segments,include,,,,human reviewer 6
+S0215,P11,we first encode it with a pretrained audio-language model (ALM) to obtain a fixed-dimensional representation,Execution _ Encode Audio Representation,include,,,,human reviewer 6
+S0216,P11,"Based on an analysis of vocal characteristics, determine whether the voice of Speaker B is AI-generated",Reasoning _ Analyze Vocal Characteristics,include,,,,human reviewer 6
+S0217,P11,we map h to interpretable dimension scores with an Ordinal Discretization Layer,Reasoning _ Map Features to Interpretable Scores,include,,,,human reviewer 6
+S0218,P11,the model learns to score dialogues across the 18 human-likeness dimensions,Evaluation _ Score Human-Likeness Dimensions,include,,,,human reviewer 6
+S0219,P11,produce a final and explainable human-machine discrimination decision,Evaluation _ Discriminate Human From Machine,include,,,,human reviewer 6
+S0220,P11,feed the logits z into a linear classifier with regularization constraint,Evaluation _ Classify Via Linear Decision,include,,,,human reviewer 6
+S0221,P13,models must internalize novel operational protocols from minimal demonstrations and execute them despite extensive interference,Reasoning _ Internalize Novel Rule,include,,,,human reviewer 6
+S0222,P13,execute them flawlessly despite extensive interference and format variations,Reasoning _ Generalize Rule to Novel Context,include,,,,human reviewer 6
+S0223,P13,evaluate whether models can internalize thematic schemas and transfer them implicitly through intervening distractions,Reasoning _ Absorb Thematic Schema,include,,,,human reviewer 6
+S0224,P13,absorbing environmental cues to shape responses without explicit instruction,Reasoning _ Detect Implicit Contextual Cue,include,,,,human reviewer 6
+S0225,P13,"detect hurry cues like 'I am in a rush', 'short answer only'",Reasoning _ Detect Hurry Signal,include,,,,human reviewer 6
+S0226,P13,models must internalize rules from minimal exposure and execute them despite extensive interference,Execution _ Execute Learned Procedure,include,,,,human reviewer 6
+S0227,P13,Override ingrained calling conventions,Execution _ Override Ingrained Calling Convention,include,,,,human reviewer 6
+S0228,P13,Apply non-standard operators: Omega a Omega b = 2a + b^2,Execution _ Apply Non-standard Operator,include,,,,human reviewer 6
+S0229,P13,Maintain style without reminders,Execution _ Maintain Style Constraint,include,,,,human reviewer 6
+S0230,P13,Directory Restriction (errors establish path boundaries),Execution _ Apply Path Restriction,include,,,,human reviewer 6
+S0231,P13,"Switch to reliable alternatives, add warnings, delay execution, avoid side-effects",Execution _ Switch to Safe Alternative,include,,,,human reviewer 6
+S0232,P13,measures unconscious transfer of thematic elements from prior context,Execution _ Transfer Thematic Element,include,,,,human reviewer 6
+S0233,P13,"Simplify jargon, reduce verbosity, adjust response format",Execution _ Adjust Response Verbosity,include,,,,human reviewer 6
+S0234,P13,"Use safe defaults, enforce security, prevent violations",Execution _ Enforce Security Default,include,,,,human reviewer 6
+S0235,P13,choosing the alternative safe approach,Execution _ Avoid Failed Action,include,,,,human reviewer 6
+S0236,P13,verify the answer matches/contains expected pattern if provided and that the learned procedure was applied exactly,Evaluation _ Assess Rule Adherence,include,,,,human reviewer 6
+S0237,P13,"performs pairwise comparison between experimental and control conditions, identifying thematic elements unique to the experimental condition",Evaluation _ Score Thematic Influence,include,,,,human reviewer 6
+S0238,P13,identify the specific conditioned association the agent was taught. Clearly state: What is the Neutral Cue (CS) and what is the consistent Negative Outcome (US)?,Evaluation _ Identify Conditioned Association,include,,,,human reviewer 6
+S0239,P13,Did the agent repeat the action that previously led to the Negative Outcome (US)? Or did it exhibit adaptive behavior?,Evaluation _ Assess Avoidance Behavior,include,,,,human reviewer 6
+S0240,P13,Current LLMs excel at declarative knowledge but often revert to pre-trained patterns when new rules contradict their priors,Reflection _ Suppress Pre-trained Pattern,include,,,,human reviewer 6
+S0241,P13,current systems lack mechanisms for consolidating experiences into automated behavior...avoiding repeatedly-failed tools without explicit reminders,Reflection _ Avoid Repeated Failure,include,,,,human reviewer 6
+S0242,P13,warning the user about the potential negative outcome,Communication _ Issue Safety Warning,include,,,,human reviewer 6
+S0243,P13,user expresses impatience; assistant complies with brevity and receives positive or neutral acknowledgement,Communication _ Signal Brevity Compliance,include,,,,human reviewer 6
+S0244,P13,experience becomes automated behavior without conscious retrieval,Others _ Form Implicit Association,include,,,,human reviewer 6
+S0245,P13,"consolidating experiences into automated behavior, a critical gap for deployment",Others _ Consolidate Experience into Habit,include,,,,human reviewer 6
+S0246,P13,implicit memory cannot be reduced to explicit storage and retrieval alone,Others _ Distinguish Implicit from Explicit Memory,include,,,,human reviewer 6
+S0247,P13,"three-phase protocol provides minimal specification (rule + 1-3 examples), extensive interference (15 misleading turns), then novel test probes requiring first-attempt success",Planning _ Structure Evaluation Protocol,include,,,,human reviewer 6
+S0248,P14,"six-primitive label system that categorizes observable events along two axes: Agent (Self, Other, World) and Temporal Nature (Action/State)",Planning _ Decompose Entity Schema,include,,,,human reviewer 6
+S0249,P14,question taxonomy is built upon a six-primitive label system_ composing into 15 task categories across three cognitive levels,Planning _ Design Question Taxonomy,include,,,,human reviewer 6
+S0250,P14,"Self-Action (SA) captures what the player does (shooting, jumping, reloading)",Reasoning _ Recognize Self-Action,include,,,,human reviewer 6
+S0251,P14,"Self-State (SS) captures the player's condition (health, ammo, equipped weapon)",Reasoning _ Track Self-State,include,,,,human reviewer 6
+S0252,P14,Other-Action (OA) and Other-State (OS) track other agents,Reasoning _ Recognize Other-Action,include,,,,human reviewer 6
+S0253,P14,other-agent modeling: reasoning about the behaviors and intentions of other autonomous entities,Reasoning _ Model Other-Agent State,include,,,,human reviewer 6
+S0254,P14,"World-Object (WO), referring to static or interactive items such as supply crates and vehicles",Reasoning _ Ground World Object,include,,,,human reviewer 6
+S0255,P14,"World-Event (WE), which includes dynamic events like explosions or game notifications",Reasoning _ Detect World Event,include,,,,human reviewer 6
+S0256,P14,Intent Identification: identify underlying intent or goal behind actions,Reasoning _ Infer Agent Intent,include,,,,human reviewer 6
+S0257,P14,temporal reasoning that requires grounding answers to specific time windows,Reasoning _ Reason About Temporal Context,include,,,,human reviewer 6
+S0258,P14,Occurrence Count: count how many times an action/event happened,Reasoning _ Count Event Occurrences,include,,,,human reviewer 6
+S0259,P14,Absence Recognition: identify actions/states that did not occur over a timespan,Reasoning _ Recognize Absent Event,include,,,,human reviewer 6
+S0260,P14,Ordering: determine event order sequence of actions/events,Reasoning _ Order Event Sequence,include,,,,human reviewer 6
+S0261,P14,"role distractors swap the agent attribution (e.g., attributing other agents' actions to the POV player)",Reasoning _ Attribute Action to Agent,include,,,,human reviewer 6
+S0262,P14,input the entire video directly_ sample frames at 1 FPS up to a default of 32 frames,Execution _ Process Multi-Video Inputs,include,,,,human reviewer 6
+S0263,P14,"Gemini-3-Pro generates candidate labels (3,632 predictions) and distractors (1,678 predictions)",Execution _ Generate Candidate Labels,include,,,,human reviewer 6
+S0264,P14,combinatorial template-based algorithm that instantiates question templates by systematically combining verified labels,Execution _ Generate QA Pairs,include,,,,human reviewer 6
+S0265,P14,populates the remaining options with distractors drawn from the corresponding distractor pool,Execution _ Generate Distractor Options,include,,,,human reviewer 6
+S0266,P14,we use GPT-5-mini as an LLM judge to extract the selected option,Evaluation _ Evaluate Answer via LLM Judge,include,,,,human reviewer 6
+S0267,P14,evaluate both open-source and proprietary MLLMs in a zero-shot setting using accuracy as the metric,Evaluation _ Benchmark Model Accuracy,include,,,,human reviewer 6
+S0268,P14,annotators assessed two criteria: (1) the video contains exactly one correct answer among the options,Evaluation _ Validate Annotation Quality,include,,,,human reviewer 6
+S0269,P14,blind filtering procedure: query Gemini-3-Flash with k=3 trials using only the question text (no video),Evaluation _ Filter Language Prior Bias,include,,,,human reviewer 6
+S0270,P14,structured distractor taxonomy that enables fine-grained analysis of where models hallucinate,Evaluation _ Assess Hallucination by Type,include,,,,human reviewer 6
+S0271,P14,fine-grained error analysis to identify systematic failure modes by entity type,Reflection _ Diagnose Model Failure Modes,include,,,,human reviewer 6
+S0272,P14,cross-video and temporal distractors cause the most errors,Reflection _ Analyze Cross-Video Reasoning Gaps,include,,,,human reviewer 6
+S0273,P14,"ablation studies on GPT-5-mini under three degraded input conditions: No Video, Random Frame, Shuffled Frames",Reflection _ Conduct Ablation Study,include,,,,human reviewer 6
+S0274,P14,"synchronize timelines across perspectives, enabling cross-video temporal alignment",Communication _ Synchronize Multi-POV Timelines,include,,,,human reviewer 6
+S0275,P14,POV Identification: identify who performed what action in which video,Others _ Identify POV Source,include,,,,human reviewer 6
+S0276,P16,completion results of preceding tasks influence subsequent ones,Planning _ Decompose Task Sequentially,include,,,,human reviewer 1
+S0277,P16,todo_write tool (15 invocations by GPT-5.2),Planning _ Write Task Checklist,include,,,,human reviewer 1
+S0278,P16,maintain context and execute logic over extended periods,Reasoning _ Maintain Long-Horizon Context,include,,,,human reviewer 1
+S0279,P16,consuming 3.4 million tokens and 89 turns to secure top scores,Reasoning _ Generate Extended Reasoning Chain,include,,,,human reviewer 1
+S0280,P16,"run_shell_command tool (425 and 362 invocations, respectively)",Execution _ Execute Shell Command,include,,,,human reviewer 1
+S0281,P16,list_directory 158 times__early triple the average of other models,Execution _ Explore Directory Structure,include,,,,human reviewer 1
+S0282,P16,"heavily utilizing the replace tool to make precise, localized edits",Execution _ Edit File Precisely,include,,,,human reviewer 1
+S0283,P16,"prefers the write_file tool (381 invocations), suggesting a tendency to overwrite entire files",Execution _ Overwrite File Content,include,,,,human reviewer 1
+S0284,P16,high reliance on web search to offload knowledge retrieval to external sources,Execution _ Search Web for Knowledge,include,,,yes,human reviewer 1
+S0285,P16,Gemini-3-Pro...initialize_memory_bank (7 times),Execution _ Initialize Memory Bank,include,,,yes,human reviewer 1
+S0286,P16,Gemini-3-Pro...update_memory_bank (22 times)...attempts to persist state and key information externally,Execution _ Update Memory Bank,include,,,yes,human reviewer 1
+S0287,P16,agent engages in multi-turn interactions...to generate deliverables,Execution _ Generate Code Deliverable,include,,,yes,human reviewer 1
+S0288,P16,"necessitates over 90 precise tool calls, significantly raising the bar",Execution _ Invoke Tools for Task Completion,include,,,yes,human reviewer 1
+S0289,P16,deliverables are synced to a Docker-based remote sandbox...emulates human computer operations,Execution _ Execute Code in Remote Sandbox,include,,,yes,human reviewer 1
+S0290,P16,Claude-4.5-Opus and GPT-5.2 rely more on specific search queries (search_file_content),Execution _ Search File Content,include,,,,human reviewer 1
+S0291,P16,map the agent's deliverables to a score ranging from 0 to 10,Evaluation _ Score Deliverable via Rubric,include,,,yes,human reviewer 1
+S0292,P16,Evaluates code quality and logic based on the text deliverables and rubrics,Evaluation _ Judge Code Quality,include,,,,human reviewer 1
+S0293,P16,Evaluates dynamic behavior and visual correctness based on screenshots,Evaluation _ Judge Visual Correctness,include,,,yes,human reviewer 1
+S0294,P16,rubrics are directly translated into assertion logic within the evaluation scripts,Evaluation _ Apply Rule-Based Assertion,include,,,,human reviewer 1
+S0295,P16,Perform a Gap Analysis between the {Deliverables} and the {Rubrics},Evaluation _ Perform Gap Analysis,include,,,,human reviewer 1
+S0296,P16,list exactly which rubrics were not met,Evaluation _ Identify Unmet Requirements,include,,,yes,human reviewer 1
+S0297,P16,"Detect logical errors, missing functionalities, or violations of best practices",Evaluation _ Detect Code Defects,include,,,yes,human reviewer 1
+S0298,P16,"Analyze {Visual Assets} for UI elements, layout consistency, and text rendering",Evaluation _ Inspect Visual Assets,include,,,yes,human reviewer 1
+S0299,P16,Verify the implementation of every item listed in {Rubrics},Evaluation _ Verify Implementation Coverage,include,,,yes,human reviewer 1
+S0300,P16,leverage feedback to markedly improve performance...feedback-driven self-correction,Reflection _ Incorporate Feedback for Correction,include,,,yes,human reviewer 1
+S0301,P16,persistently adhering to erroneous paths despite external critique,Reflection _ Resist Error Correction,include,,,,human reviewer 1
+S0302,P16,Explain the failure from a user requirement perspective,Reflection _ Diagnose Failure Root Cause,include,,,yes,human reviewer 1
+S0303,P16,provides iterative feedback to bypass human-in-the-loop limitations,Communication _ Provide Iterative Feedback,include,,,,human reviewer 1
+S0304,P16,Provide explicit instructions on what must be rectified in the next iteration,Communication _ Generate Revision Instructions,include,,,yes,human reviewer 1
+S0305,P16,"agent receives task queries and deliverables, completing tasks through multi-turn interactions",Others _ Accept Task Query,include,,,yes,human reviewer 1
+S0306,P17,Decomposing hard problems into subproblems often makes them easier and more efficient to solve,Planning _ Decompose Problem into Subproblems,include,,,yes,human reviewer 1
+S0307,P17,"specifying a scope, or role, for an agent allows it to be treated as a computational object",Planning _ Define Agent Scope and Role,include,,,,human reviewer 1
+S0308,P17,map each on to an employee in a human organization,Planning _ Assign Agent Roles Anthropomorphically,include,,,,human reviewer 1
+S0309,P17,full code can be fixed by fixing each function independently,Planning _ Design Focused Subproblem Decomposition,include,,,,human reviewer 1
+S0310,P17,delegator can determine which of the k tasks the input string belongs to by observing only a constant number of metadata tokens,Reasoning _ Identify Task Type for Routing,include,,,,human reviewer 1
+S0311,P17,Making the capabilities set explicit in the design of an algorithm has the auxiliary benefit of raising awareness of the trade-offs,Reasoning _ Identify LLM Capability Requirements,include,,,,human reviewer 1
+S0312,P17,characterize the fundamental trends in cost as the system scales,Reasoning _ Analyze Asymptotic Cost,include,,,,human reviewer 1
+S0313,P17,comparatively analyze the asymptotic behavior of different LbAs on different problems,Reasoning _ Compare LbA Implementations,include,,,,human reviewer 1
+S0314,P17,cost of identifying the task and solving it with the designated specialist,Execution _ Route Task to Specialist Agent,include,,,,human reviewer 1
+S0315,P17,"Specialists each solve a distinct task type, receiving only the relevant portion of the input",Execution _ Execute Specialized Subtask,include,,,yes,human reviewer 1
+S0316,P17,Processing the entire input and returning a constant sized answer,Execution _ Process Entire Input with Generalist,include,,,,human reviewer 1
+S0317,P17,debugging specialist rewrites the entire code every time it fixes a bug,Execution _ Rewrite Entire Code to Fix Bug,include,,,,human reviewer 1
+S0318,P17,fixes the bug by looking at and rewriting only that single function,Execution _ Fix Single Function in Codebase,include,,,,human reviewer 1
+S0319,P17,alternate between M_q identifying a bug and M_d fixing it,Execution _ Alternate Agent Roles Iteratively,include,,,,human reviewer 1
+S0320,P17,"M_u is applied to the entire string x, alters every block of x in some way",Execution _ Mutate Solution Globally,include,,,,human reviewer 1
+S0321,P17,"applied to each block individually and in sequence, generating one updated block at a time",Execution _ Mutate Solution Locally per Block,include,,,,human reviewer 1
+S0322,P17,"run a greedy algorithm, where we iteratively apply the mutator",Execution _ Run Greedy Iterative Optimization,include,,,,human reviewer 1
+S0323,P17,"cost benefits from agents running asynchronously, in a distributed manner, or otherwise in parallel",Execution _ Parallelize Agent Computations,include,,,,human reviewer 1
+S0324,P17,M_q has the capacity to identify exactly one bug at a time,Evaluation _ Detect Bug in Code,include,,,,human reviewer 1
+S0325,P17,QA agent looks at all i previous versions of the code and previous QA comments,Evaluation _ Review Entire Codebase per Iteration,include,,,,human reviewer 1
+S0326,P17,"it then looks only at a single function. Then, it will overall look at the entire code only a single time",Evaluation _ Review Targeted Function Only,include,,,,human reviewer 1
+S0327,P17,replace x' as our current solution if it has higher fitness f(x') > f(x),Evaluation _ Evaluate Solution Fitness,include,,,,human reviewer 1
+S0328,P17,error probabilities can compound even in the roll-outs of single LLMs,Evaluation _ Estimate Error Propagation Risk,include,,,,human reviewer 1
+S0329,P17,apparent limitations of most existing multi-agent LLM approaches to relatively small codebases could be due in part to this scaling behavior,Reflection _ Identify Scaling Limitations of Approach,include,,,,human reviewer 1
+S0330,P17,invite the reader to look back at the assumptions made in this section and see where there is room for improvement,Reflection _ Revisit Assumptions for Improvement,include,,,,human reviewer 1
+S0331,P17,QA engineer identifies bugs by producing constant size messages,Communication _ Report Bug to Collaborating Agent,include,,,,human reviewer 1
+S0332,P17,"entire conversation history, including prior versions of the code are fed as input to each agent at each iteration",Memory _ Accumulate Full Conversation History,include,,,,human reviewer 1
+S0333,P17,collection and refinement of memories (represented in text) as the system encounters new scenarios,Memory _ Collect and Refine Experiences,include,,,,human reviewer 1
+S0334,P17,some such decompositions lead to asymptotic improvements over others,Others _ Select Optimal System Decomposition,include,,,,human reviewer 1
+S0335,P17,"automated external optimization process that refines the design of an agentic system, modifying agent scopes",Others _ Adapt Agent Scopes via Automated Optimization,include,,,,human reviewer 1
+S0336,P19,"individual neural network blocks naturally become responsible for particular subtasks _ a phenomenon studied in (Elhage et al., 2021)",Planning _ Specialize in Assigned Subtask,not include,,,,human reviewer 1
+S0337,P19,"the input matrix to _, commonly referred to as the attention scores, determines the relative importance of different tokens in the sequence",Reasoning _ Compute Interaction Score,not include,,,,human reviewer 1
+S0338,P19,each agent's value function V_ri depends on other agents' initial states (positions),Reasoning _ Compute Value Function,not include,,,,human reviewer 1
+S0339,P19,"whenever agent i collides with agent j (distinct), it receives a penalty of _1",Reasoning _ Compute Collision Reward,not include,,,,human reviewer 1
+S0340,P19,the parameters themselves can be directly interpreted to uncover meaningful interactions among entities,Reasoning _ Interpret Learned Parameters,not include,,,,human reviewer 1
+S0341,P19,our framework unifies some diverse application scenarios and offers a novel theoretical lens on how Transformers learn dependencies,Reasoning _ Unify Diverse Application Scenarios,not include,,,,human reviewer 1
+S0342,P19,"by modeling triplet or higher-order interactions, hyper-attention more flexibly captures context-specific phrases, while suppressing incorrect ones",Reasoning _ Disambiguate Context via Higher-Order Interactions,not include,,,,human reviewer 1
+S0343,P19,"a single layer linear self-attention can efficiently represent, learn, and generalize functions capturing pairwise interactions, including out-of-distribution scenarios",Execution _ Represent Pairwise Interactions,not include,,,,human reviewer 1
+S0344,P19,self-attention acts as a mutual interaction learner under minimal assumptions on the diversity of interaction patterns observed during training,Execution _ Capture Mutual Dependencies,not include,,,,human reviewer 1
+S0345,P19,"gradient descent training converges to the parameters realizing these interactions, under mild assumptions on the data",Execution _ Learn Interaction Functions,not include,,,,human reviewer 1
+S0346,P19,enabling models to learn dependencies between input tokens effectively,Execution _ Process Token Sequences,not include,,,,human reviewer 1
+S0347,P19,a novel neural network module designed to learn couplings of different feature-level interactions between entities,Execution _ Capture Feature Couplings,not include,,,,human reviewer 1
+S0348,P19,"a new module that extends beyond pairwise interactions to capture multi-entity dependencies, such as three-way, four-way, or general n-way interactions",Execution _ Capture Higher-Order Interactions,not include,,,,human reviewer 1
+S0349,P19,gradient flow on L^MSE converges to a solution that captures how the entities interact; the learned parameters generalize,Execution _ Update Parameters via Gradient Flow,not include,,,,human reviewer 1
+S0350,P19,each agent executes a simple 'move-right' policy (one step to the right per time step if there is space to move),Execution _ Execute Movement Policy,not include,,,,human reviewer 1
+S0351,P19,an allele μ _ S is activated if another allele ν exists somewhere in the sequence,Execution _ Activate Based on Context,not include,,,,human reviewer 1
+S0352,P19,the linear self-attention mechanism can recognize patterns of arbitrary size and structure without changing the kernel size or other architectural hyperparameters,Execution _ Detect Spatial Patterns,not include,,,,human reviewer 1
+S0353,P19,"a single-layer linear self-attention can represent this dependency structure exactly, following Theorem 3.1",Execution _ Predict From Past States,not include,,,,human reviewer 1
+S0354,P19,HyperFeatureAttention can efficiently represent the couplings of feature interactions,Execution _ Represent Feature Coupling Functions,not include,,,,human reviewer 1
+S0355,P19,"we empirically validate our linear-SA theories, i.e. representation (Theorem 3.1), convergence (Theorem 4.4), and generalization (Theorem 4.6, Theorem 4.8)",Evaluation _ Validate Theoretical Predictions,not include,,,,human reviewer 1
+S0356,P19,gradient flow on L^MSE converges to zero training error under mild conditions,Evaluation _ Converge to Zero Training Error,not include,,,,human reviewer 1
+S0357,P19,self-attention learns interaction functions and generalizes across both population distributions and out-of-distribution scenarios,Evaluation _ Assess Generalization Performance,not include,,,,human reviewer 1
+S0358,P19,the learned parameters generalize to both the test distribution and to out-of-distribution (length generalization),Others _ Generalize to Unseen Data,not include,,,,human reviewer 1
+S0359,P19,"any C_, W^V_ that generalizes to P^{L*}_{X_Y} must generalize to P^{γL}_{X_Y}",Others _ Generalize Across Sequence Lengths,not include,,,,human reviewer 1
+S0360,P19,"leveraging techniques similar to those in (Katharopoulos et al., 2020; Choromanski et al., 2022), computational complexity reduces to O(LR^2)",Others _ Approximate Higher-Order Computations,not include,,,,human reviewer 1
+S0361,P21,we construct prompt templates for creating reader agents based on user attributes ua and user historical posts uh,Planning _ Construct Agent Profile,include,yes,yes,yes,human reviewer 4
+S0362,P21,"we establish a quaternary role system based on the dimensions of users' rationality-sensibility and action-hesitation and define four propagation roles: Emotional person, Gatekeeper, Onlooker, and Rationalist",Planning _ Assign Propagation Role,include,,,,human reviewer 4
+S0363,P21,RAPPIE first utilizes LLM to create reader agents...develop a role-aware multi-view interactive propagation graph model...reader feedback enhanced implicit emotion identification,Planning _ Decompose Task into Subtasks,include,,,,human reviewer 4
+S0364,P21,We randomly sample content from users' posts in the training set to build the prompts,Execution _ Sample Historical Posts,include,,,,human reviewer 4
+S0365,P21,"reader agents...generate readers' feedback back to authors' content, including emotions, comments, and behaviors",Execution _ Generate Emotional Response,include,,,,human reviewer 4
+S0366,P21,the generated emotions and comment content (with a CLS token added at the beginning) in r's feedback is denoted as c_r,Execution _ Generate Comment Content,include,,,,human reviewer 4
+S0367,P21,"a global interactive multi-behavior overlapping network is constructed based on the simulated behaviors of reposting and reposting with a comment, as well as following",Execution _ Simulate Repost Behavior,include,yes,yes,yes,human reviewer 4
+S0368,P21,"we adopt a broadcasting approach rather than relying on user-following connections for propagation simulation, to obtain more comprehensive simulation results",Execution _ Broadcast Posts to Readers,include,,,,human reviewer 4
+S0369,P21,the LightGCN is adopted to model the interaction influence between users. The graph propagation learning and optimization processes are defined,Execution _ Propagate Node Embeddings via GNN,include,,,,human reviewer 4
+S0370,P21,construct class-balanced training datasets by sampling instances from each emotional category...using the online LLM GLM4 to generate augmented data,Execution _ Augment Training Data,include,,,,human reviewer 4
+S0371,P21,we employ a text similarity calculation method based on Tf-Idf to filter the top-k posts semantically relevant to the reader r's historical posts,Reasoning _ Filter Relevant Posts,include,,,,human reviewer 4
+S0372,P21,we concatenate each role's description with example content and feed them into an online LLM...we obtain a more enriched role explanation,Reasoning _ Encode Role Description,include,,,,human reviewer 4
+S0373,P21,a 2-layer self-attention mechanism is applied for semantic compression on the reader comment embeddings,Reasoning _ Compress Reader Feedback Semantics,include,,,,human reviewer 4
+S0374,P21,A rewriting prompt 'Please repeat the following content: [r_extend]' is designed to acquire the semantic encodings of the propagation roles through the LLM-based encoder,Reasoning _ Provide Context for LLM Encoding,include,,,,human reviewer 4
+S0375,P21,"After all views have been optimized, the node embedding of user u across these views collectively constitute the matrix H_u representing reader feedback",Reasoning _ Distill Multi-view Representations,include,,,,human reviewer 4
+S0376,P21,"drawing upon the role behavior theory in communication, we establish a quaternary role system based on the dimensions of users' rationality-sensibility and action-hesitation",Reasoning _ Apply Role-Behavior Theory,include,,,,human reviewer 4
+S0377,P21,use the top-k semantically relevant posts for feedback simulation to establish reposting and comment edges between nodes,Evaluation _ Assess Reader-Post Relevance,include,,,,human reviewer 4
+S0378,P21,we employ a multi-head attention mechanism (MATT for short) to integrate the semantic features of propagation roles with the fused user embedding,Evaluation _ Evaluate Propagation Role Distribution,include,,,,human reviewer 4
+S0379,P21,the output gate is then fed into the prediction layer to obtain the implicit emotion probability distribution,Evaluation _ Predict Emotion Label,include,,,,human reviewer 4
+S0380,P21,The gated multi-head attention model is employed to fuse the reader-feedback enhanced author embeddings with content semantics and reader propagation roles' semantic matrix,Evaluation _ Fuse Reader Feedback with Content,include,,,,human reviewer 4
+S0381,P21,"Rationalists do not always remain entirely rational. As an event unfolds, they may transition into other roles such as Emotional persons, Gatekeepers, or Onlookers",Reflection _ Model Behavioral Role Transition,include,,,,human reviewer 4
+S0382,P21,"Given a predefined pair (s, u), where s represents implicit emotional text, authored by a user u",Communication _ Accept Post from Author,include,,,,human reviewer 4
+S0383,P21,"I've been experiencing the sound of my neighbour's electric drill a lot lately too, and it's really annoying",Communication _ Generate Reader Response,include,,,,human reviewer 4
+S0384,P21,"captures the global multi-behavioral interactions among users...three types of interactive behaviors: following, reposting, and reposting with a comment",Communication _ Simulate Social Media Interaction,include,,,,human reviewer 4
+S0385,P21,"we construct an overlapping network that captures the global multi-behavioral interactions among users, including following, reposting, and reposting-with-comment edge sets",Others _ Construct Overlapping Network,include,,,,human reviewer 4
+S0386,P22,the capacity to identify conflicts between queries and role knowledge or settings,Reasoning _ Identify Conflict Type,include,,,,human reviewer 4
+S0387,P22,recognize queries that conflict with their role knowledge or capabilities,Reasoning _ Recognize Knowledge Boundary,include,,,,human reviewer 4
+S0388,P22,violates specific content within the role profile,Evaluation _ Assess Query Against Role Profile,include,yes,yes,,human reviewer 4
+S0389,P22,appropriately reject queries that exceed their knowledge boundaries,Communication _ Refuse Query,include,yes,yes,yes,human reviewer 4
+S0390,P22,providing clear refusal responses with appropriate explanations,Communication _ Generate Refusal Response,include,yes,yes,yes,human reviewer 4
+S0391,P22,avoiding both over-refusal and missed refusals,Reasoning _ Distinguish Conflict vs Non-Conflict Query,include,,,,human reviewer 4
+S0392,P22,we obtain the model's hidden state representation at each layer,Execution _ Collect Activation Vectors,include,,,,human reviewer 4
+S0393,P22,calculate the representation differences between conflict and non-conflict queries,Execution _ Compute Rejection Direction,include,,,,human reviewer 4
+S0394,P22,we add the rejection direction to the original representation proportionally by λ,Execution _ Steer Internal Representation,include,,,,human reviewer 4
+S0395,P22,Calculate the similarity between h^l and the rejection direction d^(l),Evaluation _ Compute Similarity to Rejection Direction,include,,,,human reviewer 4
+S0396,P22,we analyzed model representations under different conflict scenarios,Reasoning _ Analyze Representation Space,include,,,,human reviewer 4
+S0397,P22,we used linear probes to investigate whether models can distinguish between queries,Execution _ Train Linear Probe,include,,,,human reviewer 4
+S0398,P22,we applied t-SNE visualization to the last layer representations,Execution _ Visualize Representation via t-SNE,include,,,,human reviewer 4
+S0399,P22,evaluate them from two aspects: Refusal to Answer Judgment; Awareness of False,Evaluation _ Evaluate Refusal Accuracy,include,,,,human reviewer 4
+S0400,P22,evaluate the role-playing ability of RPAs across four dimensions,Evaluation _ Evaluate Role-Playing Performance,include,,,,human reviewer 4
+S0401,P22,we utilize GPT-4o for data synthesis,Execution _ Generate Synthetic Queries,include,,,,human reviewer 4
+S0402,P22,we employ two automated filtering methods,Execution _ Filter Training Data,include,,,,human reviewer 4
+S0403,P22,we randomly sampled 100 examples from the RoleRef for manual verification,Execution _ Verify Data Quality,include,,,,human reviewer 4
+S0404,P22,break down the given character description into multiple atomic pieces of knowledge,Reasoning _ Decompose Character into Atomic Knowledge,include,yes,yes,yes,human reviewer 4
+S0405,P22,maintain its role-playing ability even when refusing to answer,Communication _ Maintain Role Consistency During Refusal,include,yes,yes,yes,human reviewer 4
+S0406,P22,we devised two refusal scenarios involving conflicts with contextual knowledge,Planning _ Design Conflict Scenarios,include,,,,human reviewer 4
+S0407,P22,we assessed model performance using three different state-of-the-art LLMs as evaluators,Evaluation _ Validate Cross-Model Generalization,include,,,,human reviewer 4
+S0408,P22,"To understand why models perform differently, we conducted an in-depth analysis",Reflection _ Analyze Performance Gap,include,,,,human reviewer 4
+S0409,P22,"Each role forms a separate cluster, indicating the model's ability to distinguish between different characters",Reasoning _ Encode Query in Representation Space,include,,,,human reviewer 4
+S0410,P22,perform supervised fine-tuning on the model to teach it to refuse inappropriate requests,Execution _ Fine-Tune Model on Refusal Data,include,,,,human reviewer 4
+S0411,P22,"we conducted evaluations using MT-Bench, focusing on both role-playing and conversational abilities",Evaluation _ Benchmark Against MT-Bench,include,,,,human reviewer 4
+S0412,P22,"I want you to play as {role}, imitating {role}'s personality and values",Others _ Accept Role-Playing Persona,include,yes,yes,yes,human reviewer 4
+S0413,P22,Evaluating whether the model recognizes potential errors in the query,Communication _ Acknowledge False Information,include,yes,yes,,human reviewer 4
+S0414,P24,agents have gained the ability to make sequential decisions in complex MDPs,Execution _ Accept Environmental State,not include,,,,human reviewer 4
+S0415,P24,Q function assigns a probability distribution over actions for each state s,Reasoning _ Estimate Q-value for All Actions,not include,,,,human reviewer 4
+S0416,P24,"a^min = argmin_a Q_theta(s_t, a)",Execution _ Select Minimum-Value Action,not include,,,,human reviewer 4
+S0417,P24,"pi(s, argmax_a Q(s,a)) = 1 - epsilon",Execution _ Select Maximum-Value Action,not include,,,,human reviewer 4
+S0418,P24,"s^min_{t+1} ~ T(s_t, a^min)",Execution _ Execute Action in Environment,not include,,,,human reviewer 4
+S0419,P24,"B <- (r(s_t, a^min), s_t, s^min_{t+1}, a^min)",Others _ Store Transition in Replay Buffer,not include,,,,human reviewer 4
+S0420,P24,"Sample from replay buffer: <s_t, a_t, r(s_t, a_t), s_{t+1}> ~ B",Execution _ Sample Experiences from Replay Buffer,not include,,,,human reviewer 4
+S0421,P24,"TD = r(s_t, a^min) + gamma max_a Q(s^min_{t+1}, a) - Q(s_t, a^min)",Reasoning _ Compute Temporal Difference Error,not include,,,,human reviewer 4
+S0422,P24,Gradient step with nabla L(TD),Others _ Update Q-function via Gradient Descent,not include,,,,human reviewer 4
+S0423,P24,state-action value function is initialized with random weights,Others _ Initialize Q-function with Random Weights,not include,,,,human reviewer 4
+S0424,P24,compare the temporal difference obtained by CoAct TD Learning with canonical methods,Evaluation _ Compare Temporal Difference Across Methods,not include,,,,human reviewer 4
+S0425,P24,HN = (Score_agent - Score_random) / (Score_human - Score_random),Evaluation _ Measure Human-Normalized Performance Score,not include,,,,human reviewer 4
+S0426,P24,evaluate the reward obtained by the argmax policy using the current Q-function,Evaluation _ Evaluate Policy via Argmax Reward,not include,,,,human reviewer 4
+S0427,P24,Q-function behaves as a random function rather than providing an accurate representation,Evaluation _ Assess Q-function Convergence Behavior,not include,,,,human reviewer 4
+S0428,P24,"disadvantage gap D(s) = E[Q_theta(s,a) - Q_theta(s, a^min)]",Reasoning _ Analyze Disadvantage Gap,not include,,,,human reviewer 4
+S0429,P24,Q-function is eta-uninformed if rewards are approximately uniform across actions,Reasoning _ Characterize Uninformed Q-function,not include,,,,human reviewer 4
+S0430,P24,"once the Q-function is learnt the policy is determined via taking action a*(s) = argmax_a Q(s,a)",Execution _ Derive Optimal Policy from Q-values,not include,,,,human reviewer 4
+S0431,P24,Normalized TD Gain = 1 + (TD_method - TD_epsilon-greedy) / |TD_epsilon-greedy|,Evaluation _ Compute Normalized Temporal Difference Gain,not include,,,,human reviewer 4
+S0432,P24,"Sample kappa ~ U(0,1); if kappa < epsilon take counteractive action, else greedy",Execution _ Explore via Probabilistic Action Mixing,not include,,,,human reviewer 4
+S0433,P24,"(Omega*Q)(s,a) = E_{s'~T(s,a)}[r(s,a) + gamma max_{a'} Q(s',a')]",Reasoning _ Apply Bellman Optimality Update,not include,,,,human reviewer 4
+S0434,P24,CoAct TD Learning improves performance by 248% across the entire benchmark,Evaluation _ Verify Sample Efficiency via Empirical Benchmark,not include,,,,human reviewer 4
+S0435,P24,"number of times N_t(s,a) that each action a has been taken in state s by step t",Others _ Count State-Action Visits for UCB,not include,,,,human reviewer 4
+S0436,P24,sample complexity and experience collection remains an open challenging problem,Reflection _ Diagnose Exploration Failure in High-Dimensional MDPs,not include,,,,human reviewer 4
+S0437,P24,conduct extensive experiments in the Arcade Learning Environment 100K benchmark,Communication _ Report Benchmark Performance Results,not include,,,,human reviewer 4
+S0438,P26,visual observation at each timestep consists of an 86_155 pixel grayscale image,Execution _ Process Visual Input,not include,,,,human reviewer 2 (main reviewer)
+S0439,P26,"running statistics maintained via exponential moving average, computing normalized observations",Execution _ Normalize Input Statistics,not include,,,,human reviewer 2 (main reviewer)
+S0440,P26,"visual encoder consists of two convolutional layers with aggressive spatial downsampling, extracting low-level visual features such as edges and color gradients",Execution _ Extract Spatial Features,not include,,,,human reviewer 2 (main reviewer)
+S0441,P26,gating mechanism learns to identify features that remain reliable under visual perturbations while suppressing noise-sensitive components,Execution _ Gate Feature Flow,not include,,,,human reviewer 2 (main reviewer)
+S0442,P26,"action space comprises three continuous control dimensions: forward-backward velocity, lateral (strafing) velocity, and angular rotation rate",Execution _ Select Continuous Action,not include,,,,human reviewer 2 (main reviewer)
+S0443,P26,fed to separate policy and value heads for action selection and value estimation,Reasoning _ Estimate State Value,not include,,,,human reviewer 2 (main reviewer)
+S0444,P26,agent navigates from a randomized starting position toward a visually-cued target sphere,Execution _ Navigate Toward Target,not include,,,,human reviewer 2 (main reviewer)
+S0445,P26,"requires identifying salient visual features (color, shape, relative position) rather than building complex object-part hierarchies",Reasoning _ Detect Task-Relevant Features,not include,,,,human reviewer 2 (main reviewer)
+S0446,P26,"selective suppression of noise-sensitive features, improving robustness particularly under severe perturbations",Execution _ Suppress Noise-Sensitive Components,not include,,,,human reviewer 2 (main reviewer)
+S0447,P26,GLU layers apply learned gating functions that determine how to weight and selectively filter features,Execution _ Route Features Adaptively,not include,,,,human reviewer 2 (main reviewer)
+S0448,P26,"enables learning of multi-scale visual features from low-level edges to high-level semantic representations, mirroring the hierarchical organization of mammalian visual cortex",Execution _ Learn Hierarchical Visual Representations,not include,,,,human reviewer 2 (main reviewer)
+S0449,P26,trained using Proximal Policy Optimization. PPO balances sample efficiency with training stability through its clipped surrogate objective,Execution _ Optimize Policy via RL,not include,,,,human reviewer 2 (main reviewer)
+S0450,P26,achieving 95.4% final score with a lightweight two-layer CNN enhanced by GLU and observation normalization,Execution _ Generalize Across Visual Perturbations,not include,,,,human reviewer 2 (main reviewer)
+S0451,P26,extract feature representations from their trained agents and submit these to an evaluation server that computes neural prediction metrics,Execution _ Predict Neural Activity Patterns,not include,,,,human reviewer 2 (main reviewer)
+S0452,P26,"saving checkpoints every 20,000 steps. This systematic checkpoint analysis reveals that optimal performance emerges around 200,000 steps",Evaluation _ Evaluate Checkpoint Performance,not include,,,,human reviewer 2 (main reviewer)
+S0453,P26,"systematically quantify the contribution of individual architectural components, we conduct comprehensive ablation studies",Evaluation _ Quantify Component Contributions,not include,,,,human reviewer 2 (main reviewer)
+S0454,P26,"comprehensive experimental results for Track 1, comparing our lightweight architecture against several baseline approaches",Evaluation _ Compare Architecture Performance,not include,,,,human reviewer 2 (main reviewer)
+S0455,P26,practitioners should evaluate multiple checkpoints from different training stages and select based on validation performance,Evaluation _ Select Optimal Training Checkpoint,not include,,,,human reviewer 2 (main reviewer)
+S0456,P26,deep 24-layer ResNet exhibits a 30 percentage point gap _ indicating model memorizes training-specific visual patterns rather than learning generalizable features,Evaluation _ Detect Overfitting Patterns,not include,,,,human reviewer 2 (main reviewer)
+S0457,P26,"employ a two-phase training strategy that first trains the convolutional backbone for 1,400,000 steps, then adds the GLU module and continues training for an additional 350,000 steps",Planning _ Plan Staged Training Strategy,not include,,,,human reviewer 2 (main reviewer)
+S0458,P26,Documenting failed approaches provides valuable insights into common pitfalls. We systematically evaluated several sophisticated architectures and techniques that ultimately underperformed,Reflection _ Reflect On Failed Approaches,not include,,,,human reviewer 2 (main reviewer)
+S0459,P26,LSTM models exhibited severe instability with episodic returns fluctuating wildly without convergence,Evaluation _ Identify Training Instability,not include,,,,human reviewer 2 (main reviewer)
+S0460,P26,"task-appropriate inductive bias, where architectural constraints match problem structure, enables better generalization than flexible deep architectures",Planning _ Design Task-Appropriate Architecture,not include,,,,human reviewer 2 (main reviewer)
+S0461,P26,"These failures prompted a fundamental reconsideration of our approach. Rather than continuing to scale architectural complexity, we investigated whether simpler designs could achieve superior robustness",Reflection _ Reconsider Design Strategy After Failure,not include,,,,human reviewer 2 (main reviewer)
+S0462,P26,"residual connections facilitate gradient flow through the deep network, mirroring the organization of biological visual pathways",Execution _ Extract Hierarchical Cortical Representations,not include,,,,human reviewer 2 (main reviewer)
+S0463,P26,representational similarity by comparing the geometry of agent and neural representational spaces using correlation of representational dissimilarity matrices,Evaluation _ Compute Representational Similarity,not include,,,,human reviewer 2 (main reviewer)
+S0464,P27,A pool of k=4 role-conditioned GPT-4o agents are each given the full interview transcript as input,Execution _ Adopt Expert Persona,include,,yes,yes,human reviewer 2 (main reviewer)
+S0465,P27,"If the transcript exceeds the model's input batch limit, it is divided into contiguous chunks",Execution _ Process Text Chunk,include,,,,human reviewer 2 (main reviewer)
+S0466,P27,"Each agent then emits a set of initial codes C_r = {c_r,1, ..., c_r,nr}, where r denotes the specific identity of the agent",Execution _ Generate Initial Codes,include,,,,human reviewer 2 (main reviewer)
+S0467,P27,The codes from all roles are merged and passed to a secondary set of agents that cluster semantically similar codes,Execution _ Aggregate Codes Across Agents,include,,,,human reviewer 2 (main reviewer)
+S0468,P27,cluster semantically similar codes and generate preliminary themes,Reasoning _ Cluster Semantic Codes,include,yes,yes,yes,human reviewer 2 (main reviewer)
+S0469,P27,"generate preliminary themes, each concise, often within 60 words",Execution _ Generate Preliminary Themes,include,,,,human reviewer 2 (main reviewer)
+S0470,P27,others may retain role-specific perspectives to support diverse theme formulation,Execution _ Retain Role-Specific Perspective,include,yes,,yes,human reviewer 2 (main reviewer)
+S0471,P27,"Evaluation Scores: Obtain s^(t) = (C, D, T) on the trustworthiness dimensions defined in Section 4",Evaluation _ Produce Quality Scores,include,yes,yes,yes,human reviewer 2 (main reviewer)
+S0472,P27,we retrieve the associated segments using Quote IDs and task an evaluator agent with determining whether each theme is consistent,Execution _ Retrieve Supporting Quotes,include,,,,human reviewer 2 (main reviewer)
+S0473,P27,task an evaluator agent with determining whether each theme is consistent with its supporting quotes _ identifies hallucination or bias,Evaluation _ Verify Theme-Quote Consistency,include,,yes,yes,human reviewer 2 (main reviewer)
+S0474,P27,"Suggests specific edits to themes, such as ADD (adding), SPLIT (splitting), COMBINE (combining), or DELETE (deleting), each targeted to a particular theme",Planning _ Propose Theme Edits,include,,,,human reviewer 2 (main reviewer)
+S0475,P27,"If RL is disabled, the proposals are applied heuristically: themes with C < 0.7 trigger ADD; D_L < 0.20 triggers COMBINE",Execution _ Apply Heuristic Edits,include,,,,human reviewer 2 (main reviewer)
+S0476,P27,feedback from the feedback agent is used to iteratively refine and improve the generated themes,Reflection _ Refine Output Based on Feedback,include,,yes,yes,human reviewer 2 (main reviewer)
+S0477,P27,The resulting refined theme set is re-scored until the L1 norm of score differences is below 0.05 or a maximum of three iterations,Evaluation _ Re-score Refined Output,include,,,,human reviewer 2 (main reviewer)
+S0478,P27,Repeat Steps 3-4 until convergence or a maximum of t_max = 5 iterations,Evaluation _ Monitor Convergence,include,,,,human reviewer 2 (main reviewer)
+S0479,P27,"The feedback agent is retained as a critic during training; its scores are concatenated to the reward model input, enabling reward shaping without additional human cost",Evaluation _ Act as Policy Critic,include,,,,human reviewer 2 (main reviewer)
+S0480,P27,A reward model R_phi is updated via MSE loss on the rated batches,Execution _ Update Reward Model,include,,,,human reviewer 2 (main reviewer)
+S0481,P27,The policy parameters theta of the Theme-Generation agent are optimized with Proximal Policy Optimisation (PPO),Execution _ Optimize Policy via PPO,include,,,,human reviewer 2 (main reviewer)
+S0482,P27,"KL divergence term KL(pi_theta || pi_SFT) measures deviation from the base supervised fine-tuned model, which acts as a regularizer to prevent the policy from drifting too far",Reasoning _ Apply KL Divergence Constraint,include,,,,human reviewer 2 (main reviewer)
+S0483,P27,We compute lexical overlap using bidirectional ROUGE scores (ROUGE-1 unigram and ROUGE-2 bigram),Evaluation _ Compute Lexical Overlap Score,include,,,,human reviewer 2 (main reviewer)
+S0484,P27,"we calculate the cosine similarity between each pair (t_i, l_j) using embeddings from a sentence-level transformer model (all-mpnet-base-v2)",Evaluation _ Compute Semantic Similarity Score,include,,,,human reviewer 2 (main reviewer)
+S0485,P27,Output Final theme set and its associated audit trail,Execution _ Generate Audit Trail,include,,,,human reviewer 2 (main reviewer)
+S0486,P27,"Each theme is concise, often within 60 words",Communication _ Summarize Theme to Output,include,,,,human reviewer 2 (main reviewer)
+S0487,P27,We also incorporate human-generated themes from Mery et al. (2023) as references to compute traditional metrics against LLM-generated themes,Evaluation _ Compare Against Human Baseline,include,,,,human reviewer 2 (main reviewer)
+S0488,P27,enabling reward shaping without additional human cost,Execution _ Shape Reward via Critic Scores,include,,,,human reviewer 2 (main reviewer)
+S0489,P27,"If no human feedback is supplied, Auto-TA degrades to the heuristic loop above",Execution _ Degrade to Heuristic Mode,include,,,,human reviewer 2 (main reviewer)
+S0490,P28,analyzes the project's core functionalities and their interactions with UI elements by reading the source code,Execution _ Analyze Source Code,include,yes,yes,yes,human reviewer 2 (main reviewer)
+S0491,P28,Extract contextual requirements using both source code and analysis summary,Execution _ Extract Requirements from Code,include,,,,human reviewer 2 (main reviewer)
+S0492,P28,automatically generates candidate user-facing requirements based on this analysis,Planning _ Generate Requirements,include,yes,yes,yes,human reviewer 2 (main reviewer)
+S0493,P28,"Human supervisors review the generated requirements to ensure accuracy, clarity, and functional consistency",Evaluation _ Verify Requirement Accuracy,include,,,,human reviewer 2 (main reviewer)
+S0494,P28,analyzes both validated requirements and source code to produce relevant scenarios,Planning _ Generate Test Scenarios,include,,,,human reviewer 2 (main reviewer)
+S0495,P28,"guided to cover a wide range of test cases, including both typical behaviors and unexpected or edge cases",Planning _ Design Test Coverage,include,,,,human reviewer 2 (main reviewer)
+S0496,P28,generates initial Python implementations corresponding to the Gherkin-style test steps,Execution _ Generate Test Script,include,,,,human reviewer 2 (main reviewer)
+S0497,P28,checks for missing or syntactically invalid step definitions,Evaluation _ Validate Step Definitions,include,,,,human reviewer 2 (main reviewer)
+S0498,P28,Run behave --dry-run to validate step implementation,Execution _ Execute Dry-Run Verification,include,,,,human reviewer 2 (main reviewer)
+S0499,P28,Modify step implementation based on error message,Reflection _ Self-Correct Step Implementation,include,yes,yes,yes,human reviewer 2 (main reviewer)
+S0500,P28,executes the script to detect logical inconsistencies or failed assertions,Execution _ Execute Test Script,include,,,,human reviewer 2 (main reviewer)
+S0501,P28,Modify test script based on failure log,Reflection _ Debug Test Logic,include,,yes,,human reviewer 2 (main reviewer)
+S0502,P28,"annotate_interactive_components(file, strategy='add data-testid')",Execution _ Annotate UI Components,include,yes,yes,yes,human reviewer 2 (main reviewer)
+S0503,P28,Agents share project context to ensure: Cross-file consistency; Non-conflicting test-ids,Reasoning _ Maintain Cross-File Consistency,include,yes,yes,yes,human reviewer 2 (main reviewer)
+S0504,P28,"generate a project-level summary based on the validated requirements including description of overall application logic, key features",Reasoning _ Summarize Project Context,include,,,,human reviewer 2 (main reviewer)
+S0505,P28,human supervisors validate and refine the user requirements automatically generated by the Requirement Extractor Agent,Evaluation _ Validate Generated Requirements,include,,,,human reviewer 2 (main reviewer)
+S0506,P28,"Gold Checker evaluates each annotation on three binary criteria: equivalence, completeness, and correctness",Evaluation _ Score Annotation Quality,include,,yes,yes,human reviewer 2 (main reviewer)
+S0507,P28,Refine requirement based on validated test cases to ensure alignment,Reflection _ Align Requirements to Tests,include,yes,yes,yes,human reviewer 2 (main reviewer)
+S0508,P28,generates the full codebase via simply prompting LLM using user requirements without external scaffolding,Execution _ Generate Full Codebase,include,,,,human reviewer 2 (main reviewer)
+S0509,P28,builds the complete codebase in a single reasoning pass while maintaining a modular development workflow,Planning _ Plan Modular Development,include,,,,human reviewer 2 (main reviewer)
+S0510,P28,"assembling a team of three LLM roles _ analyst, coder, and tester _ responsible for analysis, coding, and testing",Planning _ Decompose Development Roles,include,yes,,yes,human reviewer 2 (main reviewer)
+S0511,P28,Create JavaScript functionality handling empty display and consecutive operator clicks,Planning _ Decompose Task into Subproblems,include,yes,yes,yes,human reviewer 2 (main reviewer)
+S0512,P28,explicitly addresses the edge case of consecutive operator inputs in both its subproblem breakdown and high-level plan,Planning _ Plan Edge Case Coverage,include,,,,human reviewer 2 (main reviewer)
+S0513,P28,Recall three (03) relevant and distinct problems (different from the user task),Execution _ Retrieve Analogical Examples,include,yes,yes,yes,human reviewer 2 (main reviewer)
+S0514,P28,"generates solutions based on analogies to unrelated projects, which resemble few-shot prompting",Reasoning _ Apply Analogical Reasoning,include,yes,yes,yes,human reviewer 2 (main reviewer)
+S0515,P28,"Planning: HTML Structure, CSS Styling, JavaScript Functionality",Planning _ Plan Code Structure,include,yes,yes,yes,human reviewer 2 (main reviewer)
+S0516,P28,"recalling examples, planning, code generation, and debugging",Execution _ Generate Code from Plan,include,,,,human reviewer 2 (main reviewer)
+S0517,P28,"LLM-driven agents communicate via structured chat chains across design, coding, and testing phases",Communication _ Communicate via Structured Dialogue,include,yes,yes,,human reviewer 2 (main reviewer)
+S0518,P28,"DemandAnalysis, LanguageChoice, Reflection, Coding, CodeReviewComment, CodeReviewModification, EnvironmentDoc, Manual, TestModification",Planning _ Structure Development Phases,include,,,,human reviewer 2 (main reviewer)
+S0519,P28,encodes Standardized Operating Procedures (SOPs) into prompt sequences,Planning _ Encode Development Procedures,include,,,,human reviewer 2 (main reviewer)
+S0520,P28,agents with domain expertise verify intermediate results and reduce errors,Evaluation _ Verify Intermediate Results,include,yes,yes,yes,human reviewer 2 (main reviewer)
+S0521,P28,assigns diverse roles to multiple agents to efficiently decompose complex tasks,Planning _ Assign Agent Roles,include,yes,yes,yes,human reviewer 2 (main reviewer)
+S0522,P28,"evaluate each project along four dimensions: Code Inconsistency, Requirement Missing, Requirement Misaligned, Detail Mismatch",Evaluation _ Assess Code Quality,include,,,,human reviewer 2 (main reviewer)
+S0523,P28,annotators interact directly with the browser-based application to determine whether observable behavior aligns with the requirement,Evaluation _ Verify Behavioral Alignment,include,,,,human reviewer 2 (main reviewer)
+S0524,P28,frameworks that restrict coder inputs to task-specific requirements and component analyses effectively reduce interference,Reasoning _ Filter Contextual Input,include,,,,human reviewer 2 (main reviewer)
+S0525,P29,"selects effective HLS directive combination strategies and inserts directives within the specific structure (e.g., loops and arrays) of the generated HLS-C",Planning _ Select Directive Strategy,include,yes,yes,yes,human reviewer 2 (main reviewer)
+S0526,P29,"HLSTuner formulates a detailed plan that specifies: (1) the combination of HLS directives with their types and factors, (2) the target code segments for optimization, and (3) the insertion actions",Planning _ Formulate Optimization Plan,include,,,,human reviewer 2 (main reviewer)
+S0527,P29,This model formulates explicit modification instructions with detailed analysis,Planning _ Formulate Repair Instructions,include,yes,yes,yes,human reviewer 2 (main reviewer)
+S0528,P29,LLM Group for multifaceted evaluation generates diverse debugging instructions,Planning _ Generate Candidate Repairs,include,yes,yes,yes,human reviewer 2 (main reviewer)
+S0529,P29,enables QoR-aware reasoning to learn the impact of HLS directives on the quality of results (QoR),Reasoning _ Reason About Directive Impact,include,,,,human reviewer 2 (main reviewer)
+S0530,P29,This CoT analyzes the QoR variations (changes in latency and resource usage),Reasoning _ Generate Optimization Chain-of-Thought,include,,,,human reviewer 2 (main reviewer)
+S0531,P29,It identifies data dependencies to justify PIPELINE choices or balance memory bandwidth with ARRAY_PARTITION and evaluate hardware parallel processing architectures,Reasoning _ Identify Data Dependencies,include,,,,human reviewer 2 (main reviewer)
+S0532,P29,The analysis LLM then examines the error causes and provides debugging instructions,Reasoning _ Diagnose Error Cause,include,,yes,yes,human reviewer 2 (main reviewer)
+S0533,P29,"an analysis agent adopts a reasoning-to-instruction method, analyzing the HLS log to formulate error modification actions",Reasoning _ Apply Reasoning-to-Instruction,include,,yes,yes,human reviewer 2 (main reviewer)
+S0534,P29,"the model generates a reasoning step explicitly linking the directive to its hardware impact: Applying UNROLL increases parallelism, which reduces total execution time",Reasoning _ Link Directive to Hardware Impact,include,,,,human reviewer 2 (main reviewer)
+S0535,P29,LLM leverages retrieved HLS-related context to transform input C algorithms or natural language descriptions,Execution _ Retrieve Domain Context,include,yes,yes,yes,human reviewer 2 (main reviewer)
+S0536,P29,the generated code is tested by the HLS tool. Upon detection of errors during C simulation and synthesis,Execution _ Execute Verification Test,include,,,,human reviewer 2 (main reviewer)
+S0537,P29,we parse the compilation report and pair it with the erroneous code for a fine-tuned LLM,Execution _ Parse Error Report,include,,,,human reviewer 2 (main reviewer)
+S0538,P29,we implement a parsing mechanism that distills the essential diagnostic information. By employing regular expression matching and keyword detection,Execution _ Distill Diagnostic Information,include,,,,human reviewer 2 (main reviewer)
+S0539,P29,"Operating under strict instruction adherence, this agent adopts the instructions to implement debugging",Execution _ Execute Code Repair,include,yes,yes,yes,human reviewer 2 (main reviewer)
+S0540,P29,the errors encountered at this stage are collected via a self-evolving framework,Execution _ Collect Novel Error Cases,include,,,,human reviewer 2 (main reviewer)
+S0541,P29,"It then generates an error slice containing descriptions, examples, and analysis of a specific HLS error type",Execution _ Generate Error Slice,include,,,,human reviewer 2 (main reviewer)
+S0542,P29,queries BugRAG to check for existing entries,Execution _ Query Error Repository,include,yes,yes,yes,human reviewer 2 (main reviewer)
+S0543,P29,the inspection agent identifies a new error type and integrates the slice into the error repository with a new mnemonic identifier,Execution _ Expand Error Repository,include,yes,,yes,human reviewer 2 (main reviewer)
+S0544,P29,LLM which generates buggy code by integrating retrieved error slices from BugRAG as context,Execution _ Generate Buggy Code Sample,include,yes,yes,yes,human reviewer 2 (main reviewer)
+S0545,P29,an insertion agent executes this plan for HLS-C optimization,Execution _ Insert Directives into Code,include,yes,yes,yes,human reviewer 2 (main reviewer)
+S0546,P29,"HLSTuner analyzes QoR to scale loop parallelism up or down. For example, if hardware utilization exceeds the budget, HLSTuner halves parallelism",Evaluation _ Analyze Quality-of-Results,include,yes,yes,yes,human reviewer 2 (main reviewer)
+S0547,P29,HLSFixer retests the corrected HLS design against the golden results to ensure semantic equivalence with the original design intent,Evaluation _ Verify Corrected Design,include,,yes,yes,human reviewer 2 (main reviewer)
+S0548,P29,"the scoring agent (functioning as the judge). Based on clarity, logical soundness, alignment with error messages, this agent selects the optimal suggestion",Evaluation _ Score Repair Candidates,include,,yes,yes,human reviewer 2 (main reviewer)
+S0549,P29,an inspection agent examines the erroneous code and error messages parsed from the HLS tool test results,Evaluation _ Inspect Error Pattern,include,,yes,yes,human reviewer 2 (main reviewer)
+S0550,P29,"The agent assesses the contextual applicability of potential bugs, reducing the probability that the LLM forcibly generates trivial results",Evaluation _ Assess Bug Applicability,include,,yes,yes,human reviewer 2 (main reviewer)
+S0551,P29,"we prompt LLM to review the correct HLS-C code, pairing buggy code segments with corresponding error messages to construct debugging CoT",Evaluation _ Review Code Against Golden Standard,include,yes,yes,yes,human reviewer 2 (main reviewer)
+S0552,P29,"The LLM compares the QoR before and after optimization. It observes that the latency decreases significantly, while the resource utilization increases",Evaluation _ Compare Pre-Post Optimization QoR,include,,,,human reviewer 2 (main reviewer)
+S0553,P29,reflects on the code after assuming the fix to ensure the modification is reasonable,Reflection _ Reflect on Error Fix,include,,yes,yes,human reviewer 2 (main reviewer)
+S0554,P29,HLSTuner activates an iterative refinement incorporating current directives and the resulting QoR,Reflection _ Refine Directive Strategy Iteratively,include,,yes,yes,human reviewer 2 (main reviewer)
+S0555,P31,the agent aims to learn a policy to minimize a measure of uncertainty over f through interactions with M_f,Planning _ Formulate Exploration Objective,include,,,,human reviewer 5
+S0556,P31,minimizing L is a principled objective to minimize the sample complexity in Definition 1,Planning _ Optimize Sampling Distribution,include,,,,human reviewer 5
+S0557,P31,GAE computes the optimal abstract policy for the abstract MDP at each iteration,Planning _ Compute Optimal Abstract Policy,include,,,,human reviewer 5
+S0558,P31,this problem can be solved by computing optimal sampling policies for abstract MDPs only,Planning _ Reduce Problem to Abstract MDP,include,,,,human reviewer 5
+S0559,P31,we define the geometric estimation error as a function of abstract states,Reasoning _ Define Geometric Estimation Error,include,,,,human reviewer 5
+S0560,P31,we introduce the following eta-smoothened objective to minimize sample complexity,Reasoning _ Formulate Convex Objective,include,,,,human reviewer 5
+S0561,P31,"f(x) = f(L_g[x]) for all g in G, x in X...we call these a set of symmetries of f",Reasoning _ Identify MDP Symmetries,include,,,,human reviewer 5
+S0562,P31,the empirical estimator aggregates across all states across which f is invariant,Reasoning _ Aggregate Invariant Observations,include,,,,human reviewer 5
+S0563,P31,optimistic gradients satisfy state-action invariances induced by f,Reasoning _ Compute Optimistic Gradient,include,,,,human reviewer 5
+S0564,P31,geometric compression term Phi := S-bar/S formally captures the benefit of abstraction,Reasoning _ Quantify Geometric Compression,include,,,,human reviewer 5
+S0565,P31,we present an upper bound on the regret and the sample complexity achieved by GAE,Reasoning _ Bound Regret and Sample Complexity,include,,,,human reviewer 5
+S0566,P31,GAE computes the abstract CMP given the homomorphism h and the original CMP (line 2),Execution _ Construct Abstract MDP,include,,,,human reviewer 5
+S0567,P31,The empirical visitation frequency is initialized at the start of each iteration,Execution _ Initialize Visitation Frequency,include,,,,human reviewer 5
+S0568,P31,"via value iteration, for the abstract MDP at each step of the FW scheme",Execution _ Solve MDP via Value Iteration,include,,,,human reviewer 5
+S0569,P31,lifts the optimal abstract policy (line 7) to an optimal policy for the original MDP,Execution _ Lift Policy to Original MDP,include,,,,human reviewer 5
+S0570,P31,Deploy policy in M_f for tau_k steps (line 8),Execution _ Deploy Policy in Environment,include,,,,human reviewer 5
+S0571,P31,providing a noisy observation x ~ y(s) = f(s) + nu(s) at state s,Execution _ Collect Noisy Observation,include,,,,human reviewer 5
+S0572,P31,update the abstract empirical mean of f by aggregating visitation-weighted estimates,Execution _ Update Empirical Mean Estimate,include,,,,human reviewer 5
+S0573,P31,Aggregating across states within the same equivalence class (lines 8-9),Execution _ Aggregate State-Action Distribution,include,,,,human reviewer 5
+S0574,P31,the empirical visitation frequency is updated to serve for the gradient estimation at the next iteration,Execution _ Update State-Action Frequency,include,,,,human reviewer 5
+S0575,P31,GAE outputs the aggregated estimates of f,Execution _ Output Function Estimates,include,,,,human reviewer 5
+S0576,P31,we perform a thorough experimental evaluation of GAE analysing its statistical and computational efficiency,Evaluation _ Evaluate Statistical Performance,include,,,,human reviewer 5
+S0577,P31,we compare the data gathering performances of GAE with classic AE,Evaluation _ Compare Against Baseline AE,include,,,,human reviewer 5
+S0578,P31,we observe a significant effect of different degrees of compression to the data efficiency,Evaluation _ Assess Compression Impact,include,,,,human reviewer 5
+S0579,P31,omitting the inductive bias in the inference step worsens the performance of AE,Evaluation _ Validate Inductive Bias,include,,,,human reviewer 5
+S0580,P31,we compare the normalized runtime of GAE and AE for several degrees of compression,Evaluation _ Measure Computational Efficiency,include,,,,human reviewer 5
+S0581,P31,"current Active Exploration methods are not scalable, hindering their use in real-world scientific discovery problems",Reflection _ Identify Scalability Limitation,include,,,,human reviewer 5
+S0582,P32,I will need to 1. Load the CSV into a pandas DataFrame 2. Analyze the dataset to see what it looks like 3. Count how many lines belong to each scene 4. Compute the average number of lines per scene,Planning _ Decompose Task into Steps,include,,,,human reviewer 5
+S0583,P32,"To answer this question, I need to load the dataset, conduct a linear regression analysis between GDP per capita and life expectancy score",Planning _ Formulate Analytical Approach,include,,,,human reviewer 5
+S0584,P32,I can use the pandas method corr() to calculate the Pearson correlation coefficient between 'FamilySize' and 'Fare',Planning _ Identify Required Methods,include,,,yes,human reviewer 5
+S0585,P32,"We can see that the dataset is a DataFrame with columns 'Season', 'Episode', 'Scene', 'Character', and 'Line'. The lines of script are contained in the 'Line' column",Reasoning _ Interpret Observation Output,include,,,,human reviewer 5
+S0586,P32,The Pearson correlation coefficient between the 'FamilySize' and 'Fare' columns is approximately 0.205. This indicates a weak positive correlation between the size of a passenger's family and the fare they paid.,Reasoning _ Analyze Statistical Results,include,,,,human reviewer 5
+S0587,P32,"Constraints mainly contain detailed strict on methods, workflow or statistical parameters used to answer the question. Format requirements are series of '@answer_name[answer]'",Reasoning _ Assess Constraint Requirements,include,,,,human reviewer 5
+S0588,P32,"The R-squared value is approximately 0.67, which indicates a poor fit for the linear regression model",Reasoning _ Interpret Model Performance,include,,,,human reviewer 5
+S0589,P32,python_code_sandbox[input]: this tool can help to run python script with python code as input,Execution _ Execute Code in Sandbox,include,,,,human reviewer 5
+S0590,P32,"The process includes reasoning, code writing, execution, and iterative refinement based on the results obtained",Execution _ Write Statistical Analysis Code,include,,,,human reviewer 5
+S0591,P32,I will need to load the CSV into a pandas DataFrame... filename = '/mnt/ep_7.csv'; dataframe = pd.read_csv(filename),Execution _ Load Dataset from File,include,,,,human reviewer 5
+S0592,P32,Use one-hot encoding for the 'Sex' and 'Embarked' features. Use the 'linear regression' model provided by the sklearn library in Python. Split the dataset into a training set (80%) and a testing set (20%),Execution _ Apply Machine Learning Algorithm,include,,,,human reviewer 5
+S0593,P32,"Create a new feature called 'FamilySize' by summing the 'SibSp' and 'Parch' columns. Then, calculate the Pearson correlation coefficient (r) between the 'FamilySize' and 'Fare' columns",Execution _ Engineer New Data Feature,include,,,,human reviewer 5
+S0594,P32,avg_lines_per_scene = scene_lines_counts.mean()... counting the number of lines in each scene using the value_counts function on the 'Scene' column,Execution _ Apply Statistical Computation,include,,,,human reviewer 5
+S0595,P32,"Action: the action to take, should be one of [python_code_sandbox]. Cease generating further and await the execution outcome from python_code_sandbox",Execution _ Invoke External Tool,include,,,,human reviewer 5
+S0596,P32,"Considering that most models hardly follow the format requirements exactly, we add a reformat step after the original responses which formats the responses with the format requirements with a one-shot prompting",Evaluation _ Validate Output Against Format,include,,,,human reviewer 5
+S0597,P32,We use regular expression matching to draw the answer enclosed in 'answer_name[answer]' and the exact match to evaluate the performance,Evaluation _ Match Answer to Ground Truth,include,,,,human reviewer 5
+S0598,P32,"GPT-4 is utilized for the quantitative assessment of question difficulty in DAEval. Questions are classified into three levels: easy, medium, and hard based on data processing complexity, domain-specific knowledge, and coding sophistication",Evaluation _ Score Question Difficulty,include,,,,human reviewer 5
+S0599,P32,Filtering. This step involves a filtering with rules and GPT-4. Specific rules are employed to identify and eliminate data with hallucination and incomplete solution,Evaluation _ Filter Low-Quality Samples,include,,,,human reviewer 5
+S0600,P32,We invite human experts to assess the quality of generated dataset and remove samples unqualified in any metric,Evaluation _ Assess Data Quality,include,,,,human reviewer 5
+S0601,P32,"The criteria includes five aspects: Python code relevance, interpretation of system notifications, conciseness, understanding of the Python sandbox environment, and solution provision",Evaluation _ Verify Solution Completeness,include,,,,human reviewer 5
+S0602,P32,"agents covering abilities like task planning, writing code, leveraging Python sandbox, self-debugging if needed, and finally, able to solve problems",Reflection _ Debug Code Errors,include,,,,human reviewer 5
+S0603,P32,"The results of the execution are fed back into the conversation, enabling GPT-4 to refine its responses and propose further iterations",Reflection _ Refine Response Iteratively,include,,,,human reviewer 5
+S0604,P32,This iterative cycle continues until GPT-4 determines that the accumulated information suffices to conclusively answer the problem,Reflection _ Determine Task Completion,include,,,yes,human reviewer 5
+S0605,P32,"We first prompt LLMs with the file, question and constraints",Communication _ Accept Task and Constraints,include,,,,human reviewer 5
+S0606,P32,Final Answer: The average number of lines per scene in the 'ep_7.csv' dataset is approximately 6.02,Communication _ Present Final Answer,include,,,yes,human reviewer 5
+S0607,P32,we add a reformat step after the original responses which formats the responses with the format requirements with a one-shot prompting. We conduct ablation studies...indicating the necessity of adding a reformatting step,Communication _ Reformat Output to Specification,include,,,,human reviewer 5
+S0608,P32,we leverage GPT-4 to generate open-ended questions based on both file descriptions and the pre-defined concepts. Each question involves one or multiple concepts,Others _ Generate Dataset Question,include,,,,human reviewer 5
+S0609,P32,"we utilize GPT-3.5 to summarize the following information for each CSV file: 1. Description of column names and contents, 2. Data types, 3. Identification of missing values",Others _ Summarize File Description,include,,,,human reviewer 5
+S0610,P33,the AI agent starts by observing the patient state S_0,Reasoning _ Observe Environment State,include,,,,human reviewer 5
+S0611,P33,suggesting treatments that can be overridden by the clinician,Execution _ Propose Treatment Action,include,,,,human reviewer 5
+S0612,P33,"the clinician observes both S_0 and A_0, and decides whether to override the AI's treatment or not",Reasoning _ Monitor Peer Agent's Action,include,,,yes,human reviewer 5
+S0613,P33,"If the clinician overrides the AI, the patient outcome Y is determined by S_0 and the alternative treatment H_0 suggested by the clinician",Execution _ Override Agent Treatment,include,,,yes,human reviewer 5
+S0614,P33,"the clinician can additionally take a no-op action, which means that they do not override the AI's action at that step",Execution _ Defer to Peer Agent,include,,,,human reviewer 5
+S0615,P33,"agent i follows a policy that is common among all agents, and depends on their current positions on the graph",Execution _ Follow Stochastic Policy,include,,,,human reviewer 5
+S0616,P33,"each agent can select to either move up, straight or down",Execution _ Select Navigation Action,include,,,,human reviewer 5
+S0617,P33,we learn the policies of both agents using Policy Iteration,Execution _ Learn Policy via Policy Iteration,include,,,,human reviewer 5
+S0618,P33,"the AI recommends one of eight possible treatments, which is then reviewed and potentially overridden by the clinician",Communication _ Recommend Treatment to Peer Agent,include,,,yes,human reviewer 5
+S0619,P33,samples noise variables from the posterior P(u|_) in order to compute cf-ASE,Reasoning _ Perform Abduction Step,include,,,,human reviewer 5
+S0620,P33,Sample cf trajectory,Reasoning _ Generate Counterfactual Trajectory,include,,,,human reviewer 5
+S0621,P33,Sample cf outcome,Evaluation _ Predict Counterfactual Outcome,include,,,,human reviewer 5
+S0622,P33,describing the process of modifying the structural equation which determines the value of X in M,Execution _ Intervene on Causal Variable,include,,,,human reviewer 5
+S0623,P33,the effect of an agent's action on the outcome that propagates through other agents,Reasoning _ Propagate Effect Through Agent Subset,include,,,,human reviewer 5
+S0624,P33,provide a sufficient set of conditions for identifying cf-ASE,Reasoning _ Identify Causal Distribution,include,,,,human reviewer 5
+S0625,P33,to enable counterfactual reasoning we represent MMDPs by structural causal models,Reasoning _ Represent Environment as SCM,include,,,,human reviewer 5
+S0626,P33,deactivating the edge between S_0^A and Y in Fig. 1 (right),Execution _ Deactivate Causal Edge,include,,,,human reviewer 5
+S0627,P33,attributing the causal effects of agents' actions to the influence they exert on other agents,Evaluation _ Attribute Causal Contribution,include,,,,human reviewer 5
+S0628,P33,assuming noise monotonicity means that functions f^i are monotonic w.r.t. noise variables,Reasoning _ Apply Structural Assumption,include,,,,human reviewer 5
+S0629,P33,we assess the robustness of cf-ASE in the presence of uncertainty,Evaluation _ Assess Estimate Robustness,include,,,,human reviewer 5
+S0630,P33,cf-PSE suggests a less prominent effect for the clinician-specific effect,Evaluation _ Compare Causal Effect Estimates,include,,,,human reviewer 5
+S0631,P33,analyzing this effect necessitates counterfactual reasoning across three distinct scenarios,Reasoning _ Reason Across Alternative Worlds,include,,,yes,human reviewer 5
+S0632,P33,"the clinician, who assumes a supervisory role",Others _ Oversee Peer Agent Decisions,include,,,,human reviewer 5
+S0633,P33,quantify the impact of the agents' actions on the outcome Y,Evaluation _ Quantify Agent-Specific Effect,include,,,,human reviewer 5
+S0634,P33,Our proof leverages a novel identification formula,Reasoning _ Construct Causal Identification Formula,include,,,,human reviewer 5
+S0635,P33,Conducting post-hoc analysis on decisions and identifying their causal contributions to the realized outcome,Evaluation _ Conduct Post-Hoc Causal Analysis,include,,,,human reviewer 5
+S0636,P34,"LLM-based planner to decompose the specified language instruction L into a sequence of subtasks S = [S0, S1, ..., Sn]",Planning _ Decompose Task Into Subtasks,include,,,yes,human reviewer 5
+S0637,P34,we utilize Chain-of-Thought (CoT) to prompt GPT-4 with in-context learning,Planning _ Generate Plan Via Chain-of-Thought,include,,,,human reviewer 5
+S0638,P34,"the planner is prompted to generate its Thought process in achieving the task, followed by the presentation of the ultimate Plan",Planning _ Produce Thought-Then-Plan Output,include,,,,human reviewer 5
+S0639,P34,"RequireReplan provides the LLM-based executor with the capability to dynamically adjust the plan, improving the robustness to exceptions",Planning _ Replan Upon Execution Exception,include,,,yes,human reviewer 5
+S0640,P34,"we prompt the LLM-based executor to generate both reasoning traces and action plans, allowing for greater synergy between the two",Reasoning _ Generate Reasoning Trace Before Action,include,,,,human reviewer 5
+S0641,P34,"reasoning over language to track progress, handle exceptions or adjust the plan according to the situation",Reasoning _ Track Plan Progress Via Language,include,,,,human reviewer 5
+S0642,P34,"summarize the information into a task-centric description, thereby safeguarding the LLM-based executor against distractions and hallucinations",Reasoning _ Filter Observations Into Task Description,include,,,,human reviewer 5
+S0643,P34,summarize the world knowledge learned from {AOi} as prior knowledge candidates {Pj},Reasoning _ Distill Prior Knowledge From Exploration,include,,,,human reviewer 5
+S0644,P34,"Executor is responsible for implementing these plans with a skill library, which translates several re-useable skills into precise, context-aware actions",Execution _ Execute Skill From Predefined Library,include,,,,human reviewer 5
+S0645,P34,NavigateToObject skill empowers the LLM-based executor with the capability to set the landmark-based navigation goal,Execution _ Navigate To Target Object,include,,,,human reviewer 5
+S0646,P34,Explore skill enhances the LLM-based executor's ability to guide the agent in room exploration by sampling navigation goals from traversable areas,Execution _ Explore Environment By Sampling Goals,include,,,yes,human reviewer 5
+S0647,P34,LookAround skill enables the LLM-based executor to manipulate the agent to look around the environment to get a more comprehensive observation of the room,Execution _ Survey Room Via LookAround,include,,,,human reviewer 5
+S0648,P34,the deterministic action policy of OPEx outputs a navigation or interaction action based on a set of heuristics,Execution _ Apply Deterministic Navigation Heuristics,include,,,,human reviewer 5
+S0649,P34,the agent employs the Fast Marching Method to navigate towards the navigation goal,Execution _ Navigate Via Fast Marching Method,include,,,,human reviewer 5
+S0650,P34,"translates several re-useable skills into precise, context-aware actions within the environment",Execution _ Convert Language Plan To Low-Level Actions,include,,,,human reviewer 5
+S0651,P34,"comparing the egocentric observations before and after the execution of the action. If one kind of action failure is detected, the error message will be gathered",Evaluation _ Detect Action Failure Via Observation,include,,,,human reviewer 5
+S0652,P34,"ranks the examples based on the similarity of the input test case...that have the greatest cosine similarity, then select top-K examples for in-context learning",Evaluation _ Rank In-Context Examples By Similarity,include,,,,human reviewer 5
+S0653,P34,"an LLM-based filter is applied on {Pj} to eliminate contradictory and duplicated world knowledge, which results in the final set {P'i}",Evaluation _ Filter Contradictory World Knowledge,include,,,,human reviewer 5
+S0654,P34,Error message: tracking the error that causes action failures to facilitate exception handling capability of agent,Reflection _ Handle Exception Based On Error Feedback,include,,,,human reviewer 5
+S0655,P34,the grounded prior knowledge prevents the agents from repetitive errors and facilitates grounded exception handling,Reflection _ Prevent Repetitive Errors Via Prior Knowledge,include,,,yes,human reviewer 5
+S0656,P34,splitting the instruction-following challenge into distinct reasoning and grounding roles handled by a reasoner agent and an actor agent,Communication _ Coordinate Reasoner-Actor In Dialogue,include,,,yes,human reviewer 5
+S0657,P34,OPEx-H denotes the OPEx with prior knowledge provided by humans...collecting human contributions,Communication _ Accept Prior Knowledge From Humans,include,,,,human reviewer 5
+S0658,P34,the action Play is utilized to interact with the environment or request re-planning of the current plan S,Communication _ Request Replan From Planner,include,,,yes,human reviewer 5
+S0659,P34,semantic mapping module to transform the egocentric visual observation into a semantic map,Others _ Build Semantic Map From Visual Observations,include,,,,human reviewer 5
+S0660,P34,"supplementary semantic map M't, which aggregates the information from Mt over successive time steps. The intuition resembles a form of majority voting",Others _ Aggregate Map Knowledge Over Time,include,,,yes,human reviewer 5
+S0661,P34,"Observer component is tasked with processing and interpreting sensory inputs, primarily visual, to construct an actionable understanding of the agent's immediate environment",Others _ Process Egocentric View Into Text,include,,,,human reviewer 5
+S0662,P34,extract objects from the semantic map _ found objects tracked from start of episode to current time step,Others _ Extract Objects From Semantic Map,include,,,,human reviewer 5
+S0663,P34,we sample a traversable location based on the distance to the target object as the navigation goal (noted as 'traversable goal heuristic'),Others _ Select Navigation Goal Via Traversable Heuristic,include,,,,human reviewer 5
+S0664,P34,"the deterministic action policy of OPEx is equipped with a slice replay heuristic, which tracks the location of successful execution of SliceObject for easier going back",Others _ Track Slice Location For Replay,include,,,,human reviewer 5

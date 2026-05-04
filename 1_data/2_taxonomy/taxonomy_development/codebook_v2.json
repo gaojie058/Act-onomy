@@ -1,0 +1,121 @@
+{
+  "source_pdf": "reports/codebook/Action Space Codebook (v2).pdf",
+  "version": "v2",
+  "version_note": "Verb + Noun format with plain-English explanations. Validated.",
+  "summary": {
+    "n_super_categories": 6,
+    "n_sub_categories": 6,
+    "n_leaves": 35
+  },
+  "super_categories": [
+    {
+      "name": "Memory Actions",
+      "flat": true,
+      "sub_categories": [
+        {
+          "name": "Memory",
+          "leaves": [
+            {"action": "Store information in working memory", "examples_raw": "Put whatever the agent is currently using — recent inputs, intermediate results — onto a \"scratch pad\" for quick access.", "papers_cited": []},
+            {"action": "Store/update experiences in episodic memory", "examples_raw": "Save past events as \"episodes\" — which game was won, which plan failed, what happened step by step — like a personal diary.", "papers_cited": []},
+            {"action": "Store knowledge in semantic memory", "examples_raw": "Save general facts about the world — \"fire is hot\", \"404 means not found\" — not tied to any specific event.", "papers_cited": []}
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Grounding Actions",
+      "flat": true,
+      "sub_categories": [
+        {
+          "name": "Grounding",
+          "leaves": [
+            {"action": "Process perceptual inputs into textual observations", "examples_raw": "Turn images, sounds, or sensor readings into text descriptions so a text-based LLM can understand the physical world.", "papers_cited": []},
+            {"action": "Affect physical environments via robotic planners", "examples_raw": "Actually move things in the real world — pick up a cup, open a door — by sending language commands to a robot arm.", "papers_cited": []},
+            {"action": "Convert images to text via VLMs", "examples_raw": "Feed a picture to a Vision-Language Model (like GPT-4V) and get back a text description of what's in it.", "papers_cited": []},
+            {"action": "Accept instructions from humans", "examples_raw": "Receive a task or command from a human user, e.g. \"book me a flight\" or \"translate this paragraph.\"", "papers_cited": []},
+            {"action": "Ask for clarification from people", "examples_raw": "When something is unclear, proactively ask the human — \"Which file did you mean?\"", "papers_cited": []},
+            {"action": "Entertain people", "examples_raw": "Chat casually, tell jokes, do role-play — provide emotional support or fun.", "papers_cited": []},
+            {"action": "Conduct multi-agent debate", "examples_raw": "Have multiple agents argue different sides of the same question, using the debate to reach a better answer.", "papers_cited": []},
+            {"action": "Solve tasks collaboratively across agents", "examples_raw": "Split a big job among multiple agents — one writes code, one tests, one documents — and combine the results.", "papers_cited": []},
+            {"action": "Interact with games, APIs, and websites", "examples_raw": "Operate in digital environments: play Minecraft, call a weather API, click buttons on a webpage.", "papers_cited": []},
+            {"action": "Execute code", "examples_raw": "Run a piece of code and get the output — e.g. run a Python script, execute a database query.", "papers_cited": []},
+            {"action": "Augment external knowledge or computation", "examples_raw": "Call outside tools to fill knowledge gaps or handle heavy math — look up a database, use a calculator, etc.", "papers_cited": []}
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Retrieval Actions",
+      "flat": true,
+      "sub_categories": [
+        {
+          "name": "Retrieval",
+          "leaves": [
+            {"action": "Load skills from the skill library", "examples_raw": "Find and load a ready-made code snippet from a pre-built library — e.g., grab the \"chop tree\" skill in Minecraft.", "papers_cited": []},
+            {"action": "Retrieve events from episodic memory", "examples_raw": "Search the \"diary\" for relevant past experiences, ranked by how recent, important, and relevant they are.", "papers_cited": []},
+            {"action": "Leverage documents for code generation", "examples_raw": "Look up reference docs (API docs, tutorials) and use that information to help write code.", "papers_cited": []},
+            {"action": "Retrieve knowledge from semantic memory", "examples_raw": "Pull a general fact from the knowledge base — e.g., look up \"what does HTTP 404 mean?\"", "papers_cited": []}
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Reasoning Actions",
+      "flat": true,
+      "sub_categories": [
+        {
+          "name": "Reasoning",
+          "leaves": [
+            {"action": "Read from working memory", "examples_raw": "Check the \"scratch pad\" — grab the intermediate results and state information stored there.", "papers_cited": []},
+            {"action": "Summarize recent observations, trajectories", "examples_raw": "Condense a flood of recent information into a few key takeaways to avoid information overload.", "papers_cited": []},
+            {"action": "Distill insights from retrieved information", "examples_raw": "Extract the core conclusion from a pile of raw data — \"so the real issue is X.\"\nFor every binary score z(q) i,j from the judge, there is a corresponding explanation e(q)i,j. (P3)", "papers_cited": ["P3"]},
+            {"action": "Provide context for subsequent LLM calls", "examples_raw": "Package the reasoning results so far and feed them as background into the next LLM call for a better answer.", "papers_cited": []}
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Learning Actions",
+      "flat": true,
+      "sub_categories": [
+        {
+          "name": "Learning",
+          "leaves": [
+            {"action": "Store episodic trajectories", "examples_raw": "Save a full action sequence from start to finish — every step recorded — for later training or review.", "papers_cited": []},
+            {"action": "Update parametric policy", "examples_raw": "Change the model's internal weights through training so it actually performs better on similar tasks — real learning.", "papers_cited": []},
+            {"action": "Establish a non-parametric policy", "examples_raw": "Instead of changing weights, build a case library of past experiences and look up the closest match when a new problem arrives.", "papers_cited": []},
+            {"action": "Update semantic memory with knowledge", "examples_raw": "Generalize from raw experiences into reusable facts and save them — e.g., after three failures, note \"this API has a rate limit.\"", "papers_cited": []},
+            {"action": "Reflect on failed episodes", "examples_raw": "Do a post-mortem on what went wrong, store the lessons learned, and avoid making the same mistake again.", "papers_cited": []},
+            {"action": "Build semantic map via VLM", "examples_raw": "Use a Vision-Language Model to scan the environment and produce a labeled map — not just layout, but annotations like \"door here\" or \"enemy there.\"", "papers_cited": []},
+            {"action": "Update LLM parameters via SL/RL/RLHF", "examples_raw": "Adjust the large language model's weights using supervised learning, reinforcement learning, or human feedback to improve on a specific task.", "papers_cited": []},
+            {"action": "Self-improve", "examples_raw": "Have the LLM produce multiple outputs, pick the best ones, and train on those — the model bootstraps its own improvement.", "papers_cited": []},
+            {"action": "Utilize subtask-specific LLMs", "examples_raw": "Use smaller, specialized models for specific jobs — one for summarization, one for SQL — instead of one big model for everything.", "papers_cited": []},
+            {"action": "Update the source code as procedural memory", "examples_raw": "Modify the agent's own source code — essentially patching itself to change how it behaves.", "papers_cited": []},
+            {"action": "Infer instructions from input-output examples", "examples_raw": "Look at a few \"input → output\" examples, figure out the underlying rule, and use that rule as a prompt for future tasks.", "papers_cited": []},
+            {"action": "Update reasoning via prompt update", "examples_raw": "Rewrite its own prompt template so the LLM thinks more clearly next time — learning a better way to reason.", "papers_cited": []},
+            {"action": "Update grounding via code-based skills", "examples_raw": "Write or improve code snippets that interact with the outside world — e.g., learn a new way to navigate a webpage.", "papers_cited": []},
+            {"action": "Maintain curriculum library", "examples_raw": "Keep a syllabus of mastered and upcoming skills, arranged by difficulty, so the agent learns in a sensible order.", "papers_cited": []},
+            {"action": "Update retrieval procedures", "examples_raw": "Improve how the agent searches for information — e.g., better keyword strategies or smarter relevance ranking.", "papers_cited": []},
+            {"action": "Update decision-making procedures", "examples_raw": "Improve the decision process itself — e.g., go from \"pick randomly\" to \"score every option and pick the best.\"", "papers_cited": []}
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Decision-Making Actions",
+      "flat": true,
+      "sub_categories": [
+        {
+          "name": "Decision-Making",
+          "leaves": [
+            {"action": "Propose action candidates", "examples_raw": "Brainstorm \"what could I do right now?\" — generate one or more possible next moves.", "papers_cited": []},
+            {"action": "Evaluate actions via heuristics, LLM, or learned values", "examples_raw": "Score each candidate: use rules of thumb, ask the LLM to judge, or use a trained value function to estimate how good each option is.", "papers_cited": []},
+            {"action": "Simulate grounding feedback internally", "examples_raw": "Mentally rehearse an action before doing it — imagine \"if I do X, what will the environment look like?\" without actually executing.", "papers_cited": []},
+            {"action": "Select actions via argmax, softmax, or majority vote", "examples_raw": "Pick one action to execute: take the highest-scored one (argmax), sample probabilistically (softmax), or let multiple evaluators vote.", "papers_cited": []},
+            {"action": "Execute grounding actions, API calls, or learning actions", "examples_raw": "Finally, do it for real: either perform an external action (call an API, move a robot) or an internal one (update memory, fine-tune).", "papers_cited": []}
+          ]
+        }
+      ]
+    }
+  ]
+}

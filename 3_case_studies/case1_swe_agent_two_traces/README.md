@@ -1,4 +1,4 @@
-# Case Study 2 — Profiling Behavior Within a Single Agent
+# Case Study 1 — Profiling Behavior Within a Single Agent
 
 Reproduces the within-agent task signatures reported in §4.2 of the paper for two `swe_agent` trajectories on SWE-bench:
 

@@ -1,4 +1,4 @@
-# Case Study 1 — Profiling Behavior Across Agents
+# Case Study 2 — Profiling Behavior Across Agents
 
 Reproduces the behavioral profiles reported in §4.1 of the paper for `swe_agent`, AutoGen / AG2, and HyperAgent.
 
