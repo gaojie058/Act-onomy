@@ -6,7 +6,7 @@ A community-extensible framework for describing and analyzing agent behavior at 
 
 Act-onomy ships three things:
 
-- A **codebook** of 11 top-level action categories instantiated by ~50 fine-grained sub-actions, grounded in CoALA and built via deductive coding on a 35-paper corpus (20 incorporated into the shared codebook; NeurIPS / ICML / ICLR / ACL Anthology, 2024–2026). See [`codebook.md`](codebook.md).
+- A **codebook** of 10 top-level action categories (organised under 4 classes: Sense / Think / Act / Adapt) instantiated by 42 sub-actions and 120 leaf-level instances, grounded in CoALA and built via deductive coding on a 35-paper corpus (20 incorporated into the shared codebook; NeurIPS / ICML / ICLR / ACL Anthology, 2024–2026). See [`1_data/2_taxonomy/`](1_data/2_taxonomy/).
 - Two **Claude Skills** that apply the codebook to agent papers and trajectories: [`qualitative-analysis-judge/`](skill/qualitative-analysis-judge/) (LLM-judge that emits an HTML report from a raw trajectory) and [`discovery-judge/`](skill/discovery-judge/) (codebook-iteration pipeline used during taxonomy construction).
 - A **contribution protocol** that lets the codebook grow as new agent designs appear, versioned as `vX.Y`. See [`CONTRIBUTING.md`](CONTRIBUTING.md) and [`CHANGELOG.md`](CHANGELOG.md).
 
@@ -53,7 +53,7 @@ The Skill is registered with [Claude Code](https://claude.com/claude-code) under
 
 A worked example trajectory is included at [`skill/qualitative-analysis-judge/assets/example_pylint_5859.json`](skill/qualitative-analysis-judge/assets/example_pylint_5859.json). See [`skill/qualitative-analysis-judge/SKILL.md`](skill/qualitative-analysis-judge/SKILL.md) for the full Skill prompt and [`skill/qualitative-analysis-judge/README.md`](skill/qualitative-analysis-judge/README.md) for the layout.
 
-> **Codebook versions.** The canonical [`codebook.md`](codebook.md) is the **v1.0 paper snapshot** (11 top-level categories). The Skill loads its operational mirror at [`skill/qualitative-analysis-judge/references/codebook.md`](skill/qualitative-analysis-judge/references/codebook.md), which adds a palette table and a small set of empirically-extra leaves accumulated during real annotation runs; the two files are kept in sync.
+> **Codebook versions.** The canonical taxonomy at [`1_data/2_taxonomy/`](1_data/2_taxonomy/) is the **v4.2 snapshot** (4 Classes × 10 Actions × 42 Subactions × 120 Instances). The Skill loads its operational mirror at [`2_automatic-qualitative-analysis-tool/trace-analysis-judge/references/codebook.md`](2_automatic-qualitative-analysis-tool/trace-analysis-judge/references/codebook.md), which adds a palette table and a small set of empirically-extra leaves accumulated during real annotation runs; the two are kept in sync.
 
 
 ## License

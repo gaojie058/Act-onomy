@@ -33,7 +33,7 @@ Within each judge, the two files share `id` so the same items can be cross-joine
 | `source` | string | Paper ID (e.g., `P1`) for discovery-judge files; `<framework>:<trajectory>` for qualitative-analysis-judge files. |
 | `text` | string | The sentence being labeled. |
 | `coder` | string | One of `human-A`, `human-B`, `llm-judge`. Each file uses the subset relevant to that comparison. |
-| `category` | string | One of the 11 top-level categories from Codebook V4 / v1.0. |
+| `category` | string | One of the 10 top-level Action categories from Codebook V4.2 (organised under 4 Classes: Sense / Think / Act / Adapt). |
 | `sub_actions` | string | Semicolon-separated list of sub-action codes. |
 | `specializations` | string | Semicolon-separated list of leaf specialization codes. |
 

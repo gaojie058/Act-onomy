@@ -36,8 +36,8 @@
         },
         {
           "quote": "creating a new Python script that includes the comments",
-          "grp": "Generating",
-          "sub": "Generate",
+          "grp": "Reasoning",
+          "sub": "Generating",
           "leaf": "Generate initial codes"
         },
         {
@@ -77,7 +77,7 @@
       "quotes": [
         {
           "quote": "see if we can replicate the issue",
-          "grp": "Evaluating",
+          "grp": "Evaluate",
           "sub": "Evaluating with gold",
           "leaf": "Compare against expected (bug should reproduce)"
         },
@@ -100,7 +100,7 @@
       "quotes": [
         {
           "quote": "output confirms the issue",
-          "grp": "Evaluating",
+          "grp": "Evaluate",
           "sub": "Evaluating with gold",
           "leaf": "Confirm actual ≠ expected"
         },
@@ -142,8 +142,8 @@
       "quotes": [
         {
           "quote": "did not work as expected",
-          "grp": "Reflecting",
-          "sub": "Reflecting from in-episode error",
+          "grp": "Reflection",
+          "sub": "Reflect on errors and failures",
           "leaf": "Detect failed action"
         },
         {
@@ -154,8 +154,8 @@
         },
         {
           "quote": "enclose the search term in quotes",
-          "grp": "Generating",
-          "sub": "Generate",
+          "grp": "Reasoning",
+          "sub": "Generating",
           "leaf": "Propose action candidate (incorrect remedy)"
         }
       ]
@@ -171,8 +171,8 @@
       "quotes": [
         {
           "quote": "issue persists",
-          "grp": "Reflecting",
-          "sub": "Reflecting with external feedback",
+          "grp": "Reflection",
+          "sub": "Reflect on external feedback",
           "leaf": "Detect prior fix did not work"
         },
         {
@@ -314,8 +314,8 @@
         },
         {
           "quote": "removing the word boundary and allowing the tag to be followed by any non-word character or the end of the string",
-          "grp": "Generating",
-          "sub": "Generate",
+          "grp": "Reasoning",
+          "sub": "Generating",
           "leaf": "Generate initial fix candidate"
         },
         {
@@ -343,7 +343,7 @@
         },
         {
           "quote": "test to ensure that the fix works as expected",
-          "grp": "Evaluating",
+          "grp": "Evaluate",
           "sub": "Evaluating with gold",
           "leaf": "Plan verification step"
         },
@@ -367,7 +367,7 @@
       "quotes": [
         {
           "quote": "correctly identifies both the \"YES\" and \"???\" note tags",
-          "grp": "Evaluating",
+          "grp": "Evaluate",
           "sub": "Evaluating with gold",
           "leaf": "Confirm actual == expected"
         },

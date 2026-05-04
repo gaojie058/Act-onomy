@@ -34,7 +34,7 @@ There are four stages plus a required summarization step. **Stages 1 and 4 are n
 4. Render               → run scripts/render_artifact.py on the annotated JSON
 ```
 
-**Read `references/codebook.md` before stage 3.** It defines the 9 codebook groups, their subgroups and leaf actions, plus annotation guidelines. Stage 3 is impossible to do well without it.
+**Read `references/codebook.md` before stage 3.** It defines the 10 codebook groups (organised under 4 classes: Sense / Think / Act / Adapt), their subgroups and leaf actions, plus annotation guidelines. Stage 3 is impossible to do well without it.
 
 ---
 
@@ -121,16 +121,16 @@ For each turn's thought, pick **2–5 short verbatim quotes** that each carry a 
 1. **Quotes must be exact substrings.** The renderer matches by `String.indexOf`. If the thought says "the bug" but you write "this bug", the highlight will silently fail. Copy-paste, don't paraphrase.
 2. **Quotes must not overlap.** If two cognitive moves are in the same phrase, pick the dominant one or split.
 3. **Use a leaf from the codebook when possible.** If genuinely none fits, write a new leaf in the same naming style ("verb-phrase capturing the cognitive move") and the user can accept or revise it.
-4. **The `grp` field uses these exact values (11-category v1.0 codebook):** `Reasoning`, `Generating`, `Executing`, `Evaluating`, `Reflecting`, `Learning`, `Retrieval`, `Grounding`, `Planning`, `Memory`, `Deciding`. The keys are also their display names — no rewriting is performed by the template.
+4. **The `grp` field uses these exact values (10-category v4.2 codebook):** `Retrieval`, `Memory`, `Planning`, `Reasoning`, `Evaluate`, `Deciding`, `Grounding`, `Executing`, `Learning`, `Reflection`. The keys are also their display names — no rewriting is performed by the template. The parent Class (Sense / Think / Act / Adapt) is *not* part of the triple.
 
 ### Heuristics
 
 - **Short procedural turns** ("Now let's add the comments") may have only **1 annotation**. Don't pad.
 - **Phase-transition turns** (turns that wrap up one phase and pivot to the next) often have **4-5 annotations**. Don't compress.
 - **Tag the cognitive move, not the surface verb.** "Let's open the file" is *Grounding › Invoke structured API*, not just "Executing".
-- **Reflecting requires a failure signal.** Words like "did not work", "issue persists", "errored" are the trigger. Without one, prefer Reasoning or Deciding.
-- **Reflecting vs. Learning.** Reflecting steers within the current episode; Learning persistently changes the agent's prompt, code, weights, or stored knowledge. If the move evaporates at episode end, it's Reflecting.
-- **Generating vs. Reasoning.** Generating produces *new* artifacts (code, requirements, candidate moves). Reasoning *transforms* information that is already present. Drafting a fresh patch is Generating; tracing dataflow through an existing patch is Reasoning.
+- **Reflection requires a failure signal.** Words like "did not work", "issue persists", "errored" are the trigger. Without one, prefer Reasoning or Deciding.
+- **Reflection vs. Learning.** Reflection steers within the current episode; Learning persistently changes the agent's prompt, code, weights, or stored knowledge. If the move evaporates at episode end, it's Reflection.
+- **Reasoning › Generating vs. Reasoning › Analysing.** Generating produces *new* artifacts (code, requirements, candidate moves) *de novo*. Analysing transforms information that is already present. Drafting a fresh patch is Generating; tracing dataflow through an existing patch is Analysing.
 - **Diagnose vs. Infer**: Diagnose names a *cause* ("the regex doesn't match punctuation"). Infer chains *consequences* ("if X then Y"). Same thought can have both.
 
 ### Output of stage 3
@@ -327,7 +327,7 @@ This is your gold-standard reference for what "good" looks like.
 qualitative-analysis-judge/
 ├── SKILL.md                              ← this file
 ├── references/
-│   └── codebook.md                       ← the 9-group action codebook (read in stage 3)
+│   └── codebook.md                       ← the 10-group v4.2 action codebook (read in stage 3)
 ├── scripts/
 │   ├── parse_trajectory.py               ← stage 1 preprocessor (raw JSON → skeleton)
 │   └── render_artifact.py                ← stage 4 renderer (annotated JSON → HTML)

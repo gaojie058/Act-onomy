@@ -70,7 +70,7 @@ INPUT JSON SCHEMA
         {
           "quote": "first try to replicate the bug",  # MUST be a substring of the host field
                                                       # (thought OR action, per quote_target)
-          "grp":   "Planning",                        # one of the 9 groups
+          "grp":   "Planning",                        # one of the 10 groups
           "sub":   "Decompose a task into subtasks",
           "leaf":  "Subgoal with executable success-condition"
         },
@@ -96,19 +96,18 @@ from pathlib import Path
 
 # ============ GROUP COLOUR PALETTE ============
 # Must match the CSS variables in the template.
-# 11-category v1.0 codebook (paper-aligned).
+# 10-category v4.2 codebook (4 Classes: Sense / Think / Act / Adapt).
 GROUP_COLOURS = {
-    "Reasoning":  "#5b4a8a",
-    "Generating": "#c08030",
-    "Executing":  "#2d5a3d",
-    "Evaluating": "#1a5878",
-    "Reflecting": "#b8451a",
-    "Learning":   "#8a3a4a",
     "Retrieval":  "#6b5b3a",
-    "Grounding":  "#8a4a6a",
-    "Planning":   "#2d4a6a",
     "Memory":     "#6a5a3a",
+    "Planning":   "#2d4a6a",
+    "Reasoning":  "#5b4a8a",
+    "Evaluate":   "#1a5878",
     "Deciding":   "#4a4a5a",
+    "Grounding":  "#8a4a6a",
+    "Executing":  "#2d5a3d",
+    "Learning":   "#8a3a4a",
+    "Reflection": "#b8451a",
 }
 
 # Group keys are now their own display names; no rewriting needed.

@@ -27,14 +27,14 @@ This skill is registered with Claude Code. To use it:
 
 The `(observation, thought, action)` triple schema accepts trajectories from heterogeneous frameworks via a thin adapter (see `scripts/parse_trajectory.py`).
 
-## Reference codebook vs. canonical codebook
+## Reference codebook vs. canonical taxonomy
 
-[`references/codebook.md`](references/codebook.md) is the version the Skill loads at runtime. It mirrors the canonical [`../../codebook.md`](../../codebook.md) (v1.0, 11 top-level groups: Grounding, Planning, Reasoning, Generating, Retrieval, Memory, Evaluating, Deciding, Executing, Reflecting, Learning) and additionally carries:
+[`references/codebook.md`](references/codebook.md) is the version the Skill loads at runtime. It mirrors the canonical taxonomy at [`../../1_data/2_taxonomy/act-onomy_taxonomy.csv`](../../1_data/2_taxonomy/act-onomy_taxonomy.csv) (v4.2: 4 Classes × 10 Actions × 42 Subactions × 120 Instances — Sense / Think / Act / Adapt, with Actions: Retrieval, Memory, Planning, Reasoning, Evaluate, Deciding, Grounding, Executing, Learning, Reflection) and additionally carries:
 
 - a **palette table** that maps each group to a hex color (consumed by the renderer and the HTML template);
-- empirically-extra leaves accumulated during real annotation runs that the canonical version does not yet enumerate (e.g., `Pinpoint root cause mechanism` under Reasoning › Diagnosing).
+- empirically-extra leaves accumulated during real annotation runs that the canonical taxonomy does not yet enumerate (e.g., `Pinpoint root cause mechanism` under Reasoning › Inferring).
 
-The two files are kept in sync: any change to the canonical codebook should be reflected here, and any new leaf added during annotation should be promoted into the canonical codebook before the next versioned release.
+The two files are kept in sync: any change to the canonical taxonomy should be reflected here, and any new leaf added during annotation should be promoted into the canonical taxonomy before the next versioned release.
 
 ## License
 
