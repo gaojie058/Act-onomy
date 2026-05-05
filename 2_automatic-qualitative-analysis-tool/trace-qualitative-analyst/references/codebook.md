@@ -176,7 +176,7 @@ Internal cognition. Most thoughts contain at least one Reasoning tag. V4.2 absor
 - **Configure agent persona or role-conditioning** — "play as X, imitate X's personality"
 - **Assign roles in a multi-agent team** — map agents to organizational employees
 
-### Subgroup: Combining
+### Subgroup: Combining & Synthesis
 - **Combine information from multiple sources** — fuse multiple sources into a coherent solution
 - **Aggregate observations into a structured representation** — supplementary semantic map / majority voting
 - **Correlate variables across sources** — measure relationships *(empirical extra)*

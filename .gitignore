@@ -11,3 +11,6 @@ node_modules/
 
 # Local working notes
 TODO.md
+
+# HF release staging (uploaded to Hugging Face, not tracked here)
+hf_release/

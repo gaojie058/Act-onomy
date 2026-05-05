@@ -49,8 +49,8 @@ T2.2.7.1,Think,Reasoning,Contextualizing,Package prior reasoning as context for 
 T2.2.7.2,Think,Reasoning,Contextualizing,Construct structured context object,"Global interactive multi-behavior overlapping network is constructed based on the simulated behaviors of reposting and reposting with a comment, as well as following”"
 T2.2.7.3,Think,Reasoning,Contextualizing,Configure agent persona or role-conditioning,"I want you to play as {role}, imitating {role}’s personality and values”"
 T2.2.7.4,Think,Reasoning,Contextualizing,Assign roles in a multi-agent team,"Specifying a scope, or role, for an agent allows it to be treated as a computational object. map each one to an employee in a human organization."
-T2.2.8.1,Think,Reasoning,Combining,Combine information from multiple sources,Combine information from multiple sources... to produce a coherent solution”
-T2.2.8.2,Think,Reasoning,Combining,Aggregate observations into a structured representation,"Supplementary semantic map M't, which aggregates the information from Mt over successive time steps. The intuition resembles a form of majority voting"""
+T2.2.8.1,Think,Reasoning,Combining & Synthesis,Combine information from multiple sources,Combine information from multiple sources... to produce a coherent solution”
+T2.2.8.2,Think,Reasoning,Combining & Synthesis,Aggregate observations into a structured representation,"Supplementary semantic map M't, which aggregates the information from Mt over successive time steps. The intuition resembles a form of majority voting"""
 T2.2.9.1,Think,Reasoning,Filtering,Filter information by threshold,"Selecting relevant information based on criteria, quality, or thresholds”"
 T2.3.1.1,Think,Evaluate,Evaluating with gold,Compare against gold reference,"We prompt LLM to review the correct HLS-C code, pairing buggy code segments with corresponding error messages to construct debugging CoT”"
 T2.3.1.2,Think,Evaluate,Evaluating with gold,Score on gold criteria,"The Gold Checker evaluates each annotation on three binary criteria: equivalence, completeness, and correctness, where a score of 1 indicates the criterion is met”"

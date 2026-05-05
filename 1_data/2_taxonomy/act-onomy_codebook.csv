@@ -92,10 +92,10 @@ T2.2.7.3,Think,Reasoning,Contextualizing,Configure agent persona or role-conditi
 T2.2.7.4,Think,Reasoning,Contextualizing,Assign roles in a multi-agent team,"specifying a scope, or role, for an agent allows it to be treated as a computational object. map each one to an employee in a human organization (P17)
 ""assembling a team of three LLM roles — analyst, coder, and tester — responsible for analysis, coding, and testing"" (P28)
 ""assigns diverse roles to multiple agents to efficiently decompose complex tasks"" (P28)",P17; P28,human reviewer 1; main reviewer (human reviewer 2)
-T2.2.8.1,Think,Reasoning,Combining,Combine information from multiple sources,"“combine information from multiple sources... to produce a coherent solution” (P2)
+T2.2.8.1,Think,Reasoning,Combining & Synthesis,Combine information from multiple sources,"“combine information from multiple sources... to produce a coherent solution” (P2)
 ""the final results from all subtasks are synthesized to meet the user's requirements"" (P1)
 ""Determining a representative value that summarises numerical data collected from multiple sources"" (P2)",P1; P2,main reviewer (human reviewer 2)
-T2.2.8.2,Think,Reasoning,Combining,Aggregate observations into a structured representation,"""supplementary semantic map M't, which aggregates the information from Mt over successive time steps. The intuition resembles a form of majority voting"" (P34)
+T2.2.8.2,Think,Reasoning,Combining & Synthesis,Aggregate observations into a structured representation,"""supplementary semantic map M't, which aggregates the information from Mt over successive time steps. The intuition resembles a form of majority voting"" (P34)
 “aggregates prediction results from multiple tools to generate the final cell type labels” (P1)",P1; P34,main reviewer (human reviewer 2); human reviewer 5
 T2.2.9.1,Think,Reasoning,Filtering,Filter information by threshold,"“Selecting relevant information based on criteria, quality, or thresholds” (P2)",P2,main reviewer (human reviewer 2)
 T2.3.1.1,Think,Evaluate,Evaluating with gold,Compare against gold reference,"“we prompt LLM to review the correct HLS-C code, pairing buggy code segments with corresponding error messages to construct debugging CoT” (P29)

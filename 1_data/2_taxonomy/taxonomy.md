@@ -52,7 +52,7 @@
 - Inferring — Infer structure from indirect evidence (P11) — 14.3%
 - Comparing & Ranking — Compare values across sources (P2) — 3.6%
 - Contextualizing — Configure agent persona or role-conditioning (P22) — 17.9%
-- Combining — Combine information from multiple sources (P2) — 10.7%
+- Combining & Synthesis — Combine information from multiple sources (P2) — 10.7%
 - Filtering — Filter information by threshold (P2) — 3.6%
 
 ### Evaluating — *Cov. 28.6%*
