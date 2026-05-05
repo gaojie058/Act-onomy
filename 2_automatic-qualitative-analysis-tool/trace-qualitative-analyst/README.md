@@ -1,4 +1,4 @@
-# Skill — `trace-analysis-judge`
+# Skill — `trace-qualitative-analyst`
 
 A Claude Code Skill from Act-onomy that takes a raw agent trajectory, grounds each turn to the codebook with verbatim quote evidence, and renders an interactive HTML report.
 
@@ -22,7 +22,7 @@ skill/
 This skill is registered with Claude Code. To use it:
 
 1. Place a raw trajectory (`.traj` JSON file or pasted text) in your working directory.
-2. Ask Claude: *"Analyze this trajectory with the trace-analysis-judge skill."*
+2. Ask Claude: *"Analyze this trajectory with the trace-qualitative-analyst skill."*
 3. The skill walks through four stages — parse, phase-label, annotate, render — emitting a self-contained HTML artifact.
 
 The `(observation, thought, action)` triple schema accepts trajectories from heterogeneous frameworks via a thin adapter (see `scripts/parse_trajectory.py`).

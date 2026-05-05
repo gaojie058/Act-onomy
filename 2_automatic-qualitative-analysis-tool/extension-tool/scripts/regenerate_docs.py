@@ -31,6 +31,7 @@ DA = HOME / 'Desktop/data-analysis'
 
 CB_CSV     = GH / '1_data/2_taxonomy/act-onomy_codebook.csv'
 TX_CSV     = GH / '1_data/2_taxonomy/act-onomy_taxonomy.csv'
+TX_JSON    = GH / '1_data/2_taxonomy/act-onomy_taxonomy.json'
 TEX        = DA / 'reports/codebook/table.tex'
 OUT_TX_GH  = GH / '1_data/2_taxonomy/taxonomy.md'
 OUT_TX_DA  = DA / 'reports/codebook/taxonomy.md'
@@ -187,3 +188,15 @@ for cls, cats in hier.items():
 
 OUT_CB_DA.write_text('\n'.join(L))
 print(f'✓ wrote {OUT_CB_DA.relative_to(HOME)}')
+
+# ============ Sync act-onomy_taxonomy.json summary ============
+import json
+tj = json.loads(TX_JSON.read_text())
+old = {k: tj['summary'][k] for k in ('tier_1', 'tier_2', 'tier_3', 'tier_4')}
+new = {'tier_1': n_classes, 'tier_2': n_cats, 'tier_3': n_subs, 'tier_4': n_leaves}
+if old != new:
+    tj['summary'].update(new)
+    TX_JSON.write_text(json.dumps(tj, indent=2, ensure_ascii=False))
+    print(f'✓ updated {TX_JSON.relative_to(HOME)} summary: {old} → {new}')
+else:
+    print(f'· {TX_JSON.relative_to(HOME)} summary already up-to-date')

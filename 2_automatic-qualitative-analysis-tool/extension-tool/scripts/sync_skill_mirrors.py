@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Mirror the trace-analysis-judge skill between the Claude Code runtime location
+Mirror the trace-qualitative-analyst skill between the Claude Code runtime location
 and the Github source-of-truth copy.
 
 Direction: runtime (`.claude/skills/`) → github copy.
@@ -18,8 +18,8 @@ import sys
 from pathlib import Path
 
 HOME = Path.home()
-RT  = HOME / '.claude/skills/trace-analysis-judge'
-GH  = HOME / 'Documents/Github/Act-onomy/2_automatic-qualitative-analysis-tool/trace-analysis-judge'
+RT  = HOME / '.claude/skills/trace-qualitative-analyst'
+GH  = HOME / 'Documents/Github/Act-onomy/2_automatic-qualitative-analysis-tool/trace-qualitative-analyst'
 
 # Files that get mirrored. (Other files like __pycache__, .DS_Store are skipped.)
 MIRROR_FILES = [

@@ -26,16 +26,15 @@ These are the files you edit directly. Everything else is downstream.
 
 Auto-derive from Tier 1. Don't hand-edit; run the build script.
 
-| File | Derived from | Build script |
+| File | Derived from | How to regenerate |
 |---|---|---|
-| `1_data/2_taxonomy/taxonomy.md` | `act-onomy_codebook.csv` + `act-onomy_taxonomy.csv` + `reports/codebook/table.tex` (for paper coverage) | `/tmp/build_taxonomy_md.py` (kept in `data-analysis/scripts/` if persisted) |
-| `data-analysis/reports/codebook/taxonomy.md` | Same | Same script — copy of the above |
+| `1_data/2_taxonomy/taxonomy.md` | `act-onomy_codebook.csv` + `act-onomy_taxonomy.csv` + `reports/codebook/table.tex` (for paper coverage) | `python3 ~/.claude/skills/extension-tool/scripts/regenerate_docs.py` |
+| `data-analysis/reports/codebook/taxonomy.md` | Same | Same script — auto-copies |
 | `data-analysis/reports/codebook/codebook_v4.2.md` | `act-onomy_codebook.csv` ⨝ `act-onomy_taxonomy.csv` | Same script (second output) |
 
 ---
 
-
-## Tier 4 — Skill: `trace-analysis-judge`
+## Tier 4 — Skill: `trace-qualitative-analyst`
 
 Two mirrored copies. Edit ONE, then `cp` to the other and `diff -r` to verify.
 
@@ -50,18 +49,13 @@ Two mirrored copies. Edit ONE, then `cp` to the other and `diff -r` to verify.
 **Two mirrors.** The `.claude/skills/` copy is what the runtime loads; the Github copy is the source-of-truth in version control. Sync command:
 
 ```bash
-SRC=~/.claude/skills/trace-analysis-judge
-DST=~/Documents/Github/Act-onomy/2_automatic-qualitative-analysis-tool/trace-analysis-judge
-cp "$SRC/SKILL.md" "$SRC/README.md" "$DST/"
-cp "$SRC/references/codebook.md" "$DST/references/"
-cp "$SRC/assets/example_pylint_5859.json" "$DST/assets/"
-diff -r "$SRC" "$DST"  # must be empty
+python3 ~/.claude/skills/extension-tool/scripts/sync_skill_mirrors.py
 ```
 
 **Verification step (always run after edits):**
 
 ```bash
-cd ~/.claude/skills/trace-analysis-judge
+cd ~/.claude/skills/trace-qualitative-analyst
 python3 scripts/render_artifact.py assets/example_pylint_5859.json --output /tmp/check.html
 # expect: 0 warnings; "N codebook groups represented" matches what example uses
 ```
@@ -89,12 +83,12 @@ Search for the count and update.
 
 ---
 
-## Tier 6 — Skill: `discovery-judge` (illustrative refs only)
+## Tier 6 — Skill: `discovery-qualitative-analyst` (illustrative refs only)
 
 | File | What's codebook-bound | Notes |
 |---|---|---|
-| `2_automatic-qualitative-analysis-tool/discovery-judge/scripts/spec-schema.md` | Hypothetical example uses `Retrieve knowledge from semantic memory` (legacy V1 leaf name) | Not codebook-loading — illustrative text in methodology discussion. Update if you want the example to track current names; otherwise low-priority |
-| `2_automatic-qualitative-analysis-tool/discovery-judge/references/diagnostics.md` | Same — uses `Retrieve knowledge from semantic memory` as illustrative leaf in stretch-fit pattern docs | Low-priority; methodology point is clear regardless of which name appears |
+| `2_automatic-qualitative-analysis-tool/discovery-qualitative-analyst/scripts/spec-schema.md` | Hypothetical example uses `Retrieve knowledge from semantic memory` (legacy V1 leaf name) | Not codebook-loading — illustrative text in methodology discussion. Update if you want the example to track current names; otherwise low-priority |
+| `2_automatic-qualitative-analysis-tool/discovery-qualitative-analyst/references/diagnostics.md` | Same — uses `Retrieve knowledge from semantic memory` as illustrative leaf in stretch-fit pattern docs | Low-priority; methodology point is clear regardless of which name appears |
 
 ---
 
@@ -106,7 +100,6 @@ Search for the count and update.
 
 ---
 
-
 ## Standard runbook — "I just changed the codebook"
 
 1. **Edit Tier 1** — modify `act-onomy_codebook.csv` and `act-onomy_taxonomy.csv` (in lockstep on `taxonomy_code`/`code`). For structural changes, also edit `taxonomy_development/codebook_v4.2.json`.
@@ -117,14 +110,8 @@ Search for the count and update.
 6. **Decide on Tier 6** — only update illustrative example names if you want them to track current naming.
 7. **Skip Tier 7** — never modify frozen records.
 
-
 **Final verification:**
-
 ```bash
-# all subaction-count references should now equal the new total
-cd ~/Documents/Github/Act-onomy && grep -rn "Subactions\|sub-actions" --include="*.md" --include="*.tex" | grep -E "[0-9]+ [Ss]ub"
-
-cd ~/Desktop/data-analysis && grep -rn "Subactions\|sub-actions" --include="*.md" --include="*.tex" | grep -E "[0-9]+ [Ss]ub"
-
-# all should print the same number
+python3 ~/.claude/skills/extension-tool/scripts/check_consistency.py
+# expect: 0 errors, 0 warnings
 ```

@@ -1,5 +1,5 @@
 ---
-name: discovery-judge
+name: discovery-qualitative-analyst
 description: "Run a three-stage agent-behavior analysis pipeline — (1) extract behaviors from a paper with no codebook constraint, (2) compare the extraction against an existing codebook and propose revisions, (3) generate a refined next-version codebook. Use this skill whenever the user uploads an agent/AI/LLM paper together with an existing codebook (action space, behavior taxonomy, coding scheme) and wants to improve the codebook based on the paper. Also trigger for phrases like 'analyze this paper with my codebook', 'what should I add to my codebook based on this paper', 'run behavior extraction and compare to my taxonomy', 'iterate my codebook using this paper', 'stress-test my codebook'. Produces three .docx deliverables in one automated run — the extraction report, the refinement report, and the new codebook version."
 ---
 

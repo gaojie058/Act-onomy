@@ -13,15 +13,15 @@ python3 scripts/check_consistency.py
 # 2. Regenerate Tier-2 derived markdown from the CSV sources
 python3 scripts/regenerate_docs.py
 
-# 3. Mirror the trace-analysis-judge skill between .claude/skills/ and the github repo
+# 3. Mirror the trace-qualitative-analyst skill between .claude/skills/ and the github repo
 python3 scripts/sync_skill_mirrors.py
 ```
 
 | Script | Reads | Writes | Purpose |
 |---|---|---|---|
-| `check_consistency.py` | All known dependents | Nothing (stdout only) | Confirms CSV ↔ JSON match, all subaction-count strings match the CSV count, the trace-analysis-judge skill mirrors agree, and example annotations use only canonical V4.2 (group, sub) pairs |
+| `check_consistency.py` | All known dependents | Nothing (stdout only) | Confirms CSV ↔ JSON match, all subaction-count strings match the CSV count, the trace-qualitative-analyst skill mirrors agree, and example annotations use only canonical V4.2 (group, sub) pairs |
 | `regenerate_docs.py` | `act-onomy_codebook.csv`, `act-onomy_taxonomy.csv`, `table.tex` (for paper coverage) | `taxonomy.md` (×2 copies) and `codebook_v4.2.md` | Tier-2 rebuild from sources |
-| `sync_skill_mirrors.py` | `.claude/skills/trace-analysis-judge/` | Github copy of same | Tier-4 mirror sync (also `--reverse` to push github → runtime) |
+| `sync_skill_mirrors.py` | `.claude/skills/trace-qualitative-analyst/` | Github copy of same | Tier-4 mirror sync (also `--reverse` to push github → runtime) |
 
 ## Standard flow when you change the codebook
 
@@ -30,7 +30,7 @@ python3 scripts/sync_skill_mirrors.py
 3. `python3 scripts/regenerate_docs.py` — refresh Tier 2.
 4. **Manually** update [`reports/codebook/table.tex`](../../../Desktop/data-analysis/reports/codebook/table.tex) — paper coverage values are paper-grounded judgement calls, not auto-derivable.
 5. **Manually** update Tier 5 README counts (the checker tells you exact lines).
-6. If you renamed a sub-action that the trace-analysis-judge example uses, edit `assets/example_pylint_5859.json` to migrate — then run sync_skill_mirrors.
+6. If you renamed a sub-action that the trace-qualitative-analyst example uses, edit `assets/example_pylint_5859.json` to migrate — then run sync_skill_mirrors.
 7. `python3 scripts/check_consistency.py` again — should be clean.
 
 ## What the dependency manifest documents
@@ -59,8 +59,8 @@ The scripts assume:
 |---|---|
 | Tier 1 | `~/Documents/Github/Act-onomy/1_data/2_taxonomy/` |
 | Tier 2 | `~/Desktop/data-analysis/reports/codebook/` |
-| Tier 4 (runtime) | `~/.claude/skills/trace-analysis-judge/` |
-| Tier 4 (github) | `~/Documents/Github/Act-onomy/2_automatic-qualitative-analysis-tool/trace-analysis-judge/` |
+| Tier 4 (runtime) | `~/.claude/skills/trace-qualitative-analyst/` |
+| Tier 4 (github) | `~/Documents/Github/Act-onomy/2_automatic-qualitative-analysis-tool/trace-qualitative-analyst/` |
 | Tier 5 | `~/Documents/Github/Act-onomy/{README.md, 1_data/1_corpus/README.md}` |
 
 If you move the repo, edit the path constants at the top of each script.

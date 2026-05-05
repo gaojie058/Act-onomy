@@ -21,8 +21,8 @@ from pathlib import Path
 HOME = Path.home()
 GH = HOME / 'Documents/Github/Act-onomy'
 DA = HOME / 'Desktop/data-analysis'
-SKILL_RT = HOME / '.claude/skills/trace-analysis-judge'
-SKILL_GH = GH / '2_automatic-qualitative-analysis-tool/trace-analysis-judge'
+SKILL_RT = HOME / '.claude/skills/trace-qualitative-analyst'
+SKILL_GH = GH / '2_automatic-qualitative-analysis-tool/trace-qualitative-analyst'
 
 CB_CSV    = GH / '1_data/2_taxonomy/act-onomy_codebook.csv'
 TX_CSV    = GH / '1_data/2_taxonomy/act-onomy_taxonomy.csv'
@@ -141,7 +141,7 @@ for f in COUNT_FILES:
         ok(f'{f.relative_to(HOME)}: count = {CANONICAL_SUBS}')
 
 # ============ Tier 4: skill mirror sync ============
-print('\n[Tier 4] trace-analysis-judge mirror sync')
+print('\n[Tier 4] trace-qualitative-analyst mirror sync')
 
 if not SKILL_RT.exists() or not SKILL_GH.exists():
     err('one or both skill copies missing')

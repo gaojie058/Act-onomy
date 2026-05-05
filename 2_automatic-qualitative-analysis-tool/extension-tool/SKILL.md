@@ -1,6 +1,6 @@
 ---
 name: extension-tool
-description: Maintain consistency across all files that depend on the Act-onomy codebook. Use when the canonical taxonomy (`act-onomy_codebook.csv` / `act-onomy_taxonomy.csv` / `codebook_v4.2.json`) changes — renaming a sub-action, adding/removing a leaf, restructuring a category, bumping a version. The skill checks all 8 dependency tiers documented in `references/CODEBOOK_DEPENDENCIES.md`, regenerates derived markdown views (`taxonomy.md`, `codebook_v4.2.md`), reports stale references, and mirrors the `trace-analysis-judge` skill between the `.claude/skills/` runtime location and the Github source-of-truth copy. Trigger phrases: "extend the codebook", "propagate codebook changes", "check codebook consistency", "regenerate taxonomy.md", "sync skill mirrors", "what files need to update after changing the codebook".
+description: Maintain consistency across all files that depend on the Act-onomy codebook. Use when the canonical taxonomy (`act-onomy_codebook.csv` / `act-onomy_taxonomy.csv` / `codebook_v4.2.json`) changes — renaming a sub-action, adding/removing a leaf, restructuring a category, bumping a version. The skill checks all 8 dependency tiers documented in `references/CODEBOOK_DEPENDENCIES.md`, regenerates derived markdown views (`taxonomy.md`, `codebook_v4.2.md`), reports stale references, and mirrors the `trace-qualitative-analyst` skill between the `.claude/skills/` runtime location and the Github source-of-truth copy. Trigger phrases: "extend the codebook", "propagate codebook changes", "check codebook consistency", "regenerate taxonomy.md", "sync skill mirrors", "what files need to update after changing the codebook".
 ---
 
 # Codebook extension tool
@@ -14,7 +14,7 @@ The full dependency manifest is in [`references/CODEBOOK_DEPENDENCIES.md`](refer
 - Adding / removing / renaming a sub-action or a leaf instance
 - Restructuring a category (e.g., the V4.2 PlanB Retrieval flatten: `1 placeholder Retrieve` → `5 first-class subactions`)
 - Bumping the codebook version (V4.x → V5.0)
-- Verifying consistency before a release / before re-running `trace-analysis-judge`
+- Verifying consistency before a release / before re-running `trace-qualitative-analyst`
 - Investigating "why does file X say 42 sub-actions when file Y says 46?"
 
 If the user is editing the codebook PDF or CSV by hand and asks "what else do I need to update?", invoke this skill.
@@ -28,10 +28,10 @@ If the user is editing the codebook PDF or CSV by hand and asks "what else do I 
 | Verify CSV ↔ JSON ↔ taxonomy.json structural agreement | `scripts/check_consistency.py` | Yes — read-only |
 | Regenerate `taxonomy.md` (Tier 2) from CSVs | `scripts/regenerate_docs.py` | Yes — overwrites with canonical content |
 | Regenerate `codebook_v4.2.md` (Tier 2) from CSVs | `scripts/regenerate_docs.py` | Yes — same |
-| Mirror `trace-analysis-judge` between `.claude/skills/` and Github | `scripts/sync_skill_mirrors.py` | Yes — `cp` + `diff -r` verify |
+| Mirror `trace-qualitative-analyst` between `.claude/skills/` and Github | `scripts/sync_skill_mirrors.py` | Yes — `cp` + `diff -r` verify |
 | Update `table.tex` (Tier 3) | — | **No** — coverage values are paper-grounded, manual decisions |
 | Update project READMEs (Tier 5) | — | Manual — but checker tells you exactly which lines and counts |
-| Update `trace-analysis-judge` per-quote annotations | — | Manual — semantic decision (which V4.2 subgroup does each old V1 quote map to?) |
+| Update `trace-qualitative-analyst` per-quote annotations | — | Manual — semantic decision (which V4.2 subgroup does each old V1 quote map to?) |
 
 ## How to invoke
 
@@ -42,7 +42,7 @@ python3 scripts/check_consistency.py
 # 2. Regenerate derived docs from current CSVs
 python3 scripts/regenerate_docs.py
 
-# 3. Sync the trace-analysis-judge skill between .claude and Github
+# 3. Sync the trace-qualitative-analyst skill between .claude and Github
 python3 scripts/sync_skill_mirrors.py
 ```
 
@@ -55,10 +55,10 @@ When the user says "I just changed the codebook" or names a specific change ("I 
 1. **First run `check_consistency.py`** to surface the current state of inconsistencies. This is the diagnostic step.
 2. **Walk the user through the report**, classifying each flagged item as:
    - **Auto-fixable** (counts in READMEs, derived markdown) → propose to run `regenerate_docs.py` and an Edit pass
-   - **Manual but mechanical** (rename in trace-analysis-judge example JSON) → write the migration map in conversation and apply with a small one-off script
+   - **Manual but mechanical** (rename in trace-qualitative-analyst example JSON) → write the migration map in conversation and apply with a small one-off script
    - **Semantic decision required** (which V4.2 name does this V1 reference map to?) → ask the user
 3. **After fixes**, re-run `check_consistency.py` to verify the report is clean.
-4. **Run `sync_skill_mirrors.py`** if the trace-analysis-judge skill files were touched.
+4. **Run `sync_skill_mirrors.py`** if the trace-qualitative-analyst skill files were touched.
 
 Do not auto-edit Tier 7 files (`behavioral_descriptions.csv`) — those are frozen historical records. The checker will flag them as informational only.
 
@@ -103,8 +103,8 @@ extension-tool/
 |---|---|
 | Tier 1 (sources) | `~/Documents/Github/Act-onomy/1_data/2_taxonomy/` |
 | Tier 2/3 (derived + paper) | `~/Desktop/data-analysis/reports/codebook/` |
-| Tier 4 (skill, runtime) | `~/.claude/skills/trace-analysis-judge/` |
-| Tier 4 (skill, github) | `~/Documents/Github/Act-onomy/2_automatic-qualitative-analysis-tool/trace-analysis-judge/` |
+| Tier 4 (skill, runtime) | `~/.claude/skills/trace-qualitative-analyst/` |
+| Tier 4 (skill, github) | `~/Documents/Github/Act-onomy/2_automatic-qualitative-analysis-tool/trace-qualitative-analyst/` |
 | Tier 5 (READMEs) | `~/Documents/Github/Act-onomy/README.md`, `~/Documents/Github/Act-onomy/1_data/1_corpus/README.md` |
 
 Scripts hard-code these paths. If the repo moves, edit the path constants at the top of each script.
