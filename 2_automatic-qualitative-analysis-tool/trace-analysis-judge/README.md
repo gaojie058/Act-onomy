@@ -29,7 +29,7 @@ The `(observation, thought, action)` triple schema accepts trajectories from het
 
 ## Reference codebook vs. canonical taxonomy
 
-[`references/codebook.md`](references/codebook.md) is the version the Skill loads at runtime. It mirrors the canonical taxonomy at [`../../1_data/2_taxonomy/act-onomy_taxonomy.csv`](../../1_data/2_taxonomy/act-onomy_taxonomy.csv) (v4.2: 4 Classes × 10 Actions × 42 Subactions × 120 Instances — Sense / Think / Act / Adapt, with Actions: Retrieval, Memory, Planning, Reasoning, Evaluate, Deciding, Grounding, Executing, Learning, Reflection) and additionally carries:
+[`references/codebook.md`](references/codebook.md) is the version the Skill loads at runtime. It mirrors the canonical taxonomy at [`../../1_data/2_taxonomy/act-onomy_taxonomy.csv`](../../1_data/2_taxonomy/act-onomy_taxonomy.csv) (v4.2: 4 Classes × 10 Actions × 46 Subactions × 120 Instances — Sense / Think / Act / Adapt, with Actions: Retrieval, Memory, Planning, Reasoning, Evaluate, Deciding, Grounding, Executing, Learning, Reflection) and additionally carries:
 
 - a **palette table** that maps each group to a hex color (consumed by the renderer and the HTML template);
 - empirically-extra leaves accumulated during real annotation runs that the canonical taxonomy does not yet enumerate (e.g., `Pinpoint root cause mechanism` under Reasoning › Inferring).

@@ -7,7 +7,7 @@
   "findings": [
     {
       "title": "Reasoning is layered, not vague",
-      "body": "Turn 9's thought alone has 5 distinct phrases mapping to 5 different subgroups (Analysing, Retrieve, Inferring, Diagnosing, Planning). Whole-thought tagging would have lumped these into one \"Reasoning\" label."
+      "body": "Turn 9's thought alone has 5 distinct phrases mapping to 4 V4.2 subgroups (Analysing, Retrieve from local corpus, Inferring, Planning) — Inferring fires twice (dataflow + cause diagnosis). Whole-thought tagging would have lumped these into one \"Reasoning\" label."
     },
     {
       "title": "Recovery is one phrase",
@@ -31,7 +31,7 @@
         {
           "quote": "first try to replicate the bug as described",
           "grp": "Planning",
-          "sub": "Decompose a task into subtasks",
+          "sub": "Decompose task",
           "leaf": "Subgoal with executable success-condition"
         },
         {
@@ -43,7 +43,7 @@
         {
           "quote": "creating a new file called test.py",
           "grp": "Executing",
-          "sub": "Executing strategy",
+          "sub": "Executing plan",
           "leaf": "Initiate planned action"
         }
       ],
@@ -107,25 +107,25 @@
         {
           "quote": "matches the behavior described in the issue",
           "grp": "Reasoning",
-          "sub": "Comparing",
+          "sub": "Comparing & Ranking",
           "leaf": "Match observation against spec"
         },
         {
           "quote": "next step is to locate the part of the pylint code",
           "grp": "Planning",
-          "sub": "Decompose a task into subtasks",
+          "sub": "Decompose task",
           "leaf": "Phase transition: reproduce → localize"
         },
         {
           "quote": "determine why it's ignoring note tags",
           "grp": "Reasoning",
-          "sub": "Diagnosing",
+          "sub": "Inferring",
           "leaf": "Initial diagnostic framing"
         },
         {
           "quote": "search the directory for files",
           "grp": "Retrieval",
-          "sub": "Retrieve documents",
+          "sub": "Retrieve from local corpus",
           "leaf": "Extract data from structured documents"
         }
       ],
@@ -149,7 +149,7 @@
         {
           "quote": "--notes was interpreted as an option for grep",
           "grp": "Reasoning",
-          "sub": "Diagnosing",
+          "sub": "Inferring",
           "leaf": "Diagnose Error Cause (misdiagnosis)"
         },
         {
@@ -202,7 +202,7 @@
         {
           "quote": "most likely candidate",
           "grp": "Reasoning",
-          "sub": "Ranking",
+          "sub": "Comparing & Ranking",
           "leaf": "Rank items by criteria (match count)"
         },
         {
@@ -243,7 +243,7 @@
         {
           "quote": "find the relevant section",
           "grp": "Retrieval",
-          "sub": "Retrieve documents",
+          "sub": "Retrieve from local corpus",
           "leaf": "Extract data from structured documents"
         }
       ],
@@ -267,7 +267,7 @@
         {
           "quote": "is built from the notes configuration",
           "grp": "Retrieval",
-          "sub": "Retrieve knowledge",
+          "sub": "Retrieve from local corpus",
           "leaf": "Read code semantics from open file"
         },
         {
@@ -279,13 +279,13 @@
         {
           "quote": "pattern does not account for note tags that consist entirely of punctuation",
           "grp": "Reasoning",
-          "sub": "Diagnosing",
+          "sub": "Inferring",
           "leaf": "Diagnose Error Cause ★"
         },
         {
           "quote": "examine the regular expression pattern construction in more detail",
           "grp": "Planning",
-          "sub": "Decompose a task into subtasks",
+          "sub": "Decompose task",
           "leaf": "Plan deeper inspection before edit"
         }
       ],
@@ -303,7 +303,7 @@
         {
           "quote": "word boundary \\b, which does not match if the tag is followed by punctuation",
           "grp": "Reasoning",
-          "sub": "Diagnosing",
+          "sub": "Inferring",
           "leaf": "Pinpoint root cause mechanism"
         },
         {
@@ -321,7 +321,7 @@
         {
           "quote": "edit the regular expression construction",
           "grp": "Executing",
-          "sub": "Executing strategy",
+          "sub": "Executing plan",
           "leaf": "Apply patch via edit"
         }
       ]
@@ -350,7 +350,7 @@
         {
           "quote": "run pylint on test.py",
           "grp": "Executing",
-          "sub": "Executing strategy",
+          "sub": "Executing plan",
           "leaf": "Run verification command"
         }
       ],

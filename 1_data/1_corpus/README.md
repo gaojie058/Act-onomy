@@ -44,17 +44,17 @@ Per-paper index covering `P1`–`P35`. Merges the paper-tracker (process state) 
 
 ## Schema — `act-onomy_codebook.csv`
 
-The finalized codebook (V4.2) flattened to one row per instance. **120 instances** organized as **4 Classes → 10 Actions → 42 Subactions → 120 Instances**.
+The finalized codebook (V4.2) flattened to one row per instance. **120 instances** organized as **4 Classes → 10 Actions → 46 Subactions → 120 Instances**.
 
 Per-Class counts (Actions / Subactions / Instances):
 
 | Class | Actions | Subactions | Instances |
 |---|---:|---:|---:|
-| Sense | 2 (Retrieval, Memory) | 6 | 18 |
+| Sense | 2 (Retrieval, Memory) | 10 | 18 |
 | Think | 4 (Planning, Reasoning, Evaluate, Deciding) | 20 | 53 |
 | Act | 2 (Grounding, Executing) | 8 | 28 |
 | Adapt | 2 (Learning, Reflection) | 8 | 21 |
-| **Total** | **10** | **42** | **120** |
+| **Total** | **10** | **46** | **120** |
 
 | column | type | description |
 |---|---|---|

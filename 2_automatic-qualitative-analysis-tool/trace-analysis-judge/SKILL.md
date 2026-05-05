@@ -140,8 +140,8 @@ For each turn, attach a `quotes` list:
 "quotes": [
   {"quote": "first try to replicate the bug as described",
    "grp": "Planning",
-   "sub": "Decompose a task into subtasks",
-   "leaf": "Subgoal with executable success-condition"},
+   "sub": "Decompose task",
+   "leaf": "Decompose into subgoals with success conditions"},
   ...
 ]
 ```
@@ -280,7 +280,7 @@ Segments are surfaced **only inside the right-panel Trajectory signature** (not 
    === SEQ 01 · T01–T05 · First investigation cycle ===
    Localize → reproduce → draft a first patch (T4); T5 fails to dispatch.
 
-   T01 = [Reasoning › Diagnosing › Initial diagnostic framing, ...]
+   T01 = [Reasoning › Inferring › Initial diagnostic framing, ...]
    T02 = [...]
    ```
 2. **As compact yellow cards** above the first clickable row of each segment (same `--highlight` background + `--accent` left border as the `insight` callouts; smaller font for the narrow panel).

@@ -2,11 +2,11 @@
   "source_pdf": "data/taxonomy_development/Action Space Codebook (V4.2).pdf",
   "source_csv": "data/corpus/finalized_human_verified_codebook.csv",
   "version": "v4.2",
-  "version_note": "Final reorganization under four mega-sections (Sense / Think / Act / Adapt). Hierarchy renamed in CSV form: Class → Action → Subaction → Instance. Unclassified holding-pen from v4.1 is dissolved; entries absorbed into mainline categories. Each row includes the human reviewer(s) attributed to its evidence.",
+  "version_note": "Final reorganization under four mega-sections (Sense / Think / Act / Adapt). Hierarchy renamed in CSV form: Class → Action → Subaction → Instance. Unclassified holding-pen from v4.1 is dissolved; entries absorbed into mainline categories. Each row includes the human reviewer(s) attributed to its evidence. [PlanB] Retrieval restructured: the placeholder sub-category \"Retrieve\" is dissolved; the 5 main retrieve actions become first-class sub-categories. n_sub_categories: 42 → 46.",
   "summary": {
     "n_mega_sections": 4,
     "n_super_categories": 10,
-    "n_sub_categories": 42,
+    "n_sub_categories": 46,
     "n_leaves": 120
   },
   "mega_sections": [
@@ -17,7 +17,7 @@
           "name": "Retrieval",
           "sub_categories": [
             {
-              "name": "Retrieve",
+              "name": "Retrieve from skill library",
               "leaves": [
                 {
                   "action": "Retrieve from skill library",
@@ -26,7 +26,12 @@
                   "reviewers": [
                     "theory-driven"
                   ]
-                },
+                }
+              ]
+            },
+            {
+              "name": "Retrieve from local corpus",
+              "leaves": [
                 {
                   "action": "Retrieve from local corpus",
                   "examples_raw": "“diverse filetype reading; read between 1 to 15 documents and/or tables” (P2)\n\"read the README file — Phase 1: read_file('reproduction_package/readme.txt')\" (P11)",
@@ -38,7 +43,12 @@
                     "main reviewer (human reviewer 2)",
                     "human reviewer 6"
                   ]
-                },
+                }
+              ]
+            },
+            {
+              "name": "Retrieve from external knowledge base",
+              "leaves": [
                 {
                   "action": "Retrieve from external knowledge base",
                   "examples_raw": "“LLM which generates buggy code by integrating retrieved error slices from BugRAG as context” (P29)\n“queries BugRAG to check for existing entries” (P29)\nRecall three relevant distinct problems (P28): “Recall three (03) relevant and distinct problems (different from the user task)” (P28)",
@@ -49,7 +59,12 @@
                   "reviewers": [
                     "main reviewer (human reviewer 2)"
                   ]
-                },
+                }
+              ]
+            },
+            {
+              "name": "Retrieve from open web",
+              "leaves": [
                 {
                   "action": "Retrieve from open web",
                   "examples_raw": "\"high reliance on web search to offload knowledge retrieval to external sources\" (P16)",
@@ -59,7 +74,12 @@
                   "reviewers": [
                     "human reviewer 1"
                   ]
-                },
+                }
+              ]
+            },
+            {
+              "name": "Retrieve relevant context",
+              "leaves": [
                 {
                   "action": "Retrieve relevant context",
                   "examples_raw": "“LLM leverages retrieved HLS-related context to transform input C algorithms or natural language descriptions” (P29)",

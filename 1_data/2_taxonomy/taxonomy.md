@@ -1,102 +1,107 @@
-# Taxonomy
+# Act-onomy Taxonomy
 
-**4 classes · 10 categories · 66 sub-actions (subset shown) · 135 leaf specializations**
+**v1.0** · derived from `act-onomy_codebook.csv` (V4.2)  
+**4 classes · 10 categories · 46 sub-actions · 120 leaf instances**
 
-- **Coverage** = number of corpus papers (out of 20) containing at least one description of the category.
-- **Freq.** = share of all 565 behavior descriptions assigned to that sub-action.
-- **Bold** marks the most frequent sub-action within each category.
-- `--` = pending Q6 LLM-judge run.
+## How to read this table
+
+- **Coverage (Cov.)** = paper coverage over the **28-paper construction set**. The 7 held-out validation papers (P5, P10, P15, P20, P25, P30, P35) are excluded from the count.
+- Each cited paper contributes ≈3.6 percentage points (1/28).
+- The italic figure under each category gives the **same metric at the category level** (any sub-action cited counts the paper once).
+- "0%" marks sub-actions defined in the codebook but not cited by any construction paper (theory-driven retainers).
+- **Bold** marks the unique most-frequent sub-action within a category; ties are left unbolded.
+- Representative verb-noun examples are anchored to a corpus paper (P*) where available.
 
 ---
 
 ## 🟦 Sense
 
-### Retrieval — *Coverage 8/20*
-- **Retrieve documents** — Extract data from structured documents (P2) — **8.2%**
-- Retrieve knowledge — Retrieve knowledge from semantic memory (P25) — 3.1%
-- Retrieve domain context — Retrieve HLS-related context (P29) — 1.8%
-- Retrieve events — Retrieve events from episodic memory (P25) — --
-- Retrieve skills — Load skills from the skill library — --
-- Retrieve errors — Query error repository (P29) — --
+### Retrieval — *Cov. 17.9%*
 
-### Memory — *Coverage 5/20*
-- **Store information** — Store experiences in episodic memory (P25) — **2.6%**
-- Convert memory — Consolidate working into long-term memory (P1) — 1.8%
-- Read memory — Read from working memory — --
-- Discard information — Discard information from working memory (P1) — --
+- Retrieve from skill library — Theory-driven (no paper-grounded instance) — 0%
+- Retrieve from local corpus — Read 1-15 documents/tables (P2) — 7.1%
+- Retrieve from external knowledge base — Query BugRAG / recall analogical examples (P28; P29) — 7.1%
+- Retrieve from open web — Web search to offload knowledge retrieval (P16) — 3.6%
+- Retrieve relevant context — Retrieve HLS-related context (P29) — 3.6%
+
+### Memory — *Cov. 10.7%*
+
+- Store Information — Store information in long-term memory (P16) — 3.6%
+- Update Information — Update memory from new experiences (P17) — 3.6%
+- Discard information — Discard information from working memory (P1) — 3.6%
+- Consolidate memory — Consolidate working into long-term memory (P1) — 3.6%
+- Read memory — Read from working memory (P12) — 3.6%
 
 ---
 
 ## 🟧 Think
 
-### Planning — *Coverage 18/20*
-- **Decompose task** — Decompose task into subproblems (P28) — **5.4%**
-- Formulate workflow — Comprehensive analysis workflow (P1) — 3.0%
-- Select directive strategy — HLS directive combinations (P29) — 0.9%
+### Planning — *Cov. 35.7%*
 
-### Reasoning — *Coverage 20/20*
-- **Analysing** — Analyze codebase structure and behavior (P28) — **5.6%**
-- Generating — Propose action candidates (P28) — 5.0%
-- Inferring — Infer hidden state from evidence (P25) — 2.4%
-- Distilling — Distill insights from retrieved info (P3) — 2.2%
-- Synthesizing — Combine info into coherent solution (P2) — 1.7%
-- Diagnosing — Diagnose error cause (P29) — 1.5%
-- Comparing — Compare QoR before/after directive (P29) — --
-- Ranking — Rank items by criteria (P2) — --
-- Contextualizing — Provide context for subsequent LLM calls — --
-- Filtering — Filter information by threshold (P2) — --
-- Aggregating — Aggregate multiple candidate outputs (P1) — --
+- Decompose task — Decompose into subtasks (P34) — 17.9%
+- **Formulate a workflow or plan** — Formulate a high-level plan (P8) — **21.4%**
+- Select Strategy — Select among candidate strategies (P29) — 7.1%
+- Modify Plan — Replan dynamically based on feedback (P34) — 7.1%
 
-### Evaluating — *Coverage 20/20*
-- **Evaluating with heuristics** — Verify intermediate results (P28) — **3.5%**
-- Evaluating with gold — Review code against golden standard (P29) — 2.6%
-- Evaluating with metrics — Score repair candidates (P29) — 2.1%
-- Evaluating with goals — Independent goal-completion check (P25) — --
-- Evaluating query — Acknowledge false information (P22) — --
+### Reasoning — *Cov. 50.0%*
 
-### Deciding — *Coverage 4/20*
-- **Generate candidates** — Multifaceted debugging instruction generation (P29) — **2.4%**
-- Pick scores — argmax / softmax / majority vote — 1.8%
-- Decide accept/reject — Decline out-of-scope queries (P22) — 1.4%
-- Make a decision — Make a decision according to memory — --
-- Decide multiple states — Fork generative state at uncertainty point (P4) — --
+- **Generating** — Generate candidate options (P4) — **28.6%**
+- Analysing — Analyse artifact structure and behavior (P28) — 14.3%
+- Explaining — Explain failure from user requirement (P16) — 3.6%
+- Summarizing/Distilling — Summarize recent observations and trajectories — 0%
+- Inferring — Infer structure from indirect evidence (P11) — 14.3%
+- Comparing & Ranking — Compare values across sources (P2) — 3.6%
+- Contextualizing — Configure agent persona or role-conditioning (P22) — 17.9%
+- Combining — Combine information from multiple sources (P2) — 10.7%
+- Filtering — Filter information by threshold (P2) — 3.6%
+
+### Evaluating — *Cov. 28.6%*
+
+- Evaluating with gold — Compare against gold reference (P29) — 7.1%
+- Evaluating with goals/requirements/constraints — Domain-rule / best-practice check (P1) — 14.3%
+- **Evaluating without ground truth** — Score on quality dimensions (P22) — **28.6%**
+
+### Deciding — *Cov. 7.1%*
+
+- Make a decision — Make a decision according to memory — 0%
+- Pick scores — Select action by score (argmax/softmax/vote) — 0%
+- Decide accept or not — Decline out-of-scope queries (P22) — 3.6%
+- Decide under uncertainty — Fork trajectory at uncertainty (P4) — 3.6%
 
 ---
 
 ## 🟩 Act
 
-### Grounding — *Coverage 18/20*
-- **Interact with users** — Accept instructions from humans (P3) — **4.8%**
-- Interact with digital environments — Invoke structured API endpoint (P25) — 3.7%
-- Interact with other agents — Communicate via structured dialogue (P28) — 3.5%
-- Interact with physical environments — Affect environments via robotic planners — 1.5%
-- Augmenting — Augment external computation (P28) — 1.5%
+### Grounding — *Cov. 35.7%*
 
-### Executing — *Coverage 20/20*
-- **Executing strategy** — Insertion agent executes HLS-C optimization (P29) — **5.2%**
-- Terminating — Terminate rollout with answer tags (P4) — 1.9%
-- Execute debugging — Strict-instruction debugging implementation (P29) — 1.4%
-- Generate refusal — Character-consistent refusal with explanation (P22) — 1.1%
-- Executing with anonymity — Mask algorithm IDs with generic labels (P1) — --
+- **Interact with users** — Accept instructions from humans (P3) — **21.4%**
+- Interact with physical environments — Perceive physical environment (P34) — 7.1%
+- Interact with digital environments — Navigate digital interfaces (P2) — 7.1%
+- Interact with other agents — Send message to peer agent (P16) — 10.7%
+- Augment with external computation — Invoke specialized computation tool (P16) — 10.7%
+
+### Executing — *Cov. 17.9%*
+
+- Executing plan — Execute strategy (P29) — 3.6%
+- Executing debug — Adopt debugging instructions (P29) — 7.1%
+- **Terminating** — Provide final answer (P32) — **10.7%**
 
 ---
 
 ## 🟪 Adapt
 
-### Reflecting — *Coverage 18/20*
-- **Reflect from in-episode error** — Executor self-corrects on error (P1) — **3.4%**
-- Reflect with feedback — Revise output based on evaluator feedback (P27) — 2.7%
-- Reflect on failures (goal) — Analyze stuck state vs. ground truth (P25) — 2.6%
-- Reflect through iteration — Refine outcome over multiple rounds (P1) — 2.5%
-- Reflect from memory — Learn from mistakes in working memory (P1) — 1.0%
-- Self-monitoring — Engage in self-monitoring before commands (P1) — 0.8%
+### Learning — *Cov. 14.3%*
 
-### Learning — *Coverage 1/20*
-- **Learning LLM parameters** — Update LLM parameters via SL/RL/RLHF — **1.0%**
-- Learning reasoning — Update reasoning via prompt update — 0.6%
-- Learning knowledge — Update semantic memory with knowledge (P29) — 0.5%
-- Learning decision-making — From random pick to scored selection — --
-- Learning grounding — Update grounding via code-based skills — --
-- Learning retrieval skills — Update retrieval procedures — --
-- Learning instructions — Infer instructions from input-output examples — --
-- Self-improving — Generate-then-train on best outputs — --
+- Learning reasoning — Update reasoning via prompt update — 0%
+- Learning grounding — Update grounding via code-based skills — 0%
+- **Learning knowledge** — Update semantic memory with knowledge (P29) — **10.7%**
+- Learning LLM parameters — Update action parameters based on feedback (P1) — 3.6%
+- Learning instructions — Infer instructions from input-output examples — 0%
+
+### Reflection — *Cov. 28.6%*
+
+- **Reflect on errors and failures** — Self-correct step implementation (P28) — **21.4%**
+- Reflect on self-outcomes — Self-reflect on iterative outcomes (P32) — 10.7%
+- Reflect on external feedback — Integrate evaluator feedback (P1) — 10.7%
+
+---

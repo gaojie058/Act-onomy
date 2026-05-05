@@ -2,7 +2,7 @@
 
 This codebook defines the action taxonomy used to annotate agent trajectories. Each codebook tag has three levels: **Group** › **Subgroup** › **Leaf action**. When annotating a thought, ground each label to a specific quoted phrase from the verbatim thought text.
 
-This file is the **operational mirror** of the canonical taxonomy at [`../../../1_data/2_taxonomy/act-onomy_taxonomy.csv`](../../../1_data/2_taxonomy/act-onomy_taxonomy.csv) (Act-onomy **v4.2**: 4 Classes × 10 Actions × 42 Subactions × 120 Instances). The 10 Actions become the 10 codebook **Groups** consumed by the renderer; their parent Class (Sense / Think / Act / Adapt) is shown here as a section header but does **not** appear in the `(grp, sub, leaf)` triple. This file additionally carries:
+This file is the **operational mirror** of the canonical taxonomy at [`../../../1_data/2_taxonomy/act-onomy_taxonomy.csv`](../../../1_data/2_taxonomy/act-onomy_taxonomy.csv) (Act-onomy **v4.2**: 4 Classes × 10 Actions × 46 Subactions × 120 Instances). The 10 Actions become the 10 codebook **Groups** consumed by the renderer; their parent Class (Sense / Think / Act / Adapt) is shown here as a section header but does **not** appear in the `(grp, sub, leaf)` triple. This file additionally carries:
 
 - a **palette table** that maps each group to a hex color (consumed by the renderer and the HTML template);
 - a small set of empirically-extra leaves accumulated during real annotation runs that the canonical taxonomy does not yet enumerate (e.g., `Pinpoint root cause mechanism` under Reasoning › Inferring).
@@ -38,17 +38,25 @@ External-information intake. Sense covers everything the agent pulls *into* its 
 
 ## Group: Retrieval
 
-Pulling info from skill libraries, local corpora, external knowledge bases, the open web, or relevant context. V4.2 keeps Retrieval as a flat group with a single `Retrieve` subaction.
+Pulling info from skill libraries, local corpora, external knowledge bases, the open web, or relevant context. **V4.2 (revised):** Retrieval has 5 first-class subgroups — no shared `Retrieve` umbrella. Pick the subgroup that matches the *source* of the retrieved information.
 
-### Subgroup: Retrieve
+### Subgroup: Retrieve from skill library
 - **Retrieve from skill library** — grab pre-built skill snippet (e.g., Minecraft "chop tree")
-- **Retrieve from local corpus** — diverse-filetype reading; read between 1 and 15 documents/tables
-- **Retrieve from external knowledge base** — recall N relevant distinct problems (e.g., "Recall three relevant and distinct problems")
-- **Retrieve from open web** — high reliance on web search to offload knowledge retrieval
-- **Retrieve relevant context** — leverage retrieved domain context (e.g., HLS-related context for code transformation)
-- **Retrieve Analogical Examples** — solutions by analogy to other projects *(empirical extra)*
+
+### Subgroup: Retrieve from local corpus
+- **Retrieve from local corpus** — diverse-filetype reading; read between 1 and 15 documents/tables; opening a README or source file in the repo
 - **Read code semantics from open file** — understand a function/class from its body *(empirical extra)*
-- **Query Error Repository** — look up known error patterns *(empirical extra)*
+
+### Subgroup: Retrieve from external knowledge base
+- **Retrieve from external knowledge base** — recall N relevant distinct problems / query a curated bug or skill repository (e.g., BugRAG)
+- **Retrieve Analogical Examples** — solutions by analogy to other projects *(empirical extra)*
+- **Query Error Repository** — look up known error patterns (e.g., BugRAG) *(empirical extra)*
+
+### Subgroup: Retrieve from open web
+- **Retrieve from open web** — high reliance on web search to offload knowledge retrieval
+
+### Subgroup: Retrieve relevant context
+- **Retrieve relevant context** — leverage retrieved domain context (e.g., HLS-related context for code transformation)
 
 ---
 

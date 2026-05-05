@@ -1,9 +1,9 @@
 code,Class,Action,Subaction,Instance,definition
-T1.1.1.1,Sense,Retrieval,Retrieve,Retrieve from skill library,Grab pre-built skill snippet (Minecraft “chop tree”)
-T1.1.1.2,Sense,Retrieval,Retrieve,Retrieve from local corpus,Diverse filetype reading; read between 1 to 15 documents and/or tables”
-T1.1.1.3,Sense,Retrieval,Retrieve,Retrieve from external knowledge base,Recall three relevant distinct problems (P28): “Recall three (03) relevant and distinct problems (different from the user task)”
-T1.1.1.4,Sense,Retrieval,Retrieve,Retrieve from open web,"High reliance on web search to offload knowledge retrieval to external sources"""
-T1.1.1.5,Sense,Retrieval,Retrieve,Retrieve relevant context,LLM leverages retrieved HLS-related context to transform input C algorithms or natural language descriptions”
+T1.1.1.1,Sense,Retrieval,Retrieve from skill library,Retrieve from skill library,Grab pre-built skill snippet (Minecraft “chop tree”)
+T1.1.2.1,Sense,Retrieval,Retrieve from local corpus,Retrieve from local corpus,Diverse filetype reading; read between 1 to 15 documents and/or tables”
+T1.1.3.1,Sense,Retrieval,Retrieve from external knowledge base,Retrieve from external knowledge base,Recall three relevant distinct problems (P28): “Recall three (03) relevant and distinct problems (different from the user task)”
+T1.1.4.1,Sense,Retrieval,Retrieve from open web,Retrieve from open web,"High reliance on web search to offload knowledge retrieval to external sources"""
+T1.1.5.1,Sense,Retrieval,Retrieve relevant context,Retrieve relevant context,LLM leverages retrieved HLS-related context to transform input C algorithms or natural language descriptions”
 T1.2.1.1,Sense,Memory,Store Information,Store information in working memory,Scratchpad for current inputs and intermediate results.
 T1.2.1.2,Sense,Memory,Store Information,Store episodic trajectories,Record full action sequences for later training.
 T1.2.1.3,Sense,Memory,Store Information,Store knowledge in semantic memory,Save general world facts.
