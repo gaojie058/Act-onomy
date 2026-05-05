@@ -7,7 +7,7 @@ A community-extensible framework for describing and analyzing agent behavior at 
 Act-onomy ships three things:
 
 - A **codebook** of 10 top-level action categories (organised under 4 classes: Sense / Think / Act / Adapt) instantiated by 46 sub-actions and 120 leaf-level instances, grounded in CoALA and built via deductive coding on a 35-paper corpus (20 incorporated into the shared codebook; NeurIPS / ICML / ICLR / ACL Anthology, 2024–2026). See [`1_data/2_taxonomy/`](1_data/2_taxonomy/).
-- Two **Claude Skills** that apply the codebook to agent papers and trajectories: [`trace-qualitative-analyst/`](skill/trace-qualitative-analyst/) (LLM-judge that emits an HTML report from a raw trajectory) and [`discovery-qualitative-analyst/`](skill/discovery-qualitative-analyst/) (codebook-iteration pipeline used during taxonomy construction).
+- Two **Claude Skills** that apply the codebook to agent papers and trajectories: [`trace-qualitative-analyst/`](skill/trace-qualitative-analyst/) (qualitative annotation tool that emits an interactive HTML report from a raw trajectory) and [`discovery-qualitative-analyst/`](skill/discovery-qualitative-analyst/) (codebook-iteration pipeline used during taxonomy construction).
 - A **contribution protocol** that lets the codebook grow as new agent designs appear, versioned as `vX.Y`. See [`CONTRIBUTING.md`](CONTRIBUTING.md) and [`CHANGELOG.md`](CHANGELOG.md).
 
 ## Repository layout
