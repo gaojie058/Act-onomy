@@ -2,242 +2,88 @@
   "source_pdf": "data/taxonomy_development/Action Space Codebook (V4.2).pdf",
   "source_csv": "data/corpus/finalized_human_verified_codebook.csv",
   "version": "v4.2",
-  "version_note": "Final reorganization under four mega-sections (Sense / Think / Act / Adapt). Hierarchy renamed in CSV form: Class → Action → Subaction → Instance. Unclassified holding-pen from v4.1 is dissolved; entries absorbed into mainline categories. Each row includes the human reviewer(s) attributed to its evidence. [PlanB] Retrieval restructured: the placeholder sub-category \"Retrieve\" is dissolved; the 5 main retrieve actions become first-class sub-categories. n_sub_categories: 42 → 46.",
+  "version_note": "Final reorganization under four mega-sections (Sense / Think / Act / Adapt). Hierarchy renamed in CSV form: Class → Action → Subaction → Instance. Unclassified holding-pen from v4.1 is dissolved; entries absorbed into mainline categories. Each row includes the human reviewer(s) attributed to its evidence. [PlanB] Retrieval restructured: the placeholder sub-category \"Retrieve\" is dissolved; the 5 main retrieve actions become first-class sub-categories. n_sub_categories: 42 → 46. | 2026-05 dropped 4-class super-layer; now 3-level: action→sub→leaf, aligned with arXiv:2605.13625v1",
   "summary": {
-    "n_mega_sections": 4,
-    "n_super_categories": 10,
+    "n_actions": 10,
     "n_sub_categories": 46,
     "n_leaves": 120
   },
-  "mega_sections": [
+  "actions": [
     {
-      "name": "Sense",
-      "super_categories": [
+      "name": "Retrieval",
+      "sub_categories": [
         {
-          "name": "Retrieval",
-          "sub_categories": [
+          "name": "Retrieve from skill library",
+          "leaves": [
             {
-              "name": "Retrieve from skill library",
-              "leaves": [
-                {
-                  "action": "Retrieve from skill library",
-                  "examples_raw": "Grab pre-built skill snippet (Minecraft “chop tree”)\nFind and load ready-made code snippet from pre-built library",
-                  "papers_cited": [],
-                  "reviewers": [
-                    "theory-driven"
-                  ]
-                }
-              ]
-            },
-            {
-              "name": "Retrieve from local corpus",
-              "leaves": [
-                {
-                  "action": "Retrieve from local corpus",
-                  "examples_raw": "“diverse filetype reading; read between 1 to 15 documents and/or tables” (P2)\n\"read the README file — Phase 1: read_file('reproduction_package/readme.txt')\" (P11)",
-                  "papers_cited": [
-                    "P2",
-                    "P11"
-                  ],
-                  "reviewers": [
-                    "main reviewer (human reviewer 2)",
-                    "human reviewer 6"
-                  ]
-                }
-              ]
-            },
-            {
-              "name": "Retrieve from external knowledge base",
-              "leaves": [
-                {
-                  "action": "Retrieve from external knowledge base",
-                  "examples_raw": "“LLM which generates buggy code by integrating retrieved error slices from BugRAG as context” (P29)\n“queries BugRAG to check for existing entries” (P29)\nRecall three relevant distinct problems (P28): “Recall three (03) relevant and distinct problems (different from the user task)” (P28)",
-                  "papers_cited": [
-                    "P28",
-                    "P29"
-                  ],
-                  "reviewers": [
-                    "main reviewer (human reviewer 2)"
-                  ]
-                }
-              ]
-            },
-            {
-              "name": "Retrieve from open web",
-              "leaves": [
-                {
-                  "action": "Retrieve from open web",
-                  "examples_raw": "\"high reliance on web search to offload knowledge retrieval to external sources\" (P16)",
-                  "papers_cited": [
-                    "P16"
-                  ],
-                  "reviewers": [
-                    "human reviewer 1"
-                  ]
-                }
-              ]
-            },
-            {
-              "name": "Retrieve relevant context",
-              "leaves": [
-                {
-                  "action": "Retrieve relevant context",
-                  "examples_raw": "“LLM leverages retrieved HLS-related context to transform input C algorithms or natural language descriptions” (P29)",
-                  "papers_cited": [
-                    "P29"
-                  ],
-                  "reviewers": [
-                    "main reviewer (human reviewer 2)"
-                  ]
-                }
+              "action": "Retrieve from skill library",
+              "examples_raw": "Grab pre-built skill snippet (Minecraft “chop tree”)\nFind and load ready-made code snippet from pre-built library",
+              "papers_cited": [],
+              "reviewers": [
+                "theory-driven"
               ]
             }
           ]
         },
         {
-          "name": "Memory",
-          "sub_categories": [
+          "name": "Retrieve from local corpus",
+          "leaves": [
             {
-              "name": "Store Information",
-              "leaves": [
-                {
-                  "action": "Store information in working memory",
-                  "examples_raw": "Scratchpad for current inputs and intermediate results\nQuick-access buffer that holds recent inputs and intermediate results",
-                  "papers_cited": [],
-                  "reviewers": [
-                    "theory-driven"
-                  ]
-                },
-                {
-                  "action": "Store episodic trajectories",
-                  "examples_raw": "Record full action sequences for later training\nSave complete sequences from start to finish for training/review",
-                  "papers_cited": [],
-                  "reviewers": [
-                    "theory-driven"
-                  ]
-                },
-                {
-                  "action": "Store knowledge in semantic memory",
-                  "examples_raw": "Save general world facts\nSave general facts about the world, not tied to any specific event",
-                  "papers_cited": [],
-                  "reviewers": [
-                    "theory-driven"
-                  ]
-                },
-                {
-                  "action": "Store experiences in episodic memory",
-                  "examples_raw": "Save events as episodes\nSaves past events as personal-diary-like episodes (which game won, which plan failed)",
-                  "papers_cited": [],
-                  "reviewers": [
-                    "theory-driven"
-                  ]
-                },
-                {
-                  "action": "Store information in long-term memory",
-                  "examples_raw": "Store information in external storage\n\"Gemini-3-Pro...initialize_memory_bank (7 times) Gemini-3-Pro...update_memory_bank (22 times)...attempts to persist state and key information externally\" (P16)",
-                  "papers_cited": [
-                    "P16"
-                  ],
-                  "reviewers": [
-                    "human reviewer 1"
-                  ]
-                },
-                {
-                  "action": "Maintain curriculum library",
-                  "examples_raw": "Keep a syllabus of mastered and upcoming skills, arranged by difficulty, so the agent learns in a sensible order.",
-                  "papers_cited": [],
-                  "reviewers": [
-                    "theory-driven"
-                  ]
-                }
+              "action": "Retrieve from local corpus",
+              "examples_raw": "“diverse filetype reading; read between 1 to 15 documents and/or tables” (P2)\n\"read the README file — Phase 1: read_file('reproduction_package/readme.txt')\" (P11)",
+              "papers_cited": [
+                "P2",
+                "P11"
+              ],
+              "reviewers": [
+                "main reviewer (human reviewer 2)",
+                "human reviewer 6"
               ]
-            },
+            }
+          ]
+        },
+        {
+          "name": "Retrieve from external knowledge base",
+          "leaves": [
             {
-              "name": "Update Information",
-              "leaves": [
-                {
-                  "action": "Update memory",
-                  "examples_raw": "Update experiences\nrefinement of memories (represented in text) as the system encounters new scenarios",
-                  "papers_cited": [],
-                  "reviewers": [
-                    "theory-driven"
-                  ]
-                }
+              "action": "Retrieve from external knowledge base",
+              "examples_raw": "“LLM which generates buggy code by integrating retrieved error slices from BugRAG as context” (P29)\n“queries BugRAG to check for existing entries” (P29)\nRecall three relevant distinct problems (P28): “Recall three (03) relevant and distinct problems (different from the user task)” (P28)",
+              "papers_cited": [
+                "P28",
+                "P29"
+              ],
+              "reviewers": [
+                "main reviewer (human reviewer 2)"
               ]
-            },
+            }
+          ]
+        },
+        {
+          "name": "Retrieve from open web",
+          "leaves": [
             {
-              "name": "Discard information",
-              "leaves": [
-                {
-                  "action": "Discard information from working memory",
-                  "examples_raw": "Discard local memory after subtask completion (P1)\n“the local memory is discarded upon successful completion of the subtask” (P1)",
-                  "papers_cited": [
-                    "P1"
-                  ],
-                  "reviewers": [
-                    "main reviewer (human reviewer 2)"
-                  ]
-                },
-                {
-                  "action": "Discard redundant game state, keep summaries",
-                  "examples_raw": "“automatic context compaction to manage thousands of reasoning steps, preserving only LLM responses and action summaries while discarding redundant game state” (P25)",
-                  "papers_cited": [
-                    "P25"
-                  ],
-                  "reviewers": [
-                    "main reviewer (human reviewer 2)"
-                  ]
-                }
+              "action": "Retrieve from open web",
+              "examples_raw": "\"high reliance on web search to offload knowledge retrieval to external sources\" (P16)",
+              "papers_cited": [
+                "P16"
+              ],
+              "reviewers": [
+                "human reviewer 1"
               ]
-            },
+            }
+          ]
+        },
+        {
+          "name": "Retrieve relevant context",
+          "leaves": [
             {
-              "name": "Consolidate memory",
-              "leaves": [
-                {
-                  "action": "Consolidate working memory into long-term memory",
-                  "examples_raw": "Retain only successful analysis path to global memory (P1)\nThis discard-after-use strategy ensures that only the clear and successful analysis path is retained in the global memory, preventing interference from the intermediate trial-and-error history and thereby maintaining a concise and efficient context for subsequent steps (P1)",
-                  "papers_cited": [
-                    "P1"
-                  ],
-                  "reviewers": [
-                    "main reviewer (human reviewer 2)"
-                  ]
-                },
-                {
-                  "action": "Compact context window",
-                  "examples_raw": "\"automatic context compaction to manage the thousands of reasoning steps required, preserving only LLM responses and action summaries while discarding redundant game state\" (P25)",
-                  "papers_cited": [
-                    "P25"
-                  ],
-                  "reviewers": [
-                    "main reviewer (human reviewer 2)"
-                  ]
-                }
-              ]
-            },
-            {
-              "name": "Read memory",
-              "leaves": [
-                {
-                  "action": "Read from working memory",
-                  "examples_raw": "Grab intermediate results from scratchpad\nCheck the scratchpad — grab stored intermediate results and state\n“IMPLICITMEMBENCH reframes evaluation from ‘what agents recall’ to ‘what they automatically enact’.” (P12)",
-                  "papers_cited": [
-                    "P12"
-                  ],
-                  "reviewers": [
-                    "main reviewer (human reviewer 2)"
-                  ]
-                },
-                {
-                  "action": "Read from long-term memory",
-                  "examples_raw": "Importance-weighted retrieval of discoveries (P25)\n“Persistent memory system storing discoveries (locations, NPCs, items, strategies) with importance-weighted retrieval” (P25)",
-                  "papers_cited": [
-                    "P25"
-                  ],
-                  "reviewers": [
-                    "main reviewer (human reviewer 2)"
-                  ]
-                }
+              "action": "Retrieve relevant context",
+              "examples_raw": "“LLM leverages retrieved HLS-related context to transform input C algorithms or natural language descriptions” (P29)",
+              "papers_cited": [
+                "P29"
+              ],
+              "reviewers": [
+                "main reviewer (human reviewer 2)"
               ]
             }
           ]
@@ -245,685 +91,147 @@
       ]
     },
     {
-      "name": "Think",
-      "super_categories": [
+      "name": "Memory",
+      "sub_categories": [
         {
-          "name": "Planning",
-          "sub_categories": [
+          "name": "Store Information",
+          "leaves": [
             {
-              "name": "Decompose task",
-              "leaves": [
-                {
-                  "action": "Decompose into subtasks",
-                  "examples_raw": "\"LLM-based planner to decompose the specified language instruction L into a sequence of subtasks S = [S0, S1, ..., Sn]\" (P34)\n“Decomposing hard problems into subproblems often makes them easier and more efficient to solve” (P17)\n“Decomposes complex user requests into manageable subtasks, an Executor that carries out the analysis by generating and running code, and an Evaluator that assesses the quality of the results” (P1)\n“formulate plans, decompose problems into sub-steps” (P2)\ntodo_write tool (15 invocations by GPT-5.2) (P16)",
-                  "papers_cited": [
-                    "P1",
-                    "P2",
-                    "P16",
-                    "P17",
-                    "P34"
-                  ],
-                  "reviewers": [
-                    "main reviewer (human reviewer 2)",
-                    "human reviewer 1",
-                    "human reviewer 5"
-                  ]
-                },
-                {
-                  "action": "Decompose into subgoals with success conditions",
-                  "examples_raw": "“LLM decomposes the task into a sequence of subgoals, each paired with an executable success-condition function” (P25)",
-                  "papers_cited": [
-                    "P25"
-                  ],
-                  "reviewers": [
-                    "main reviewer (human reviewer 2)"
-                  ]
-                },
-                {
-                  "action": "Decompose by role specialization",
-                  "examples_raw": "\"splitting the instruction-following challenge into distinct reasoning and grounding roles handled by a reasoner agent and an actor agent\" (P34)\n\"Specialists each solve a distinct task type, receiving only the relevant portion of the input\" (P17)",
-                  "papers_cited": [
-                    "P17",
-                    "P34"
-                  ],
-                  "reviewers": [
-                    "human reviewer 1",
-                    "human reviewer 5"
-                  ]
-                }
+              "action": "Store information in working memory",
+              "examples_raw": "Scratchpad for current inputs and intermediate results\nQuick-access buffer that holds recent inputs and intermediate results",
+              "papers_cited": [],
+              "reviewers": [
+                "theory-driven"
               ]
             },
             {
-              "name": "Formulate a workflow or plan",
-              "leaves": [
-                {
-                  "action": "Formulate a high-level plan",
-                  "examples_raw": "\"METRO starts with the identification of the strategic action a_i for every expert utterance u_i in transcript D\" (P10)\n\"summarizing it into a high-level planning directive that emphasizes cumulative temporal effects\" (P8)",
-                  "papers_cited": [
-                    "P8",
-                    "P10"
-                  ],
-                  "reviewers": [
-                    "human reviewer 3",
-                    "main reviewer (human reviewer 2)"
-                  ]
-                },
-                {
-                  "action": "Formulate an analysis workflow",
-                  "examples_raw": "“the Planner accurately interprets user intent and formulates a comprehensive analysis workflow” (P1)",
-                  "papers_cited": [
-                    "P1"
-                  ],
-                  "reviewers": [
-                    "main reviewer (human reviewer 2)"
-                  ]
-                },
-                {
-                  "action": "Plan navigation through environment",
-                  "examples_raw": "“planning to navigate the web; tasks require navigation through an average of 4.2 web pages” (P2)",
-                  "papers_cited": [
-                    "P2"
-                  ],
-                  "reviewers": [
-                    "main reviewer (human reviewer 2)"
-                  ]
-                },
-                {
-                  "action": "Plan function or tool use",
-                  "examples_raw": "\"I can use the pandas method corr() to calculate the Pearson correlation coefficient\" (P32)",
-                  "papers_cited": [
-                    "P32"
-                  ],
-                  "reviewers": [
-                    "human reviewer 5"
-                  ]
-                },
-                {
-                  "action": "Plan Code or artifact structure",
-                  "examples_raw": "\"Planning: HTML Structure, CSS Styling, JavaScript Functionality\" (P28)",
-                  "papers_cited": [
-                    "P28"
-                  ],
-                  "reviewers": [
-                    "main reviewer (human reviewer 2)"
-                  ]
-                },
-                {
-                  "action": "Formulate plan from template",
-                  "examples_raw": "\"HLSTuner formulates a detailed plan that specifies: (1) the combination of HLS directives, (2) target code segments, and (3) the insertion actions\" (P29)",
-                  "papers_cited": [
-                    "P29"
-                  ],
-                  "reviewers": [
-                    "main reviewer (human reviewer 2)"
-                  ]
-                }
+              "action": "Store episodic trajectories",
+              "examples_raw": "Record full action sequences for later training\nSave complete sequences from start to finish for training/review",
+              "papers_cited": [],
+              "reviewers": [
+                "theory-driven"
               ]
             },
             {
-              "name": "Select Strategy",
-              "leaves": [
-                {
-                  "action": "Select among candidate strategies",
-                  "examples_raw": "“selects effective HLS directive combination strategies and inserts directives within the specific structure (e.g., loops and arrays)” (P29)",
-                  "papers_cited": [
-                    "P29"
-                  ],
-                  "reviewers": [
-                    "main reviewer (human reviewer 2)"
-                  ]
-                },
-                {
-                  "action": "Switch to fallback strategy",
-                  "examples_raw": "\"incorporating a dummy score prediction as a fallback mechanism\" (P11)",
-                  "papers_cited": [
-                    "P11"
-                  ],
-                  "reviewers": [
-                    "human reviewer 6"
-                  ]
-                }
+              "action": "Store knowledge in semantic memory",
+              "examples_raw": "Save general world facts\nSave general facts about the world, not tied to any specific event",
+              "papers_cited": [],
+              "reviewers": [
+                "theory-driven"
               ]
             },
             {
-              "name": "Modify Plan",
-              "leaves": [
-                {
-                  "action": "Replan dynamically based on feedback",
-                  "examples_raw": "\"RequireReplan provides the LLM-based executor with the capability to dynamically adjust the plan\" (P34)",
-                  "papers_cited": [
-                    "P34"
-                  ],
-                  "reviewers": [
-                    "human reviewer 5"
-                  ]
-                },
-                {
-                  "action": "Refine Requirements",
-                  "examples_raw": "“Refine requirement based on validated test cases to ensure alignment” (P28)",
-                  "papers_cited": [
-                    "P28"
-                  ],
-                  "reviewers": [
-                    "main reviewer (human reviewer 2)"
-                  ]
-                }
+              "action": "Store experiences in episodic memory",
+              "examples_raw": "Save events as episodes\nSaves past events as personal-diary-like episodes (which game won, which plan failed)",
+              "papers_cited": [],
+              "reviewers": [
+                "theory-driven"
+              ]
+            },
+            {
+              "action": "Store information in long-term memory",
+              "examples_raw": "Store information in external storage\n\"Gemini-3-Pro...initialize_memory_bank (7 times) Gemini-3-Pro...update_memory_bank (22 times)...attempts to persist state and key information externally\" (P16)",
+              "papers_cited": [
+                "P16"
+              ],
+              "reviewers": [
+                "human reviewer 1"
+              ]
+            },
+            {
+              "action": "Maintain curriculum library",
+              "examples_raw": "Keep a syllabus of mastered and upcoming skills, arranged by difficulty, so the agent learns in a sensible order.",
+              "papers_cited": [],
+              "reviewers": [
+                "theory-driven"
               ]
             }
           ]
         },
         {
-          "name": "Reasoning",
-          "sub_categories": [
+          "name": "Update Information",
+          "leaves": [
             {
-              "name": "Generating",
-              "leaves": [
-                {
-                  "action": "Generate candidate options",
-                  "examples_raw": "Brainstorm possible next moves\nGenerate one or more possible next moves\n“Running multiple candidate pipelines for each analysis step” (P1)\n“generates solutions based on analogies to unrelated projects, which resemble few-shot prompting” (P28)\n\"Fork the current generative state and generate a new parallel trajectory from this point of high uncertainty\" (P4)\n\"the LLM reinterprets the actions from breadth logic...summarizing them into a concise next-step strategy\" (P8)",
-                  "papers_cited": [
-                    "P1",
-                    "P4",
-                    "P8",
-                    "P28"
-                  ],
-                  "reviewers": [
-                    "main reviewer (human reviewer 2)",
-                    "human reviewer 3"
-                  ]
-                },
-                {
-                  "action": "Generate structured artifacts",
-                  "examples_raw": "\"Each agent then emits a set of initial codes; cluster semantically similar codes and generate preliminary themes\" (P27)\n\"automatically generates candidate user-facing requirements\" (P28)\n\"Create JavaScript functionality handling empty display and consecutive operator clicks\" (P28)\n“break down the given character description into multiple atomic pieces of knowledge” (P22)",
-                  "papers_cited": [
-                    "P22",
-                    "P27",
-                    "P28"
-                  ],
-                  "reviewers": [
-                    "human reviewer 4",
-                    "main reviewer (human reviewer 2)"
-                  ]
-                },
-                {
-                  "action": "Generate evaluations",
-                  "examples_raw": "“LLM Group for multifaceted evaluation generates diverse debugging instructions” (P29)\n“For every binary score z(q) i,j from the judge, there is a corresponding explanation e(q)i,j” (P3)",
-                  "papers_cited": [
-                    "P3",
-                    "P29"
-                  ],
-                  "reviewers": [
-                    "main reviewer (human reviewer 2)"
-                  ]
-                }
-              ]
-            },
-            {
-              "name": "Analysing",
-              "leaves": [
-                {
-                  "action": "Analyse artifact structure and behavior",
-                  "examples_raw": "“Analyze frontend framework and interactive components” (P28)\n\"analyzes the project's core functionalities and their interactions with UI elements by reading the source code\" (P28)",
-                  "papers_cited": [
-                    "P28"
-                  ],
-                  "reviewers": [
-                    "main reviewer (human reviewer 2)"
-                  ]
-                },
-                {
-                  "action": "Detect patterns or trends in data",
-                  "examples_raw": "“Identifying patterns, directions, or changes in data over time or across contexts” (P2)\n“Measuring relationships or associations between two or more variables” (P2)",
-                  "papers_cited": [
-                    "P2"
-                  ],
-                  "reviewers": [
-                    "main reviewer (human reviewer 2)"
-                  ]
-                },
-                {
-                  "action": "Interpret meaning of artifacts",
-                  "examples_raw": "\"logical reasoning to interpret papers and code; mathematical reasoning to modify and run code; causal reasoning to infer scientific insights from results\" (P11)",
-                  "papers_cited": [
-                    "P11"
-                  ],
-                  "reviewers": [
-                    "human reviewer 6"
-                  ]
-                },
-                {
-                  "action": "Classify inputs into categories",
-                  "examples_raw": "delegator can determine which of the k tasks the input string belongs to by observing only a constant number of metadata tokens (P17)",
-                  "papers_cited": [
-                    "P17"
-                  ],
-                  "reviewers": [
-                    "human reviewer 1"
-                  ]
-                }
-              ]
-            },
-            {
-              "name": "Explaining",
-              "leaves": [
-                {
-                  "action": "Explain reasoning or outcomes",
-                  "examples_raw": "\"Explain the failure from a user requirement perspective\" (P16)",
-                  "papers_cited": [
-                    "P16"
-                  ],
-                  "reviewers": [
-                    "human reviewer 1"
-                  ]
-                }
-              ]
-            },
-            {
-              "name": "Summarizing/Distilling",
-              "leaves": [
-                {
-                  "action": "Summarize recent observations and trajectories",
-                  "examples_raw": "Condense recent observations and trajectories into key takeaways",
-                  "papers_cited": [],
-                  "reviewers": [
-                    "theory-driven"
-                  ]
-                }
-              ]
-            },
-            {
-              "name": "Inferring",
-              "leaves": [
-                {
-                  "action": "Infer hidden state from observable evidence",
-                  "examples_raw": "Damage calculation reveals stat distributions (P25)\n“intelligently infers hidden information through game mechanics: damage calculations reveal stat distributions, move priority ordering constrains speed ranges” (P25)",
-                  "papers_cited": [
-                    "P25"
-                  ],
-                  "reviewers": [
-                    "main reviewer (human reviewer 2)"
-                  ]
-                },
-                {
-                  "action": "Infer causal relationship",
-                  "examples_raw": "Determine plausible causal factor (P2)\n“determine the most plausible event or factor accounting for this variability” (P2)",
-                  "papers_cited": [
-                    "P2"
-                  ],
-                  "reviewers": [
-                    "main reviewer (human reviewer 2)"
-                  ]
-                },
-                {
-                  "action": "Infer structure from indirect evidence",
-                  "examples_raw": "\"agents must infer the directory layout by inspecting package structures and README files\" (P11)",
-                  "papers_cited": [
-                    "P11"
-                  ],
-                  "reviewers": [
-                    "human reviewer 6"
-                  ]
-                },
-                {
-                  "action": "Infer errors",
-                  "examples_raw": "M_q has the capacity to identify exactly one bug at a time (P17)\n“The analysis LLM then examines the error causes and provides debugging instructions” (P29)",
-                  "papers_cited": [
-                    "P17",
-                    "P29"
-                  ],
-                  "reviewers": [
-                    "human reviewer 1",
-                    "main reviewer (human reviewer 2)"
-                  ]
-                }
-              ]
-            },
-            {
-              "name": "Comparing & Ranking",
-              "leaves": [
-                {
-                  "action": "Compare values across sources",
-                  "examples_raw": "Quantify and compare across sources (P2)\n“Quantifying occurrences and comparing values across sources or categories” (P2)",
-                  "papers_cited": [
-                    "P2"
-                  ],
-                  "reviewers": [
-                    "main reviewer (human reviewer 2)"
-                  ]
-                },
-                {
-                  "action": "Rank items by criteria",
-                  "examples_raw": "Order items by importance (P2)\n“Ordering items or facts based on specific criteria or importance” (P2)",
-                  "papers_cited": [
-                    "P2"
-                  ],
-                  "reviewers": [
-                    "main reviewer (human reviewer 2)"
-                  ]
-                }
-              ]
-            },
-            {
-              "name": "Contextualizing",
-              "leaves": [
-                {
-                  "action": "Package prior reasoning as context for subsequent calls",
-                  "examples_raw": "Feed reasoning so far as context to next LLM call",
-                  "papers_cited": [],
-                  "reviewers": [
-                    "theory-driven"
-                  ]
-                },
-                {
-                  "action": "Construct structured context object",
-                  "examples_raw": "“global interactive multi-behavior overlapping network is constructed based on the simulated behaviors of reposting and reposting with a comment, as well as following” (P21)\n“construct prompt templates for creating reader agents based on user attributes ua and user historical posts” (P21)",
-                  "papers_cited": [
-                    "P21"
-                  ],
-                  "reviewers": [
-                    "human reviewer 4"
-                  ]
-                },
-                {
-                  "action": "Configure agent persona or role-conditioning",
-                  "examples_raw": "“I want you to play as {role}, imitating {role}’s personality and values” (P22)\n“maintain its role-playing ability even when refusing to answer” (P22)\n“A pool of k=4 role-conditioned GPT-4o agents are each given the full interview transcript as input” (P27)\n“others may retain role-specific perspectives to support diverse theme formulation” (P27)",
-                  "papers_cited": [
-                    "P22",
-                    "P27"
-                  ],
-                  "reviewers": [
-                    "human reviewer 4",
-                    "main reviewer (human reviewer 2)"
-                  ]
-                },
-                {
-                  "action": "Assign roles in a multi-agent team",
-                  "examples_raw": "specifying a scope, or role, for an agent allows it to be treated as a computational object. map each one to an employee in a human organization (P17)\n\"assembling a team of three LLM roles — analyst, coder, and tester — responsible for analysis, coding, and testing\" (P28)\n\"assigns diverse roles to multiple agents to efficiently decompose complex tasks\" (P28)",
-                  "papers_cited": [
-                    "P17",
-                    "P28"
-                  ],
-                  "reviewers": [
-                    "human reviewer 1",
-                    "main reviewer (human reviewer 2)"
-                  ]
-                }
-              ]
-            },
-            {
-              "name": "Combining & Synthesis",
-              "leaves": [
-                {
-                  "action": "Combine information from multiple sources",
-                  "examples_raw": "“combine information from multiple sources... to produce a coherent solution” (P2)\n\"the final results from all subtasks are synthesized to meet the user's requirements\" (P1)\n\"Determining a representative value that summarises numerical data collected from multiple sources\" (P2)",
-                  "papers_cited": [
-                    "P1",
-                    "P2"
-                  ],
-                  "reviewers": [
-                    "main reviewer (human reviewer 2)"
-                  ]
-                },
-                {
-                  "action": "Aggregate observations into a structured representation",
-                  "examples_raw": "\"supplementary semantic map M't, which aggregates the information from Mt over successive time steps. The intuition resembles a form of majority voting\" (P34)\n“aggregates prediction results from multiple tools to generate the final cell type labels” (P1)",
-                  "papers_cited": [
-                    "P1",
-                    "P34"
-                  ],
-                  "reviewers": [
-                    "main reviewer (human reviewer 2)",
-                    "human reviewer 5"
-                  ]
-                }
-              ]
-            },
-            {
-              "name": "Filtering",
-              "leaves": [
-                {
-                  "action": "Filter information by threshold",
-                  "examples_raw": "“Selecting relevant information based on criteria, quality, or thresholds” (P2)",
-                  "papers_cited": [
-                    "P2"
-                  ],
-                  "reviewers": [
-                    "main reviewer (human reviewer 2)"
-                  ]
-                }
+              "action": "Update memory",
+              "examples_raw": "Update experiences\nrefinement of memories (represented in text) as the system encounters new scenarios",
+              "papers_cited": [],
+              "reviewers": [
+                "theory-driven"
               ]
             }
           ]
         },
         {
-          "name": "Evaluate",
-          "sub_categories": [
+          "name": "Discard information",
+          "leaves": [
             {
-              "name": "Evaluating with gold",
-              "leaves": [
-                {
-                  "action": "Compare against gold reference",
-                  "examples_raw": "“we prompt LLM to review the correct HLS-C code, pairing buggy code segments with corresponding error messages to construct debugging CoT” (P29)\n“HLSFixer retests the corrected HLS design against the golden results to ensure semantic equivalence” (P29)",
-                  "papers_cited": [
-                    "P29"
-                  ],
-                  "reviewers": [
-                    "main reviewer (human reviewer 2)"
-                  ]
-                },
-                {
-                  "action": "Score on gold criteria",
-                  "examples_raw": "“The Gold Checker evaluates each annotation on three binary criteria: equivalence, completeness, and correctness, where a score of 1 indicates the criterion is met” (P28)",
-                  "papers_cited": [
-                    "P28"
-                  ],
-                  "reviewers": [
-                    "main reviewer (human reviewer 2)"
-                  ]
-                }
+              "action": "Discard information from working memory",
+              "examples_raw": "Discard local memory after subtask completion (P1)\n“the local memory is discarded upon successful completion of the subtask” (P1)",
+              "papers_cited": [
+                "P1"
+              ],
+              "reviewers": [
+                "main reviewer (human reviewer 2)"
               ]
             },
             {
-              "name": "Evaluating with goals/requirements/constraints",
-              "leaves": [
-                {
-                  "action": "goal-completion check",
-                  "examples_raw": "“Independently checks whether objectives are truly complete, preventing the orchestrator from advancing when the main agent incorrectly believes a task is finished” (P25)",
-                  "papers_cited": [
-                    "P25"
-                  ],
-                  "reviewers": [
-                    "main reviewer (human reviewer 2)"
-                  ]
-                },
-                {
-                  "action": "Requirement-satisfaction check",
-                  "examples_raw": "“the final results from all subtasks are synthesized to meet the user's requirements” (P1)",
-                  "papers_cited": [
-                    "P1"
-                  ],
-                  "reviewers": [
-                    "main reviewer (human reviewer 2)"
-                  ]
-                },
-                {
-                  "action": "Constraint / budget check",
-                  "examples_raw": "“HLSTuner enables QoR-aware reasoning to align optimization goals with hardware constraints” (P29)\n\"if hardware utilization exceeds the budget\" (P29)",
-                  "papers_cited": [
-                    "P29"
-                  ],
-                  "reviewers": [
-                    "main reviewer (human reviewer 2)"
-                  ]
-                },
-                {
-                  "action": "Domain-rule / best-practice check",
-                  "examples_raw": "\"codified best-practices, such as the standard order of operations (e.g., quality control must precede normalization)\" (P1)\n“Agents share project context to ensure: Cross-file consistency; Non-conflicting test-ids” (P28)\n\"Detect logical errors, missing functionalities, or violations of best practices\" (P16)",
-                  "papers_cited": [
-                    "P1",
-                    "P16",
-                    "P28"
-                  ],
-                  "reviewers": [
-                    "main reviewer (human reviewer 2)",
-                    "human reviewer 1"
-                  ]
-                }
-              ]
-            },
-            {
-              "name": "Evaluating without ground truth",
-              "leaves": [
-                {
-                  "action": "Score on quality dimensions",
-                  "examples_raw": "“we use GPT-4o as the default evaluator, each dimension scored on a scale of 0 to 2” (P22)\n\"map the agent's deliverables to a score ranging from 0 to 10\" (P16)\n\"Evaluation Scores: Obtain s^(t) = (C, D, T) on the trustworthiness dimensions\" (P27)\n\"the scoring agent (functioning as the judge) based on clarity, logical soundness, alignment with error messages, this agent selects the optimal suggestion\" (P29)",
-                  "papers_cited": [
-                    "P16",
-                    "P22",
-                    "P27",
-                    "P29"
-                  ],
-                  "reviewers": [
-                    "human reviewer 1",
-                    "human reviewer 4",
-                    "main reviewer (human reviewer 2)"
-                  ]
-                },
-                {
-                  "action": "Check rubric compliance",
-                  "examples_raw": "\"Verify the implementation of every item listed in {Rubrics}\" (P16)\n\"list exactly which rubrics were not met\" (P16)",
-                  "papers_cited": [
-                    "P16"
-                  ],
-                  "reviewers": [
-                    "human reviewer 1"
-                  ]
-                },
-                {
-                  "action": "Evaluate visual/behavioral correctness",
-                  "examples_raw": "\"Evaluates dynamic behavior and visual correctness based on screenshots\" (P16)\n\"Analyze {Visual Assets} for UI elements, layout consistency, and text rendering\" (P16)",
-                  "papers_cited": [
-                    "P16"
-                  ],
-                  "reviewers": [
-                    "human reviewer 1"
-                  ]
-                },
-                {
-                  "action": "Evaluate internal consistency",
-                  "examples_raw": "“task an evaluator agent with determining whether each theme is consistent with its supporting quotes” (P27)\n“In Phase 2, they inspect the provided code for potential inconsistencies; generating a reproducibility score on a scale from 1 to 4” (P11)",
-                  "papers_cited": [
-                    "P11",
-                    "P27"
-                  ],
-                  "reviewers": [
-                    "human reviewer 6",
-                    "main reviewer (human reviewer 2)"
-                  ]
-                },
-                {
-                  "action": "Evaluate intermediate results",
-                  "examples_raw": "“agents with domain expertise verify intermediate results and reduce errors” (P28)",
-                  "papers_cited": [
-                    "P28"
-                  ],
-                  "reviewers": [
-                    "main reviewer (human reviewer 2)"
-                  ]
-                },
-                {
-                  "action": "Provide qualitative judgement",
-                  "examples_raw": "“Upon successful generation of a result, the Evaluator agent, ALLMe assesses the outcome and provides natural language feedback if it deems revisions are necessary.” (P1)",
-                  "papers_cited": [
-                    "P1"
-                  ],
-                  "reviewers": [
-                    "main reviewer (human reviewer 2)"
-                  ]
-                },
-                {
-                  "action": "Simulate counterfactual outcomes",
-                  "examples_raw": "Mentally simulate an alternative scenario — either before acting (imagine 'if I do X, what happens?') or post-hoc (imagine 'what would have happened if action X had been different?'). Includes counterfactual trajectory generation for causal analysis. (P33)\n\"analyzing this effect necessitates counterfactual reasoning across three distinct scenarios\"",
-                  "papers_cited": [
-                    "P33"
-                  ],
-                  "reviewers": [
-                    "human reviewer 5"
-                  ]
-                },
-                {
-                  "action": "Validate predicted issues",
-                  "examples_raw": "“The agent assesses the contextual applicability of potential bugs, reducing the probability that the LLM forcibly generates trivial results” (P29)",
-                  "papers_cited": [
-                    "P29"
-                  ],
-                  "reviewers": [
-                    "main reviewer (human reviewer 2)"
-                  ]
-                }
+              "action": "Discard redundant game state, keep summaries",
+              "examples_raw": "“automatic context compaction to manage thousands of reasoning steps, preserving only LLM responses and action summaries while discarding redundant game state” (P25)",
+              "papers_cited": [
+                "P25"
+              ],
+              "reviewers": [
+                "main reviewer (human reviewer 2)"
               ]
             }
           ]
         },
         {
-          "name": "Deciding",
-          "sub_categories": [
+          "name": "Consolidate memory",
+          "leaves": [
             {
-              "name": "Make a decision",
-              "leaves": [
-                {
-                  "action": "Make a decision according to memory",
-                  "examples_raw": "The agent conditions its decisions on I, the current observation st, and a history buffer of n past state-action pairs (P5)",
-                  "papers_cited": [
-                    "P5"
-                  ],
-                  "reviewers": [
-                    "main reviewer (human reviewer 2)"
-                  ]
-                }
+              "action": "Consolidate working memory into long-term memory",
+              "examples_raw": "Retain only successful analysis path to global memory (P1)\nThis discard-after-use strategy ensures that only the clear and successful analysis path is retained in the global memory, preventing interference from the intermediate trial-and-error history and thereby maintaining a concise and efficient context for subsequent steps (P1)",
+              "papers_cited": [
+                "P1"
+              ],
+              "reviewers": [
+                "main reviewer (human reviewer 2)"
               ]
             },
             {
-              "name": "Pick scores",
-              "leaves": [
-                {
-                  "action": "Select action by score",
-                  "examples_raw": "argmax = highest score; softmax = probabilistic sample; majority vote across evaluators",
-                  "papers_cited": [],
-                  "reviewers": [
-                    "theory-driven"
-                  ]
-                }
+              "action": "Compact context window",
+              "examples_raw": "\"automatic context compaction to manage the thousands of reasoning steps required, preserving only LLM responses and action summaries while discarding redundant game state\" (P25)",
+              "papers_cited": [
+                "P25"
+              ],
+              "reviewers": [
+                "main reviewer (human reviewer 2)"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Read memory",
+          "leaves": [
+            {
+              "action": "Read from working memory",
+              "examples_raw": "Grab intermediate results from scratchpad\nCheck the scratchpad — grab stored intermediate results and state\n“IMPLICITMEMBENCH reframes evaluation from ‘what agents recall’ to ‘what they automatically enact’.” (P12)",
+              "papers_cited": [
+                "P12"
+              ],
+              "reviewers": [
+                "main reviewer (human reviewer 2)"
               ]
             },
             {
-              "name": "Decide accept or not",
-              "leaves": [
-                {
-                  "action": "Decline out-of-scope queries",
-                  "examples_raw": "“appropriately reject queries that exceed their knowledge boundaries or conflict with their role settings” (P22)",
-                  "papers_cited": [
-                    "P22"
-                  ],
-                  "reviewers": [
-                    "human reviewer 4"
-                  ]
-                }
-              ]
-            },
-            {
-              "name": "Decide under uncertainty",
-              "leaves": [
-                {
-                  "action": "Fork trajectory at uncertainty",
-                  "examples_raw": "“Fork the current generative state and generate a new parallel trajectory from this point of high uncertainty” (P4)",
-                  "papers_cited": [
-                    "P4"
-                  ],
-                  "reviewers": [
-                    "main reviewer (human reviewer 2)"
-                  ]
-                }
+              "action": "Read from long-term memory",
+              "examples_raw": "Importance-weighted retrieval of discoveries (P25)\n“Persistent memory system storing discoveries (locations, NPCs, items, strategies) with importance-weighted retrieval” (P25)",
+              "papers_cited": [
+                "P25"
+              ],
+              "reviewers": [
+                "main reviewer (human reviewer 2)"
               ]
             }
           ]
@@ -931,335 +239,164 @@
       ]
     },
     {
-      "name": "Act",
-      "super_categories": [
+      "name": "Planning",
+      "sub_categories": [
         {
-          "name": "Grounding",
-          "sub_categories": [
+          "name": "Decompose task",
+          "leaves": [
             {
-              "name": "Interact with users",
-              "leaves": [
-                {
-                  "action": "Accept instructions from humans",
-                  "examples_raw": "Receive task or command from human user\ne.g. “book me a flight” or “translate this paragraph”\n\"agent receives task queries and deliverables, completing tasks through multi-turn interactions\" (P16)\n“demonstrate clear intent understanding, partial progress” (P5)",
-                  "papers_cited": [
-                    "P5",
-                    "P16"
-                  ],
-                  "reviewers": [
-                    "main reviewer (human reviewer 2)",
-                    "human reviewer 1"
-                  ]
-                },
-                {
-                  "action": "Ask for clarification from people",
-                  "examples_raw": "Proactively ask human when unclear\ne.g. “Which file did you mean?”",
-                  "papers_cited": [],
-                  "reviewers": [
-                    "theory-driven"
-                  ]
-                },
-                {
-                  "action": "Communicate task outcome natural language",
-                  "examples_raw": "Agent informs the user: ‘Buy a nice rich navy bathing dress’ (P3)\nAgent informs the user that wifi is turned off (P3)",
-                  "papers_cited": [
-                    "P3"
-                  ],
-                  "reviewers": [
-                    "main reviewer (human reviewer 2)"
-                  ]
-                },
-                {
-                  "action": "Communicate via visualization",
-                  "examples_raw": "“CellAgent generated differential expression and marker gene visualizations, enabling intuitive interpretation of cluster identities” (P1)",
-                  "papers_cited": [
-                    "P1"
-                  ],
-                  "reviewers": [
-                    "main reviewer (human reviewer 2)"
-                  ]
-                },
-                {
-                  "action": "Communicate via structured format",
-                  "examples_raw": "“generate outputs in a JSON format (or lists of JSON objects)” (P2)",
-                  "papers_cited": [
-                    "P2"
-                  ],
-                  "reviewers": [
-                    "main reviewer (human reviewer 2)"
-                  ]
-                },
-                {
-                  "action": "Communicate refusal/inability",
-                  "examples_raw": "\"appropriately reject queries that exceed their knowledge boundaries or conflict with their role settings\" (P22)\nrecognize and refuse queries that conflict with their role knowledge\" (P22)\n\"providing clear refusal responses with appropriate explanations\" (P22)",
-                  "papers_cited": [
-                    "P22"
-                  ],
-                  "reviewers": [
-                    "human reviewer 4"
-                  ]
-                },
-                {
-                  "action": "Express tone to user",
-                  "examples_raw": "“models exhibit a strong default tendency to excessively affirm, apologize, and express gratitude” (P11)",
-                  "papers_cited": [
-                    "P11"
-                  ],
-                  "reviewers": [
-                    "human reviewer 6"
-                  ]
-                },
-                {
-                  "action": "Disclose self-information to user",
-                  "examples_raw": "“identity disclosure, S2S systems often proactively mention that they are intelligent assistants (P11)",
-                  "papers_cited": [
-                    "P11"
-                  ],
-                  "reviewers": [
-                    "human reviewer 6"
-                  ]
-                }
+              "action": "Decompose into subtasks",
+              "examples_raw": "\"LLM-based planner to decompose the specified language instruction L into a sequence of subtasks S = [S0, S1, ..., Sn]\" (P34)\n“Decomposing hard problems into subproblems often makes them easier and more efficient to solve” (P17)\n“Decomposes complex user requests into manageable subtasks, an Executor that carries out the analysis by generating and running code, and an Evaluator that assesses the quality of the results” (P1)\n“formulate plans, decompose problems into sub-steps” (P2)\ntodo_write tool (15 invocations by GPT-5.2) (P16)",
+              "papers_cited": [
+                "P1",
+                "P2",
+                "P16",
+                "P17",
+                "P34"
+              ],
+              "reviewers": [
+                "main reviewer (human reviewer 2)",
+                "human reviewer 1",
+                "human reviewer 5"
               ]
             },
             {
-              "name": "Interact with physical environments",
-              "leaves": [
-                {
-                  "action": "Perceive physical environment",
-                  "examples_raw": "Convert images to text via VLMs\nVLM image-to-text description\nConvert sensor / image / audio readings to text\nTurn images, sounds, or sensor readings into text descriptions for text-based LLMs\n“Explore skill enhances the LLM-based executor's ability to guide the agent in room exploration by sampling navigation goals from traversable areas” (P33)\nCovert perceptual visual information to map\n“semantic mapping module receives egocentric visual observations...processed into a depth map and instance segmentation using a UNet and a MaskRCNN” (P34)",
-                  "papers_cited": [
-                    "P33",
-                    "P34"
-                  ],
-                  "reviewers": [
-                    "human reviewer 5"
-                  ]
-                },
-                {
-                  "action": "Affect physical environments",
-                  "examples_raw": "Send language commands to robot arm\nMove things in the real world by sending language commands to a robot arm\n\"the action Play is utilized to interact with the environment or request re-planning of the current plan S\" (P34)",
-                  "papers_cited": [
-                    "P34"
-                  ],
-                  "reviewers": [
-                    "human reviewer 5"
-                  ]
-                }
+              "action": "Decompose into subgoals with success conditions",
+              "examples_raw": "“LLM decomposes the task into a sequence of subgoals, each paired with an executable success-condition function” (P25)",
+              "papers_cited": [
+                "P25"
+              ],
+              "reviewers": [
+                "main reviewer (human reviewer 2)"
               ]
             },
             {
-              "name": "Interact with digital environments",
-              "leaves": [
-                {
-                  "action": "Navigate digital interfaces",
-                  "examples_raw": "Browse websites, scroll pages, navigate menus, move within apps\n“navigate multiple websites, extract information from both structured and unstructured sources” (P2)",
-                  "papers_cited": [
-                    "P2"
-                  ],
-                  "reviewers": [
-                    "main reviewer (human reviewer 2)"
-                  ]
-                },
-                {
-                  "action": "Modify digital objects",
-                  "examples_raw": "Annotate UI Components\nAdd data-testid attributes (P28)\n“annotate_interactive_components(file, strategy=‘add data-testid’)” (P28)",
-                  "papers_cited": [
-                    "P28"
-                  ],
-                  "reviewers": [
-                    "main reviewer (human reviewer 2)"
-                  ]
-                },
-                {
-                  "action": "Issue operational commands",
-                  "examples_raw": "Invoke structured API or data endpoint\n“Game Control: get_game_state, press_buttons, and navigate_to for direct game control” (P25)",
-                  "papers_cited": [
-                    "P25"
-                  ],
-                  "reviewers": [
-                    "main reviewer (human reviewer 2)"
-                  ]
-                }
-              ]
-            },
-            {
-              "name": "Interact with other agents",
-              "leaves": [
-                {
-                  "action": "Monitor peer agent's state or decision",
-                  "examples_raw": "Observe another agent's chosen action before making one's own decision — a prerequisite for oversight, override, or trust-based deference in multi-agent systems. (P33)\n\"observes both S_0 and A_0, and decides whether to override the AI's treatment or not\"",
-                  "papers_cited": [
-                    "P33"
-                  ],
-                  "reviewers": [
-                    "human reviewer 5"
-                  ]
-                },
-                {
-                  "action": "Receive feedback from peer agent",
-                  "examples_raw": "Evaluator provides natural-language feedback (P1)",
-                  "papers_cited": [
-                    "P1"
-                  ],
-                  "reviewers": [
-                    "main reviewer (human reviewer 2)"
-                  ]
-                },
-                {
-                  "action": "Send message to peer agent",
-                  "examples_raw": "\"agent engages in multi-turn interactions...to generate deliverables\" (P16)",
-                  "papers_cited": [
-                    "P16"
-                  ],
-                  "reviewers": [
-                    "human reviewer 1"
-                  ]
-                },
-                {
-                  "action": "Recommend action to peer agent",
-                  "examples_raw": "Communicate a proposed action to a peer agent for their consideration, knowing the peer may accept or override it — agent-to-agent advisory communication. (P33)\n\"the AI recommends one of eight possible treatments, which is then reviewed and potentially overridden by the clinician\"",
-                  "papers_cited": [
-                    "P33"
-                  ],
-                  "reviewers": [
-                    "human reviewer 5"
-                  ]
-                },
-                {
-                  "action": "Override peer agent's decision",
-                  "examples_raw": "Replace another agent's selected action with one's own decision — the active side of human-in-the-loop oversight or hierarchical agent control. (P33)\n\"If the clinician overrides the AI, the patient outcome Y is determined by S_0 and the alternative treatment H_0 suggested by the clinician\"",
-                  "papers_cited": [
-                    "P33"
-                  ],
-                  "reviewers": [
-                    "human reviewer 5"
-                  ]
-                },
-                {
-                  "action": "Dispatch task to sub-agent",
-                  "examples_raw": "“A central orchestrator maintains a high-level route plan while dynamically dispatching sub-agents based on game context” (P25)",
-                  "papers_cited": [
-                    "P25"
-                  ],
-                  "reviewers": [
-                    "main reviewer (human reviewer 2)"
-                  ]
-                },
-                {
-                  "action": "Argue or debate with peer agent",
-                  "examples_raw": "Multi-agent argumentation toward better answer\nHave multiple agents argue different sides to reach a better answer",
-                  "papers_cited": [],
-                  "reviewers": [
-                    "theory-driven"
-                  ]
-                }
-              ]
-            },
-            {
-              "name": "Augment with external computation",
-              "leaves": [
-                {
-                  "action": "Execute code",
-                  "examples_raw": "Test Runner detects logic inconsistencies (P28)\nTest Runner executes the script to detect logical inconsistencies or failed assertions. (P28)",
-                  "papers_cited": [
-                    "P28"
-                  ],
-                  "reviewers": [
-                    "main reviewer (human reviewer 2)"
-                  ]
-                },
-                {
-                  "action": "Invoke specialized computation tool",
-                  "examples_raw": "Use calculator / heavy compute tools\nCall outside tools to handle heavy math\nrun_shell_command tool (425 and 362 invocations, respectively) (P16)\n\"necessitates over 90 precise tool calls, significantly raising the bar\" (P16)\n\"deliverables are synced to a Docker-based remote sandbox...emulates human computer operations\" (P16)",
-                  "papers_cited": [
-                    "P16"
-                  ],
-                  "reviewers": [
-                    "human reviewer 1"
-                  ]
-                },
-                {
-                  "action": "Invoke visual inspection tool",
-                  "examples_raw": "Zoom-in tool for region-of-interest (P4)\n“proactively invokes the Zoom-in tool for a targeted examination of the specific region of interest” (P4)",
-                  "papers_cited": [
-                    "P4"
-                  ],
-                  "reviewers": [
-                    "main reviewer (human reviewer 2)"
-                  ]
-                }
+              "action": "Decompose by role specialization",
+              "examples_raw": "\"splitting the instruction-following challenge into distinct reasoning and grounding roles handled by a reasoner agent and an actor agent\" (P34)\n\"Specialists each solve a distinct task type, receiving only the relevant portion of the input\" (P17)",
+              "papers_cited": [
+                "P17",
+                "P34"
+              ],
+              "reviewers": [
+                "human reviewer 1",
+                "human reviewer 5"
               ]
             }
           ]
         },
         {
-          "name": "Executing",
-          "sub_categories": [
+          "name": "Formulate a workflow or plan",
+          "leaves": [
             {
-              "name": "Executing plan",
-              "leaves": [
-                {
-                  "action": "Execute strategy",
-                  "examples_raw": "“an insertion agent executes this plan for HLS-C optimization” (P29)",
-                  "papers_cited": [
-                    "P29"
-                  ],
-                  "reviewers": [
-                    "main reviewer (human reviewer 2)"
-                  ]
-                }
+              "action": "Formulate a high-level plan",
+              "examples_raw": "\"METRO starts with the identification of the strategic action a_i for every expert utterance u_i in transcript D\" (P10)\n\"summarizing it into a high-level planning directive that emphasizes cumulative temporal effects\" (P8)",
+              "papers_cited": [
+                "P8",
+                "P10"
+              ],
+              "reviewers": [
+                "human reviewer 3",
+                "main reviewer (human reviewer 2)"
               ]
             },
             {
-              "name": "Executing debug",
-              "leaves": [
-                {
-                  "action": "Adopt debugging instructions",
-                  "examples_raw": "“Operating under strict instruction adherence, this agent adopts the instructions to implement debugging” (P29)",
-                  "papers_cited": [
-                    "P29"
-                  ],
-                  "reviewers": [
-                    "main reviewer (human reviewer 2)"
-                  ]
-                },
-                {
-                  "action": "Rewrite code after bug fix",
-                  "examples_raw": "debugging specialist rewrites the entire code every time it fixes a bug (P17)",
-                  "papers_cited": [
-                    "P17"
-                  ],
-                  "reviewers": [
-                    "human reviewer 1"
-                  ]
-                }
+              "action": "Formulate an analysis workflow",
+              "examples_raw": "“the Planner accurately interprets user intent and formulates a comprehensive analysis workflow” (P1)",
+              "papers_cited": [
+                "P1"
+              ],
+              "reviewers": [
+                "main reviewer (human reviewer 2)"
               ]
             },
             {
-              "name": "Terminating",
-              "leaves": [
-                {
-                  "action": "Provide final answer",
-                  "examples_raw": "\"Final Answer: The average number of lines per scene in the ep_7.csv dataset is approximately 6.02\" (p32)\n\"produces a final answer and terminates the rollout; enclose it within <answer></answer> tags\" (P4)",
-                  "papers_cited": [
-                    "P4",
-                    "P32"
-                  ],
-                  "reviewers": [
-                    "main reviewer (human reviewer 2)",
-                    "human reviewer 5"
-                  ]
-                },
-                {
-                  "action": "Generate refusal",
-                  "examples_raw": "“providing clear refusal responses with appropriate explanations” (P22)",
-                  "papers_cited": [
-                    "P22"
-                  ],
-                  "reviewers": [
-                    "human reviewer 4"
-                  ]
-                }
+              "action": "Plan navigation through environment",
+              "examples_raw": "“planning to navigate the web; tasks require navigation through an average of 4.2 web pages” (P2)",
+              "papers_cited": [
+                "P2"
+              ],
+              "reviewers": [
+                "main reviewer (human reviewer 2)"
+              ]
+            },
+            {
+              "action": "Plan function or tool use",
+              "examples_raw": "\"I can use the pandas method corr() to calculate the Pearson correlation coefficient\" (P32)",
+              "papers_cited": [
+                "P32"
+              ],
+              "reviewers": [
+                "human reviewer 5"
+              ]
+            },
+            {
+              "action": "Plan Code or artifact structure",
+              "examples_raw": "\"Planning: HTML Structure, CSS Styling, JavaScript Functionality\" (P28)",
+              "papers_cited": [
+                "P28"
+              ],
+              "reviewers": [
+                "main reviewer (human reviewer 2)"
+              ]
+            },
+            {
+              "action": "Formulate plan from template",
+              "examples_raw": "\"HLSTuner formulates a detailed plan that specifies: (1) the combination of HLS directives, (2) target code segments, and (3) the insertion actions\" (P29)",
+              "papers_cited": [
+                "P29"
+              ],
+              "reviewers": [
+                "main reviewer (human reviewer 2)"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Select Strategy",
+          "leaves": [
+            {
+              "action": "Select among candidate strategies",
+              "examples_raw": "“selects effective HLS directive combination strategies and inserts directives within the specific structure (e.g., loops and arrays)” (P29)",
+              "papers_cited": [
+                "P29"
+              ],
+              "reviewers": [
+                "main reviewer (human reviewer 2)"
+              ]
+            },
+            {
+              "action": "Switch to fallback strategy",
+              "examples_raw": "\"incorporating a dummy score prediction as a fallback mechanism\" (P11)",
+              "papers_cited": [
+                "P11"
+              ],
+              "reviewers": [
+                "human reviewer 6"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Modify Plan",
+          "leaves": [
+            {
+              "action": "Replan dynamically based on feedback",
+              "examples_raw": "\"RequireReplan provides the LLM-based executor with the capability to dynamically adjust the plan\" (P34)",
+              "papers_cited": [
+                "P34"
+              ],
+              "reviewers": [
+                "human reviewer 5"
+              ]
+            },
+            {
+              "action": "Refine Requirements",
+              "examples_raw": "“Refine requirement based on validated test cases to ensure alignment” (P28)",
+              "papers_cited": [
+                "P28"
+              ],
+              "reviewers": [
+                "main reviewer (human reviewer 2)"
               ]
             }
           ]
@@ -1267,262 +404,1104 @@
       ]
     },
     {
-      "name": "Adapt",
-      "super_categories": [
+      "name": "Reasoning",
+      "sub_categories": [
         {
-          "name": "Learning",
-          "sub_categories": [
+          "name": "Generating",
+          "leaves": [
             {
-              "name": "Learning reasoning",
-              "leaves": [
-                {
-                  "action": "Update reasoning via prompt update",
-                  "examples_raw": "Rewrite own prompt template\nLearn a better way to reason via prompt rewrite",
-                  "papers_cited": [],
-                  "reviewers": [
-                    "theory-driven"
-                  ]
-                }
+              "action": "Generate candidate options",
+              "examples_raw": "Brainstorm possible next moves\nGenerate one or more possible next moves\n“Running multiple candidate pipelines for each analysis step” (P1)\n“generates solutions based on analogies to unrelated projects, which resemble few-shot prompting” (P28)\n\"Fork the current generative state and generate a new parallel trajectory from this point of high uncertainty\" (P4)\n\"the LLM reinterprets the actions from breadth logic...summarizing them into a concise next-step strategy\" (P8)",
+              "papers_cited": [
+                "P1",
+                "P4",
+                "P8",
+                "P28"
+              ],
+              "reviewers": [
+                "main reviewer (human reviewer 2)",
+                "human reviewer 3"
               ]
             },
             {
-              "name": "Learning grounding",
-              "leaves": [
-                {
-                  "action": "Update grounding via code-based skills",
-                  "examples_raw": "Improve web-navigation code snippets\nWrite or improve code that interacts with outside world",
-                  "papers_cited": [],
-                  "reviewers": [
-                    "theory-driven"
-                  ]
-                },
-                {
-                  "action": "Update retrieval procedures",
-                  "examples_raw": "Improve how the agent searches for information",
-                  "papers_cited": [],
-                  "reviewers": [
-                    "theory-driven"
-                  ]
-                }
+              "action": "Generate structured artifacts",
+              "examples_raw": "\"Each agent then emits a set of initial codes; cluster semantically similar codes and generate preliminary themes\" (P27)\n\"automatically generates candidate user-facing requirements\" (P28)\n\"Create JavaScript functionality handling empty display and consecutive operator clicks\" (P28)\n“break down the given character description into multiple atomic pieces of knowledge” (P22)",
+              "papers_cited": [
+                "P22",
+                "P27",
+                "P28"
+              ],
+              "reviewers": [
+                "human reviewer 4",
+                "main reviewer (human reviewer 2)"
               ]
             },
             {
-              "name": "Learning knowledge",
-              "leaves": [
-                {
-                  "action": "Update source code as procedural memory",
-                  "examples_raw": "Self-patch agent's own source code\nModify the agent's own source code to change behavior",
-                  "papers_cited": [],
-                  "reviewers": [
-                    "theory-driven"
-                  ]
-                },
-                {
-                  "action": "Update semantic memory with knowledge",
-                  "examples_raw": "Expand Error Repository with new mnemonic (P29)\n“the inspection agent identifies a new error type and integrates the slice into the error repository with a new mnemonic identifier” (P29)",
-                  "papers_cited": [
-                    "P29"
-                  ],
-                  "reviewers": [
-                    "main reviewer (human reviewer 2)"
-                  ]
-                },
-                {
-                  "action": "Update memory from new experiences",
-                  "examples_raw": "refinement of memories (represented in text) as the system encounters new scenarios (P17)",
-                  "papers_cited": [
-                    "P17"
-                  ],
-                  "reviewers": [
-                    "human reviewer 1"
-                  ]
-                },
-                {
-                  "action": "Update hypothesis with new evidence",
-                  "examples_raw": "“allowing the model to update its textual understanding, refine its hypothesis, or even trigger further visual exploration” (P4)",
-                  "papers_cited": [
-                    "P4"
-                  ],
-                  "reviewers": [
-                    "main reviewer (human reviewer 2)"
-                  ]
-                }
-              ]
-            },
-            {
-              "name": "Learning LLM parameters",
-              "leaves": [
-                {
-                  "action": "Update parametric policy",
-                  "examples_raw": "Change the model's internal weights through training\nReal learning by changing internal weights",
-                  "papers_cited": [],
-                  "reviewers": [
-                    "theory-driven"
-                  ]
-                },
-                {
-                  "action": "Update LLM parameters via SL/RL/RLHF",
-                  "examples_raw": "SL/RL/RLHF weight adjustment\nUse supervised, reinforcement, or human-feedback learning",
-                  "papers_cited": [],
-                  "reviewers": [
-                    "theory-driven"
-                  ]
-                },
-                {
-                  "action": "Update action parameters based on feedback",
-                  "examples_raw": "Auto-adjust params from exception info (P1)\n“automatically adjusts parameters using exception information to generate executable code” (P1)",
-                  "papers_cited": [
-                    "P1"
-                  ],
-                  "reviewers": [
-                    "main reviewer (human reviewer 2)"
-                  ]
-                }
-              ]
-            },
-            {
-              "name": "Learning instructions",
-              "leaves": [
-                {
-                  "action": "Learning instructions",
-                  "examples_raw": "Extract rule from examples for future use\nLook at input→output examples, figure out underlying rule",
-                  "papers_cited": [],
-                  "reviewers": [
-                    "theory-driven"
-                  ]
-                }
+              "action": "Generate evaluations",
+              "examples_raw": "“LLM Group for multifaceted evaluation generates diverse debugging instructions” (P29)\n“For every binary score z(q) i,j from the judge, there is a corresponding explanation e(q)i,j” (P3)",
+              "papers_cited": [
+                "P3",
+                "P29"
+              ],
+              "reviewers": [
+                "main reviewer (human reviewer 2)"
               ]
             }
           ]
         },
         {
-          "name": "Reflection",
-          "sub_categories": [
+          "name": "Analysing",
+          "leaves": [
             {
-              "name": "Reflect on errors and failures",
-              "leaves": [
-                {
-                  "action": "Diagnose failure against ground truth",
-                  "examples_raw": "“Analyzes stuck states by comparing current situation against ground truth sources (porymap data, knowledge base) to diagnose navigation failures” (P25)",
-                  "papers_cited": [
-                    "P25"
-                  ],
-                  "reviewers": [
-                    "main reviewer (human reviewer 2)"
-                  ]
-                },
-                {
-                  "action": "Inspect Error Pattern",
-                  "examples_raw": "“an inspection agent examines the erroneous code and error messages parsed from the HLS tool test results” (P29)",
-                  "papers_cited": [
-                    "P29"
-                  ],
-                  "reviewers": [
-                    "main reviewer (human reviewer 2)"
-                  ]
-                },
-                {
-                  "action": "Analyze log to formulate fix instructions",
-                  "examples_raw": "Reasoning-to-instruction on HLS log (P29)\n“an analysis agent adopts a reasoning-to-instruction method, analyzing the HLS log to formulate error modification actions” (P29)\n\"This model formulates explicit modification instructions with detailed analysis\" (P29)\n\"Provide explicit instructions on what must be rectified in the next iteration\" (P16)",
-                  "papers_cited": [
-                    "P16",
-                    "P29"
-                  ],
-                  "reviewers": [
-                    "human reviewer 1",
-                    "main reviewer (human reviewer 2)"
-                  ]
-                },
-                {
-                  "action": "Reflect on failed episodes for prior knowledge",
-                  "examples_raw": "\"RequireReplan...dynamically adjust the plan, improving the robustness to exceptions\" (P26)\n\"the grounded prior knowledge prevents the agents from repetitive errors and facilitates grounded exception handling\" (P34)\n“This allows the agent to learn from mistakes in realtime and avoid repeating errors before the local memory is discarded” (P1)",
-                  "papers_cited": [
-                    "P1",
-                    "P26",
-                    "P34"
-                  ],
-                  "reviewers": [
-                    "main reviewer (human reviewer 2)",
-                    "human reviewer 5"
-                  ]
-                },
-                {
-                  "action": "Self-Correct Step Implementation",
-                  "examples_raw": "“Modify step implementation based on error message” (P28)\n“In case of an execution error E(ci), the Executor autonomously performs self-correction to produce a valid code version” (P1)\n“When the initial attempt fails... HLSTuner activates an iterative refinement incorporating current directives and the resulting QoR” (P29)",
-                  "papers_cited": [
-                    "P1",
-                    "P28",
-                    "P29"
-                  ],
-                  "reviewers": [
-                    "main reviewer (human reviewer 2)"
-                  ]
-                }
+              "action": "Analyse artifact structure and behavior",
+              "examples_raw": "“Analyze frontend framework and interactive components” (P28)\n\"analyzes the project's core functionalities and their interactions with UI elements by reading the source code\" (P28)",
+              "papers_cited": [
+                "P28"
+              ],
+              "reviewers": [
+                "main reviewer (human reviewer 2)"
               ]
             },
             {
-              "name": "Reflect on self-outcomes",
-              "leaves": [
-                {
-                  "action": "Self-reflect",
-                  "examples_raw": "The results of the execution are fed back, enabling GPT-4 to refine its responses and propose further iterations\" (P32)\n\"This iterative cycle continues until GPT-4 determines that the accumulated information suffices to conclusively answer the problem\" (P32)\n“This self-reflective optimization loop iterates to enhance precision, and the final results from all subtasks are synthesized” (P1)\n“the optimization process runs three iterations, each invoking a different algorithm” (P1)",
-                  "papers_cited": [
-                    "P1",
-                    "P32"
-                  ],
-                  "reviewers": [
-                    "main reviewer (human reviewer 2)",
-                    "human reviewer 5"
-                  ]
-                },
-                {
-                  "action": "Reflect on proposed fix",
-                  "examples_raw": "“reflects on the code after assuming the fix to ensure the modification is reasonable” (P29)",
-                  "papers_cited": [
-                    "P29"
-                  ],
-                  "reviewers": [
-                    "main reviewer (human reviewer 2)"
-                  ]
-                },
-                {
-                  "action": "Pre-action self-check",
-                  "examples_raw": "“These steps are labeled as reflective, indicating the model is engaging in self-monitoring or explicit reasoning before issuing commands” (P1)",
-                  "papers_cited": [
-                    "P1"
-                  ],
-                  "reviewers": [
-                    "main reviewer (human reviewer 2)"
-                  ]
-                },
-                {
-                  "action": "Refine Strategy Iteratively",
-                  "examples_raw": "Iterative refinement using current QoR (P29)\n“When the initial attempt fails... HLSTuner activates an iterative refinement incorporating current directives and the resulting QoR” (P29)",
-                  "papers_cited": [
-                    "P29"
-                  ],
-                  "reviewers": [
-                    "main reviewer (human reviewer 2)"
-                  ]
-                }
+              "action": "Detect patterns or trends in data",
+              "examples_raw": "“Identifying patterns, directions, or changes in data over time or across contexts” (P2)\n“Measuring relationships or associations between two or more variables” (P2)",
+              "papers_cited": [
+                "P2"
+              ],
+              "reviewers": [
+                "main reviewer (human reviewer 2)"
               ]
             },
             {
-              "name": "Reflect on external feedback",
-              "leaves": [
-                {
-                  "action": "Receive and integrate external feedback",
-                  "examples_raw": "“the Evaluator agent ALLMe assesses the outcome and provides natural language feedback if it deems revisions are necessary” (P1)\n“feedback from the feedback agent is used to iteratively refine and improve the generated themes” (P27)\n\"leverage feedback to markedly improve performance...feedback-driven self-correction\" (P16)\nThe Evaluator drives a self-reflective optimization mechanism, which leverages automated evaluation methods for various analysis tasks to iteratively refine outcomes, replacing subjective manual assessments. (P1)",
-                  "papers_cited": [
-                    "P1",
-                    "P16",
-                    "P27"
-                  ],
-                  "reviewers": [
-                    "main reviewer (human reviewer 2)",
-                    "human reviewer 1"
-                  ]
-                }
+              "action": "Interpret meaning of artifacts",
+              "examples_raw": "\"logical reasoning to interpret papers and code; mathematical reasoning to modify and run code; causal reasoning to infer scientific insights from results\" (P11)",
+              "papers_cited": [
+                "P11"
+              ],
+              "reviewers": [
+                "human reviewer 6"
+              ]
+            },
+            {
+              "action": "Classify inputs into categories",
+              "examples_raw": "delegator can determine which of the k tasks the input string belongs to by observing only a constant number of metadata tokens (P17)",
+              "papers_cited": [
+                "P17"
+              ],
+              "reviewers": [
+                "human reviewer 1"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Explaining",
+          "leaves": [
+            {
+              "action": "Explain reasoning or outcomes",
+              "examples_raw": "\"Explain the failure from a user requirement perspective\" (P16)",
+              "papers_cited": [
+                "P16"
+              ],
+              "reviewers": [
+                "human reviewer 1"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Summarizing/Distilling",
+          "leaves": [
+            {
+              "action": "Summarize recent observations and trajectories",
+              "examples_raw": "Condense recent observations and trajectories into key takeaways",
+              "papers_cited": [],
+              "reviewers": [
+                "theory-driven"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Inferring",
+          "leaves": [
+            {
+              "action": "Infer hidden state from observable evidence",
+              "examples_raw": "Damage calculation reveals stat distributions (P25)\n“intelligently infers hidden information through game mechanics: damage calculations reveal stat distributions, move priority ordering constrains speed ranges” (P25)",
+              "papers_cited": [
+                "P25"
+              ],
+              "reviewers": [
+                "main reviewer (human reviewer 2)"
+              ]
+            },
+            {
+              "action": "Infer causal relationship",
+              "examples_raw": "Determine plausible causal factor (P2)\n“determine the most plausible event or factor accounting for this variability” (P2)",
+              "papers_cited": [
+                "P2"
+              ],
+              "reviewers": [
+                "main reviewer (human reviewer 2)"
+              ]
+            },
+            {
+              "action": "Infer structure from indirect evidence",
+              "examples_raw": "\"agents must infer the directory layout by inspecting package structures and README files\" (P11)",
+              "papers_cited": [
+                "P11"
+              ],
+              "reviewers": [
+                "human reviewer 6"
+              ]
+            },
+            {
+              "action": "Infer errors",
+              "examples_raw": "M_q has the capacity to identify exactly one bug at a time (P17)\n“The analysis LLM then examines the error causes and provides debugging instructions” (P29)",
+              "papers_cited": [
+                "P17",
+                "P29"
+              ],
+              "reviewers": [
+                "human reviewer 1",
+                "main reviewer (human reviewer 2)"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Comparing & Ranking",
+          "leaves": [
+            {
+              "action": "Compare values across sources",
+              "examples_raw": "Quantify and compare across sources (P2)\n“Quantifying occurrences and comparing values across sources or categories” (P2)",
+              "papers_cited": [
+                "P2"
+              ],
+              "reviewers": [
+                "main reviewer (human reviewer 2)"
+              ]
+            },
+            {
+              "action": "Rank items by criteria",
+              "examples_raw": "Order items by importance (P2)\n“Ordering items or facts based on specific criteria or importance” (P2)",
+              "papers_cited": [
+                "P2"
+              ],
+              "reviewers": [
+                "main reviewer (human reviewer 2)"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Contextualizing",
+          "leaves": [
+            {
+              "action": "Package prior reasoning as context for subsequent calls",
+              "examples_raw": "Feed reasoning so far as context to next LLM call",
+              "papers_cited": [],
+              "reviewers": [
+                "theory-driven"
+              ]
+            },
+            {
+              "action": "Construct structured context object",
+              "examples_raw": "“global interactive multi-behavior overlapping network is constructed based on the simulated behaviors of reposting and reposting with a comment, as well as following” (P21)\n“construct prompt templates for creating reader agents based on user attributes ua and user historical posts” (P21)",
+              "papers_cited": [
+                "P21"
+              ],
+              "reviewers": [
+                "human reviewer 4"
+              ]
+            },
+            {
+              "action": "Configure agent persona or role-conditioning",
+              "examples_raw": "“I want you to play as {role}, imitating {role}’s personality and values” (P22)\n“maintain its role-playing ability even when refusing to answer” (P22)\n“A pool of k=4 role-conditioned GPT-4o agents are each given the full interview transcript as input” (P27)\n“others may retain role-specific perspectives to support diverse theme formulation” (P27)",
+              "papers_cited": [
+                "P22",
+                "P27"
+              ],
+              "reviewers": [
+                "human reviewer 4",
+                "main reviewer (human reviewer 2)"
+              ]
+            },
+            {
+              "action": "Assign roles in a multi-agent team",
+              "examples_raw": "specifying a scope, or role, for an agent allows it to be treated as a computational object. map each one to an employee in a human organization (P17)\n\"assembling a team of three LLM roles — analyst, coder, and tester — responsible for analysis, coding, and testing\" (P28)\n\"assigns diverse roles to multiple agents to efficiently decompose complex tasks\" (P28)",
+              "papers_cited": [
+                "P17",
+                "P28"
+              ],
+              "reviewers": [
+                "human reviewer 1",
+                "main reviewer (human reviewer 2)"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Combining & Synthesis",
+          "leaves": [
+            {
+              "action": "Combine information from multiple sources",
+              "examples_raw": "“combine information from multiple sources... to produce a coherent solution” (P2)\n\"the final results from all subtasks are synthesized to meet the user's requirements\" (P1)\n\"Determining a representative value that summarises numerical data collected from multiple sources\" (P2)",
+              "papers_cited": [
+                "P1",
+                "P2"
+              ],
+              "reviewers": [
+                "main reviewer (human reviewer 2)"
+              ]
+            },
+            {
+              "action": "Aggregate observations into a structured representation",
+              "examples_raw": "\"supplementary semantic map M't, which aggregates the information from Mt over successive time steps. The intuition resembles a form of majority voting\" (P34)\n“aggregates prediction results from multiple tools to generate the final cell type labels” (P1)",
+              "papers_cited": [
+                "P1",
+                "P34"
+              ],
+              "reviewers": [
+                "main reviewer (human reviewer 2)",
+                "human reviewer 5"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Filtering",
+          "leaves": [
+            {
+              "action": "Filter information by threshold",
+              "examples_raw": "“Selecting relevant information based on criteria, quality, or thresholds” (P2)",
+              "papers_cited": [
+                "P2"
+              ],
+              "reviewers": [
+                "main reviewer (human reviewer 2)"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Evaluate",
+      "sub_categories": [
+        {
+          "name": "Evaluating with gold",
+          "leaves": [
+            {
+              "action": "Compare against gold reference",
+              "examples_raw": "“we prompt LLM to review the correct HLS-C code, pairing buggy code segments with corresponding error messages to construct debugging CoT” (P29)\n“HLSFixer retests the corrected HLS design against the golden results to ensure semantic equivalence” (P29)",
+              "papers_cited": [
+                "P29"
+              ],
+              "reviewers": [
+                "main reviewer (human reviewer 2)"
+              ]
+            },
+            {
+              "action": "Score on gold criteria",
+              "examples_raw": "“The Gold Checker evaluates each annotation on three binary criteria: equivalence, completeness, and correctness, where a score of 1 indicates the criterion is met” (P28)",
+              "papers_cited": [
+                "P28"
+              ],
+              "reviewers": [
+                "main reviewer (human reviewer 2)"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Evaluating with goals/requirements/constraints",
+          "leaves": [
+            {
+              "action": "goal-completion check",
+              "examples_raw": "“Independently checks whether objectives are truly complete, preventing the orchestrator from advancing when the main agent incorrectly believes a task is finished” (P25)",
+              "papers_cited": [
+                "P25"
+              ],
+              "reviewers": [
+                "main reviewer (human reviewer 2)"
+              ]
+            },
+            {
+              "action": "Requirement-satisfaction check",
+              "examples_raw": "“the final results from all subtasks are synthesized to meet the user's requirements” (P1)",
+              "papers_cited": [
+                "P1"
+              ],
+              "reviewers": [
+                "main reviewer (human reviewer 2)"
+              ]
+            },
+            {
+              "action": "Constraint / budget check",
+              "examples_raw": "“HLSTuner enables QoR-aware reasoning to align optimization goals with hardware constraints” (P29)\n\"if hardware utilization exceeds the budget\" (P29)",
+              "papers_cited": [
+                "P29"
+              ],
+              "reviewers": [
+                "main reviewer (human reviewer 2)"
+              ]
+            },
+            {
+              "action": "Domain-rule / best-practice check",
+              "examples_raw": "\"codified best-practices, such as the standard order of operations (e.g., quality control must precede normalization)\" (P1)\n“Agents share project context to ensure: Cross-file consistency; Non-conflicting test-ids” (P28)\n\"Detect logical errors, missing functionalities, or violations of best practices\" (P16)",
+              "papers_cited": [
+                "P1",
+                "P16",
+                "P28"
+              ],
+              "reviewers": [
+                "main reviewer (human reviewer 2)",
+                "human reviewer 1"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Evaluating without ground truth",
+          "leaves": [
+            {
+              "action": "Score on quality dimensions",
+              "examples_raw": "“we use GPT-4o as the default evaluator, each dimension scored on a scale of 0 to 2” (P22)\n\"map the agent's deliverables to a score ranging from 0 to 10\" (P16)\n\"Evaluation Scores: Obtain s^(t) = (C, D, T) on the trustworthiness dimensions\" (P27)\n\"the scoring agent (functioning as the judge) based on clarity, logical soundness, alignment with error messages, this agent selects the optimal suggestion\" (P29)",
+              "papers_cited": [
+                "P16",
+                "P22",
+                "P27",
+                "P29"
+              ],
+              "reviewers": [
+                "human reviewer 1",
+                "human reviewer 4",
+                "main reviewer (human reviewer 2)"
+              ]
+            },
+            {
+              "action": "Check rubric compliance",
+              "examples_raw": "\"Verify the implementation of every item listed in {Rubrics}\" (P16)\n\"list exactly which rubrics were not met\" (P16)",
+              "papers_cited": [
+                "P16"
+              ],
+              "reviewers": [
+                "human reviewer 1"
+              ]
+            },
+            {
+              "action": "Evaluate visual/behavioral correctness",
+              "examples_raw": "\"Evaluates dynamic behavior and visual correctness based on screenshots\" (P16)\n\"Analyze {Visual Assets} for UI elements, layout consistency, and text rendering\" (P16)",
+              "papers_cited": [
+                "P16"
+              ],
+              "reviewers": [
+                "human reviewer 1"
+              ]
+            },
+            {
+              "action": "Evaluate internal consistency",
+              "examples_raw": "“task an evaluator agent with determining whether each theme is consistent with its supporting quotes” (P27)\n“In Phase 2, they inspect the provided code for potential inconsistencies; generating a reproducibility score on a scale from 1 to 4” (P11)",
+              "papers_cited": [
+                "P11",
+                "P27"
+              ],
+              "reviewers": [
+                "human reviewer 6",
+                "main reviewer (human reviewer 2)"
+              ]
+            },
+            {
+              "action": "Evaluate intermediate results",
+              "examples_raw": "“agents with domain expertise verify intermediate results and reduce errors” (P28)",
+              "papers_cited": [
+                "P28"
+              ],
+              "reviewers": [
+                "main reviewer (human reviewer 2)"
+              ]
+            },
+            {
+              "action": "Provide qualitative judgement",
+              "examples_raw": "“Upon successful generation of a result, the Evaluator agent, ALLMe assesses the outcome and provides natural language feedback if it deems revisions are necessary.” (P1)",
+              "papers_cited": [
+                "P1"
+              ],
+              "reviewers": [
+                "main reviewer (human reviewer 2)"
+              ]
+            },
+            {
+              "action": "Simulate counterfactual outcomes",
+              "examples_raw": "Mentally simulate an alternative scenario — either before acting (imagine 'if I do X, what happens?') or post-hoc (imagine 'what would have happened if action X had been different?'). Includes counterfactual trajectory generation for causal analysis. (P33)\n\"analyzing this effect necessitates counterfactual reasoning across three distinct scenarios\"",
+              "papers_cited": [
+                "P33"
+              ],
+              "reviewers": [
+                "human reviewer 5"
+              ]
+            },
+            {
+              "action": "Validate predicted issues",
+              "examples_raw": "“The agent assesses the contextual applicability of potential bugs, reducing the probability that the LLM forcibly generates trivial results” (P29)",
+              "papers_cited": [
+                "P29"
+              ],
+              "reviewers": [
+                "main reviewer (human reviewer 2)"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Deciding",
+      "sub_categories": [
+        {
+          "name": "Make a decision",
+          "leaves": [
+            {
+              "action": "Make a decision according to memory",
+              "examples_raw": "The agent conditions its decisions on I, the current observation st, and a history buffer of n past state-action pairs (P5)",
+              "papers_cited": [
+                "P5"
+              ],
+              "reviewers": [
+                "main reviewer (human reviewer 2)"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Pick scores",
+          "leaves": [
+            {
+              "action": "Select action by score",
+              "examples_raw": "argmax = highest score; softmax = probabilistic sample; majority vote across evaluators",
+              "papers_cited": [],
+              "reviewers": [
+                "theory-driven"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Decide accept or not",
+          "leaves": [
+            {
+              "action": "Decline out-of-scope queries",
+              "examples_raw": "“appropriately reject queries that exceed their knowledge boundaries or conflict with their role settings” (P22)",
+              "papers_cited": [
+                "P22"
+              ],
+              "reviewers": [
+                "human reviewer 4"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Decide under uncertainty",
+          "leaves": [
+            {
+              "action": "Fork trajectory at uncertainty",
+              "examples_raw": "“Fork the current generative state and generate a new parallel trajectory from this point of high uncertainty” (P4)",
+              "papers_cited": [
+                "P4"
+              ],
+              "reviewers": [
+                "main reviewer (human reviewer 2)"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Grounding",
+      "sub_categories": [
+        {
+          "name": "Interact with users",
+          "leaves": [
+            {
+              "action": "Accept instructions from humans",
+              "examples_raw": "Receive task or command from human user\ne.g. “book me a flight” or “translate this paragraph”\n\"agent receives task queries and deliverables, completing tasks through multi-turn interactions\" (P16)\n“demonstrate clear intent understanding, partial progress” (P5)",
+              "papers_cited": [
+                "P5",
+                "P16"
+              ],
+              "reviewers": [
+                "main reviewer (human reviewer 2)",
+                "human reviewer 1"
+              ]
+            },
+            {
+              "action": "Ask for clarification from people",
+              "examples_raw": "Proactively ask human when unclear\ne.g. “Which file did you mean?”",
+              "papers_cited": [],
+              "reviewers": [
+                "theory-driven"
+              ]
+            },
+            {
+              "action": "Communicate task outcome natural language",
+              "examples_raw": "Agent informs the user: ‘Buy a nice rich navy bathing dress’ (P3)\nAgent informs the user that wifi is turned off (P3)",
+              "papers_cited": [
+                "P3"
+              ],
+              "reviewers": [
+                "main reviewer (human reviewer 2)"
+              ]
+            },
+            {
+              "action": "Communicate via visualization",
+              "examples_raw": "“CellAgent generated differential expression and marker gene visualizations, enabling intuitive interpretation of cluster identities” (P1)",
+              "papers_cited": [
+                "P1"
+              ],
+              "reviewers": [
+                "main reviewer (human reviewer 2)"
+              ]
+            },
+            {
+              "action": "Communicate via structured format",
+              "examples_raw": "“generate outputs in a JSON format (or lists of JSON objects)” (P2)",
+              "papers_cited": [
+                "P2"
+              ],
+              "reviewers": [
+                "main reviewer (human reviewer 2)"
+              ]
+            },
+            {
+              "action": "Communicate refusal/inability",
+              "examples_raw": "\"appropriately reject queries that exceed their knowledge boundaries or conflict with their role settings\" (P22)\nrecognize and refuse queries that conflict with their role knowledge\" (P22)\n\"providing clear refusal responses with appropriate explanations\" (P22)",
+              "papers_cited": [
+                "P22"
+              ],
+              "reviewers": [
+                "human reviewer 4"
+              ]
+            },
+            {
+              "action": "Express tone to user",
+              "examples_raw": "“models exhibit a strong default tendency to excessively affirm, apologize, and express gratitude” (P11)",
+              "papers_cited": [
+                "P11"
+              ],
+              "reviewers": [
+                "human reviewer 6"
+              ]
+            },
+            {
+              "action": "Disclose self-information to user",
+              "examples_raw": "“identity disclosure, S2S systems often proactively mention that they are intelligent assistants (P11)",
+              "papers_cited": [
+                "P11"
+              ],
+              "reviewers": [
+                "human reviewer 6"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Interact with physical environments",
+          "leaves": [
+            {
+              "action": "Perceive physical environment",
+              "examples_raw": "Convert images to text via VLMs\nVLM image-to-text description\nConvert sensor / image / audio readings to text\nTurn images, sounds, or sensor readings into text descriptions for text-based LLMs\n“Explore skill enhances the LLM-based executor's ability to guide the agent in room exploration by sampling navigation goals from traversable areas” (P33)\nCovert perceptual visual information to map\n“semantic mapping module receives egocentric visual observations...processed into a depth map and instance segmentation using a UNet and a MaskRCNN” (P34)",
+              "papers_cited": [
+                "P33",
+                "P34"
+              ],
+              "reviewers": [
+                "human reviewer 5"
+              ]
+            },
+            {
+              "action": "Affect physical environments",
+              "examples_raw": "Send language commands to robot arm\nMove things in the real world by sending language commands to a robot arm\n\"the action Play is utilized to interact with the environment or request re-planning of the current plan S\" (P34)",
+              "papers_cited": [
+                "P34"
+              ],
+              "reviewers": [
+                "human reviewer 5"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Interact with digital environments",
+          "leaves": [
+            {
+              "action": "Navigate digital interfaces",
+              "examples_raw": "Browse websites, scroll pages, navigate menus, move within apps\n“navigate multiple websites, extract information from both structured and unstructured sources” (P2)",
+              "papers_cited": [
+                "P2"
+              ],
+              "reviewers": [
+                "main reviewer (human reviewer 2)"
+              ]
+            },
+            {
+              "action": "Modify digital objects",
+              "examples_raw": "Annotate UI Components\nAdd data-testid attributes (P28)\n“annotate_interactive_components(file, strategy=‘add data-testid’)” (P28)",
+              "papers_cited": [
+                "P28"
+              ],
+              "reviewers": [
+                "main reviewer (human reviewer 2)"
+              ]
+            },
+            {
+              "action": "Issue operational commands",
+              "examples_raw": "Invoke structured API or data endpoint\n“Game Control: get_game_state, press_buttons, and navigate_to for direct game control” (P25)",
+              "papers_cited": [
+                "P25"
+              ],
+              "reviewers": [
+                "main reviewer (human reviewer 2)"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Interact with other agents",
+          "leaves": [
+            {
+              "action": "Monitor peer agent's state or decision",
+              "examples_raw": "Observe another agent's chosen action before making one's own decision — a prerequisite for oversight, override, or trust-based deference in multi-agent systems. (P33)\n\"observes both S_0 and A_0, and decides whether to override the AI's treatment or not\"",
+              "papers_cited": [
+                "P33"
+              ],
+              "reviewers": [
+                "human reviewer 5"
+              ]
+            },
+            {
+              "action": "Receive feedback from peer agent",
+              "examples_raw": "Evaluator provides natural-language feedback (P1)",
+              "papers_cited": [
+                "P1"
+              ],
+              "reviewers": [
+                "main reviewer (human reviewer 2)"
+              ]
+            },
+            {
+              "action": "Send message to peer agent",
+              "examples_raw": "\"agent engages in multi-turn interactions...to generate deliverables\" (P16)",
+              "papers_cited": [
+                "P16"
+              ],
+              "reviewers": [
+                "human reviewer 1"
+              ]
+            },
+            {
+              "action": "Recommend action to peer agent",
+              "examples_raw": "Communicate a proposed action to a peer agent for their consideration, knowing the peer may accept or override it — agent-to-agent advisory communication. (P33)\n\"the AI recommends one of eight possible treatments, which is then reviewed and potentially overridden by the clinician\"",
+              "papers_cited": [
+                "P33"
+              ],
+              "reviewers": [
+                "human reviewer 5"
+              ]
+            },
+            {
+              "action": "Override peer agent's decision",
+              "examples_raw": "Replace another agent's selected action with one's own decision — the active side of human-in-the-loop oversight or hierarchical agent control. (P33)\n\"If the clinician overrides the AI, the patient outcome Y is determined by S_0 and the alternative treatment H_0 suggested by the clinician\"",
+              "papers_cited": [
+                "P33"
+              ],
+              "reviewers": [
+                "human reviewer 5"
+              ]
+            },
+            {
+              "action": "Dispatch task to sub-agent",
+              "examples_raw": "“A central orchestrator maintains a high-level route plan while dynamically dispatching sub-agents based on game context” (P25)",
+              "papers_cited": [
+                "P25"
+              ],
+              "reviewers": [
+                "main reviewer (human reviewer 2)"
+              ]
+            },
+            {
+              "action": "Argue or debate with peer agent",
+              "examples_raw": "Multi-agent argumentation toward better answer\nHave multiple agents argue different sides to reach a better answer",
+              "papers_cited": [],
+              "reviewers": [
+                "theory-driven"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Augment with external computation",
+          "leaves": [
+            {
+              "action": "Execute code",
+              "examples_raw": "Test Runner detects logic inconsistencies (P28)\nTest Runner executes the script to detect logical inconsistencies or failed assertions. (P28)",
+              "papers_cited": [
+                "P28"
+              ],
+              "reviewers": [
+                "main reviewer (human reviewer 2)"
+              ]
+            },
+            {
+              "action": "Invoke specialized computation tool",
+              "examples_raw": "Use calculator / heavy compute tools\nCall outside tools to handle heavy math\nrun_shell_command tool (425 and 362 invocations, respectively) (P16)\n\"necessitates over 90 precise tool calls, significantly raising the bar\" (P16)\n\"deliverables are synced to a Docker-based remote sandbox...emulates human computer operations\" (P16)",
+              "papers_cited": [
+                "P16"
+              ],
+              "reviewers": [
+                "human reviewer 1"
+              ]
+            },
+            {
+              "action": "Invoke visual inspection tool",
+              "examples_raw": "Zoom-in tool for region-of-interest (P4)\n“proactively invokes the Zoom-in tool for a targeted examination of the specific region of interest” (P4)",
+              "papers_cited": [
+                "P4"
+              ],
+              "reviewers": [
+                "main reviewer (human reviewer 2)"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Executing",
+      "sub_categories": [
+        {
+          "name": "Executing plan",
+          "leaves": [
+            {
+              "action": "Execute strategy",
+              "examples_raw": "“an insertion agent executes this plan for HLS-C optimization” (P29)",
+              "papers_cited": [
+                "P29"
+              ],
+              "reviewers": [
+                "main reviewer (human reviewer 2)"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Executing debug",
+          "leaves": [
+            {
+              "action": "Adopt debugging instructions",
+              "examples_raw": "“Operating under strict instruction adherence, this agent adopts the instructions to implement debugging” (P29)",
+              "papers_cited": [
+                "P29"
+              ],
+              "reviewers": [
+                "main reviewer (human reviewer 2)"
+              ]
+            },
+            {
+              "action": "Rewrite code after bug fix",
+              "examples_raw": "debugging specialist rewrites the entire code every time it fixes a bug (P17)",
+              "papers_cited": [
+                "P17"
+              ],
+              "reviewers": [
+                "human reviewer 1"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Terminating",
+          "leaves": [
+            {
+              "action": "Provide final answer",
+              "examples_raw": "\"Final Answer: The average number of lines per scene in the ep_7.csv dataset is approximately 6.02\" (p32)\n\"produces a final answer and terminates the rollout; enclose it within <answer></answer> tags\" (P4)",
+              "papers_cited": [
+                "P4",
+                "P32"
+              ],
+              "reviewers": [
+                "main reviewer (human reviewer 2)",
+                "human reviewer 5"
+              ]
+            },
+            {
+              "action": "Generate refusal",
+              "examples_raw": "“providing clear refusal responses with appropriate explanations” (P22)",
+              "papers_cited": [
+                "P22"
+              ],
+              "reviewers": [
+                "human reviewer 4"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Learning",
+      "sub_categories": [
+        {
+          "name": "Learning reasoning",
+          "leaves": [
+            {
+              "action": "Update reasoning via prompt update",
+              "examples_raw": "Rewrite own prompt template\nLearn a better way to reason via prompt rewrite",
+              "papers_cited": [],
+              "reviewers": [
+                "theory-driven"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Learning grounding",
+          "leaves": [
+            {
+              "action": "Update grounding via code-based skills",
+              "examples_raw": "Improve web-navigation code snippets\nWrite or improve code that interacts with outside world",
+              "papers_cited": [],
+              "reviewers": [
+                "theory-driven"
+              ]
+            },
+            {
+              "action": "Update retrieval procedures",
+              "examples_raw": "Improve how the agent searches for information",
+              "papers_cited": [],
+              "reviewers": [
+                "theory-driven"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Learning knowledge",
+          "leaves": [
+            {
+              "action": "Update source code as procedural memory",
+              "examples_raw": "Self-patch agent's own source code\nModify the agent's own source code to change behavior",
+              "papers_cited": [],
+              "reviewers": [
+                "theory-driven"
+              ]
+            },
+            {
+              "action": "Update semantic memory with knowledge",
+              "examples_raw": "Expand Error Repository with new mnemonic (P29)\n“the inspection agent identifies a new error type and integrates the slice into the error repository with a new mnemonic identifier” (P29)",
+              "papers_cited": [
+                "P29"
+              ],
+              "reviewers": [
+                "main reviewer (human reviewer 2)"
+              ]
+            },
+            {
+              "action": "Update memory from new experiences",
+              "examples_raw": "refinement of memories (represented in text) as the system encounters new scenarios (P17)",
+              "papers_cited": [
+                "P17"
+              ],
+              "reviewers": [
+                "human reviewer 1"
+              ]
+            },
+            {
+              "action": "Update hypothesis with new evidence",
+              "examples_raw": "“allowing the model to update its textual understanding, refine its hypothesis, or even trigger further visual exploration” (P4)",
+              "papers_cited": [
+                "P4"
+              ],
+              "reviewers": [
+                "main reviewer (human reviewer 2)"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Learning LLM parameters",
+          "leaves": [
+            {
+              "action": "Update parametric policy",
+              "examples_raw": "Change the model's internal weights through training\nReal learning by changing internal weights",
+              "papers_cited": [],
+              "reviewers": [
+                "theory-driven"
+              ]
+            },
+            {
+              "action": "Update LLM parameters via SL/RL/RLHF",
+              "examples_raw": "SL/RL/RLHF weight adjustment\nUse supervised, reinforcement, or human-feedback learning",
+              "papers_cited": [],
+              "reviewers": [
+                "theory-driven"
+              ]
+            },
+            {
+              "action": "Update action parameters based on feedback",
+              "examples_raw": "Auto-adjust params from exception info (P1)\n“automatically adjusts parameters using exception information to generate executable code” (P1)",
+              "papers_cited": [
+                "P1"
+              ],
+              "reviewers": [
+                "main reviewer (human reviewer 2)"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Learning instructions",
+          "leaves": [
+            {
+              "action": "Learning instructions",
+              "examples_raw": "Extract rule from examples for future use\nLook at input→output examples, figure out underlying rule",
+              "papers_cited": [],
+              "reviewers": [
+                "theory-driven"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Reflection",
+      "sub_categories": [
+        {
+          "name": "Reflect on errors and failures",
+          "leaves": [
+            {
+              "action": "Diagnose failure against ground truth",
+              "examples_raw": "“Analyzes stuck states by comparing current situation against ground truth sources (porymap data, knowledge base) to diagnose navigation failures” (P25)",
+              "papers_cited": [
+                "P25"
+              ],
+              "reviewers": [
+                "main reviewer (human reviewer 2)"
+              ]
+            },
+            {
+              "action": "Inspect Error Pattern",
+              "examples_raw": "“an inspection agent examines the erroneous code and error messages parsed from the HLS tool test results” (P29)",
+              "papers_cited": [
+                "P29"
+              ],
+              "reviewers": [
+                "main reviewer (human reviewer 2)"
+              ]
+            },
+            {
+              "action": "Analyze log to formulate fix instructions",
+              "examples_raw": "Reasoning-to-instruction on HLS log (P29)\n“an analysis agent adopts a reasoning-to-instruction method, analyzing the HLS log to formulate error modification actions” (P29)\n\"This model formulates explicit modification instructions with detailed analysis\" (P29)\n\"Provide explicit instructions on what must be rectified in the next iteration\" (P16)",
+              "papers_cited": [
+                "P16",
+                "P29"
+              ],
+              "reviewers": [
+                "human reviewer 1",
+                "main reviewer (human reviewer 2)"
+              ]
+            },
+            {
+              "action": "Reflect on failed episodes for prior knowledge",
+              "examples_raw": "\"RequireReplan...dynamically adjust the plan, improving the robustness to exceptions\" (P26)\n\"the grounded prior knowledge prevents the agents from repetitive errors and facilitates grounded exception handling\" (P34)\n“This allows the agent to learn from mistakes in realtime and avoid repeating errors before the local memory is discarded” (P1)",
+              "papers_cited": [
+                "P1",
+                "P26",
+                "P34"
+              ],
+              "reviewers": [
+                "main reviewer (human reviewer 2)",
+                "human reviewer 5"
+              ]
+            },
+            {
+              "action": "Self-Correct Step Implementation",
+              "examples_raw": "“Modify step implementation based on error message” (P28)\n“In case of an execution error E(ci), the Executor autonomously performs self-correction to produce a valid code version” (P1)\n“When the initial attempt fails... HLSTuner activates an iterative refinement incorporating current directives and the resulting QoR” (P29)",
+              "papers_cited": [
+                "P1",
+                "P28",
+                "P29"
+              ],
+              "reviewers": [
+                "main reviewer (human reviewer 2)"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Reflect on self-outcomes",
+          "leaves": [
+            {
+              "action": "Self-reflect",
+              "examples_raw": "The results of the execution are fed back, enabling GPT-4 to refine its responses and propose further iterations\" (P32)\n\"This iterative cycle continues until GPT-4 determines that the accumulated information suffices to conclusively answer the problem\" (P32)\n“This self-reflective optimization loop iterates to enhance precision, and the final results from all subtasks are synthesized” (P1)\n“the optimization process runs three iterations, each invoking a different algorithm” (P1)",
+              "papers_cited": [
+                "P1",
+                "P32"
+              ],
+              "reviewers": [
+                "main reviewer (human reviewer 2)",
+                "human reviewer 5"
+              ]
+            },
+            {
+              "action": "Reflect on proposed fix",
+              "examples_raw": "“reflects on the code after assuming the fix to ensure the modification is reasonable” (P29)",
+              "papers_cited": [
+                "P29"
+              ],
+              "reviewers": [
+                "main reviewer (human reviewer 2)"
+              ]
+            },
+            {
+              "action": "Pre-action self-check",
+              "examples_raw": "“These steps are labeled as reflective, indicating the model is engaging in self-monitoring or explicit reasoning before issuing commands” (P1)",
+              "papers_cited": [
+                "P1"
+              ],
+              "reviewers": [
+                "main reviewer (human reviewer 2)"
+              ]
+            },
+            {
+              "action": "Refine Strategy Iteratively",
+              "examples_raw": "Iterative refinement using current QoR (P29)\n“When the initial attempt fails... HLSTuner activates an iterative refinement incorporating current directives and the resulting QoR” (P29)",
+              "papers_cited": [
+                "P29"
+              ],
+              "reviewers": [
+                "main reviewer (human reviewer 2)"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Reflect on external feedback",
+          "leaves": [
+            {
+              "action": "Receive and integrate external feedback",
+              "examples_raw": "“the Evaluator agent ALLMe assesses the outcome and provides natural language feedback if it deems revisions are necessary” (P1)\n“feedback from the feedback agent is used to iteratively refine and improve the generated themes” (P27)\n\"leverage feedback to markedly improve performance...feedback-driven self-correction\" (P16)\nThe Evaluator drives a self-reflective optimization mechanism, which leverages automated evaluation methods for various analysis tasks to iteratively refine outcomes, replacing subjective manual assessments. (P1)",
+              "papers_cited": [
+                "P1",
+                "P16",
+                "P27"
+              ],
+              "reviewers": [
+                "main reviewer (human reviewer 2)",
+                "human reviewer 1"
               ]
             }
           ]

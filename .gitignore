@@ -9,8 +9,13 @@ venv/
 .vscode/
 node_modules/
 
+
 # Local working notes
 TODO.md
 
 # HF release staging (uploaded to Hugging Face, not tracked here)
 hf_release/
+
+# Hold back from upload (still iterating)
+1_data/3_reliability/
+1_data/4_saturation/

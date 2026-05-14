@@ -1,66 +1,46 @@
-# Act-onomy
+# Act·ONOMY
 
-A community-extensible framework for describing and analyzing agent behavior at runtime.
+An extensible codebook for describing AI-agent behavior at runtime, together with the data, tools, and case studies released alongside the paper.
 
-> **Status.** Pre-release.
+---
 
-Act-onomy ships three things:
+## Data
 
-- A **codebook** of 10 top-level action categories (organised under 4 classes: Sense / Think / Act / Adapt) instantiated by 46 sub-actions and 120 leaf-level instances, grounded in CoALA and built via deductive coding on a 35-paper corpus (20 incorporated into the shared codebook; NeurIPS / ICML / ICLR / ACL Anthology, 2024–2026). See [`1_data/2_taxonomy/`](1_data/2_taxonomy/).
-- Two **Claude Skills** that apply the codebook to agent papers and trajectories: [`trace-qualitative-analyst/`](skill/trace-qualitative-analyst/) (qualitative annotation tool that emits an interactive HTML report from a raw trajectory) and [`discovery-qualitative-analyst/`](skill/discovery-qualitative-analyst/) (codebook-iteration pipeline used during taxonomy construction).
-- A **contribution protocol** that lets the codebook grow as new agent designs appear, versioned as `vX.Y`. See [`CONTRIBUTING.md`](CONTRIBUTING.md) and [`CHANGELOG.md`](CHANGELOG.md).
+The datasets behind the empirical results in the paper.
 
-## Repository layout
+| Subdirectory                                                           | Contents                                                                                                                                                         |
+|------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `1_data/1_corpus_grounded_theory/` | The 35-paper grounded-theory corpus and the 780 behavior-description sentences extracted from it.<br><br>**Construction set** — 28 papers / 664 sentences: 20 papers (565 sentences) incorporated into V4.2, with 120 sentences quoted as evidence in the released codebook; the remaining 8 papers (99 sentences) were reviewed but judged off-topic for an agent-behavior taxonomy.<br>**Held-out set** — 7 papers / 116 sentences reserved for the Phase-2 reliability check; 50 sentences sampled for the human–human and human–LLM κ tests.<br><br>• `papers (35 items).csv` — per-paper index (title, domain tags, incorporation flag, anonymized reviewer, reliability-check flag); joins to the sentence CSVs on `paper_id`.<br>• `(construction set)behavioral_descriptions.csv` — 664 rows, one per (sentence, suggested code, human verdict).<br>• `(validation set) behavioral_descriptions_validation.csv` — 116 held-out sentences from the 7 validation papers. |
+| `1_data/2_taxonomy/`               | The Act·onomy codebook itself: the canonical CSV/JSON taxonomy, the human-readable `taxonomy.md`, the dependency map, and the taxonomy-development trace.        |
+| `1_data/5_large_corpus/`           | A larger follow-up corpus: 210 agent papers and 3,455 behavior-description sentences extracted from them, used to stress-test Act·onomy beyond the 35-paper set. |
 
-```
-Act-onomy/
-├── codebook.md                  Canonical codebook (latest)
-├── codebook.v1.0.md             Frozen snapshot cited in the paper
-├── CHANGELOG.md                 Codebook version history
-├── CONTRIBUTING.md              How to propose extensions (governance)
-├── skill/
-│   ├── trace-qualitative-analyst/   Trajectory → HTML report
-│   │   ├── SKILL.md             Skill prompt (Claude Code skill format)
-│   │   ├── assets/
-│   │   │   ├── template.html    Interactive HTML report template
-│   │   │   └── example_pylint_5859.json  Worked example trajectory
-│   │   ├── references/
-│   │   │   └── codebook.md      Codebook the Skill loads at runtime
-│   │   └── scripts/
-│   │       ├── parse_trajectory.py  Stage 1: raw trajectory → annotated skeleton
-│   │       └── render_artifact.py   Stage 4: annotated JSON → HTML artifact
-│   └── discovery-qualitative-analyst/         Codebook-iteration pipeline (paper → revised codebook)
-│       ├── SKILL.md             Three-stage extraction / refinement / new-version skill
-│       ├── references/          Diagnostic and revision-pattern reference docs
-│       └── scripts/             docx builders for F1/F2/F3 deliverables
-├── data/
-│   ├── corpus/                  927-sentence behavior corpus + coding audit trail
-│   ├── reliability/             Cohen's κ datasets (paper-level + trace-level judges)
-│   └── saturation/              Theoretical-saturation curve and held-out proposals
-└── case_studies/
-    ├── case1_three_agents/      Profiling across agents (Section 4.1)
-    ├── case2_swe_agent_two_traces/  Within-agent task signatures (Section 4.2)
-    └── case3_mast_astropy/      Failure-mode surfacing with MAST (Section 4.3)
-```
+---
 
-## Quick start
+## Tools
 
-The Skill is registered with [Claude Code](https://claude.com/claude-code) under the name `trace-qualitative-analyst`. To use it:
+The three tools shipped with Act·onomy, each implemented as a Claude Code skill under `2_tools/`.
 
-1. Drop a raw trajectory (`.traj` JSON file or pasted log) into your working directory.
-2. Ask Claude: *"Analyze this trajectory with the trace-qualitative-analyst skill."*
-3. The Skill walks four stages — parse, phase-label, annotate, render — and emits a self-contained interactive HTML report (pie chart of action types, per-turn timeline, quote-grounded evidence panel).
+| Tool                                                                          | What it does                                                                                  |
+|-------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------|
+| `Automated-Trace-Analysis-Tool`<br>`2_tools/trace-qualitative-analyst/`       | Takes a raw agent trajectory, tags each turn with the codebook, and renders an HTML report.   |
+| `LLM-powered-Discovery-Qualitative-Analyst`<br>`2_tools/discovery-qualitative-analyst/` | Reads a new agent paper, compares its behaviors against the codebook, and proposes revisions. |
+| `Automated-Codebook-Extension-Tool`<br>`2_tools/extension-tool/`              | Keeps the codebook and all files that depend on it in sync after edits.                       |
 
-A worked example trajectory is included at [`skill/trace-qualitative-analyst/assets/example_pylint_5859.json`](skill/trace-qualitative-analyst/assets/example_pylint_5859.json). See [`skill/trace-qualitative-analyst/SKILL.md`](skill/trace-qualitative-analyst/SKILL.md) for the full Skill prompt and [`skill/trace-qualitative-analyst/README.md`](skill/trace-qualitative-analyst/README.md) for the layout.
+---
 
-> **Codebook versions.** The canonical taxonomy at [`1_data/2_taxonomy/`](1_data/2_taxonomy/) is the **v4.2 snapshot** (4 Classes × 10 Actions × 46 Subactions × 120 Instances). The Skill loads its operational mirror at [`2_automatic-qualitative-analysis-tool/trace-qualitative-analyst/references/codebook.md`](2_automatic-qualitative-analysis-tool/trace-qualitative-analyst/references/codebook.md), which adds a palette table and a small set of empirically-extra leaves accumulated during real annotation runs; the two are kept in sync.
+## Case studies
 
+Files for reproducing the case studies in the paper.
+
+| Folder                                                                                     | Question                                                                                                                             | Scope                                                                                                                                                                                       |
+|--------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `3_case_studies/case1_three_agents/`         | Does Act·onomy surface distinct behavioral profiles across agents that vary in architecture and task?                                | 300 trajectories across three agent collections (AG2/AutoGen, HyperAgent, SWE-Agent). Ships the aggregated `analysis_report.md` and `run_summaries.md` only; raw trajectories not included. |
+| `3_case_studies/case2_swe_agent_two_traces/` | Within a single agent, does the behavior profile change with the task (e.g., the same SWE-agent on two different SWE-bench tickets)? | Two `swe_agent` trajectories on SWE-bench (`psf/requests-2317`, `django/django-14411`), each with raw JSON, annotated JSON, and a rendered HTML report.                                     |
+
+---
 
 ## License
 
-- **Source code** (under `skill/` and helper scripts): MIT, see [`LICENSE`](LICENSE).
-- **Codebook content** (`codebook.md`, `codebook.v*.md`) and **labeled datasets** (under `data/`): CC BY 4.0, see [`LICENSE-codebook`](LICENSE-codebook).
-
-## Acknowledgement
-
-Act-onomy's codebook is grounded in the CoALA framework (Sumers et al., 2024) and informed by 35 peer-reviewed agent papers from NeurIPS / ICML / ICLR / ACL (2024–2026), of which 20 were incorporated into the shared codebook. Failure-mode pairing in Case Study 3 uses MAST (Cemri et al., 2025). Trajectories analyzed in the case studies come from the public releases of `swe_agent`, AutoGen / AG2, and HyperAgent. See the paper's appendix for the full asset-license table.
+- **Source code** (under `2_tools/` and helper scripts): MIT, see `LICENSE`.
+- **Codebook content** (`1_data/2_taxonomy/`) and **labeled datasets** (under `1_data/`): CC BY 4.0, see `LICENSE-codebook`.
+- Third-party assets used in the case studies (`swe_agent`, AutoGen / AG2, CodeAct, HyperAgent trajectories; MAST failure taxonomy) are credited under their original licenses in the paper's appendix.

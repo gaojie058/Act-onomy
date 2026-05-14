@@ -1,121 +1,121 @@
-code,Class,Action,Subaction,Instance,definition
-T1.1.1.1,Sense,Retrieval,Retrieve from skill library,Retrieve from skill library,Grab pre-built skill snippet (Minecraft “chop tree”)
-T1.1.2.1,Sense,Retrieval,Retrieve from local corpus,Retrieve from local corpus,Diverse filetype reading; read between 1 to 15 documents and/or tables”
-T1.1.3.1,Sense,Retrieval,Retrieve from external knowledge base,Retrieve from external knowledge base,Recall three relevant distinct problems (P28): “Recall three (03) relevant and distinct problems (different from the user task)”
-T1.1.4.1,Sense,Retrieval,Retrieve from open web,Retrieve from open web,"High reliance on web search to offload knowledge retrieval to external sources"""
-T1.1.5.1,Sense,Retrieval,Retrieve relevant context,Retrieve relevant context,LLM leverages retrieved HLS-related context to transform input C algorithms or natural language descriptions”
-T1.2.1.1,Sense,Memory,Store Information,Store information in working memory,Scratchpad for current inputs and intermediate results.
-T1.2.1.2,Sense,Memory,Store Information,Store episodic trajectories,Record full action sequences for later training.
-T1.2.1.3,Sense,Memory,Store Information,Store knowledge in semantic memory,Save general world facts.
-T1.2.1.4,Sense,Memory,Store Information,Store experiences in episodic memory,Save events as episodes.
-T1.2.1.5,Sense,Memory,Store Information,Store information in long-term memory,Store information in external storage.
-T1.2.1.6,Sense,Memory,Store Information,Maintain curriculum library,"Keep a syllabus of mastered and upcoming skills, arranged by difficulty, so the agent learns in a sensible order."
-T1.2.2.1,Sense,Memory,Update Information,Update memory,Update experiences.
-T1.2.3.1,Sense,Memory,Discard information,Discard information from working memory,Discard local memory after subtask completion.
-T1.2.3.2,Sense,Memory,Discard information,"Discard redundant game state, keep summaries","Automatic context compaction to manage thousands of reasoning steps, preserving only LLM responses and action summaries while discarding redundant game state”"
-T1.2.4.1,Sense,Memory,Consolidate memory,Consolidate working memory into long-term memory,Retain only successful analysis path to global memory.
-T1.2.4.2,Sense,Memory,Consolidate memory,Compact context window,"Automatic context compaction to manage the thousands of reasoning steps required, preserving only LLM responses and action summaries while discarding redundant game state"""
-T1.2.5.1,Sense,Memory,Read memory,Read from working memory,Grab intermediate results from scratchpad.
-T1.2.5.2,Sense,Memory,Read memory,Read from long-term memory,Importance-weighted retrieval of discoveries.
-T2.1.1.1,Think,Planning,Decompose task,Decompose into subtasks,Todo_write tool (15 invocations by GPT-5.2)
-T2.1.1.2,Think,Planning,Decompose task,Decompose into subgoals with success conditions,"LLM decomposes the task into a sequence of subgoals, each paired with an executable success-condition function”"
-T2.1.1.3,Think,Planning,Decompose task,Decompose by role specialization,"Splitting the instruction-following challenge into distinct reasoning and grounding roles handled by a reasoner agent and an actor agent"""
-T2.1.2.1,Think,Planning,Formulate a workflow or plan,Formulate a high-level plan,"METRO starts with the identification of the strategic action a_i for every expert utterance u_i in transcript D"""
-T2.1.2.2,Think,Planning,Formulate a workflow or plan,Formulate an analysis workflow,The Planner accurately interprets user intent and formulates a comprehensive analysis workflow”
-T2.1.2.3,Think,Planning,Formulate a workflow or plan,Plan navigation through environment,Planning to navigate the web; tasks require navigation through an average of 4.2 web pages”
-T2.1.2.4,Think,Planning,Formulate a workflow or plan,Plan function or tool use,"I can use the pandas method corr() to calculate the Pearson correlation coefficient"""
-T2.1.2.5,Think,Planning,Formulate a workflow or plan,Plan Code or artifact structure,"Planning: HTML Structure, CSS Styling, JavaScript Functionality"""
-T2.1.2.6,Think,Planning,Formulate a workflow or plan,Formulate plan from template,"HLSTuner formulates a detailed plan that specifies: (1) the combination of HLS directives, (2) target code segments, and (3) the insertion actions"""
-T2.1.3.1,Think,Planning,Select Strategy,Select among candidate strategies,"Selects effective HLS directive combination strategies and inserts directives within the specific structure (e.g., loops and arrays)”"
-T2.1.3.2,Think,Planning,Select Strategy,Switch to fallback strategy,"Incorporating a dummy score prediction as a fallback mechanism"""
-T2.1.4.1,Think,Planning,Modify Plan,Replan dynamically based on feedback,"RequireReplan provides the LLM-based executor with the capability to dynamically adjust the plan"""
-T2.1.4.2,Think,Planning,Modify Plan,Refine Requirements,Refine requirement based on validated test cases to ensure alignment”
-T2.2.1.1,Think,Reasoning,Generating,Generate candidate options,Brainstorm possible next moves.
-T2.2.1.2,Think,Reasoning,Generating,Generate structured artifacts,"Each agent then emits a set of initial codes; cluster semantically similar codes and generate preliminary themes"""
-T2.2.1.3,Think,Reasoning,Generating,Generate evaluations,LLM Group for multifaceted evaluation generates diverse debugging instructions”
-T2.2.2.1,Think,Reasoning,Analysing,Analyse artifact structure and behavior,Analyze frontend framework and interactive components”
-T2.2.2.2,Think,Reasoning,Analysing,Detect patterns or trends in data,"Identifying patterns, directions, or changes in data over time or across contexts”"
-T2.2.2.3,Think,Reasoning,Analysing,Interpret meaning of artifacts,"Logical reasoning to interpret papers and code; mathematical reasoning to modify and run code; causal reasoning to infer scientific insights from results"""
-T2.2.2.4,Think,Reasoning,Analysing,Classify inputs into categories,Delegator can determine which of the k tasks the input string belongs to by observing only a constant number of metadata tokens.
-T2.2.3.1,Think,Reasoning,Explaining,Explain reasoning or outcomes,"Explain the failure from a user requirement perspective"""
-T2.2.4.1,Think,Reasoning,Summarizing/Distilling,Summarize recent observations and trajectories,Condense recent observations and trajectories into key takeaways.
-T2.2.5.1,Think,Reasoning,Inferring,Infer hidden state from observable evidence,Damage calculation reveals stat distributions.
-T2.2.5.2,Think,Reasoning,Inferring,Infer causal relationship,Determine plausible causal factor.
-T2.2.5.3,Think,Reasoning,Inferring,Infer structure from indirect evidence,"Agents must infer the directory layout by inspecting package structures and README files"""
-T2.2.5.4,Think,Reasoning,Inferring,Infer errors,M_q has the capacity to identify exactly one bug at a time.
-T2.2.6.1,Think,Reasoning,Comparing & Ranking,Compare values across sources,Quantify and compare across sources.
-T2.2.6.2,Think,Reasoning,Comparing & Ranking,Rank items by criteria,Order items by importance.
-T2.2.7.1,Think,Reasoning,Contextualizing,Package prior reasoning as context for subsequent calls,Feed reasoning so far as context to next LLM call.
-T2.2.7.2,Think,Reasoning,Contextualizing,Construct structured context object,"Global interactive multi-behavior overlapping network is constructed based on the simulated behaviors of reposting and reposting with a comment, as well as following”"
-T2.2.7.3,Think,Reasoning,Contextualizing,Configure agent persona or role-conditioning,"I want you to play as {role}, imitating {role}’s personality and values”"
-T2.2.7.4,Think,Reasoning,Contextualizing,Assign roles in a multi-agent team,"Specifying a scope, or role, for an agent allows it to be treated as a computational object. map each one to an employee in a human organization."
-T2.2.8.1,Think,Reasoning,Combining & Synthesis,Combine information from multiple sources,Combine information from multiple sources... to produce a coherent solution”
-T2.2.8.2,Think,Reasoning,Combining & Synthesis,Aggregate observations into a structured representation,"Supplementary semantic map M't, which aggregates the information from Mt over successive time steps. The intuition resembles a form of majority voting"""
-T2.2.9.1,Think,Reasoning,Filtering,Filter information by threshold,"Selecting relevant information based on criteria, quality, or thresholds”"
-T2.3.1.1,Think,Evaluate,Evaluating with gold,Compare against gold reference,"We prompt LLM to review the correct HLS-C code, pairing buggy code segments with corresponding error messages to construct debugging CoT”"
-T2.3.1.2,Think,Evaluate,Evaluating with gold,Score on gold criteria,"The Gold Checker evaluates each annotation on three binary criteria: equivalence, completeness, and correctness, where a score of 1 indicates the criterion is met”"
-T2.3.2.1,Think,Evaluate,Evaluating with goals/requirements/constraints,goal-completion check,"Independently checks whether objectives are truly complete, preventing the orchestrator from advancing when the main agent incorrectly believes a task is finished”"
-T2.3.2.2,Think,Evaluate,Evaluating with goals/requirements/constraints,Requirement-satisfaction check,The final results from all subtasks are synthesized to meet the user's requirements”
-T2.3.2.3,Think,Evaluate,Evaluating with goals/requirements/constraints,Constraint / budget check,HLSTuner enables QoR-aware reasoning to align optimization goals with hardware constraints”
-T2.3.2.4,Think,Evaluate,Evaluating with goals/requirements/constraints,Domain-rule / best-practice check,"Codified best-practices, such as the standard order of operations (e.g., quality control must precede normalization)"""
-T2.3.3.1,Think,Evaluate,Evaluating without ground truth,Score on quality dimensions,"We use GPT-4o as the default evaluator, each dimension scored on a scale of 0 to 2”"
-T2.3.3.2,Think,Evaluate,Evaluating without ground truth,Check rubric compliance,"Verify the implementation of every item listed in {Rubrics}"""
-T2.3.3.3,Think,Evaluate,Evaluating without ground truth,Evaluate visual/behavioral correctness,"Evaluates dynamic behavior and visual correctness based on screenshots"""
-T2.3.3.4,Think,Evaluate,Evaluating without ground truth,Evaluate internal consistency,Task an evaluator agent with determining whether each theme is consistent with its supporting quotes”
-T2.3.3.5,Think,Evaluate,Evaluating without ground truth,Evaluate intermediate results,Agents with domain expertise verify intermediate results and reduce errors”
-T2.3.3.6,Think,Evaluate,Evaluating without ground truth,Provide qualitative judgement,"Upon successful generation of a result, the Evaluator agent, ALLMe assesses the outcome and provides natural language feedback if it deems revisions are necessary.”"
-T2.3.3.7,Think,Evaluate,Evaluating without ground truth,Simulate counterfactual outcomes,"Mentally simulate an alternative scenario — either before acting (imagine 'if I do X, what happens?') or post-hoc (imagine 'what would have happened if action X had been different?'). Includes counterfactual trajectory generation for causal analysis."
-T2.3.3.8,Think,Evaluate,Evaluating without ground truth,Validate predicted issues,"The agent assesses the contextual applicability of potential bugs, reducing the probability that the LLM forcibly generates trivial results”"
-T2.4.1.1,Think,Deciding,Make a decision,Make a decision according to memory,"The agent conditions its decisions on I, the current observation st, and a history buffer of n past state-action pairs."
-T2.4.2.1,Think,Deciding,Pick scores,Select action by score,Argmax = highest score; softmax = probabilistic sample; majority vote across evaluators.
-T2.4.3.1,Think,Deciding,Decide accept or not,Decline out-of-scope queries,Appropriately reject queries that exceed their knowledge boundaries or conflict with their role settings”
-T2.4.4.1,Think,Deciding,Decide under uncertainty,Fork trajectory at uncertainty,Fork the current generative state and generate a new parallel trajectory from this point of high uncertainty”
-T3.1.1.1,Act,Grounding,Interact with users,Accept instructions from humans,Receive task or command from human user.
-T3.1.1.2,Act,Grounding,Interact with users,Ask for clarification from people,Proactively ask human when unclear.
-T3.1.1.3,Act,Grounding,Interact with users,Communicate task outcome natural language,Agent informs the user: ‘Buy a nice rich navy bathing dress’.
-T3.1.1.4,Act,Grounding,Interact with users,Communicate via visualization,"CellAgent generated differential expression and marker gene visualizations, enabling intuitive interpretation of cluster identities”"
-T3.1.1.5,Act,Grounding,Interact with users,Communicate via structured format,Generate outputs in a JSON format (or lists of JSON objects)”
-T3.1.1.6,Act,Grounding,Interact with users,Communicate refusal/inability,"Recognize and refuse queries that conflict with their role knowledge"""
-T3.1.1.7,Act,Grounding,Interact with users,Express tone to user,"Models exhibit a strong default tendency to excessively affirm, apologize, and express gratitude”"
-T3.1.1.8,Act,Grounding,Interact with users,Disclose self-information to user,"Identity disclosure, S2S systems often proactively mention that they are intelligent assistants."
-T3.1.2.1,Act,Grounding,Interact with physical environments,Perceive physical environment,Convert images to text via VLMs.
-T3.1.2.2,Act,Grounding,Interact with physical environments,Affect physical environments,Send language commands to robot arm.
-T3.1.3.1,Act,Grounding,Interact with digital environments,Navigate digital interfaces,"Browse websites, scroll pages, navigate menus, move within apps."
-T3.1.3.2,Act,Grounding,Interact with digital environments,Modify digital objects,Annotate UI Components.
-T3.1.3.3,Act,Grounding,Interact with digital environments,Issue operational commands,Invoke structured API or data endpoint.
-T3.1.4.1,Act,Grounding,Interact with other agents,Monitor peer agent's state or decision,"Observe another agent's chosen action before making one's own decision — a prerequisite for oversight, override, or trust-based deference in multi-agent systems."
-T3.1.4.2,Act,Grounding,Interact with other agents,Receive feedback from peer agent,Evaluator provides natural-language feedback.
-T3.1.4.3,Act,Grounding,Interact with other agents,Send message to peer agent,"Agent engages in multi-turn interactions...to generate deliverables"""
-T3.1.4.4,Act,Grounding,Interact with other agents,Recommend action to peer agent,"Communicate a proposed action to a peer agent for their consideration, knowing the peer may accept or override it — agent-to-agent advisory communication."
-T3.1.4.5,Act,Grounding,Interact with other agents,Override peer agent's decision,Replace another agent's selected action with one's own decision — the active side of human-in-the-loop oversight or hierarchical agent control.
-T3.1.4.6,Act,Grounding,Interact with other agents,Dispatch task to sub-agent,A central orchestrator maintains a high-level route plan while dynamically dispatching sub-agents based on game context”
-T3.1.4.7,Act,Grounding,Interact with other agents,Argue or debate with peer agent,Multi-agent argumentation toward better answer.
-T3.1.5.1,Act,Grounding,Augment with external computation,Execute code,Test Runner detects logic inconsistencies.
-T3.1.5.2,Act,Grounding,Augment with external computation,Invoke specialized computation tool,Use calculator / heavy compute tools.
-T3.1.5.3,Act,Grounding,Augment with external computation,Invoke visual inspection tool,Zoom-in tool for region-of-interest.
-T3.2.1.1,Act,Executing,Executing plan,Execute strategy,An insertion agent executes this plan for HLS-C optimization”
-T3.2.2.1,Act,Executing,Executing debug,Adopt debugging instructions,"Operating under strict instruction adherence, this agent adopts the instructions to implement debugging”"
-T3.2.2.2,Act,Executing,Executing debug,Rewrite code after bug fix,Debugging specialist rewrites the entire code every time it fixes a bug.
-T3.2.3.1,Act,Executing,Terminating,Provide final answer,"Final Answer: The average number of lines per scene in the ep_7.csv dataset is approximately 6.02"" (p32)"
-T3.2.3.2,Act,Executing,Terminating,Generate refusal,Providing clear refusal responses with appropriate explanations”
-T4.1.1.1,Adapt,Learning,Learning reasoning,Update reasoning via prompt update,Rewrite own prompt template.
-T4.1.2.1,Adapt,Learning,Learning grounding,Update grounding via code-based skills,Improve web-navigation code snippets.
-T4.1.2.2,Adapt,Learning,Learning grounding,Update retrieval procedures,Improve how the agent searches for information.
-T4.1.3.1,Adapt,Learning,Learning knowledge,Update source code as procedural memory,Self-patch agent's own source code.
-T4.1.3.2,Adapt,Learning,Learning knowledge,Update semantic memory with knowledge,Expand Error Repository with new mnemonic.
-T4.1.3.3,Adapt,Learning,Learning knowledge,Update memory from new experiences,Refinement of memories (represented in text) as the system encounters new scenarios.
-T4.1.3.4,Adapt,Learning,Learning knowledge,Update hypothesis with new evidence,"Allowing the model to update its textual understanding, refine its hypothesis, or even trigger further visual exploration”"
-T4.1.4.1,Adapt,Learning,Learning LLM parameters,Update parametric policy,Change the model's internal weights through training.
-T4.1.4.2,Adapt,Learning,Learning LLM parameters,Update LLM parameters via SL/RL/RLHF,SL/RL/RLHF weight adjustment.
-T4.1.4.3,Adapt,Learning,Learning LLM parameters,Update action parameters based on feedback,Auto-adjust params from exception info.
-T4.1.5.1,Adapt,Learning,Learning instructions,Learning instructions,Extract rule from examples for future use.
-T4.2.1.1,Adapt,Reflection,Reflect on errors and failures,Diagnose failure against ground truth,"Analyzes stuck states by comparing current situation against ground truth sources (porymap data, knowledge base) to diagnose navigation failures”"
-T4.2.1.2,Adapt,Reflection,Reflect on errors and failures,Inspect Error Pattern,An inspection agent examines the erroneous code and error messages parsed from the HLS tool test results”
-T4.2.1.3,Adapt,Reflection,Reflect on errors and failures,Analyze log to formulate fix instructions,Reasoning-to-instruction on HLS log.
-T4.2.1.4,Adapt,Reflection,Reflect on errors and failures,Reflect on failed episodes for prior knowledge,"RequireReplan...dynamically adjust the plan, improving the robustness to exceptions"""
-T4.2.1.5,Adapt,Reflection,Reflect on errors and failures,Self-Correct Step Implementation,Modify step implementation based on error message”
-T4.2.2.1,Adapt,Reflection,Reflect on self-outcomes,Self-reflect,"The results of the execution are fed back, enabling GPT-4 to refine its responses and propose further iterations"""
-T4.2.2.2,Adapt,Reflection,Reflect on self-outcomes,Reflect on proposed fix,Reflects on the code after assuming the fix to ensure the modification is reasonable”
-T4.2.2.3,Adapt,Reflection,Reflect on self-outcomes,Pre-action self-check,"These steps are labeled as reflective, indicating the model is engaging in self-monitoring or explicit reasoning before issuing commands”"
-T4.2.2.4,Adapt,Reflection,Reflect on self-outcomes,Refine Strategy Iteratively,Iterative refinement using current QoR.
-T4.2.3.1,Adapt,Reflection,Reflect on external feedback,Receive and integrate external feedback,"The Evaluator drives a self-reflective optimization mechanism, which leverages automated evaluation methods for various analysis tasks to iteratively refine outcomes, replacing subjective manual assessments."
+code,Action,Subaction,Instance,definition
+T1.1.1.1,Retrieval,Retrieve from skill library,Retrieve from skill library,Grab pre-built skill snippet (Minecraft “chop tree”)
+T1.1.2.1,Retrieval,Retrieve from local corpus,Retrieve from local corpus,Diverse filetype reading; read between 1 to 15 documents and/or tables”
+T1.1.3.1,Retrieval,Retrieve from external knowledge base,Retrieve from external knowledge base,Recall three relevant distinct problems (P28): “Recall three (03) relevant and distinct problems (different from the user task)”
+T1.1.4.1,Retrieval,Retrieve from open web,Retrieve from open web,"High reliance on web search to offload knowledge retrieval to external sources"""
+T1.1.5.1,Retrieval,Retrieve relevant context,Retrieve relevant context,LLM leverages retrieved HLS-related context to transform input C algorithms or natural language descriptions”
+T1.2.1.1,Memory,Store Information,Store information in working memory,Scratchpad for current inputs and intermediate results.
+T1.2.1.2,Memory,Store Information,Store episodic trajectories,Record full action sequences for later training.
+T1.2.1.3,Memory,Store Information,Store knowledge in semantic memory,Save general world facts.
+T1.2.1.4,Memory,Store Information,Store experiences in episodic memory,Save events as episodes.
+T1.2.1.5,Memory,Store Information,Store information in long-term memory,Store information in external storage.
+T1.2.1.6,Memory,Store Information,Maintain curriculum library,"Keep a syllabus of mastered and upcoming skills, arranged by difficulty, so the agent learns in a sensible order."
+T1.2.2.1,Memory,Update Information,Update memory,Update experiences.
+T1.2.3.1,Memory,Discard information,Discard information from working memory,Discard local memory after subtask completion.
+T1.2.3.2,Memory,Discard information,"Discard redundant game state, keep summaries","Automatic context compaction to manage thousands of reasoning steps, preserving only LLM responses and action summaries while discarding redundant game state”"
+T1.2.4.1,Memory,Consolidate memory,Consolidate working memory into long-term memory,Retain only successful analysis path to global memory.
+T1.2.4.2,Memory,Consolidate memory,Compact context window,"Automatic context compaction to manage the thousands of reasoning steps required, preserving only LLM responses and action summaries while discarding redundant game state"""
+T1.2.5.1,Memory,Read memory,Read from working memory,Grab intermediate results from scratchpad.
+T1.2.5.2,Memory,Read memory,Read from long-term memory,Importance-weighted retrieval of discoveries.
+T2.1.1.1,Planning,Decompose task,Decompose into subtasks,Todo_write tool (15 invocations by GPT-5.2)
+T2.1.1.2,Planning,Decompose task,Decompose into subgoals with success conditions,"LLM decomposes the task into a sequence of subgoals, each paired with an executable success-condition function”"
+T2.1.1.3,Planning,Decompose task,Decompose by role specialization,"Splitting the instruction-following challenge into distinct reasoning and grounding roles handled by a reasoner agent and an actor agent"""
+T2.1.2.1,Planning,Formulate a workflow or plan,Formulate a high-level plan,"METRO starts with the identification of the strategic action a_i for every expert utterance u_i in transcript D"""
+T2.1.2.2,Planning,Formulate a workflow or plan,Formulate an analysis workflow,The Planner accurately interprets user intent and formulates a comprehensive analysis workflow”
+T2.1.2.3,Planning,Formulate a workflow or plan,Plan navigation through environment,Planning to navigate the web; tasks require navigation through an average of 4.2 web pages”
+T2.1.2.4,Planning,Formulate a workflow or plan,Plan function or tool use,"I can use the pandas method corr() to calculate the Pearson correlation coefficient"""
+T2.1.2.5,Planning,Formulate a workflow or plan,Plan Code or artifact structure,"Planning: HTML Structure, CSS Styling, JavaScript Functionality"""
+T2.1.2.6,Planning,Formulate a workflow or plan,Formulate plan from template,"HLSTuner formulates a detailed plan that specifies: (1) the combination of HLS directives, (2) target code segments, and (3) the insertion actions"""
+T2.1.3.1,Planning,Select Strategy,Select among candidate strategies,"Selects effective HLS directive combination strategies and inserts directives within the specific structure (e.g., loops and arrays)”"
+T2.1.3.2,Planning,Select Strategy,Switch to fallback strategy,"Incorporating a dummy score prediction as a fallback mechanism"""
+T2.1.4.1,Planning,Modify Plan,Replan dynamically based on feedback,"RequireReplan provides the LLM-based executor with the capability to dynamically adjust the plan"""
+T2.1.4.2,Planning,Modify Plan,Refine Requirements,Refine requirement based on validated test cases to ensure alignment”
+T2.2.1.1,Reasoning,Generating,Generate candidate options,Brainstorm possible next moves.
+T2.2.1.2,Reasoning,Generating,Generate structured artifacts,"Each agent then emits a set of initial codes; cluster semantically similar codes and generate preliminary themes"""
+T2.2.1.3,Reasoning,Generating,Generate evaluations,LLM Group for multifaceted evaluation generates diverse debugging instructions”
+T2.2.2.1,Reasoning,Analysing,Analyse artifact structure and behavior,Analyze frontend framework and interactive components”
+T2.2.2.2,Reasoning,Analysing,Detect patterns or trends in data,"Identifying patterns, directions, or changes in data over time or across contexts”"
+T2.2.2.3,Reasoning,Analysing,Interpret meaning of artifacts,"Logical reasoning to interpret papers and code; mathematical reasoning to modify and run code; causal reasoning to infer scientific insights from results"""
+T2.2.2.4,Reasoning,Analysing,Classify inputs into categories,Delegator can determine which of the k tasks the input string belongs to by observing only a constant number of metadata tokens.
+T2.2.3.1,Reasoning,Explaining,Explain reasoning or outcomes,"Explain the failure from a user requirement perspective"""
+T2.2.4.1,Reasoning,Summarizing/Distilling,Summarize recent observations and trajectories,Condense recent observations and trajectories into key takeaways.
+T2.2.5.1,Reasoning,Inferring,Infer hidden state from observable evidence,Damage calculation reveals stat distributions.
+T2.2.5.2,Reasoning,Inferring,Infer causal relationship,Determine plausible causal factor.
+T2.2.5.3,Reasoning,Inferring,Infer structure from indirect evidence,"Agents must infer the directory layout by inspecting package structures and README files"""
+T2.2.5.4,Reasoning,Inferring,Infer errors,M_q has the capacity to identify exactly one bug at a time.
+T2.2.6.1,Reasoning,Comparing & Ranking,Compare values across sources,Quantify and compare across sources.
+T2.2.6.2,Reasoning,Comparing & Ranking,Rank items by criteria,Order items by importance.
+T2.2.7.1,Reasoning,Contextualizing,Package prior reasoning as context for subsequent calls,Feed reasoning so far as context to next LLM call.
+T2.2.7.2,Reasoning,Contextualizing,Construct structured context object,"Global interactive multi-behavior overlapping network is constructed based on the simulated behaviors of reposting and reposting with a comment, as well as following”"
+T2.2.7.3,Reasoning,Contextualizing,Configure agent persona or role-conditioning,"I want you to play as {role}, imitating {role}’s personality and values”"
+T2.2.7.4,Reasoning,Contextualizing,Assign roles in a multi-agent team,"Specifying a scope, or role, for an agent allows it to be treated as a computational object. map each one to an employee in a human organization."
+T2.2.8.1,Reasoning,Combining & Synthesis,Combine information from multiple sources,Combine information from multiple sources... to produce a coherent solution”
+T2.2.8.2,Reasoning,Combining & Synthesis,Aggregate observations into a structured representation,"Supplementary semantic map M't, which aggregates the information from Mt over successive time steps. The intuition resembles a form of majority voting"""
+T2.2.9.1,Reasoning,Filtering,Filter information by threshold,"Selecting relevant information based on criteria, quality, or thresholds”"
+T2.3.1.1,Evaluate,Evaluating with gold,Compare against gold reference,"We prompt LLM to review the correct HLS-C code, pairing buggy code segments with corresponding error messages to construct debugging CoT”"
+T2.3.1.2,Evaluate,Evaluating with gold,Score on gold criteria,"The Gold Checker evaluates each annotation on three binary criteria: equivalence, completeness, and correctness, where a score of 1 indicates the criterion is met”"
+T2.3.2.1,Evaluate,Evaluating with goals/requirements/constraints,goal-completion check,"Independently checks whether objectives are truly complete, preventing the orchestrator from advancing when the main agent incorrectly believes a task is finished”"
+T2.3.2.2,Evaluate,Evaluating with goals/requirements/constraints,Requirement-satisfaction check,The final results from all subtasks are synthesized to meet the user's requirements”
+T2.3.2.3,Evaluate,Evaluating with goals/requirements/constraints,Constraint / budget check,HLSTuner enables QoR-aware reasoning to align optimization goals with hardware constraints”
+T2.3.2.4,Evaluate,Evaluating with goals/requirements/constraints,Domain-rule / best-practice check,"Codified best-practices, such as the standard order of operations (e.g., quality control must precede normalization)"""
+T2.3.3.1,Evaluate,Evaluating without ground truth,Score on quality dimensions,"We use GPT-4o as the default evaluator, each dimension scored on a scale of 0 to 2”"
+T2.3.3.2,Evaluate,Evaluating without ground truth,Check rubric compliance,"Verify the implementation of every item listed in {Rubrics}"""
+T2.3.3.3,Evaluate,Evaluating without ground truth,Evaluate visual/behavioral correctness,"Evaluates dynamic behavior and visual correctness based on screenshots"""
+T2.3.3.4,Evaluate,Evaluating without ground truth,Evaluate internal consistency,Task an evaluator agent with determining whether each theme is consistent with its supporting quotes”
+T2.3.3.5,Evaluate,Evaluating without ground truth,Evaluate intermediate results,Agents with domain expertise verify intermediate results and reduce errors”
+T2.3.3.6,Evaluate,Evaluating without ground truth,Provide qualitative judgement,"Upon successful generation of a result, the Evaluator agent, ALLMe assesses the outcome and provides natural language feedback if it deems revisions are necessary.”"
+T2.3.3.7,Evaluate,Evaluating without ground truth,Simulate counterfactual outcomes,"Mentally simulate an alternative scenario — either before acting (imagine 'if I do X, what happens?') or post-hoc (imagine 'what would have happened if action X had been different?'). Includes counterfactual trajectory generation for causal analysis."
+T2.3.3.8,Evaluate,Evaluating without ground truth,Validate predicted issues,"The agent assesses the contextual applicability of potential bugs, reducing the probability that the LLM forcibly generates trivial results”"
+T2.4.1.1,Deciding,Make a decision,Make a decision according to memory,"The agent conditions its decisions on I, the current observation st, and a history buffer of n past state-action pairs."
+T2.4.2.1,Deciding,Pick scores,Select action by score,Argmax = highest score; softmax = probabilistic sample; majority vote across evaluators.
+T2.4.3.1,Deciding,Decide accept or not,Decline out-of-scope queries,Appropriately reject queries that exceed their knowledge boundaries or conflict with their role settings”
+T2.4.4.1,Deciding,Decide under uncertainty,Fork trajectory at uncertainty,Fork the current generative state and generate a new parallel trajectory from this point of high uncertainty”
+T3.1.1.1,Grounding,Interact with users,Accept instructions from humans,Receive task or command from human user.
+T3.1.1.2,Grounding,Interact with users,Ask for clarification from people,Proactively ask human when unclear.
+T3.1.1.3,Grounding,Interact with users,Communicate task outcome natural language,Agent informs the user: ‘Buy a nice rich navy bathing dress’.
+T3.1.1.4,Grounding,Interact with users,Communicate via visualization,"CellAgent generated differential expression and marker gene visualizations, enabling intuitive interpretation of cluster identities”"
+T3.1.1.5,Grounding,Interact with users,Communicate via structured format,Generate outputs in a JSON format (or lists of JSON objects)”
+T3.1.1.6,Grounding,Interact with users,Communicate refusal/inability,"Recognize and refuse queries that conflict with their role knowledge"""
+T3.1.1.7,Grounding,Interact with users,Express tone to user,"Models exhibit a strong default tendency to excessively affirm, apologize, and express gratitude”"
+T3.1.1.8,Grounding,Interact with users,Disclose self-information to user,"Identity disclosure, S2S systems often proactively mention that they are intelligent assistants."
+T3.1.2.1,Grounding,Interact with physical environments,Perceive physical environment,Convert images to text via VLMs.
+T3.1.2.2,Grounding,Interact with physical environments,Affect physical environments,Send language commands to robot arm.
+T3.1.3.1,Grounding,Interact with digital environments,Navigate digital interfaces,"Browse websites, scroll pages, navigate menus, move within apps."
+T3.1.3.2,Grounding,Interact with digital environments,Modify digital objects,Annotate UI Components.
+T3.1.3.3,Grounding,Interact with digital environments,Issue operational commands,Invoke structured API or data endpoint.
+T3.1.4.1,Grounding,Interact with other agents,Monitor peer agent's state or decision,"Observe another agent's chosen action before making one's own decision — a prerequisite for oversight, override, or trust-based deference in multi-agent systems."
+T3.1.4.2,Grounding,Interact with other agents,Receive feedback from peer agent,Evaluator provides natural-language feedback.
+T3.1.4.3,Grounding,Interact with other agents,Send message to peer agent,"Agent engages in multi-turn interactions...to generate deliverables"""
+T3.1.4.4,Grounding,Interact with other agents,Recommend action to peer agent,"Communicate a proposed action to a peer agent for their consideration, knowing the peer may accept or override it — agent-to-agent advisory communication."
+T3.1.4.5,Grounding,Interact with other agents,Override peer agent's decision,Replace another agent's selected action with one's own decision — the active side of human-in-the-loop oversight or hierarchical agent control.
+T3.1.4.6,Grounding,Interact with other agents,Dispatch task to sub-agent,A central orchestrator maintains a high-level route plan while dynamically dispatching sub-agents based on game context”
+T3.1.4.7,Grounding,Interact with other agents,Argue or debate with peer agent,Multi-agent argumentation toward better answer.
+T3.1.5.1,Grounding,Augment with external computation,Execute code,Test Runner detects logic inconsistencies.
+T3.1.5.2,Grounding,Augment with external computation,Invoke specialized computation tool,Use calculator / heavy compute tools.
+T3.1.5.3,Grounding,Augment with external computation,Invoke visual inspection tool,Zoom-in tool for region-of-interest.
+T3.2.1.1,Executing,Executing plan,Execute strategy,An insertion agent executes this plan for HLS-C optimization”
+T3.2.2.1,Executing,Executing debug,Adopt debugging instructions,"Operating under strict instruction adherence, this agent adopts the instructions to implement debugging”"
+T3.2.2.2,Executing,Executing debug,Rewrite code after bug fix,Debugging specialist rewrites the entire code every time it fixes a bug.
+T3.2.3.1,Executing,Terminating,Provide final answer,"Final Answer: The average number of lines per scene in the ep_7.csv dataset is approximately 6.02"" (p32)"
+T3.2.3.2,Executing,Terminating,Generate refusal,Providing clear refusal responses with appropriate explanations”
+T4.1.1.1,Learning,Learning reasoning,Update reasoning via prompt update,Rewrite own prompt template.
+T4.1.2.1,Learning,Learning grounding,Update grounding via code-based skills,Improve web-navigation code snippets.
+T4.1.2.2,Learning,Learning grounding,Update retrieval procedures,Improve how the agent searches for information.
+T4.1.3.1,Learning,Learning knowledge,Update source code as procedural memory,Self-patch agent's own source code.
+T4.1.3.2,Learning,Learning knowledge,Update semantic memory with knowledge,Expand Error Repository with new mnemonic.
+T4.1.3.3,Learning,Learning knowledge,Update memory from new experiences,Refinement of memories (represented in text) as the system encounters new scenarios.
+T4.1.3.4,Learning,Learning knowledge,Update hypothesis with new evidence,"Allowing the model to update its textual understanding, refine its hypothesis, or even trigger further visual exploration”"
+T4.1.4.1,Learning,Learning LLM parameters,Update parametric policy,Change the model's internal weights through training.
+T4.1.4.2,Learning,Learning LLM parameters,Update LLM parameters via SL/RL/RLHF,SL/RL/RLHF weight adjustment.
+T4.1.4.3,Learning,Learning LLM parameters,Update action parameters based on feedback,Auto-adjust params from exception info.
+T4.1.5.1,Learning,Learning instructions,Learning instructions,Extract rule from examples for future use.
+T4.2.1.1,Reflection,Reflect on errors and failures,Diagnose failure against ground truth,"Analyzes stuck states by comparing current situation against ground truth sources (porymap data, knowledge base) to diagnose navigation failures”"
+T4.2.1.2,Reflection,Reflect on errors and failures,Inspect Error Pattern,An inspection agent examines the erroneous code and error messages parsed from the HLS tool test results”
+T4.2.1.3,Reflection,Reflect on errors and failures,Analyze log to formulate fix instructions,Reasoning-to-instruction on HLS log.
+T4.2.1.4,Reflection,Reflect on errors and failures,Reflect on failed episodes for prior knowledge,"RequireReplan...dynamically adjust the plan, improving the robustness to exceptions"""
+T4.2.1.5,Reflection,Reflect on errors and failures,Self-Correct Step Implementation,Modify step implementation based on error message”
+T4.2.2.1,Reflection,Reflect on self-outcomes,Self-reflect,"The results of the execution are fed back, enabling GPT-4 to refine its responses and propose further iterations"""
+T4.2.2.2,Reflection,Reflect on self-outcomes,Reflect on proposed fix,Reflects on the code after assuming the fix to ensure the modification is reasonable”
+T4.2.2.3,Reflection,Reflect on self-outcomes,Pre-action self-check,"These steps are labeled as reflective, indicating the model is engaging in self-monitoring or explicit reasoning before issuing commands”"
+T4.2.2.4,Reflection,Reflect on self-outcomes,Refine Strategy Iteratively,Iterative refinement using current QoR.
+T4.2.3.1,Reflection,Reflect on external feedback,Receive and integrate external feedback,"The Evaluator drives a self-reflective optimization mechanism, which leverages automated evaluation methods for various analysis tasks to iteratively refine outcomes, replacing subjective manual assessments."

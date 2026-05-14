@@ -1,0 +1,1335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agent Trajectory & Behavior Profile · django/django-14411</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #fafbfc;
+  --bg-panel: #ffffff;
+  --ink: #0f172a;
+  --ink-soft: #475569;
+  --ink-mute: #94a3b8;
+  --rule: #e2e8f0;
+  --rule-soft: #f1f5f9;
+  --accent: #4f46e5;
+  --accent-soft: #c7d2fe;
+  --thought: #4f46e5;
+  --action: #059669;
+  --obs: #d97706;
+  --obs-soft: #fef3c7;
+  --highlight: #eef2ff;
+
+  --grp-Retrieval: #0891b2;
+  --grp-Retrieval-bg: rgba(8, 145, 178, 0.10);
+  --grp-Memory: #d97706;
+  --grp-Memory-bg: rgba(217, 119, 6, 0.10);
+  --grp-Planning: #0284c7;
+  --grp-Planning-bg: rgba(2, 132, 199, 0.10);
+  --grp-Reasoning: #4f46e5;
+  --grp-Reasoning-bg: rgba(79, 70, 229, 0.10);
+  --grp-Evaluating: #0d9488;
+  --grp-Evaluating-bg: rgba(13, 148, 136, 0.10);
+  --grp-Deciding: #7c3aed;
+  --grp-Deciding-bg: rgba(124, 58, 237, 0.10);
+  --grp-Grounding: #c026d3;
+  --grp-Grounding-bg: rgba(192, 38, 211, 0.10);
+  --grp-Executing: #059669;
+  --grp-Executing-bg: rgba(5, 150, 105, 0.10);
+  --grp-Learning: #db2777;
+  --grp-Learning-bg: rgba(219, 39, 119, 0.10);
+  --grp-Reflection: #e11d48;
+  --grp-Reflection-bg: rgba(225, 29, 72, 0.10);
+
+  --panel-w: 360px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  font-size: 15px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+body {
+  min-height: 100vh;
+}
+
+header.masthead {
+  border-bottom: 1px solid var(--rule);
+  padding: 28px calc(var(--panel-w) + 24px) 24px 40px;
+  background: var(--bg-panel);
+  position: relative;
+  z-index: 5;
+}
+
+.eyebrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  margin-bottom: 8px;
+}
+
+h1.title {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-variation-settings: 'opsz' 144;
+  font-size: 38px;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin-bottom: 6px;
+}
+
+h1.title em {
+  font-style: italic;
+  font-weight: 400;
+  color: var(--accent);
+}
+
+.subtitle {
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  color: var(--ink-soft);
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.55;
+  max-width: 820px;
+}
+
+.meta-row {
+  display: flex;
+  gap: 24px;
+  margin-top: 16px;
+  flex-wrap: wrap;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--ink-mute);
+}
+
+.meta-row span strong {
+  color: var(--ink);
+  font-weight: 500;
+}
+
+.outcome-pill {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 2px;
+  font-weight: 600;
+}
+.outcome-resolved { background: rgba(5, 150, 105, 0.13); color: var(--grp-Executing); }
+.outcome-unresolved { background: rgba(79, 70, 229, 0.13); color: var(--accent); }
+
+.app {
+  position: relative;
+  min-height: calc(100vh - 140px);
+}
+
+@media (max-width: 1100px) {
+  header.masthead { padding-right: 40px; }
+  main.trajectory { margin-right: 0 !important; max-width: 100% !important; }
+  aside.codebook-panel {
+    position: relative !important;
+    top: auto !important;
+    right: auto !important;
+    width: 100% !important;
+    height: auto !important;
+    max-height: none !important;
+    border-left: none !important;
+    border-top: 1px solid var(--rule);
+  }
+}
+
+main.trajectory {
+  padding: 32px 40px 80px;
+  max-width: 900px;
+  margin-right: var(--panel-w);
+}
+
+.section-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.section-label::after { content: ''; flex: 1; height: 1px; background: var(--rule); }
+
+.issue-block {
+  background: var(--bg-panel);
+  border: 1px solid var(--rule);
+  border-left: 3px solid var(--accent);
+  padding: 18px 22px;
+  margin-bottom: 28px;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  color: var(--ink-soft);
+  line-height: 1.65;
+  white-space: pre-wrap;
+}
+.issue-block strong { font-weight: 600; color: var(--ink); }
+.issue-block code { font-family: 'JetBrains Mono', monospace; font-size: 12.5px; background: var(--rule-soft); padding: 1px 5px; border-radius: 2px; }
+
+.summary-block {
+  background: var(--bg-panel);
+  border: 1px solid var(--rule);
+  border-left: 3px solid var(--thought);
+  padding: 20px 24px 22px;
+  margin-bottom: 32px;
+  font-family: 'Inter', sans-serif;
+  font-size: 14.5px;
+  line-height: 1.65;
+  color: var(--ink);
+  position: relative;
+}
+.summary-block .summary-eyebrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9.5px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--thought);
+  font-weight: 600;
+  margin-bottom: 10px;
+  display: block;
+}
+.summary-block .summary-text {
+  font-style: normal;
+  color: var(--ink);
+  letter-spacing: 0;
+}
+.summary-block .summary-text strong { font-style: normal; font-weight: 600; color: var(--ink); }
+.summary-block .summary-text em { font-style: normal; color: var(--accent); }
+.summary-block .summary-text code { font-family: 'JetBrains Mono', monospace; font-style: normal; font-size: 13px; background: var(--rule-soft); padding: 1px 5px; border-radius: 2px; color: var(--ink); }
+
+.method-note {
+  font-family: 'Inter', sans-serif;
+  font-style: normal;
+  font-size: 13.5px;
+  color: var(--ink-soft);
+  margin-bottom: 24px;
+  padding: 12px 16px;
+  background: var(--highlight);
+  border-left: 2px solid var(--accent);
+  border-radius: 0 2px 2px 0;
+  line-height: 1.6;
+}
+.method-note strong { font-style: normal; font-weight: 600; color: var(--ink); }
+.method-note code { font-family: 'JetBrains Mono', monospace; font-size: 12px; background: rgba(0,0,0,0.06); padding: 1px 5px; border-radius: 2px; font-style: normal; }
+
+.turn {
+  position: relative;
+  margin-bottom: 28px;
+  padding: 22px 24px 20px 28px;
+  background: var(--bg-panel);
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  transition: all 0.25s ease;
+}
+.turn::before { content: ''; position: absolute; left: -1px; top: -1px; bottom: -1px; width: 4px; background: var(--rule); transition: background 0.25s ease; }
+.turn.active { border-color: var(--ink); box-shadow: 0 4px 24px rgba(26,24,20,0.08); }
+.turn.active::before { background: var(--accent); width: 4px; }
+
+.turn-header {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  margin-bottom: 14px;
+  padding-bottom: 12px;
+  border-bottom: 1px dashed var(--rule);
+}
+
+.turn-num {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 28px;
+  font-variation-settings: 'opsz' 144;
+  color: var(--accent);
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+.turn-num small { font-size: 11px; font-family: 'JetBrains Mono', monospace; color: var(--ink-mute); font-weight: 400; display: block; letter-spacing: 0.1em; margin-bottom: 2px; }
+
+.turn-tag-line { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-style: normal; font-size: 15px; color: var(--ink); font-weight: 500; flex: 1; line-height: 1.45; }
+
+.turn-phase {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border: 1px solid var(--rule);
+  border-radius: 2px;
+  color: var(--ink-soft);
+  background: var(--bg);
+}
+.phase-reproduce { color: var(--obs); border-color: var(--obs-soft); background: var(--obs-soft); }
+.phase-localize { color: var(--thought); border-color: rgba(91,74,138,0.2); background: rgba(91,74,138,0.08); }
+.phase-edit { color: var(--action); border-color: rgba(5, 150, 105, 0.2); background: rgba(5, 150, 105, 0.08); }
+.phase-recover { color: var(--accent); border-color: var(--accent-soft); background: var(--accent-soft); }
+.phase-verify { color: var(--grp-Evaluating); border-color: rgba(26,88,120,0.2); background: rgba(26,88,120,0.08); }
+.phase-submit { color: var(--ink); border-color: var(--rule); background: var(--rule-soft); }
+.phase-other { color: var(--ink-soft); border-color: var(--rule); background: var(--bg); }
+
+.oat-block { margin: 12px 0; padding-left: 14px; border-left: 2px solid; font-size: 14px; line-height: 1.55; }
+.oat-block .lbl { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 600; margin-bottom: 6px; display: block; }
+
+.oat-obs { border-color: var(--obs); }
+.oat-obs .lbl { color: var(--obs); }
+
+.oat-thought { border-color: var(--thought); background: rgba(91, 74, 138, 0.025); padding: 8px 14px 10px; border-radius: 0 2px 2px 0; }
+.oat-thought .lbl { color: var(--thought); }
+.oat-thought .lbl .small { opacity: 0.5; font-weight: 400; text-transform: none; letter-spacing: 0.05em; font-style: italic; }
+.thought-text { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-style: normal; font-size: 14px; color: var(--ink); line-height: 1.65; letter-spacing: 0; }
+
+.oat-action { border-color: var(--action); }
+.oat-action .lbl { color: var(--action); }
+.oat-action .content {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12.5px;
+  background: #1f1f1f;
+  color: #eaeaea;
+  padding: 8px 12px;
+  border-radius: 2px;
+  display: block;
+  margin-top: 4px;
+  white-space: pre-wrap;
+  line-height: 1.5;
+}
+.oat-action .content .cmt { color: #888888; }
+.oat-action .content .kw { color: #d4a574; }
+
+.content { color: var(--ink); }
+.content code { font-family: 'JetBrains Mono', monospace; font-size: 12.5px; background: var(--rule-soft); padding: 1px 5px; border-radius: 2px; }
+
+.qmark {
+  font-style: italic;
+  background: var(--qbg, var(--rule-soft));
+  border-bottom: 1.5px solid var(--qcolor, var(--ink-mute));
+  padding: 0 2px;
+  margin: 0 1px;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  border-radius: 1px;
+  position: relative;
+}
+.qmark:hover { background: var(--qcolor, var(--ink-mute)); color: var(--bg); }
+.qmark sup { font-family: 'JetBrains Mono', monospace; font-style: normal; font-size: 9px; font-weight: 600; color: var(--qcolor, var(--ink-mute)); margin-left: 2px; letter-spacing: 0; vertical-align: super; line-height: 0; }
+.qmark:hover sup { color: var(--bg); }
+
+.annotations {
+  margin-top: 14px;
+  padding: 12px 14px;
+  background: var(--bg);
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.annotations-header { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-mute); font-weight: 600; margin-bottom: 4px; }
+
+.annot-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1.1fr);
+  gap: 10px;
+  align-items: baseline;
+  font-size: 13px;
+  cursor: pointer;
+  padding: 5px 6px;
+  border-radius: 2px;
+  transition: background 0.18s ease;
+}
+.annot-row:hover { background: var(--rule-soft); }
+.annot-row.flash { background: var(--qbg, var(--rule-soft)); }
+
+.annot-quote {
+  font-family: 'Inter', sans-serif;
+  font-style: italic;
+  color: var(--qcolor, var(--ink));
+  font-size: 13px;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.annot-quote::before { content: '"'; opacity: 0.5; }
+.annot-quote::after { content: '"'; opacity: 0.5; }
+.annot-quote .qnum { font-family: 'JetBrains Mono', monospace; font-style: normal; font-size: 9px; font-weight: 600; margin-right: 4px; opacity: 0.7; vertical-align: super; }
+
+.annot-arrow { color: var(--ink-mute); font-family: 'JetBrains Mono', monospace; font-size: 11px; }
+
+.annot-tag { font-family: 'Inter', sans-serif; font-size: 11.5px; color: var(--ink-soft); letter-spacing: 0.005em; }
+.annot-tag .annot-grp { font-weight: 600; color: var(--qcolor, var(--ink)); }
+.annot-tag .annot-sep { margin: 0 4px; opacity: 0.4; }
+.annot-tag .annot-leaf { color: var(--ink); }
+
+.insight {
+  margin-top: 12px;
+  padding: 10px 12px 10px 14px;
+  background: var(--highlight);
+  border-radius: 2px;
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-style: normal;
+  color: var(--ink-soft);
+  position: relative;
+  line-height: 1.6;
+}
+.insight::before { content: '※'; position: absolute; left: -22px; top: 8px; font-size: 14px; color: var(--accent); font-style: normal; }
+.insight strong { font-style: normal; font-weight: 600; color: var(--ink); }
+
+/* Segment summary card inside the right-panel trajectory signature.
+   Sits above the first row of each `segments[]` entry — a compact "what
+   the agent is doing in this stretch" preface for the row block below. */
+.sig-segment {
+  margin: 14px 0 6px;
+  padding: 8px 10px;
+  background: var(--highlight);
+  border-left: 3px solid var(--accent);
+  border-radius: 0 2px 2px 0;
+}
+.sig-segment:first-child { margin-top: 4px; }
+.sig-segment-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 8.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 700;
+  margin-bottom: 3px;
+}
+.sig-segment-title {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 12.5px;
+  font-style: italic;
+  color: var(--ink);
+  line-height: 1.3;
+  margin-bottom: 3px;
+}
+.sig-segment-body {
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  color: var(--ink-soft);
+  line-height: 1.55;
+}
+.sig-segment-body code {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10.5px;
+  background: rgba(79, 70, 229, 0.08);
+  padding: 0 3px;
+  border-radius: 2px;
+}
+
+aside.codebook-panel {
+  background: var(--bg-panel);
+  border-left: 1px solid var(--rule);
+  padding: 32px 24px 60px;
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: var(--panel-w);
+  height: 100vh;
+  overflow-y: auto;
+  z-index: 10;
+}
+aside.codebook-panel::-webkit-scrollbar { width: 6px; }
+aside.codebook-panel::-webkit-scrollbar-track { background: transparent; }
+aside.codebook-panel::-webkit-scrollbar-thumb { background: var(--rule); border-radius: 3px; }
+
+/* Drag handle on the panel's left edge — sits over the border, 6px hit area,
+   shows a thin colored stripe on hover/drag. Double-click resets width. */
+#panel-resize-handle {
+  position: absolute;
+  top: 0;
+  left: -3px;
+  width: 6px;
+  height: 100%;
+  cursor: col-resize;
+  z-index: 20;
+  background: transparent;
+  transition: background 0.15s ease;
+}
+#panel-resize-handle:hover,
+#panel-resize-handle:active {
+  background: linear-gradient(to right, transparent 0%, transparent 40%, var(--accent) 40%, var(--accent) 60%, transparent 60%);
+}
+
+.panel-title { font-family: 'Inter', sans-serif; font-weight: 600; font-size: 22px; font-variation-settings: 'opsz' 144; margin-bottom: 4px; letter-spacing: -0.01em; }
+.panel-sub { font-family: 'Inter', sans-serif; font-style: normal; font-size: 12.5px; color: var(--ink-soft); line-height: 1.5; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid var(--rule); }
+
+/* Pie chart section */
+.pie-section {
+  margin-bottom: 24px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--rule);
+}
+.pie-svg-wrap {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 12px;
+}
+.pie-legend {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+}
+.pie-legend-row {
+  display: grid;
+  grid-template-columns: 12px 1fr auto auto;
+  gap: 8px;
+  align-items: center;
+  color: var(--ink-soft);
+}
+.pie-legend-swatch { width: 10px; height: 10px; border-radius: 1px; }
+.pie-legend-name { font-weight: 500; color: var(--ink); }
+.pie-legend-pct { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--ink-mute); }
+.pie-legend-count { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--ink-mute); }
+
+.pie-slice { transition: opacity 0.2s ease; cursor: pointer; }
+.pie-slice:hover { opacity: 0.8; }
+
+.cb-group { margin-bottom: 18px; }
+.cb-group-header { display: flex; align-items: baseline; gap: 8px; margin-bottom: 6px; }
+.cb-group-name { font-family: 'Inter', sans-serif; font-weight: 600; font-size: 14px; font-style: italic; color: var(--qcolor, var(--ink)); }
+.cb-count { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--ink-mute); background: var(--bg); padding: 1px 6px; border-radius: 8px; border: 1px solid var(--rule); }
+.cb-bar { height: 4px; background: var(--rule-soft); border-radius: 2px; margin-bottom: 8px; overflow: hidden; }
+.cb-bar-fill { height: 100%; border-radius: 2px; transition: width 0.4s ease; }
+.cb-items { display: flex; flex-direction: column; gap: 2px; margin-left: 4px; }
+.cb-item {
+  font-family: 'Inter', sans-serif;
+  font-size: 11.5px;
+  color: var(--ink-soft);
+  padding: 4px 8px 4px 12px;
+  border-left: 2px solid var(--rule);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-radius: 0 2px 2px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 6px;
+}
+.cb-item:hover { background: var(--bg); border-left-color: var(--ink-soft); color: var(--ink); }
+.cb-item.fired { border-left-color: var(--qcolor, var(--accent)); color: var(--ink); background: var(--qbg, var(--accent-soft)); font-weight: 500; }
+.cb-item-text { flex: 1; }
+.cb-item .turn-refs { font-family: 'JetBrains Mono', monospace; font-size: 9px; color: var(--ink-mute); flex-shrink: 0; }
+.cb-item.fired .turn-refs { color: var(--qcolor, var(--accent)); font-weight: 600; }
+
+.summary-footer {
+  margin-top: 60px;
+  padding: 28px;
+  background: var(--bg-panel);
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+}
+.summary-footer h2 { font-family: 'Inter', sans-serif; font-weight: 600; font-size: 22px; margin-bottom: 4px; letter-spacing: -0.01em; }
+.summary-footer .sub { font-style: italic; color: var(--ink-soft); font-size: 14px; margin-bottom: 20px; }
+.findings { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
+.finding { padding: 14px 16px; border-left: 2px solid var(--accent); background: var(--bg); font-size: 13px; line-height: 1.55; }
+.finding strong { font-weight: 600; display: block; margin-bottom: 4px; color: var(--ink); }
+.finding span { color: var(--ink-soft); }
+
+@keyframes pulse-ring {
+  0% { box-shadow: 0 0 0 0 rgba(79, 70, 229, 0.4); }
+  100% { box-shadow: 0 0 0 8px rgba(79, 70, 229, 0); }
+}
+.cb-item.fired.flash, .annot-row.flash, .qmark.flash-pulse { animation: pulse-ring 0.6s ease-out; }
+
+.legend {
+  display: flex;
+  gap: 14px;
+  margin-bottom: 24px;
+  padding: 10px 14px;
+  background: var(--bg-panel);
+  border: 1px solid var(--rule);
+  border-radius: 2px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--ink-soft);
+  flex-wrap: wrap;
+  align-items: center;
+}
+.legend-item { display: flex; align-items: center; gap: 6px; }
+.legend-dot { width: 8px; height: 8px; border-radius: 1px; }
+.legend-dot.obs { background: var(--obs); }
+.legend-dot.thought { background: var(--thought); }
+.legend-dot.action { background: var(--action); }
+.legend small { margin-left: auto; color: var(--ink-mute); font-style: italic; }
+
+/* ===== Trajectory signature (right panel, above the bar chart) =====
+   Auto-built in JS from the same turns/quotes data. No extra schema fields. */
+.signature-section {
+  margin-bottom: 24px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--rule);
+}
+.sig-section-title {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  margin-bottom: 4px;
+  font-weight: 600;
+}
+.sig-section-sub {
+  font-family: 'Inter', sans-serif;
+  font-style: italic;
+  font-size: 11.5px;
+  color: var(--ink-soft);
+  margin-bottom: 10px;
+  line-height: 1.4;
+}
+.sig-flat {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10.5px;
+  line-height: 1.55;
+  color: var(--ink-soft);
+  background: var(--bg);
+  border: 1px solid var(--rule);
+  border-radius: 2px;
+  padding: 10px 12px;
+  margin-bottom: 12px;
+  white-space: pre-wrap;
+  word-break: normal;
+  overflow-wrap: anywhere;
+  user-select: all;
+  cursor: text;
+  max-height: 220px;
+  overflow-y: auto;
+}
+.sig-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-bottom: 4px;
+}
+.sig-row {
+  display: grid;
+  grid-template-columns: 36px minmax(0, 1fr);
+  gap: 6px;
+  align-items: start;
+  padding: 5px 6px 5px 4px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  border-radius: 2px;
+  text-align: left;
+  font: inherit;
+  color: inherit;
+  transition: background 0.15s ease;
+}
+.sig-row:hover { background: var(--bg); }
+.sig-row:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+.sig-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--ink-mute);
+  font-weight: 600;
+  text-align: right;
+  padding-right: 4px;
+  padding-top: 2px;
+}
+.sig-num .sig-flag {
+  display: inline;
+  margin-left: 2px;
+  color: var(--accent);
+  font-weight: 700;
+}
+.sig-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px;
+  align-items: center;
+}
+.sig-chip {
+  font-family: 'Inter', sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  padding: 1px 6px 2px;
+  border-radius: 2px;
+  border: 1px solid;
+  line-height: 1.35;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 4px;
+}
+.sig-chip-grp {
+  text-transform: uppercase;
+  font-size: 8.5px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  opacity: 0.7;
+}
+.sig-chip-sub {
+  font-size: 10px;
+  font-weight: 600;
+}
+.sig-chip-sep {
+  font-size: 10px;
+  opacity: 0.45;
+  margin: 0 1px;
+}
+.sig-chip-leaf {
+  font-size: 9.5px;
+  font-weight: 500;
+  font-style: italic;
+  opacity: 0.78;
+}
+.sig-chip-empty {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--ink-mute);
+  padding: 0 4px;
+}
+.sig-chip.grp-Retrieval  { color: var(--grp-Retrieval);  background: var(--grp-Retrieval-bg);  border-color: var(--grp-Retrieval); }
+.sig-chip.grp-Memory     { color: var(--grp-Memory);     background: var(--grp-Memory-bg);     border-color: var(--grp-Memory); }
+.sig-chip.grp-Planning   { color: var(--grp-Planning);   background: var(--grp-Planning-bg);   border-color: var(--grp-Planning); }
+.sig-chip.grp-Reasoning  { color: var(--grp-Reasoning);  background: var(--grp-Reasoning-bg);  border-color: var(--grp-Reasoning); }
+.sig-chip.grp-Evaluating   { color: var(--grp-Evaluating);   background: var(--grp-Evaluating-bg);   border-color: var(--grp-Evaluating); }
+.sig-chip.grp-Deciding   { color: var(--grp-Deciding);   background: var(--grp-Deciding-bg);   border-color: var(--grp-Deciding); }
+.sig-chip.grp-Grounding  { color: var(--grp-Grounding);  background: var(--grp-Grounding-bg);  border-color: var(--grp-Grounding); }
+.sig-chip.grp-Executing  { color: var(--grp-Executing);  background: var(--grp-Executing-bg);  border-color: var(--grp-Executing); }
+.sig-chip.grp-Learning   { color: var(--grp-Learning);   background: var(--grp-Learning-bg);   border-color: var(--grp-Learning); }
+.sig-chip.grp-Reflection { color: var(--grp-Reflection); background: var(--grp-Reflection-bg); border-color: var(--grp-Reflection); }
+
+.sig-restart-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 6px;
+  margin: 4px 0;
+  background: rgba(79, 70, 229, 0.06);
+  border-left: 2px solid var(--accent);
+  border-radius: 0 2px 2px 0;
+  font-family: 'Inter', sans-serif;
+  font-style: italic;
+  font-size: 11px;
+  color: var(--accent);
+  cursor: help;
+}
+.sig-restart-glyph { font-size: 16px; line-height: 1; }
+.sig-restart-text { color: var(--ink-soft); }
+
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="eyebrow">Quote-grounded annotation</div>
+  <h1 class="title">Agent Trajectory <em>&</em> Behavior Profile</h1>
+  <div class="subtitle">Each codebook tag is grounded to a specific quoted phrase from the verbatim thought text — pinning <em>what</em> in the agent's reasoning triggered <em>which</em> action category.</div>
+  <div class="meta-row">
+    <span><strong>Instance</strong> django/django-14411</span>
+    <span><strong>Model</strong> SWE-agent w/ GPT-4 Turbo</span>
+    <span><strong>Turns</strong> 16</span>
+    <span><strong>Outcome</strong> <span class="outcome-pill outcome-unresolved">UNRESOLVED ✗</span></span>
+    <span><strong>Annotations</strong> 53</span>
+  </div>
+</header>
+
+<div class="app">
+
+<main class="trajectory">
+
+<div class="section-label">issue statement</div>
+<div class="issue-block">Label for ReadOnlyPasswordHashWidget points to non-labelable element.
+
+Description
+
+(last modified by David Sanders)
+
+In the admin, the label element for the ReadOnlyPasswordHashWidget widget has a 'for' attribute which points to a non-labelable element, since the widget just renders text, not an input. There's no labelable element for the widget, so the label shouldn't have a 'for' attribute.</div>
+
+<div class="section-label">trajectory summary</div>
+<div class="summary-block">
+  <span class="summary-eyebrow">What happened in this run</span>
+  <div class="summary-text">The agent attempts to remove the spurious <code>for</code> attribute on the <code>&lt;label&gt;</code> rendered above <code>ReadOnlyPasswordHashWidget</code> in the Django admin. The run is dominated by <strong>investigation</strong> (T1–T13) — five distinct localization passes that each rule out a candidate site (find_file → search_dir → helpers.py:215 → helpers.py:191 → widget template → forms.py:136) before settling on <code>ReadOnlyPasswordHashField</code> as the place to patch. The decisive turn is <strong>T14</strong>, where the agent diagnoses that “the 'for' attribute is likely added automatically by Django's form rendering” and decides to override <code>label_tag</code> on the field; <strong>T15</strong> recovers from a lint error (missing <code>format_html</code> import). <strong>T16</strong> then submits — explicitly <em>without verification</em> (“we cannot run a Django server”), which is the run's main quality concern. The submitted patch also visibly clobbers neighbouring code (a stray <code>white=False</code> appears in <code>UserCreationForm.password1</code>, and <code>password2</code> is duplicated), but the agent reports “successfully applied” on the strength of the editor accepting the buffer rather than any behavioral test. The fix overrides <code>label_tag</code> at the field level, which only intercepts one of the rendering paths the admin actually uses (the readonly path goes through <code>helpers.Fieldline.label_tag</code>, never the field's own); the canonical fix would have lived on the widget's <code>id_for_label</code>. Treating the run as <em>unresolved</em>: the patch is structurally compromised and untested.</div>
+</div>
+
+<div class="method-note">
+  <strong>How to read this.</strong> Each turn shows the verbatim <em>thought</em> from the trajectory. Inside, underlined phrases are <em>linguistic evidence</em> for a codebook label — the colour matches the codebook group on the right. Below each thought, the annotation table reads <code>"quote" → Group › Subgroup › Action</code>, one row per phrase. Click any phrase, any row, or any codebook entry — they highlight bidirectionally without scrolling.
+</div>
+
+<div class="legend">
+  <div class="legend-item"><span class="legend-dot obs"></span> Observation</div>
+  <div class="legend-item"><span class="legend-dot thought"></span> Thought</div>
+  <div class="legend-item"><span class="legend-dot action"></span> Action</div>
+  <small>annotations are bidirectionally linked</small>
+</div>
+
+<div class="section-label">trajectory · 16 turns</div>
+
+<div id="turns-container"></div>
+
+<div class="summary-footer">
+  <h2>Summary findings</h2>
+  <div class="sub">Patterns visible from the quote-level annotation density</div>
+  <div class="findings"><div class="finding"><strong>Localization is the run's center of gravity</strong><span>13 of 16 turns are pure localization moves (find_file → search_dir → search_file → goto). The single turn of real diagnostic reasoning is T14, and the actual edit is one paragraph. Quote density follows: T1–T5 average ~2 quotes/turn while T6, T8, and T14 each carry 4–5 — these are exactly the phase-pivot turns where one hypothesis is ruled out and another picked up.</span></div><div class="finding"><strong>Hypothesis-disproven ≠ Reflection</strong><span>T8 and T11 both contain phrases like “this is not the part of the code responsible” and “the issue might be elsewhere” — but neither is a failure of an <em>action</em>. The <code>goto</code> succeeded; the failure is of a precursor hypothesis. The codebook captures these as <code>Reasoning › Comparing &amp; Ranking › Match observation against spec</code>, reserving Reflection for the real failures at T2 (find_file miss) and T15 (lint error).</span></div><div class="finding"><strong>Verification is replaced with a knowledge-boundary disclaimer</strong><span>T16 explicitly anchors <code>Evaluating › Recognize Knowledge Boundary</code> (“we cannot run a Django server”) and yet still concludes “successfully applied” via <code>Reasoning › Conclude success from evidence</code>. The two tags fire on adjacent sentences — the agent both knows it can't verify <em>and</em> claims success, which is exactly the failure mode that makes editor-acceptance read as test-pass.</span></div><div class="finding"><strong>The edit silently corrupts neighbour code</strong><span>The T16 buffer shows <code>white=False</code> inside <code>UserCreationForm.password1</code> and a duplicated <code>password2</code> block — collateral from where the <code>format_html</code> import was inserted mid-file in T15. No turn flags this: the agent never re-reads the broader file region after the fix. The artifact's quote-level view makes the absence visible — there is no Reflection or Evaluating tag anywhere near the edit on a neighbour-block check.</span></div></div>
+</div>
+
+</main>
+
+<aside class="codebook-panel">
+  <div id="panel-resize-handle" title="Drag to resize · double-click to reset"></div>
+  <div class="panel-title">Action Sequences Annotated</div>
+  <div class="panel-sub">Aggregated from quote-level evidence across 16 turns</div>
+
+  <div class="pie-section">
+    <div class="pie-legend"><div style="font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--ink-mute); letter-spacing: 0.08em; text-transform: uppercase; text-align: center; margin-bottom: 10px;">53 tags across 7 groups</div></div>
+    <div class="pie-svg-wrap"><svg width="300" height="162" viewBox="0 0 300 162" xmlns="http://www.w3.org/2000/svg" style="display: block; margin: 0 auto;"><g class="pie-slice" data-grp="Reasoning" style="cursor: pointer;"><title>Reasoning: 22 (42%)</title><rect x="0" y="4" width="300" height="22" fill="transparent"/><text x="96" y="18.5" text-anchor="end" font-family="Inter, sans-serif" font-size="11" font-weight="500" fill="#0f172a">Reasoning</text><rect x="102" y="9" width="164.0" height="12" fill="#f1f5f9" rx="2"/><rect x="102" y="9" width="164.0" height="12" fill="#4f46e5" rx="2"/><text x="298" y="18.5" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="10" fill="#94a3b8">22</text></g><g class="pie-slice" data-grp="Executing" style="cursor: pointer;"><title>Executing: 14 (26%)</title><rect x="0" y="26" width="300" height="22" fill="transparent"/><text x="96" y="40.5" text-anchor="end" font-family="Inter, sans-serif" font-size="11" font-weight="500" fill="#0f172a">Executing</text><rect x="102" y="31" width="164.0" height="12" fill="#f1f5f9" rx="2"/><rect x="102" y="31" width="104.4" height="12" fill="#059669" rx="2"/><text x="298" y="40.5" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="10" fill="#94a3b8">14</text></g><g class="pie-slice" data-grp="Planning" style="cursor: pointer;"><title>Planning: 8 (15%)</title><rect x="0" y="48" width="300" height="22" fill="transparent"/><text x="96" y="62.5" text-anchor="end" font-family="Inter, sans-serif" font-size="11" font-weight="500" fill="#0f172a">Planning</text><rect x="102" y="53" width="164.0" height="12" fill="#f1f5f9" rx="2"/><rect x="102" y="53" width="59.6" height="12" fill="#0284c7" rx="2"/><text x="298" y="62.5" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="10" fill="#94a3b8">8</text></g><g class="pie-slice" data-grp="Reflection" style="cursor: pointer;"><title>Reflection: 3 (6%)</title><rect x="0" y="70" width="300" height="22" fill="transparent"/><text x="96" y="84.5" text-anchor="end" font-family="Inter, sans-serif" font-size="11" font-weight="500" fill="#0f172a">Reflection</text><rect x="102" y="75" width="164.0" height="12" fill="#f1f5f9" rx="2"/><rect x="102" y="75" width="22.4" height="12" fill="#e11d48" rx="2"/><text x="298" y="84.5" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="10" fill="#94a3b8">3</text></g><g class="pie-slice" data-grp="Memory" style="cursor: pointer;"><title>Memory: 3 (6%)</title><rect x="0" y="92" width="300" height="22" fill="transparent"/><text x="96" y="106.5" text-anchor="end" font-family="Inter, sans-serif" font-size="11" font-weight="500" fill="#0f172a">Memory</text><rect x="102" y="97" width="164.0" height="12" fill="#f1f5f9" rx="2"/><rect x="102" y="97" width="22.4" height="12" fill="#d97706" rx="2"/><text x="298" y="106.5" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="10" fill="#94a3b8">3</text></g><g class="pie-slice" data-grp="Evaluating" style="cursor: pointer;"><title>Evaluating: 2 (4%)</title><rect x="0" y="114" width="300" height="22" fill="transparent"/><text x="96" y="128.5" text-anchor="end" font-family="Inter, sans-serif" font-size="11" font-weight="500" fill="#0f172a">Evaluating</text><rect x="102" y="119" width="164.0" height="12" fill="#f1f5f9" rx="2"/><rect x="102" y="119" width="14.9" height="12" fill="#0d9488" rx="2"/><text x="298" y="128.5" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="10" fill="#94a3b8">2</text></g><g class="pie-slice" data-grp="Deciding" style="cursor: pointer;"><title>Deciding: 1 (2%)</title><rect x="0" y="136" width="300" height="22" fill="transparent"/><text x="96" y="150.5" text-anchor="end" font-family="Inter, sans-serif" font-size="11" font-weight="500" fill="#0f172a">Deciding</text><rect x="102" y="141" width="164.0" height="12" fill="#f1f5f9" rx="2"/><rect x="102" y="141" width="7.5" height="12" fill="#7c3aed" rx="2"/><text x="298" y="150.5" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="10" fill="#94a3b8">1</text></g></svg></div>
+  </div>
+
+  <div id="signature-container"></div>
+
+  <div id="codebook-container"></div>
+</aside>
+
+</div>
+
+<script>
+const turns = [{"n": 1, "phase": "localize", "phaseLabel": "File-level localize", "headline": "Find the widget definition file", "obs": "Initial state: issue text + INSTRUCTIONS delivered. No file open; agent is in the repo root.", "thought": "To address the issue, we need to locate the file that contains the `ReadOnlyPasswordHashWidget` widget's rendering code. Since this is likely part of the Django admin, we should start by searching for the file that defines `ReadOnlyPasswordHashWidget`. Let's use the `find_file` command to locate this file within the repository.", "action": "find_file \"ReadOnlyPasswordHashWidget\"", "quotes": [{"quote": "we need to locate the file that contains the `ReadOnlyPasswordHashWidget` widget's rendering code", "grp": "Planning", "sub": "Decompose task", "leaf": "Decompose into subgoals with success conditions"}, {"quote": "this is likely part of the Django admin", "grp": "Reasoning", "sub": "Inferring", "leaf": "Form precursor hypothesis about cause"}, {"quote": "Let's use the `find_file` command to locate this file within the repository", "grp": "Executing", "sub": "Executing plan", "leaf": "Initiate planned action"}], "insight": ""}, {"n": 2, "phase": "recover", "phaseLabel": "Recover from miss", "headline": "Switch to repo-wide search after find_file fails", "obs": "No matches found for \"ReadOnlyPasswordHashWidget\" in /django__django", "thought": "It seems that the `find_file` command did not yield any results for \"ReadOnlyPasswordHashWidget\". This could be because the file name does not exactly match the widget name. Since the widget is likely to be part of the Django admin, it might be located in a file related to forms or widgets in the admin app. Let's try a broader search using the `search_dir` command to look for the term \"ReadOnlyPasswordHashWidget\" within the files of the repository. This should help us find the file where the widget is defined or used.", "action": "search_dir \"ReadOnlyPasswordHashWidget\"", "quotes": [{"quote": "the `find_file` command did not yield any results", "grp": "Reflection", "sub": "Reflect on errors and failures", "leaf": "Detect failed action"}, {"quote": "the file name does not exactly match the widget name", "grp": "Reasoning", "sub": "Inferring", "leaf": "Diagnose Error Cause"}, {"quote": "Let's try a broader search using the `search_dir` command", "grp": "Planning", "sub": "Select Strategy", "leaf": "Switch to fallback strategy"}], "insight": ""}, {"n": 3, "phase": "localize", "phaseLabel": "Pick file to inspect", "headline": "Pick helpers.py from candidate files", "obs": "Found 9 matches for \"ReadOnlyPasswordHashWidget\" in /django__django:\n/django__django/django/contrib/admin/helpers.py (1 matches)\n/django__django/django/contrib/auth/forms.py (2 matches)\n/django__django/docs/releases/1.11.1.txt (1 matches)\n/django__django/tests/auth_tests/test_forms.py (4 matches)\n/django__django/tests/auth_tests/test_views.py (1 matches)\nEnd of matches for \"ReadOnlyPasswordHashWidget\" in /django__django", "thought": "The search results indicate that there are matches for \"ReadOnlyPasswordHashWidget\" in several files, but the most likely places where the rendering code would be defined are in `helpers.py` and `forms.py` within the `django/contrib/admin` and `django/contrib/auth` directories, respectively. Since the issue is related to the admin interface, let's first check the `helpers.py` file in the `django/contrib/admin` directory. We'll open this file and look for the relevant code.", "action": "open django/contrib/admin/helpers.py", "quotes": [{"quote": "the most likely places where the rendering code would be defined are in `helpers.py` and `forms.py`", "grp": "Reasoning", "sub": "Comparing & Ranking", "leaf": "Rank items by criteria"}, {"quote": "Since the issue is related to the admin interface, let's first check the `helpers.py` file", "grp": "Deciding", "sub": "Make a decision", "leaf": "Pick alternative strategy"}, {"quote": "We'll open this file and look for the relevant code", "grp": "Executing", "sub": "Executing plan", "leaf": "Initiate planned action"}], "insight": ""}, {"n": 4, "phase": "localize", "phaseLabel": "Pinpoint within file", "headline": "Search inside helpers.py", "obs": "[File: /django__django/django/contrib/admin/helpers.py (424 lines total)]\n... (top of helpers.py, ACTION_CHECKBOX_NAME, AdminForm, Fieldset, Fieldline class headers visible) ...", "thought": "The `helpers.py` file is now open, but we need to find the specific part of the code that deals with the `ReadOnlyPasswordHashWidget`. Since the file is quite long, we should use the `search_file` command to locate the term within this file.", "action": "search_file \"ReadOnlyPasswordHashWidget\"", "quotes": [{"quote": "we need to find the specific part of the code that deals with the `ReadOnlyPasswordHashWidget`", "grp": "Planning", "sub": "Decompose task", "leaf": "Plan deeper inspection before edit"}, {"quote": "the file is quite long", "grp": "Memory", "sub": "Read memory", "leaf": "Track current view state"}, {"quote": "use the `search_file` command to locate the term within this file", "grp": "Executing", "sub": "Executing plan", "leaf": "Initiate planned action"}], "insight": ""}, {"n": 5, "phase": "localize", "phaseLabel": "Navigate to match", "headline": "Open line 215 to inspect context", "obs": "Found 1 matches for \"ReadOnlyPasswordHashWidget\" in /django__django/django/contrib/admin/helpers.py:\nLine 215:                # ReadOnlyPasswordHashWidget.\nEnd of matches for \"ReadOnlyPasswordHashWidget\" in /django__django/django/contrib/admin/helpers.py", "thought": "We have found a reference to `ReadOnlyPasswordHashWidget` on line 215 of the `helpers.py` file. Let's navigate to that line to examine the context and see how the label is being rendered.", "action": "goto 215", "quotes": [{"quote": "We have found a reference to `ReadOnlyPasswordHashWidget` on line 215", "grp": "Memory", "sub": "Read memory", "leaf": "Read from working memory"}, {"quote": "Let's navigate to that line to examine the context", "grp": "Executing", "sub": "Executing plan", "leaf": "Initiate planned action"}], "insight": ""}, {"n": 6, "phase": "localize", "phaseLabel": "Pivot to label rendering", "headline": "Pivot from special-case to label-rendering search", "obs": "[File: /django__django/django/contrib/admin/helpers.py around line 215]\n... contents() method on Fieldline; the comment on 215 explains that lines 213–217 special-case the ReadOnlyPasswordHashWidget by short-circuiting widget.render(field, value); no <label> rendering visible in this region ...", "thought": "We have navigated to the relevant section of the `helpers.py` file where the `ReadOnlyPasswordHashWidget` is mentioned. The comment on line 215 suggests that there is a special case handling for the `ReadOnlyPasswordHashWidget`. The code on line 216 checks if the widget has a `read_only` attribute and, if so, renders the widget directly.\nTo address the issue, we need to ensure that the label for the `ReadOnlyPasswordHashWidget` does not have a 'for' attribute, as it points to a non-labelable element. We should look for the part of the code where the label is being rendered with the 'for' attribute and make the necessary changes.\nSince the code snippet we are looking at does not show the rendering of the label, we need to find where the label is being rendered. It might be in the template files or somewhere else in the code. Let's search for the term \"label\" in the current file to find where labels are being rendered.", "action": "search_file \"label\"", "quotes": [{"quote": "The comment on line 215 suggests that there is a special case handling for the `ReadOnlyPasswordHashWidget`", "grp": "Reasoning", "sub": "Analysing", "leaf": "Analyse source code"}, {"quote": "we need to ensure that the label for the `ReadOnlyPasswordHashWidget` does not have a 'for' attribute", "grp": "Planning", "sub": "Decompose task", "leaf": "Decompose into subgoals with success conditions"}, {"quote": "the code snippet we are looking at does not show the rendering of the label", "grp": "Reasoning", "sub": "Analysing", "leaf": "Interpret meaning of artifacts"}, {"quote": "It might be in the template files or somewhere else in the code", "grp": "Reasoning", "sub": "Generating", "leaf": "Propose action candidates"}, {"quote": "Let's search for the term \"label\" in the current file", "grp": "Executing", "sub": "Executing plan", "leaf": "Initiate planned action"}], "insight": ""}, {"n": 7, "phase": "localize", "phaseLabel": "Navigate to label_tag", "headline": "Pick line 191 as suspected source", "obs": "Found 23 matches for \"label\" in /django__django/django/contrib/admin/helpers.py: ... Line 186: def label_tag(self): ... Line 191: return format_html('<label{}>{}{}</label>', flatatt(attrs), capfirst(label), self.form.label_suffix) ...", "thought": "The search results show several instances where labels are being handled in the `helpers.py` file. The most promising lines for our issue seem to be around line 191, where a label tag is being formatted with a `for` attribute. Let's navigate to that line to examine the context and see if this is where we need to make our changes.", "action": "goto 191", "quotes": [{"quote": "The most promising lines for our issue seem to be around line 191", "grp": "Reasoning", "sub": "Comparing & Ranking", "leaf": "Rank items by criteria"}, {"quote": "where a label tag is being formatted with a `for` attribute", "grp": "Reasoning", "sub": "Inferring", "leaf": "Form precursor hypothesis about cause"}, {"quote": "Let's navigate to that line to examine the context", "grp": "Executing", "sub": "Executing plan", "leaf": "Initiate planned action"}], "insight": ""}, {"n": 8, "phase": "localize", "phaseLabel": "Pivot to forms.py", "headline": "Disprove helpers.py as source; pivot to forms.py", "obs": "[helpers.py around line 191]\nclass AdminReadonlyField:\n    def label_tag(self):\n        attrs = {}\n        ...\n        return format_html('<label{}>{}{}</label>', flatatt(attrs), capfirst(label), self.form.label_suffix)\n[no `for` attribute is rendered here]", "thought": "We are now looking at the section of the `helpers.py` file where a label tag is being generated. However, this label tag does not include a 'for' attribute, which means this is not the part of the code responsible for the issue described.\nThe issue states that the label for the `ReadOnlyPasswordHashWidget` has a 'for' attribute pointing to a non-labelable element. Since the `ReadOnlyPasswordHashWidget` is likely a custom widget used in the Django admin, the rendering of its label might be handled in a template or in the widget's own Python code.\nGiven that the `ReadOnlyPasswordHashWidget` is part of the `django.contrib.auth` app, we should look into the `forms.py` file in the `django/contrib/auth` directory, as it might contain the definition of the widget and the rendering of its label.\nLet's open the `forms.py` file in the `django/contrib/auth` directory to investigate further.", "action": "open django/contrib/auth/forms.py", "quotes": [{"quote": "this label tag does not include a 'for' attribute, which means this is not the part of the code responsible for the issue described", "grp": "Reasoning", "sub": "Comparing & Ranking", "leaf": "Match observation against spec"}, {"quote": "the rendering of its label might be handled in a template or in the widget's own Python code", "grp": "Reasoning", "sub": "Generating", "leaf": "Propose action candidates"}, {"quote": "Given that the `ReadOnlyPasswordHashWidget` is part of the `django.contrib.auth` app, we should look into the `forms.py` file", "grp": "Planning", "sub": "Select Strategy", "leaf": "Select among candidate strategies"}, {"quote": "Let's open the `forms.py` file in the `django/contrib/auth` directory", "grp": "Executing", "sub": "Executing plan", "leaf": "Initiate planned action"}], "insight": "Phase-pivot turn. The hypothesis from T7 is disproven; rather than tag this as Reflection (which the codebook reserves for failed actions), the disprove-and-pivot move anchors a Comparing &amp; Ranking match-against-spec tag plus a Planning fallback."}, {"n": 9, "phase": "localize", "phaseLabel": "Trace to widget template", "headline": "Trace from widget class to its template file", "obs": "[django/contrib/auth/forms.py top]\nclass ReadOnlyPasswordHashWidget(forms.Widget):\n    template_name = 'auth/widgets/read_only_password_hash.html'\n    read_only = True\n    def get_context(self, name, value, attrs):\n        ...\nclass ReadOnlyPasswordHashField(forms.Field):\n    widget = ReadOnlyPasswordHashWidget", "thought": "We have opened the `forms.py` file in the `django/contrib/auth` directory and found the definition of the `ReadOnlyPasswordHashWidget` starting at line 33. The widget uses a template named `read_only_password_hash.html` for rendering, as specified on line 34.\nSince the issue is related to the label's 'for' attribute in the rendered HTML, we should look at the template file `read_only_password_hash.html` to see how the label is being rendered. Let's use the `find_file` command to locate this template file within the repository.", "action": "find_file \"read_only_password_hash.html\"", "quotes": [{"quote": "found the definition of the `ReadOnlyPasswordHashWidget` starting at line 33", "grp": "Memory", "sub": "Read memory", "leaf": "Track current view state"}, {"quote": "The widget uses a template named `read_only_password_hash.html` for rendering", "grp": "Reasoning", "sub": "Analysing", "leaf": "Analyse source code"}, {"quote": "we should look at the template file `read_only_password_hash.html`", "grp": "Planning", "sub": "Decompose task", "leaf": "Plan deeper inspection before edit"}, {"quote": "Let's use the `find_file` command", "grp": "Executing", "sub": "Executing plan", "leaf": "Initiate planned action"}], "insight": ""}, {"n": 10, "phase": "localize", "phaseLabel": "Open template", "headline": "Open the widget template", "obs": "Found 1 matches for \"read_only_password_hash.html\" in /django__django:\n/django__django/django/contrib/auth/templates/auth/widgets/read_only_password_hash.html", "thought": "We have located the template file `read_only_password_hash.html` in the `django/contrib/auth/templates/auth/widgets` directory. Let's open this file to inspect the HTML and see how the label is being rendered.", "action": "open django/contrib/auth/templates/auth/widgets/read_only_password_hash.html", "quotes": [{"quote": "Let's open this file to inspect the HTML", "grp": "Executing", "sub": "Executing plan", "leaf": "Initiate planned action"}], "insight": ""}, {"n": 11, "phase": "localize", "phaseLabel": "Rule out template", "headline": "Eliminate template; pivot back to forms.py", "obs": "[read_only_password_hash.html, 5 lines]\n<div{% include 'django/forms/widgets/attrs.html' %}>\n{% for entry in summary %}\n<strong>{{ entry.label }}</strong>{% if entry.value %}: {{ entry.value }}{% endif %}\n{% endfor %}\n</div>", "thought": "The template file `read_only_password_hash.html` does not show a `label` element with a 'for' attribute, which means the issue might be elsewhere. The issue description mentions that the label element for the `ReadOnlyPasswordHashWidget` has a 'for' attribute pointing to a non-labelable element. Since we don't see a `label` element here, the 'for' attribute is likely added in the Python code that generates the HTML for the widget or in a different part of the template.\nGiven that the `ReadOnlyPasswordHashWidget` is a custom widget, the rendering of the label with the 'for' attribute might be handled in the Python code where the widget is used in a form, rather than in the widget's template itself.\nLet's go back to the `forms.py` file and look for the usage of `ReadOnlyPasswordHashWidget` in a form where a label might be rendered with a 'for' attribute. We should look for a form that includes `ReadOnlyPasswordHashWidget` and inspect how the label is being generated.", "action": "open django/contrib/auth/forms.py", "quotes": [{"quote": "does not show a `label` element with a 'for' attribute, which means the issue might be elsewhere", "grp": "Reasoning", "sub": "Comparing & Ranking", "leaf": "Match observation against spec"}, {"quote": "the 'for' attribute is likely added in the Python code that generates the HTML for the widget", "grp": "Reasoning", "sub": "Inferring", "leaf": "Form precursor hypothesis about cause"}, {"quote": "the rendering of the label with the 'for' attribute might be handled in the Python code where the widget is used in a form", "grp": "Reasoning", "sub": "Inferring", "leaf": "Infer dataflow / control flow"}, {"quote": "Let's go back to the `forms.py` file", "grp": "Executing", "sub": "Executing plan", "leaf": "Initiate planned action"}], "insight": ""}, {"n": 12, "phase": "localize", "phaseLabel": "Search field usage", "headline": "Search for the field's usage site", "obs": "[django/contrib/auth/forms.py reopened, top]\nclass ReadOnlyPasswordHashWidget(forms.Widget):\n    template_name = 'auth/widgets/read_only_password_hash.html'\n    read_only = True\n    ...\nclass ReadOnlyPasswordHashField(forms.Field):\n    widget = ReadOnlyPasswordHashWidget\n    def __init__(self, *args, **kwargs): ...", "thought": "We are back in the `forms.py` file where the `ReadOnlyPasswordHashWidget` is defined. Since the issue is with the label's 'for' attribute, we need to find where the `ReadOnlyPasswordHashField` is used in a form and how the label is being rendered there.\nThe `ReadOnlyPasswordHashField` is a custom field that uses the `ReadOnlyPasswordHashWidget`, and it's likely used in the admin forms for the User model. We should search for the usage of `ReadOnlyPasswordHashField` within this file to find where it's included in a form.\nLet's use the `search_file` command to search for \"ReadOnlyPasswordHashField\" in the current file.", "action": "search_file \"ReadOnlyPasswordHashField\"", "quotes": [{"quote": "we need to find where the `ReadOnlyPasswordHashField` is used in a form and how the label is being rendered there", "grp": "Planning", "sub": "Decompose task", "leaf": "Decompose into subgoals with success conditions"}, {"quote": "it's likely used in the admin forms for the User model", "grp": "Reasoning", "sub": "Inferring", "leaf": "Form precursor hypothesis about cause"}, {"quote": "Let's use the `search_file` command to search for \"ReadOnlyPasswordHashField\"", "grp": "Executing", "sub": "Executing plan", "leaf": "Initiate planned action"}], "insight": ""}, {"n": 13, "phase": "localize", "phaseLabel": "Navigate to usage", "headline": "Open the field's call site", "obs": "Found 2 matches for \"ReadOnlyPasswordHashField\" in /django__django/django/contrib/auth/forms.py:\nLine 54:class ReadOnlyPasswordHashField(forms.Field):\nLine 136:    password = ReadOnlyPasswordHashField(\nEnd of matches for \"ReadOnlyPasswordHashField\" in /django__django/django/contrib/auth/forms.py", "thought": "We have found two references to `ReadOnlyPasswordHashField` in the `forms.py` file. The first reference on line 54 is the class definition itself, and the second reference on line 136 is likely where the field is used in a form.\nLet's navigate to line 136 to see the context in which `ReadOnlyPasswordHashField` is used and how the label is being rendered.", "action": "goto 136", "quotes": [{"quote": "The first reference on line 54 is the class definition itself", "grp": "Reasoning", "sub": "Analysing", "leaf": "Analyse source code"}, {"quote": "the second reference on line 136 is likely where the field is used in a form", "grp": "Reasoning", "sub": "Inferring", "leaf": "Infer structure from indirect evidence"}, {"quote": "Let's navigate to line 136", "grp": "Executing", "sub": "Executing plan", "leaf": "Initiate planned action"}], "insight": ""}, {"n": 14, "phase": "edit", "phaseLabel": "Diagnose + first patch", "headline": "Override label_tag on the field class", "obs": "[forms.py around line 136]\nclass UserChangeForm(forms.ModelForm):\n    password = ReadOnlyPasswordHashField(\n        label=_(\"Password\"),\n        help_text=_('Raw passwords are not stored, so there is no way to see this user’s password, but you can change the password using <a href=\"{}\">this form</a>.'),\n    )", "thought": "We are now looking at the `UserChangeForm` class where the `ReadOnlyPasswordHashField` is used. The field is instantiated with a label on line 136, and the help text includes an HTML anchor tag for changing the password.\nThe issue reported is that the label element for the `ReadOnlyPasswordHashWidget` has a 'for' attribute which points to a non-labelable element. However, in the `UserChangeForm`, the label is defined in the Python code and not in the HTML template. This suggests that the 'for' attribute is likely added automatically by Django's form rendering.\nTo resolve the issue, we need to ensure that when the form is rendered, the label for the `ReadOnlyPasswordHashField` does not include a 'for' attribute. Since the rendering of form fields to HTML is handled by Django's form rendering system, we may need to customize the rendering for this specific field to exclude the 'for' attribute.\nOne way to do this is to override the `label_tag` method for the `ReadOnlyPasswordHashField` to ensure it does not render a 'for' attribute. Let's edit the `ReadOnlyPasswordHashField` class to include this customization.\nWe will add a custom `label_tag` method to the `ReadOnlyPasswordHashField` class that returns a label without the 'for' attribute.", "action": "edit 54:60\nclass ReadOnlyPasswordHashField(forms.Field):\n    widget = ReadOnlyPasswordHashWidget\n\n    def __init__(self, *args, **kwargs):\n        kwargs.setdefault(\"required\", False)\n        kwargs.setdefault('disabled', True)\n        super().__init__(*args, **kwargs)\n\n    def label_tag(self, contents=None, attrs=None, label_suffix=None):\n        contents = contents or self.label\n        if label_suffix is not None and label_suffix not in contents:\n            contents += label_suffix\n        widget = self.widget\n        id_ = widget.attrs.get('id') or ''\n        return format_html('<label{}>{}</label>', format_html_join('', ' {}=\"{}\"', sorted(attrs.items()) if attrs else ()), contents)\nend_of_edit", "quotes": [{"quote": "the label is defined in the Python code and not in the HTML template", "grp": "Reasoning", "sub": "Analysing", "leaf": "Analyse source code"}, {"quote": "This suggests that the 'for' attribute is likely added automatically by Django's form rendering", "grp": "Reasoning", "sub": "Inferring", "leaf": "Pinpoint root cause mechanism"}, {"quote": "we may need to customize the rendering for this specific field to exclude the 'for' attribute", "grp": "Reasoning", "sub": "Generating", "leaf": "Generate initial fix candidate"}, {"quote": "override the `label_tag` method for the `ReadOnlyPasswordHashField`", "grp": "Planning", "sub": "Formulate a workflow or plan", "leaf": "Plan code or artifact structure"}, {"quote": "Let's edit the `ReadOnlyPasswordHashField` class to include this customization", "grp": "Executing", "sub": "Executing plan", "leaf": "Apply patch via edit"}], "insight": "Densest reasoning turn of the run. Five distinct cognitive moves in one paragraph: source-code analysis, root-cause pin, fix-candidate generation, structural plan, and edit dispatch. Note the mismatch with the actual Django fix — the canonical patch lives on the widget's <code>id_for_label</code>, not on a field-level <code>label_tag</code> override."}, {"n": 15, "phase": "recover", "phaseLabel": "Recover from lint error", "headline": "Add missing imports after lint error", "obs": "Your proposed edit has introduced new syntax error(s). Please understand the fixes and retry your edit commmand.\n\nERRORS:\n- F821 undefined name 'format_html'\n- F821 undefined name 'format_html_join'\n\nThis is how your edit would have looked if applied ... Your changes have NOT been applied. Please fix your edit command and try again.", "thought": "The error message indicates that the names `format_html` and `format_html_join` are undefined. These functions are utility functions provided by Django for safely creating HTML output. To use them, we need to import them from `django.utils.html`.\nLet's correct the edit by adding the necessary imports and retrying the edit command.", "action": "edit 54:60\nfrom django.utils.html import format_html, format_html_join\n\nclass ReadOnlyPasswordHashField(forms.Field):\n    widget = ReadOnlyPasswordHashWidget\n\n    def __init__(self, *args, **kwargs):\n        kwargs.setdefault(\"required\", False)\n        kwargs.setdefault('disabled', True)\n        super().__init__(*args, **kwargs)\n\n    def label_tag(self, contents=None, attrs=None, label_suffix=None):\n        contents = contents or self.label\n        if label_suffix is not None and label_suffix not in contents:\n            contents += label_suffix\n        return format_html('<label>{}</label>', contents)\nend_of_edit", "quotes": [{"quote": "The error message indicates that the names `format_html` and `format_html_join` are undefined", "grp": "Reflection", "sub": "Reflect on errors and failures", "leaf": "Inspect Error Pattern"}, {"quote": "we need to import them from `django.utils.html`", "grp": "Reasoning", "sub": "Inferring", "leaf": "Diagnose Error Cause"}, {"quote": "Let's correct the edit by adding the necessary imports and retrying the edit command", "grp": "Reflection", "sub": "Reflect on errors and failures", "leaf": "Self-Correct Step Implementation"}], "insight": "The agent inserts the import as line 54 — mid-file, immediately after the widget definition — instead of at the top with the other imports. This is the textual seed of the corruption visible in T16."}, {"n": 16, "phase": "submit", "phaseLabel": "Submit without verification", "headline": "Submit despite no verification", "obs": "[forms.py after edit, lines 50–70]\n        context['summary'] = summary\n        return context\n\n\nfrom django.utils.html import format_html, format_html_join\n\nclass ReadOnlyPasswordHashField(forms.Field):\n    widget = ReadOnlyPasswordHashWidget\n    ...\n    def label_tag(self, contents=None, attrs=None, label_suffix=None):\n        contents = contents or self.label\n        if label_suffix is not None and label_suffix not in contents:\n            contents += label_suffix\n        return format_html('<label>{}</label>', contents)\n\n[also visible nearby: UserCreationForm.password1 now contains a stray `white=False` and a duplicated widget= line; password2 is duplicated. The agent does not flag either.]\nFile updated. Please review the changes and make sure they are correct (correct indentation, no duplicate lines, etc). Edit the file again if necessary.", "thought": "The changes to the `ReadOnlyPasswordHashField` class have been successfully applied, including the import of `format_html` and `format_html_join`, and the addition of a custom `label_tag` method that returns a label without the 'for' attribute.\nBefore submitting the changes, it would be prudent to test that the changes have the desired effect. However, since we cannot run a Django server or render forms in this environment, we will proceed with submitting the changes.\nLet's submit the changes to the code base using the `submit` command.", "action": "submit", "quotes": [{"quote": "The changes to the `ReadOnlyPasswordHashField` class have been successfully applied", "grp": "Reasoning", "sub": "Inferring", "leaf": "Conclude success from evidence"}, {"quote": "it would be prudent to test that the changes have the desired effect", "grp": "Evaluating", "sub": "Evaluating with gold", "leaf": "Plan verification step"}, {"quote": "since we cannot run a Django server or render forms in this environment, we will proceed with submitting the changes", "grp": "Evaluating", "sub": "Evaluating without ground truth", "leaf": "Recognize Knowledge Boundary"}, {"quote": "Let's submit the changes to the code base using the `submit` command", "grp": "Executing", "sub": "Terminating", "leaf": "Terminate rollout with submission"}], "insight": "Two adjacent sentences fire <code>Reasoning › Conclude success from evidence</code> and <code>Evaluating › Recognize Knowledge Boundary</code>. The agent both knows it cannot verify and claims success — the dominant failure pattern in unverified SWE-agent submits."}];
+const segments = [{"start": 1, "end": 5, "title": "First localize cycle", "summary": "find_file misses, search_dir lands 9 hits, agent picks <code>helpers.py</code> and pinpoints line 215."}, {"start": 6, "end": 8, "title": "Helpers.py dead-end", "summary": "The <code>read_only</code> branch at line 215 doesn't render the label; line 191's <code>label_tag</code> has no <code>for</code> either. Pivot to <code>auth/forms.py</code>."}, {"start": 9, "end": 11, "title": "Widget template dead-end", "summary": "Trace from widget class to its HTML template; the template has no <code>&lt;label&gt;</code> tag. Pivot back to forms.py."}, {"start": 12, "end": 13, "title": "Locate the field's call site", "summary": "Search inside forms.py and open <code>UserChangeForm.password</code> at line 136 — the only consumer of <code>ReadOnlyPasswordHashField</code>."}, {"start": 14, "end": 16, "title": "Diagnose, patch, recover, submit", "summary": "T14 picks the field-level <code>label_tag</code> override; T15 recovers from a missing-import lint error; T16 submits without verification."}];
+const QUOTE_TARGET = "thought"; // "thought" | "action"
+
+function buildCodebook() {
+  const cb = {};
+  turns.forEach(t => {
+    t.quotes.forEach(q => {
+      if (!cb[q.grp]) cb[q.grp] = { items: {}, total: 0 };
+      const key = q.sub + ' › ' + q.leaf;
+      if (!cb[q.grp].items[key]) cb[q.grp].items[key] = { sub: q.sub, leaf: q.leaf, turns: [] };
+      cb[q.grp].items[key].turns.push(t.n);
+      cb[q.grp].total += 1;
+    });
+  });
+  return cb;
+}
+
+const codebook = buildCodebook();
+
+const grpDisplayName = {};
+function displayGrp(g) { return grpDisplayName[g] || g; }
+
+function escapeHTML(s) { return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+function highlightAction(s) {
+  let out = escapeHTML(s);
+  out = out.replace(/^(edit|create|open|search_dir|search_file|find_file|goto|scroll_down|scroll_up|submit|rm|pylint|python|pytest|cat|ls|cd|grep|sed|find|end_of_edit)(\b)/gm, '<span class="kw">$1</span>$2');
+  out = out.replace(/(#[^\n]*)/g, '<span class="cmt">$1</span>');
+  return out;
+}
+
+function renderThoughtWithQuotes(thought, quotes, turnNum) {
+  const positioned = quotes.map((q, idx) => {
+    const pos = thought.indexOf(q.quote);
+    return { ...q, idx, pos };
+  }).filter(q => q.pos !== -1).sort((a, b) => a.pos - b.pos);
+
+  const filtered = [];
+  let lastEnd = -1;
+  for (const q of positioned) {
+    if (q.pos >= lastEnd) {
+      filtered.push(q);
+      lastEnd = q.pos + q.quote.length;
+    }
+  }
+
+  let out = '';
+  let cursor = 0;
+  for (const q of filtered) {
+    out += escapeHTML(thought.slice(cursor, q.pos));
+    out += `<span class="qmark" data-turn="${turnNum}" data-qidx="${q.idx}" data-grp="${q.grp}" data-key="${q.sub} › ${q.leaf}" style="--qcolor: var(--grp-${q.grp}); --qbg: var(--grp-${q.grp}-bg);">${escapeHTML(q.quote)}<sup>${q.idx + 1}</sup></span>`;
+    cursor = q.pos + q.quote.length;
+  }
+  out += escapeHTML(thought.slice(cursor));
+  return out;
+}
+
+function renderTurns() {
+  const container = document.getElementById('turns-container');
+  container.innerHTML = turns.map(t => {
+    const annotCount = t.quotes.length;
+    const annotRows = t.quotes.map((q, idx) => `
+      <div class="annot-row" data-turn="${t.n}" data-qidx="${idx}" data-grp="${q.grp}" data-key="${q.sub} › ${q.leaf}" style="--qcolor: var(--grp-${q.grp}); --qbg: var(--grp-${q.grp}-bg);">
+        <div class="annot-quote"><span class="qnum">${idx + 1}</span>${escapeHTML(q.quote)}</div>
+        <div class="annot-arrow">→</div>
+        <div class="annot-tag"><span class="annot-grp">${displayGrp(q.grp)}</span><span class="annot-sep">›</span>${q.sub}<span class="annot-sep">›</span><span class="annot-leaf">${q.leaf}</span></div>
+      </div>
+    `).join('');
+
+    let thoughtBlock, actionBlock, thoughtAnnotBlock = '', actionAnnotBlock = '', annotBlock = '';
+    if (QUOTE_TARGET === "action") {
+      // Action surface is the host: quote highlights live in the <code> action block.
+      // Thought becomes plain context.
+      const actionHTML = renderThoughtWithQuotes(t.action, t.quotes, t.n);
+      thoughtBlock = `
+        <div class="oat-block oat-thought">
+          <span class="lbl">Thought <span class="small">context · not annotated</span></span>
+          <div class="thought-text">${escapeHTML(t.thought)}</div>
+        </div>`;
+      actionBlock = `
+        <div class="oat-block oat-action">
+          <span class="lbl">Action <span class="small">verbatim · ${annotCount} annotation${annotCount === 1 ? '' : 's'}</span></span>
+          <code class="content">${actionHTML}</code>
+        </div>`;
+      annotBlock = annotCount > 0 ? `
+        <div class="annotations">
+          <div class="annotations-header">Quote-grounded annotations</div>
+          ${annotRows}
+        </div>` : '';
+    } else if (QUOTE_TARGET === "both") {
+      // Dual annotation: each quote carries its own target ("thought" | "action").
+      // Render both surfaces with their respective highlights, and put a small
+      // annotation table under each surface (so the reader can scan the surface,
+      // then immediately see what was tagged on it).
+      const thoughtQuotes = t.quotes.filter(q => (q.target || 'action') === 'thought');
+      const actionQuotes = t.quotes.filter(q => (q.target || 'action') === 'action');
+      const thoughtHTML = renderThoughtWithQuotes(t.thought, thoughtQuotes, t.n);
+      const actionHTML = renderThoughtWithQuotes(t.action, actionQuotes, t.n);
+      const tCount = thoughtQuotes.length;
+      const aCount = actionQuotes.length;
+      thoughtBlock = `
+        <div class="oat-block oat-thought">
+          <span class="lbl">Thought <span class="small">verbatim · ${tCount} meta annotation${tCount === 1 ? '' : 's'}</span></span>
+          <div class="thought-text">${thoughtHTML}</div>
+        </div>`;
+      actionBlock = `
+        <div class="oat-block oat-action">
+          <span class="lbl">Action <span class="small">verbatim · ${aCount} surface annotation${aCount === 1 ? '' : 's'}</span></span>
+          <code class="content">${actionHTML}</code>
+        </div>`;
+      // Two sub-tables, each grouping the rows for its host surface.
+      const buildRows = (quotes) => quotes.map((q) => {
+        const idx = t.quotes.indexOf(q);
+        return `
+          <div class="annot-row" data-turn="${t.n}" data-qidx="${idx}" data-grp="${q.grp}" data-key="${q.sub} › ${q.leaf}" style="--qcolor: var(--grp-${q.grp}); --qbg: var(--grp-${q.grp}-bg);">
+            <div class="annot-quote"><span class="qnum">${idx + 1}</span>${escapeHTML(q.quote)}</div>
+            <div class="annot-arrow">→</div>
+            <div class="annot-tag"><span class="annot-grp">${displayGrp(q.grp)}</span><span class="annot-sep">›</span>${q.sub}<span class="annot-sep">›</span><span class="annot-leaf">${q.leaf}</span></div>
+          </div>`;
+      }).join('');
+      thoughtAnnotBlock = tCount > 0 ? `
+        <div class="annotations">
+          <div class="annotations-header">Thought · meta-move annotations</div>
+          ${buildRows(thoughtQuotes)}
+        </div>` : '';
+      actionAnnotBlock = aCount > 0 ? `
+        <div class="annotations">
+          <div class="annotations-header">Action · surface annotations</div>
+          ${buildRows(actionQuotes)}
+        </div>` : '';
+    } else {
+      // Default: thought is the host (SWE-agent style).
+      const thoughtHTML = renderThoughtWithQuotes(t.thought, t.quotes, t.n);
+      thoughtBlock = `
+        <div class="oat-block oat-thought">
+          <span class="lbl">Thought <span class="small">verbatim · ${annotCount} annotation${annotCount === 1 ? '' : 's'}</span></span>
+          <div class="thought-text">${thoughtHTML}</div>
+        </div>`;
+      actionBlock = `
+        <div class="oat-block oat-action">
+          <span class="lbl">Action</span>
+          <code class="content">${highlightAction(t.action)}</code>
+        </div>`;
+      annotBlock = annotCount > 0 ? `
+        <div class="annotations">
+          <div class="annotations-header">Quote-grounded annotations</div>
+          ${annotRows}
+        </div>` : '';
+    }
+
+    // Layout per mode:
+    //   action mode  : Thought (context) → Action (highlighted) → annot table
+    //   both mode    : Thought (highlighted) → thought-table → Action (highlighted) → action-table
+    //   thought mode : Thought (highlighted) → annot table → Action (plain code)
+    let body;
+    if (QUOTE_TARGET === "action") {
+      body = `${thoughtBlock}${actionBlock}${annotBlock}`;
+    } else if (QUOTE_TARGET === "both") {
+      body = `${thoughtBlock}${thoughtAnnotBlock}${actionBlock}${actionAnnotBlock}`;
+    } else {
+      body = `${thoughtBlock}${annotBlock}${actionBlock}`;
+    }
+
+    return `
+      <div class="turn" data-turn="${t.n}">
+        <div class="turn-header">
+          <div class="turn-num"><small>turn</small>${String(t.n).padStart(2,'0')}</div>
+          <div class="turn-tag-line">${escapeHTML(t.headline || '')}</div>
+          <div class="turn-phase phase-${t.phase || 'other'}">${t.phaseLabel || 'Step'}</div>
+        </div>
+
+        <div class="oat-block oat-obs">
+          <span class="lbl">Observation</span>
+          <div class="content">${escapeHTML(t.obs)}</div>
+        </div>
+        ${body}
+        ${t.insight ? `<div class="insight">${t.insight}</div>` : ''}
+      </div>
+    `;
+  }).join('');
+}
+
+function renderSignature() {
+  // Build the codebook-group signature for the right panel.
+  // For each turn, list the groups of its quotes in firing order; show both a
+  // copy-pasteable flat block and a clickable per-turn row list. Sessions
+  // restarts are auto-detected as turns whose verbatim thought equals an
+  // earlier turn's thought, and shown as a `↺` divider.
+  const container = document.getElementById('signature-container');
+  if (!container) return;
+
+  // Detect restart points: turn n is a restart if t.thought has appeared earlier.
+  const seenThoughts = new Map(); // thought-text -> first turn index
+  const restartAtTurnN = new Set();
+  turns.forEach((t, i) => {
+    if (seenThoughts.has(t.thought)) {
+      restartAtTurnN.add(t.n);
+    } else {
+      seenThoughts.set(t.thought, i);
+    }
+  });
+
+  const pad2 = (n) => String(n).padStart(2, '0');
+
+  // Index segments by their `start` turn so we can interleave segment
+  // summaries both into the flat copy-paste block (as plain-text headers)
+  // and above the first row of each segment in the clickable list.
+  const segByStart = new Map();
+  (segments || []).forEach((s, i) => {
+    segByStart.set(s.start, { ...s, _idx: i + 1 });
+  });
+
+  // Strip inline HTML so segment summaries render cleanly inside the
+  // <pre> copy-paste block.  We unescape a small set of named entities
+  // (mdash/ndash/strong tags etc.) and drop everything else.
+  const stripHTML = (s) => {
+    if (!s) return '';
+    return s
+      .replace(/<[^>]+>/g, '')
+      .replace(/&amp;/g, '&')
+      .replace(/&lt;/g, '<')
+      .replace(/&gt;/g, '>')
+      .replace(/&quot;/g, '"')
+      .replace(/&mdash;/g, '—')
+      .replace(/&ndash;/g, '–')
+      .replace(/&rarr;/g, '→')
+      .replace(/&middot;/g, '·')
+      .replace(/&nbsp;/g, ' ');
+  };
+
+  // Word-wrap a paragraph to ~78 cols so it copy-pastes cleanly into
+  // notebooks / chat panes without horizontal scrolling.
+  const wrap = (text, width = 78) => {
+    const words = text.split(/\s+/);
+    const out = [];
+    let line = '';
+    for (const w of words) {
+      if (line.length === 0) { line = w; continue; }
+      if (line.length + 1 + w.length > width) { out.push(line); line = w; }
+      else line += ' ' + w;
+    }
+    if (line) out.push(line);
+    return out.join('\n');
+  };
+
+  // Flat copy-pasteable signature block. Each segment gets a plain-text
+  // header ("=== SEQ 01 · T01–T05 · Title ===" + wrapped summary), then
+  // its turns are listed `T01 = [Group › Sub › Leaf, ...]` so the full
+  // codebook triple plus narrative context survive a copy/paste.
+  const flatLines = [];
+  turns.forEach((t, i) => {
+    const seg = segByStart.get(t.n);
+    if (seg) {
+      if (i > 0) flatLines.push('');  // blank line before each segment except the first
+      const titleStr = stripHTML(seg.title || '');
+      flatLines.push(`=== SEQ ${String(seg._idx).padStart(2,'0')} · T${pad2(seg.start)}–T${pad2(seg.end)}${titleStr ? ' · ' + titleStr : ''} ===`);
+      if (seg.summary) {
+        flatLines.push(wrap(stripHTML(seg.summary)));
+      }
+      flatLines.push('');  // blank line between header and first turn
+    }
+    if (restartAtTurnN.has(t.n)) flatLines.push('↺');
+    const tags = t.quotes.map(q => `${displayGrp(q.grp)} › ${q.sub} › ${q.leaf}`);
+    flatLines.push(`T${pad2(t.n)} = [${tags.join(', ')}]`);
+  });
+  const flatStr = flatLines.join('\n');
+
+  // Per-turn rows.
+  // Chips show the full Group › Sub › Leaf triple, colored by group. Group
+  // is a small uppercase tag; sub is the dominant text; leaf trails in a
+  // muted italic. Full triple is also in the tooltip for hover affordance.
+  const rowsHTML = turns.map((t) => {
+    const seg = segByStart.get(t.n);
+    const segHTML = seg ? `
+      <div class="sig-segment">
+        <div class="sig-segment-tag">SEQ ${String(seg._idx).padStart(2,'0')} · T${pad2(seg.start)}–T${pad2(seg.end)}</div>
+        ${seg.title ? `<div class="sig-segment-title">${seg.title}</div>` : ''}
+        ${seg.summary ? `<div class="sig-segment-body">${seg.summary}</div>` : ''}
+      </div>
+    ` : '';
+    const restartHTML = restartAtTurnN.has(t.n)
+      ? '<div class="sig-restart-row" title="Session restart — Planner thought matches an earlier turn verbatim"><span class="sig-restart-glyph">↺</span><span class="sig-restart-text">session restart · thought matches an earlier turn verbatim</span></div>'
+      : '';
+    const chipsHTML = t.quotes.length === 0
+      ? '<span class="sig-chip-empty">∅</span>'
+      : t.quotes.map(q => {
+          const tip = `${displayGrp(q.grp)} › ${q.sub} › ${q.leaf}`;
+          return `<span class="sig-chip grp-${q.grp}" title="${escapeHTML(tip)}"><span class="sig-chip-grp">${displayGrp(q.grp)}</span><span class="sig-chip-sub">${escapeHTML(q.sub)}</span><span class="sig-chip-sep">›</span><span class="sig-chip-leaf">${escapeHTML(q.leaf)}</span></span>`;
+        }).join('');
+    const flag = (t.phase === 'submit') ? '<span class="sig-flag">‡</span>' : '';
+    const headline = (t.headline || '').replace(/"/g, '&quot;');
+    const tip = `T${pad2(t.n)} · ${t.phaseLabel} · ${headline}`;
+    return segHTML + restartHTML + `
+      <button class="sig-row" data-turn="${t.n}" title="${tip}">
+        <span class="sig-num">T${pad2(t.n)}${flag}</span>
+        <span class="sig-chips">${chipsHTML}</span>
+      </button>
+    `;
+  }).join('');
+
+  container.innerHTML = `
+    <div class="signature-section">
+      <div class="sig-section-title">Trajectory signature</div>
+      <div class="sig-section-sub">For each turn, the codebook annotations that fired — in firing order, with subgroup › leaf shown alongside each group chip.</div>
+      <pre class="sig-flat" title="copy-paste signature">${escapeHTML(flatStr)}</pre>
+      <div class="sig-rows">${rowsHTML}</div>
+    </div>
+  `;
+}
+
+function renderCodebook() {
+  const container = document.getElementById('codebook-container');
+  const sorted = Object.entries(codebook).sort((a,b) => b[1].total - a[1].total);
+  if (sorted.length === 0) { container.innerHTML = '<em style="color: var(--ink-mute)">No annotations.</em>'; return; }
+  const maxCount = Math.max(...sorted.map(([,g]) => g.total));
+
+  container.innerHTML = sorted.map(([grpName, grp]) => {
+    const pct = (grp.total / maxCount) * 100;
+    const items = Object.values(grp.items).sort((a,b) => b.turns.length - a.turns.length);
+    return `
+      <div class="cb-group" data-group="${grpName}" style="--qcolor: var(--grp-${grpName}); --qbg: var(--grp-${grpName}-bg);">
+        <div class="cb-group-header">
+          <div class="cb-group-name">${displayGrp(grpName)}</div>
+          <div class="cb-count">${grp.total}</div>
+        </div>
+        <div class="cb-bar"><div class="cb-bar-fill" style="width: ${pct}%; background: var(--grp-${grpName});"></div></div>
+        <div class="cb-items">
+          ${items.map(item => `
+            <div class="cb-item" data-grp="${grpName}" data-key="${item.sub} › ${item.leaf}" data-turns="${item.turns.join(',')}" style="--qcolor: var(--grp-${grpName}); --qbg: var(--grp-${grpName}-bg);">
+              <span class="cb-item-text">${item.sub} <span style="opacity:0.5">›</span> ${item.leaf}</span>
+              <span class="turn-refs">[${item.turns.map(n => 'T'+n).join(',')}]</span>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function clearActive() {
+  document.querySelectorAll('.turn.active').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.cb-item.fired').forEach(el => el.classList.remove('fired', 'flash'));
+  document.querySelectorAll('.qmark.flash-pulse').forEach(el => el.classList.remove('flash-pulse'));
+  document.querySelectorAll('.annot-row.flash').forEach(el => el.classList.remove('flash'));
+  document.querySelectorAll('.pie-slice.dimmed').forEach(el => el.classList.remove('dimmed'));
+}
+
+function flashAnnotationLink(turnN, qidx, grp, key) {
+  document.querySelectorAll('.qmark.flash-pulse').forEach(el => el.classList.remove('flash-pulse'));
+  document.querySelectorAll('.annot-row.flash').forEach(el => el.classList.remove('flash'));
+  document.querySelectorAll('.cb-item.fired').forEach(el => el.classList.remove('fired', 'flash'));
+
+  const qm = document.querySelector(`.qmark[data-turn="${turnN}"][data-qidx="${qidx}"]`);
+  const row = document.querySelector(`.annot-row[data-turn="${turnN}"][data-qidx="${qidx}"]`);
+  const item = document.querySelector(`.cb-item[data-grp="${grp}"][data-key="${key}"]`);
+  if (qm) qm.classList.add('flash-pulse');
+  if (row) row.classList.add('flash');
+  if (item) item.classList.add('fired', 'flash');
+}
+
+function scrollToTurn(turnEl) {
+  if (!turnEl) return;
+  // Snapshot the right-side panel's internal scroll position BEFORE we touch
+  // the main page scroll. Some browsers will auto-scroll the focused element
+  // into view, which can cause the codebook panel to drift. We restore the
+  // exact position right after.
+  const panel = document.querySelector('aside.codebook-panel');
+  const panelScrollTop = panel ? panel.scrollTop : 0;
+
+  const rect = turnEl.getBoundingClientRect();
+  const targetY = window.scrollY + rect.top - 24;
+  window.scrollTo({ top: targetY, behavior: 'smooth' });
+
+  // Restore panel scroll on the next animation frame, and again after the
+  // smooth-scroll likely finishes. Both are cheap and cover edge cases.
+  if (panel) {
+    requestAnimationFrame(() => { panel.scrollTop = panelScrollTop; });
+    setTimeout(() => { panel.scrollTop = panelScrollTop; }, 50);
+    setTimeout(() => { panel.scrollTop = panelScrollTop; }, 500);
+  }
+}
+
+function activateCodebookItem(grp, key) {
+  clearActive();
+  const item = codebook[grp] && codebook[grp].items[key];
+  if (!item) return;
+  const itemEl = document.querySelector(`.cb-item[data-grp="${grp}"][data-key="${key}"]`);
+  if (itemEl) itemEl.classList.add('fired', 'flash');
+  item.turns.forEach(n => {
+    const turnEl = document.querySelector(`.turn[data-turn="${n}"]`);
+    if (turnEl) turnEl.classList.add('active');
+    document.querySelectorAll(`.qmark[data-turn="${n}"][data-grp="${grp}"][data-key="${key}"]`).forEach(qm => qm.classList.add('flash-pulse'));
+    document.querySelectorAll(`.annot-row[data-turn="${n}"][data-grp="${grp}"][data-key="${key}"]`).forEach(r => r.classList.add('flash'));
+  });
+  if (item.turns.length > 0) {
+    scrollToTurn(document.querySelector(`.turn[data-turn="${item.turns[0]}"]`));
+  }
+}
+
+function activateGroup(grp) {
+  clearActive();
+  document.querySelectorAll(`.cb-item[data-grp="${grp}"]`).forEach(el => el.classList.add('fired'));
+  document.querySelectorAll(`.qmark[data-grp="${grp}"]`).forEach(qm => qm.classList.add('flash-pulse'));
+  document.querySelectorAll(`.annot-row[data-grp="${grp}"]`).forEach(r => r.classList.add('flash'));
+  const turnsHit = new Set();
+  document.querySelectorAll(`.qmark[data-grp="${grp}"]`).forEach(qm => turnsHit.add(parseInt(qm.dataset.turn)));
+  turnsHit.forEach(n => {
+    const turnEl = document.querySelector(`.turn[data-turn="${n}"]`);
+    if (turnEl) turnEl.classList.add('active');
+  });
+  if (turnsHit.size > 0) {
+    const firstTurn = Math.min(...turnsHit);
+    scrollToTurn(document.querySelector(`.turn[data-turn="${firstTurn}"]`));
+  }
+}
+
+function setupInteractions() {
+  document.querySelectorAll('.qmark').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      flashAnnotationLink(parseInt(el.dataset.turn), parseInt(el.dataset.qidx), el.dataset.grp, el.dataset.key);
+    });
+  });
+  document.querySelectorAll('.annot-row').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      flashAnnotationLink(parseInt(el.dataset.turn), parseInt(el.dataset.qidx), el.dataset.grp, el.dataset.key);
+    });
+  });
+  document.querySelectorAll('.cb-item').forEach(el => {
+    el.addEventListener('click', () => {
+      activateCodebookItem(el.dataset.grp, el.dataset.key);
+    });
+  });
+  document.querySelectorAll('.pie-slice').forEach(el => {
+    el.addEventListener('click', () => {
+      activateGroup(el.dataset.grp);
+    });
+  });
+  document.querySelectorAll('.pie-legend-row').forEach(el => {
+    el.addEventListener('click', () => {
+      activateGroup(el.dataset.grp);
+    });
+  });
+  document.querySelectorAll('.sig-row').forEach(el => {
+    el.addEventListener('click', () => {
+      const n = parseInt(el.dataset.turn, 10);
+      const turnEl = document.querySelector(`.turn[data-turn="${n}"]`);
+      if (!turnEl) return;
+      document.querySelectorAll('.turn.active').forEach(x => x.classList.remove('active'));
+      turnEl.classList.add('active');
+      scrollToTurn(turnEl);
+    });
+  });
+}
+
+// Drag-to-resize handle on the left edge of the codebook panel.
+// The panel is `position: fixed; right: 0; width: 360px;` and the main has a
+// matching `margin-right: 360px`. We drive both off a single CSS variable
+// `--panel-w` so they stay in sync, and persist the user's last width in
+// localStorage so it sticks across reloads.
+function setupPanelResize() {
+  const panel = document.querySelector('aside.codebook-panel');
+  const main  = document.querySelector('main.trajectory');
+  const handle = document.getElementById('panel-resize-handle');
+  if (!panel || !main || !handle) return;
+
+  const MIN = 280;
+  const MAX_FRAC = 0.7;  // never let the panel eat more than 70% of the viewport
+  const STORAGE_KEY = 'tta.panel-width';
+
+  const apply = (w) => {
+    const cap = Math.max(MIN, Math.min(w, window.innerWidth * MAX_FRAC));
+    document.documentElement.style.setProperty('--panel-w', cap + 'px');
+  };
+
+  // Restore persisted width on load.
+  const saved = parseInt(localStorage.getItem(STORAGE_KEY) || '', 10);
+  if (!Number.isNaN(saved) && saved >= MIN) apply(saved);
+
+  let dragging = false;
+  let startX = 0;
+  let startW = 0;
+
+  handle.addEventListener('mousedown', (e) => {
+    dragging = true;
+    startX = e.clientX;
+    startW = panel.getBoundingClientRect().width;
+    document.body.style.cursor = 'col-resize';
+    document.body.style.userSelect = 'none';
+    e.preventDefault();
+  });
+
+  window.addEventListener('mousemove', (e) => {
+    if (!dragging) return;
+    // Drag left = wider panel; drag right = narrower.
+    const w = startW + (startX - e.clientX);
+    apply(w);
+  });
+
+  window.addEventListener('mouseup', () => {
+    if (!dragging) return;
+    dragging = false;
+    document.body.style.cursor = '';
+    document.body.style.userSelect = '';
+    localStorage.setItem(STORAGE_KEY, String(panel.getBoundingClientRect().width));
+  });
+
+  // Double-click the handle to reset to the default 360px.
+  handle.addEventListener('dblclick', () => {
+    document.documentElement.style.removeProperty('--panel-w');
+    localStorage.removeItem(STORAGE_KEY);
+  });
+}
+
+renderTurns();
+renderSignature();
+renderCodebook();
+setupInteractions();
+setupPanelResize();
+
+</script>
+</body>
+</html>
