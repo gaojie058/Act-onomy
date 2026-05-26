@@ -1,6 +1,6 @@
 # Act·ONOMY
 
-An extensible codebook for describing AI-agent behavior at runtime, together with the data, tools, and case studies released alongside the paper.
+An extensible codebook for describing AI-agent behavior at runtime.
 
 ---
 
