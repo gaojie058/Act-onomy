@@ -1,6 +1,10 @@
-# Act·ONOMY
+<p align="center">
+  <img src="assets/actonomy_logo.png" alt="act*onomy" width="440">
+</p>
 
-An extensible codebook for describing AI-agent behavior at runtime.
+<p align="center">
+  An extensible codebook for describing AI-agent behavior at runtime.
+</p>
 
 ---
 

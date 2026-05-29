@@ -244,6 +244,9 @@ main.trajectory {
 .turn.active { border-color: var(--ink); box-shadow: 0 4px 24px rgba(26,24,20,0.08); }
 .turn.active::before { background: var(--accent); width: 4px; }
 
+/* Collapsible turns — the header is the click target; a chevron on the right
+   rotates to point sideways when the turn is folded. Collapsed turns hide
+   their body and drop the header's bottom rule so they read as a tidy strip. */
 .turn-header {
   display: flex;
   align-items: baseline;
@@ -251,7 +254,43 @@ main.trajectory {
   margin-bottom: 14px;
   padding-bottom: 12px;
   border-bottom: 1px dashed var(--rule);
+  cursor: pointer;
+  user-select: none;
 }
+.turn-header:hover .turn-toggle { color: var(--accent); }
+.turn.is-collapsed .turn-header { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
+.turn.is-collapsed { padding-bottom: 22px; }
+.turn.is-collapsed .turn-body { display: none; }
+
+.turn-toggle {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 14px;
+  color: var(--ink-mute);
+  transition: transform 0.2s ease, color 0.18s ease;
+  align-self: center;
+  width: 16px;
+  text-align: center;
+  flex-shrink: 0;
+}
+.turn.is-collapsed .turn-toggle { transform: rotate(-90deg); }
+
+/* Expand / collapse-all controls, hosted in the trajectory section label. */
+.section-label-turns::after { display: none; }
+.section-label-turns .sl-rule { flex: 1; height: 1px; background: var(--rule); }
+.turn-ctl-btn {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border: 1px solid var(--rule);
+  border-radius: 2px;
+  background: var(--bg-panel);
+  color: var(--ink-soft);
+  cursor: pointer;
+  transition: border-color 0.18s ease, color 0.18s ease;
+}
+.turn-ctl-btn:hover { border-color: var(--accent); color: var(--accent); }
 
 .turn-num {
   font-family: 'Inter', sans-serif;
@@ -778,7 +817,12 @@ In the admin, the label element for the ReadOnlyPasswordHashWidget widget has a 
   <small>annotations are bidirectionally linked</small>
 </div>
 
-<div class="section-label">trajectory · 16 turns</div>
+<div class="section-label section-label-turns">
+  <span>trajectory · 16 turns</span>
+  <span class="sl-rule"></span>
+  <button class="turn-ctl-btn" id="expand-all">Expand all</button>
+  <button class="turn-ctl-btn" id="collapse-all">Collapse all</button>
+</div>
 
 <div id="turns-container"></div>
 
@@ -973,19 +1017,22 @@ function renderTurns() {
     }
 
     return `
-      <div class="turn" data-turn="${t.n}">
-        <div class="turn-header">
+      <div class="turn is-collapsed" data-turn="${t.n}">
+        <div class="turn-header" role="button" tabindex="0" aria-expanded="false" title="Click to expand or collapse this turn">
           <div class="turn-num"><small>turn</small>${String(t.n).padStart(2,'0')}</div>
           <div class="turn-tag-line">${escapeHTML(t.headline || '')}</div>
           <div class="turn-phase phase-${t.phase || 'other'}">${t.phaseLabel || 'Step'}</div>
+          <span class="turn-toggle" aria-hidden="true">▾</span>
         </div>
 
-        <div class="oat-block oat-obs">
-          <span class="lbl">Observation</span>
-          <div class="content">${escapeHTML(t.obs)}</div>
+        <div class="turn-body">
+          <div class="oat-block oat-obs">
+            <span class="lbl">Observation</span>
+            <div class="content">${escapeHTML(t.obs)}</div>
+          </div>
+          ${body}
+          ${t.insight ? `<div class="insight">${t.insight}</div>` : ''}
         </div>
-        ${body}
-        ${t.insight ? `<div class="insight">${t.insight}</div>` : ''}
       </div>
     `;
   }).join('');
@@ -1191,6 +1238,15 @@ function scrollToTurn(turnEl) {
   }
 }
 
+// Expand a single turn (used when an activation points into a folded turn).
+function expandTurn(n) {
+  const turnEl = document.querySelector(`.turn[data-turn="${n}"]`);
+  if (!turnEl) return;
+  turnEl.classList.remove('is-collapsed');
+  const h = turnEl.querySelector('.turn-header');
+  if (h) h.setAttribute('aria-expanded', 'true');
+}
+
 function activateCodebookItem(grp, key) {
   clearActive();
   const item = codebook[grp] && codebook[grp].items[key];
@@ -1198,6 +1254,7 @@ function activateCodebookItem(grp, key) {
   const itemEl = document.querySelector(`.cb-item[data-grp="${grp}"][data-key="${key}"]`);
   if (itemEl) itemEl.classList.add('fired', 'flash');
   item.turns.forEach(n => {
+    expandTurn(n);
     const turnEl = document.querySelector(`.turn[data-turn="${n}"]`);
     if (turnEl) turnEl.classList.add('active');
     document.querySelectorAll(`.qmark[data-turn="${n}"][data-grp="${grp}"][data-key="${key}"]`).forEach(qm => qm.classList.add('flash-pulse'));
@@ -1216,6 +1273,7 @@ function activateGroup(grp) {
   const turnsHit = new Set();
   document.querySelectorAll(`.qmark[data-grp="${grp}"]`).forEach(qm => turnsHit.add(parseInt(qm.dataset.turn)));
   turnsHit.forEach(n => {
+    expandTurn(n);
     const turnEl = document.querySelector(`.turn[data-turn="${n}"]`);
     if (turnEl) turnEl.classList.add('active');
   });
@@ -1259,10 +1317,40 @@ function setupInteractions() {
       const turnEl = document.querySelector(`.turn[data-turn="${n}"]`);
       if (!turnEl) return;
       document.querySelectorAll('.turn.active').forEach(x => x.classList.remove('active'));
+      expandTurn(n);
       turnEl.classList.add('active');
       scrollToTurn(turnEl);
     });
   });
+}
+
+// Per-turn collapse: clicking (or Enter/Space on) a turn header folds/unfolds it.
+function setupTurnCollapse() {
+  document.querySelectorAll('.turn-header').forEach(h => {
+    const turnEl = h.closest('.turn');
+    if (!turnEl) return;
+    const toggle = (ev) => {
+      if (ev) ev.stopPropagation();
+      const collapsed = turnEl.classList.toggle('is-collapsed');
+      h.setAttribute('aria-expanded', collapsed ? 'false' : 'true');
+    };
+    h.addEventListener('click', toggle);
+    h.addEventListener('keydown', (ev) => {
+      if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); toggle(ev); }
+    });
+  });
+
+  const setAll = (collapsed) => {
+    document.querySelectorAll('.turn').forEach(t => {
+      t.classList.toggle('is-collapsed', collapsed);
+      const h = t.querySelector('.turn-header');
+      if (h) h.setAttribute('aria-expanded', collapsed ? 'false' : 'true');
+    });
+  };
+  const expandBtn = document.getElementById('expand-all');
+  const collapseBtn = document.getElementById('collapse-all');
+  if (expandBtn) expandBtn.addEventListener('click', () => setAll(false));
+  if (collapseBtn) collapseBtn.addEventListener('click', () => setAll(true));
 }
 
 // Drag-to-resize handle on the left edge of the codebook panel.
@@ -1328,6 +1416,7 @@ renderTurns();
 renderSignature();
 renderCodebook();
 setupInteractions();
+setupTurnCollapse();
 setupPanelResize();
 
 </script>
