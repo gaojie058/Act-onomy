@@ -1,0 +1,1543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agent Trajectory & Behavior Profile · FSM1/cipher-box · session c621c551 (Expert Nitpicker)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #fafbfc;
+  --bg-panel: #ffffff;
+  --ink: #0f172a;
+  --ink-soft: #475569;
+  --ink-mute: #94a3b8;
+  --rule: #e2e8f0;
+  --rule-soft: #f1f5f9;
+  --accent: #4f46e5;
+  --accent-soft: #c7d2fe;
+  --thought: #4f46e5;
+  --action: #059669;
+  --obs: #d97706;
+  --obs-soft: #fef3c7;
+  --highlight: #eef2ff;
+
+  --grp-Retrieval: #0891b2;
+  --grp-Retrieval-bg: rgba(8, 145, 178, 0.10);
+  --grp-Memory: #d97706;
+  --grp-Memory-bg: rgba(217, 119, 6, 0.10);
+  --grp-Planning: #0284c7;
+  --grp-Planning-bg: rgba(2, 132, 199, 0.10);
+  --grp-Reasoning: #4f46e5;
+  --grp-Reasoning-bg: rgba(79, 70, 229, 0.10);
+  --grp-Evaluate: #0d9488;
+  --grp-Evaluate-bg: rgba(13, 148, 136, 0.10);
+  --grp-Deciding: #7c3aed;
+  --grp-Deciding-bg: rgba(124, 58, 237, 0.10);
+  --grp-Grounding: #c026d3;
+  --grp-Grounding-bg: rgba(192, 38, 211, 0.10);
+  --grp-Executing: #059669;
+  --grp-Executing-bg: rgba(5, 150, 105, 0.10);
+  --grp-Learning: #db2777;
+  --grp-Learning-bg: rgba(219, 39, 119, 0.10);
+  --grp-Reflection: #e11d48;
+  --grp-Reflection-bg: rgba(225, 29, 72, 0.10);
+
+  --panel-w: 360px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  font-size: 15px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+body {
+  min-height: 100vh;
+}
+
+header.masthead {
+  border-bottom: 1px solid var(--rule);
+  padding: 28px calc(var(--panel-w) + 24px) 24px 40px;
+  background: var(--bg-panel);
+  position: relative;
+  z-index: 5;
+}
+
+.eyebrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  margin-bottom: 8px;
+}
+
+h1.title {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-variation-settings: 'opsz' 144;
+  font-size: 38px;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin-bottom: 6px;
+}
+
+h1.title em {
+  font-style: italic;
+  font-weight: 400;
+  color: var(--accent);
+}
+
+.subtitle {
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  color: var(--ink-soft);
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.55;
+  max-width: 820px;
+}
+
+.meta-row {
+  display: flex;
+  gap: 24px;
+  margin-top: 16px;
+  flex-wrap: wrap;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--ink-mute);
+}
+
+.meta-row span strong {
+  color: var(--ink);
+  font-weight: 500;
+}
+
+.outcome-pill {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 2px;
+  font-weight: 600;
+}
+.outcome-resolved { background: rgba(5, 150, 105, 0.13); color: var(--grp-Executing); }
+.outcome-unresolved { background: rgba(79, 70, 229, 0.13); color: var(--accent); }
+
+.app {
+  position: relative;
+  min-height: calc(100vh - 140px);
+}
+
+@media (max-width: 1100px) {
+  header.masthead { padding-right: 40px; }
+  main.trajectory { margin-right: 0 !important; max-width: 100% !important; }
+  aside.codebook-panel {
+    position: relative !important;
+    top: auto !important;
+    right: auto !important;
+    width: 100% !important;
+    height: auto !important;
+    max-height: none !important;
+    border-left: none !important;
+    border-top: 1px solid var(--rule);
+  }
+}
+
+main.trajectory {
+  padding: 32px 40px 80px;
+  max-width: 900px;
+  margin-right: var(--panel-w);
+}
+
+.section-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.section-label::after { content: ''; flex: 1; height: 1px; background: var(--rule); }
+
+.issue-block {
+  background: var(--bg-panel);
+  border: 1px solid var(--rule);
+  border-left: 3px solid var(--accent);
+  padding: 18px 22px;
+  margin-bottom: 28px;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  color: var(--ink-soft);
+  line-height: 1.65;
+  white-space: pre-wrap;
+}
+.issue-block strong { font-weight: 600; color: var(--ink); }
+.issue-block code { font-family: 'JetBrains Mono', monospace; font-size: 12.5px; background: var(--rule-soft); padding: 1px 5px; border-radius: 2px; }
+
+.summary-block {
+  background: var(--bg-panel);
+  border: 1px solid var(--rule);
+  border-left: 3px solid var(--thought);
+  padding: 20px 24px 22px;
+  margin-bottom: 32px;
+  font-family: 'Inter', sans-serif;
+  font-size: 14.5px;
+  line-height: 1.65;
+  color: var(--ink);
+  position: relative;
+}
+.summary-block .summary-eyebrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9.5px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--thought);
+  font-weight: 600;
+  margin-bottom: 10px;
+  display: block;
+}
+.summary-block .summary-text {
+  font-style: normal;
+  color: var(--ink);
+  letter-spacing: 0;
+}
+.summary-block .summary-text strong { font-style: normal; font-weight: 600; color: var(--ink); }
+.summary-block .summary-text em { font-style: normal; color: var(--accent); }
+.summary-block .summary-text code { font-family: 'JetBrains Mono', monospace; font-style: normal; font-size: 13px; background: var(--rule-soft); padding: 1px 5px; border-radius: 2px; color: var(--ink); }
+.summary-block .summary-text ul { margin: 10px 0; padding-left: 22px; }
+.summary-block .summary-text li { margin-bottom: 8px; line-height: 1.6; }
+.summary-block .summary-text p { margin: 0 0 10px 0; }
+.method-note ul { margin: 8px 0 4px 0; padding-left: 20px; }
+.method-note li { margin-bottom: 5px; line-height: 1.55; }
+
+.method-note {
+  font-family: 'Inter', sans-serif;
+  font-style: normal;
+  font-size: 13.5px;
+  color: var(--ink-soft);
+  margin-bottom: 24px;
+  padding: 12px 16px;
+  background: var(--highlight);
+  border-left: 2px solid var(--accent);
+  border-radius: 0 2px 2px 0;
+  line-height: 1.6;
+}
+.method-note strong { font-style: normal; font-weight: 600; color: var(--ink); }
+.method-note code { font-family: 'JetBrains Mono', monospace; font-size: 12px; background: rgba(0,0,0,0.06); padding: 1px 5px; border-radius: 2px; font-style: normal; }
+
+.turn {
+  position: relative;
+  margin-bottom: 28px;
+  padding: 22px 24px 20px 28px;
+  background: var(--bg-panel);
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  transition: all 0.25s ease;
+}
+.turn::before { content: ''; position: absolute; left: -1px; top: -1px; bottom: -1px; width: 4px; background: var(--rule); transition: background 0.25s ease; }
+.turn.active { border-color: var(--ink); box-shadow: 0 4px 24px rgba(26,24,20,0.08); }
+.turn.active::before { background: var(--accent); width: 4px; }
+
+.turn-header {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  margin-bottom: 14px;
+  padding-bottom: 12px;
+  border-bottom: 1px dashed var(--rule);
+}
+
+.turn-num {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 28px;
+  font-variation-settings: 'opsz' 144;
+  color: var(--accent);
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+.turn-num small { font-size: 11px; font-family: 'JetBrains Mono', monospace; color: var(--ink-mute); font-weight: 400; display: block; letter-spacing: 0.1em; margin-bottom: 2px; }
+
+.turn-tag-line { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-style: normal; font-size: 15px; color: var(--ink); font-weight: 500; flex: 1; line-height: 1.45; }
+
+/* ===== Collapsible turns =====
+   Turns render collapsed by default: only the header row (icon, number,
+   headline, phase pill) is visible. Clicking the header toggles the body.
+   Programmatic activation (codebook / signature clicks) auto-expands. */
+.turn-header, .interaction-header { cursor: pointer; user-select: none; }
+.turn-body { display: none; }
+.turn.expanded > .turn-body { display: block; }
+.turn:not(.expanded) .turn-header,
+.turn:not(.expanded) .interaction-header {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: none;
+}
+.turn:not(.expanded) { padding-top: 16px; padding-bottom: 16px; }
+.turn-chevron {
+  flex-shrink: 0;
+  align-self: center;
+  color: var(--ink-mute);
+  font-size: 11px;
+  transition: transform 0.2s ease;
+}
+.turn.expanded .turn-chevron { transform: rotate(90deg); }
+
+.turns-controls {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  margin-bottom: 14px;
+}
+.turns-controls button {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  background: var(--bg-panel);
+  color: var(--ink-soft);
+  cursor: pointer;
+}
+.turns-controls button:hover { border-color: var(--accent); color: var(--accent); }
+
+/* ===== Actor icons (Google Material Design icons: person / smart_toy) ===== */
+.actor-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  align-self: center;
+}
+.actor-icon svg { width: 20px; height: 20px; }
+.actor-agent { color: var(--accent); background: var(--highlight); border: 1px solid var(--accent-soft); }
+.actor-human { color: #b45309; background: var(--obs-soft); border: 1px solid rgba(217, 119, 6, 0.35); }
+
+/* ===== Human interaction cards =====
+   First-class human turns interleaved with agent (obs, thought, action)
+   turns. Verbatim prompt, amber palette, person icon — visually distinct
+   from agent turn cards. */
+.turn.interaction {
+  background: #fffbeb;
+  border: 1px solid rgba(217, 119, 6, 0.35);
+  border-left: 3px solid var(--obs);
+}
+.interaction-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 12px;
+  padding-bottom: 10px;
+  border-bottom: 1px dashed rgba(217, 119, 6, 0.35);
+}
+.int-num {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 28px;
+  color: #b45309;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+.int-num small { font-size: 11px; font-family: 'JetBrains Mono', monospace; color: var(--ink-mute); font-weight: 400; display: block; letter-spacing: 0.1em; margin-bottom: 2px; }
+.int-title { font-family: 'Inter', sans-serif; font-size: 15px; color: var(--ink); font-weight: 500; flex: 1; }
+.int-title .small { font-size: 10px; font-family: 'JetBrains Mono', monospace; color: var(--ink-mute); font-weight: 400; margin-left: 6px; }
+.int-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border: 1px solid rgba(217, 119, 6, 0.4);
+  border-radius: 2px;
+  color: #b45309;
+  background: rgba(217, 119, 6, 0.08);
+}
+.interaction-text {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--ink);
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* Interaction rows in the right-panel trajectory signature */
+.sig-row.sig-interaction {
+  background: #fffbeb;
+  border: 1px solid rgba(217, 119, 6, 0.3);
+  border-radius: 3px;
+}
+.sig-row.sig-interaction:hover { background: var(--obs-soft); }
+.sig-num-h { color: #b45309 !important; }
+.sig-int-text {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: #92400e;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.sig-int-text svg { width: 12px; height: 12px; flex-shrink: 0; color: #b45309; }
+
+.turn-phase {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border: 1px solid var(--rule);
+  border-radius: 2px;
+  color: var(--ink-soft);
+  background: var(--bg);
+}
+.phase-reproduce { color: var(--obs); border-color: var(--obs-soft); background: var(--obs-soft); }
+.phase-localize { color: var(--thought); border-color: rgba(91,74,138,0.2); background: rgba(91,74,138,0.08); }
+.phase-edit { color: var(--action); border-color: rgba(5, 150, 105, 0.2); background: rgba(5, 150, 105, 0.08); }
+.phase-recover { color: var(--accent); border-color: var(--accent-soft); background: var(--accent-soft); }
+.phase-verify { color: var(--grp-Evaluate); border-color: rgba(26,88,120,0.2); background: rgba(26,88,120,0.08); }
+.phase-submit { color: var(--ink); border-color: var(--rule); background: var(--rule-soft); }
+.phase-other { color: var(--ink-soft); border-color: var(--rule); background: var(--bg); }
+
+.oat-block { margin: 12px 0; padding-left: 14px; border-left: 2px solid; font-size: 14px; line-height: 1.55; }
+.oat-block .lbl { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 600; margin-bottom: 6px; display: block; }
+
+.oat-obs { border-color: var(--obs); }
+.oat-obs .lbl { color: var(--obs); }
+
+.oat-thought { border-color: var(--thought); background: rgba(91, 74, 138, 0.025); padding: 8px 14px 10px; border-radius: 0 2px 2px 0; }
+.oat-thought .lbl { color: var(--thought); }
+.oat-thought .lbl .small { opacity: 0.5; font-weight: 400; text-transform: none; letter-spacing: 0.05em; font-style: italic; }
+.thought-text { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-style: normal; font-size: 14px; color: var(--ink); line-height: 1.65; letter-spacing: 0; }
+
+.oat-action { border-color: var(--action); }
+.oat-action .lbl { color: var(--action); }
+.oat-action .content {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12.5px;
+  background: #1f1f1f;
+  color: #eaeaea;
+  padding: 8px 12px;
+  border-radius: 2px;
+  display: block;
+  margin-top: 4px;
+  white-space: pre-wrap;
+  line-height: 1.5;
+}
+.oat-action .content .cmt { color: #888888; }
+.oat-action .content .kw { color: #d4a574; }
+
+.content { color: var(--ink); }
+.content code { font-family: 'JetBrains Mono', monospace; font-size: 12.5px; background: var(--rule-soft); padding: 1px 5px; border-radius: 2px; }
+
+.qmark {
+  font-style: italic;
+  background: var(--qbg, var(--rule-soft));
+  border-bottom: 1.5px solid var(--qcolor, var(--ink-mute));
+  padding: 0 2px;
+  margin: 0 1px;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  border-radius: 1px;
+  position: relative;
+}
+.qmark:hover { background: var(--qcolor, var(--ink-mute)); color: var(--bg); }
+.qmark sup { font-family: 'JetBrains Mono', monospace; font-style: normal; font-size: 9px; font-weight: 600; color: var(--qcolor, var(--ink-mute)); margin-left: 2px; letter-spacing: 0; vertical-align: super; line-height: 0; }
+.qmark:hover sup { color: var(--bg); }
+
+.annotations {
+  margin-top: 14px;
+  padding: 12px 14px;
+  background: var(--bg);
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.annotations-header { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-mute); font-weight: 600; margin-bottom: 4px; }
+
+.annot-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1.1fr);
+  gap: 10px;
+  align-items: baseline;
+  font-size: 13px;
+  cursor: pointer;
+  padding: 5px 6px;
+  border-radius: 2px;
+  transition: background 0.18s ease;
+}
+.annot-row:hover { background: var(--rule-soft); }
+.annot-row.flash { background: var(--qbg, var(--rule-soft)); }
+
+.annot-quote {
+  font-family: 'Inter', sans-serif;
+  font-style: italic;
+  color: var(--qcolor, var(--ink));
+  font-size: 13px;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.annot-quote::before { content: '"'; opacity: 0.5; }
+.annot-quote::after { content: '"'; opacity: 0.5; }
+.annot-quote .qnum { font-family: 'JetBrains Mono', monospace; font-style: normal; font-size: 9px; font-weight: 600; margin-right: 4px; opacity: 0.7; vertical-align: super; }
+
+.annot-arrow { color: var(--ink-mute); font-family: 'JetBrains Mono', monospace; font-size: 11px; }
+
+.annot-tag { font-family: 'Inter', sans-serif; font-size: 11.5px; color: var(--ink-soft); letter-spacing: 0.005em; }
+.annot-tag .annot-grp { font-weight: 600; color: var(--qcolor, var(--ink)); }
+.annot-tag .annot-sep { margin: 0 4px; opacity: 0.4; }
+.annot-tag .annot-leaf { color: var(--ink); }
+
+.insight {
+  margin-top: 12px;
+  padding: 10px 12px 10px 14px;
+  background: var(--highlight);
+  border-radius: 2px;
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-style: normal;
+  color: var(--ink-soft);
+  position: relative;
+  line-height: 1.6;
+}
+.insight::before { content: '※'; position: absolute; left: -22px; top: 8px; font-size: 14px; color: var(--accent); font-style: normal; }
+.insight strong { font-style: normal; font-weight: 600; color: var(--ink); }
+
+/* Segment summary card inside the right-panel trajectory signature.
+   Sits above the first row of each `segments[]` entry — a compact "what
+   the agent is doing in this stretch" preface for the row block below. */
+.sig-segment {
+  margin: 14px 0 6px;
+  padding: 8px 10px;
+  background: var(--highlight);
+  border-left: 3px solid var(--accent);
+  border-radius: 0 2px 2px 0;
+}
+.sig-segment:first-child { margin-top: 4px; }
+.sig-segment-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 8.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 700;
+  margin-bottom: 3px;
+}
+.sig-segment-title {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 12.5px;
+  font-style: italic;
+  color: var(--ink);
+  line-height: 1.3;
+  margin-bottom: 3px;
+}
+.sig-segment-body {
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  color: var(--ink-soft);
+  line-height: 1.55;
+}
+.sig-segment-body code {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10.5px;
+  background: rgba(79, 70, 229, 0.08);
+  padding: 0 3px;
+  border-radius: 2px;
+}
+
+aside.codebook-panel {
+  background: var(--bg-panel);
+  border-left: 1px solid var(--rule);
+  padding: 32px 24px 60px;
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: var(--panel-w);
+  height: 100vh;
+  overflow-y: auto;
+  z-index: 10;
+}
+aside.codebook-panel::-webkit-scrollbar { width: 6px; }
+aside.codebook-panel::-webkit-scrollbar-track { background: transparent; }
+aside.codebook-panel::-webkit-scrollbar-thumb { background: var(--rule); border-radius: 3px; }
+
+/* Drag handle on the panel's left edge — sits over the border, 6px hit area,
+   shows a thin colored stripe on hover/drag. Double-click resets width. */
+#panel-resize-handle {
+  position: absolute;
+  top: 0;
+  left: -3px;
+  width: 6px;
+  height: 100%;
+  cursor: col-resize;
+  z-index: 20;
+  background: transparent;
+  transition: background 0.15s ease;
+}
+#panel-resize-handle:hover,
+#panel-resize-handle:active {
+  background: linear-gradient(to right, transparent 0%, transparent 40%, var(--accent) 40%, var(--accent) 60%, transparent 60%);
+}
+
+.panel-title { font-family: 'Inter', sans-serif; font-weight: 600; font-size: 22px; font-variation-settings: 'opsz' 144; margin-bottom: 4px; letter-spacing: -0.01em; }
+.panel-sub { font-family: 'Inter', sans-serif; font-style: normal; font-size: 12.5px; color: var(--ink-soft); line-height: 1.5; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid var(--rule); }
+
+/* Pie chart section */
+.pie-section {
+  margin-bottom: 24px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--rule);
+}
+.pie-svg-wrap {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 12px;
+}
+.pie-legend {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+}
+.pie-legend-row {
+  display: grid;
+  grid-template-columns: 12px 1fr auto auto;
+  gap: 8px;
+  align-items: center;
+  color: var(--ink-soft);
+}
+.pie-legend-swatch { width: 10px; height: 10px; border-radius: 1px; }
+.pie-legend-name { font-weight: 500; color: var(--ink); }
+.pie-legend-pct { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--ink-mute); }
+.pie-legend-count { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--ink-mute); }
+
+.pie-slice { transition: opacity 0.2s ease; cursor: pointer; }
+.pie-slice:hover { opacity: 0.8; }
+
+.cb-group { margin-bottom: 18px; }
+.cb-group-header { display: flex; align-items: baseline; gap: 8px; margin-bottom: 6px; }
+.cb-group-name { font-family: 'Inter', sans-serif; font-weight: 600; font-size: 14px; font-style: italic; color: var(--qcolor, var(--ink)); }
+.cb-count { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--ink-mute); background: var(--bg); padding: 1px 6px; border-radius: 8px; border: 1px solid var(--rule); }
+.cb-bar { height: 4px; background: var(--rule-soft); border-radius: 2px; margin-bottom: 8px; overflow: hidden; }
+.cb-bar-fill { height: 100%; border-radius: 2px; transition: width 0.4s ease; }
+.cb-items { display: flex; flex-direction: column; gap: 2px; margin-left: 4px; }
+.cb-item {
+  font-family: 'Inter', sans-serif;
+  font-size: 11.5px;
+  color: var(--ink-soft);
+  padding: 4px 8px 4px 12px;
+  border-left: 2px solid var(--rule);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-radius: 0 2px 2px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 6px;
+}
+.cb-item:hover { background: var(--bg); border-left-color: var(--ink-soft); color: var(--ink); }
+.cb-item.fired { border-left-color: var(--qcolor, var(--accent)); color: var(--ink); background: var(--qbg, var(--accent-soft)); font-weight: 500; }
+.cb-item-text { flex: 1; }
+.cb-item .turn-refs { font-family: 'JetBrains Mono', monospace; font-size: 9px; color: var(--ink-mute); flex-shrink: 0; }
+.cb-item.fired .turn-refs { color: var(--qcolor, var(--accent)); font-weight: 600; }
+
+.summary-footer {
+  margin-top: 60px;
+  padding: 28px;
+  background: var(--bg-panel);
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+}
+.summary-footer h2 { font-family: 'Inter', sans-serif; font-weight: 600; font-size: 22px; margin-bottom: 4px; letter-spacing: -0.01em; }
+.summary-footer .sub { font-style: italic; color: var(--ink-soft); font-size: 14px; margin-bottom: 20px; }
+.findings { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
+.finding { padding: 14px 16px; border-left: 2px solid var(--accent); background: var(--bg); font-size: 13px; line-height: 1.55; }
+.finding strong { font-weight: 600; display: block; margin-bottom: 4px; color: var(--ink); }
+.finding span { color: var(--ink-soft); }
+
+@keyframes pulse-ring {
+  0% { box-shadow: 0 0 0 0 rgba(79, 70, 229, 0.4); }
+  100% { box-shadow: 0 0 0 8px rgba(79, 70, 229, 0); }
+}
+.cb-item.fired.flash, .annot-row.flash, .qmark.flash-pulse { animation: pulse-ring 0.6s ease-out; }
+
+.legend {
+  display: flex;
+  gap: 14px;
+  margin-bottom: 24px;
+  padding: 10px 14px;
+  background: var(--bg-panel);
+  border: 1px solid var(--rule);
+  border-radius: 2px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--ink-soft);
+  flex-wrap: wrap;
+  align-items: center;
+}
+.legend-item { display: flex; align-items: center; gap: 6px; }
+.legend-dot { width: 8px; height: 8px; border-radius: 1px; }
+.legend-dot.obs { background: var(--obs); }
+.legend-dot.thought { background: var(--thought); }
+.legend-dot.action { background: var(--action); }
+.legend small { margin-left: auto; color: var(--ink-mute); font-style: italic; }
+
+/* ===== Trajectory signature (right panel, above the bar chart) =====
+   Auto-built in JS from the same turns/quotes data. No extra schema fields. */
+.signature-section {
+  margin-bottom: 24px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--rule);
+}
+.sig-section-title {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  margin-bottom: 4px;
+  font-weight: 600;
+}
+.sig-section-sub {
+  font-family: 'Inter', sans-serif;
+  font-style: italic;
+  font-size: 11.5px;
+  color: var(--ink-soft);
+  margin-bottom: 10px;
+  line-height: 1.4;
+}
+.sig-flat {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10.5px;
+  line-height: 1.55;
+  color: var(--ink-soft);
+  background: var(--bg);
+  border: 1px solid var(--rule);
+  border-radius: 2px;
+  padding: 10px 12px;
+  margin-bottom: 12px;
+  white-space: pre-wrap;
+  word-break: normal;
+  overflow-wrap: anywhere;
+  user-select: all;
+  cursor: text;
+  max-height: 220px;
+  overflow-y: auto;
+}
+.sig-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-bottom: 4px;
+}
+.sig-row {
+  display: grid;
+  grid-template-columns: 36px minmax(0, 1fr);
+  gap: 6px;
+  align-items: start;
+  padding: 5px 6px 5px 4px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  border-radius: 2px;
+  text-align: left;
+  font: inherit;
+  color: inherit;
+  transition: background 0.15s ease;
+}
+.sig-row:hover { background: var(--bg); }
+.sig-row:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+.sig-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--ink-mute);
+  font-weight: 600;
+  text-align: right;
+  padding-right: 4px;
+  padding-top: 2px;
+}
+.sig-num .sig-flag {
+  display: inline;
+  margin-left: 2px;
+  color: var(--accent);
+  font-weight: 700;
+}
+.sig-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px;
+  align-items: center;
+}
+.sig-chip {
+  font-family: 'Inter', sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  padding: 1px 6px 2px;
+  border-radius: 2px;
+  border: 1px solid;
+  line-height: 1.35;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 4px;
+}
+.sig-chip-grp {
+  text-transform: uppercase;
+  font-size: 8.5px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  opacity: 0.7;
+}
+.sig-chip-sub {
+  font-size: 10px;
+  font-weight: 600;
+}
+.sig-chip-sep {
+  font-size: 10px;
+  opacity: 0.45;
+  margin: 0 1px;
+}
+.sig-chip-leaf {
+  font-size: 9.5px;
+  font-weight: 500;
+  font-style: italic;
+  opacity: 0.78;
+}
+.sig-chip-empty {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--ink-mute);
+  padding: 0 4px;
+}
+.sig-chip.grp-Retrieval  { color: var(--grp-Retrieval);  background: var(--grp-Retrieval-bg);  border-color: var(--grp-Retrieval); }
+.sig-chip.grp-Memory     { color: var(--grp-Memory);     background: var(--grp-Memory-bg);     border-color: var(--grp-Memory); }
+.sig-chip.grp-Planning   { color: var(--grp-Planning);   background: var(--grp-Planning-bg);   border-color: var(--grp-Planning); }
+.sig-chip.grp-Reasoning  { color: var(--grp-Reasoning);  background: var(--grp-Reasoning-bg);  border-color: var(--grp-Reasoning); }
+.sig-chip.grp-Evaluate   { color: var(--grp-Evaluate);   background: var(--grp-Evaluate-bg);   border-color: var(--grp-Evaluate); }
+.sig-chip.grp-Deciding   { color: var(--grp-Deciding);   background: var(--grp-Deciding-bg);   border-color: var(--grp-Deciding); }
+.sig-chip.grp-Grounding  { color: var(--grp-Grounding);  background: var(--grp-Grounding-bg);  border-color: var(--grp-Grounding); }
+.sig-chip.grp-Executing  { color: var(--grp-Executing);  background: var(--grp-Executing-bg);  border-color: var(--grp-Executing); }
+.sig-chip.grp-Learning   { color: var(--grp-Learning);   background: var(--grp-Learning-bg);   border-color: var(--grp-Learning); }
+.sig-chip.grp-Reflection { color: var(--grp-Reflection); background: var(--grp-Reflection-bg); border-color: var(--grp-Reflection); }
+
+.sig-restart-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 6px;
+  margin: 4px 0;
+  background: rgba(79, 70, 229, 0.06);
+  border-left: 2px solid var(--accent);
+  border-radius: 0 2px 2px 0;
+  font-family: 'Inter', sans-serif;
+  font-style: italic;
+  font-size: 11px;
+  color: var(--accent);
+  cursor: help;
+}
+.sig-restart-glyph { font-size: 16px; line-height: 1; }
+.sig-restart-text { color: var(--ink-soft); }
+
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="eyebrow">Quote-grounded annotation</div>
+  <h1 class="title">Agent Trajectory <em>&</em> Behavior Profile</h1>
+  <div class="subtitle">This report walks through one agent session step by step. Every label is tied to the exact quoted words that justify it — so you can see what was asked, what the agent did, and why.</div>
+  <div class="meta-row">
+    <span><strong>Instance</strong> FSM1/cipher-box · session c621c551 (Expert Nitpicker)</span>
+    <span><strong>Model</strong> Claude Code (human-in-the-loop, persona: Expert Nitpicker)</span>
+    <span><strong>Turns</strong> 43</span>
+    <span><strong>Human prompts</strong> 6</span>
+    <span><strong>Outcome</strong> <span class="outcome-pill outcome-resolved">RESOLVED ✓</span></span>
+    <span><strong>Annotations</strong> 113</span>
+  </div>
+</header>
+
+<div class="app">
+
+<main class="trajectory">
+
+<div class="section-label">the task</div>
+<div class="issue-block">Implement a plan to create docs/DATABASE_EVOLUTION_PROTOCOL.md — a formal protocol for PostgreSQL schema migrations in the cipher-box project, mirroring the existing IPFS metadata evolution protocol, to prevent the Phase 14 class of error (a new TypeORM entity shipped without a CREATE TABLE migration, breaking the staging deploy).</div>
+
+<div class="section-label">trajectory summary</div>
+<div class="summary-block">
+  <span class="summary-eyebrow">What happened in this run</span>
+  <div class="summary-text"><p>A 6-prompt working session between a human and Claude Code on the <strong>cipher-box</strong> project. The human is an <strong>Expert Nitpicker</strong>: they let the agent do almost all of the work, then interrogate its design decisions with precise, low-emotion technical arguments. The agent writes about 86% of the code; the human's leverage is entirely in the questions. The session has four arcs:</p><ul><li><strong>Writing the protocol (T1–T14, H1).</strong> From a detailed plan, the agent reads the reference protocol, every migration file, the entity list, and the deploy pipeline, then writes the ten-section doc. Along the way it notices on its own that the <code>device_approvals</code> table is missing from the FullSchema baseline and flags it as a gap.</li><li><strong>Fixing the gap (T15–T21, H2).</strong> The human asks the agent to fix that gap and probes whether it needs a staging reset. The agent adds the table to the baseline, updates the <code>down()</code> method and the doc, builds to confirm it compiles, and reports done.</li><li><strong>The reversal (T22–T28, H3).</strong> One sentence from the human (if the dedicated migration already creates the table, why duplicate it?) undoes the whole fix. The agent concedes, reverts every code change, rewrites the doc's principle, and corrects the project memory file.</li><li><strong>Shipping and deferring (T29–T43, H4–H6).</strong> The agent commits the doc (recovering from a markdown-lint failure), lands it on PR #186, weighs a follow-up proposal to disable auto-sync everywhere, and files it as a backlog todo — fixing its own bookkeeping slip when it miscounts the todo list.</li></ul><p>Worth noticing:</p><ul><li>The agent built, verified, and reported the gap fix as done (T16–T21) before the human's question at <strong>H3</strong> made it revert all of it.</li><li>At <strong>T22</strong> the agent even recalls a precedent that supports its own approach (shares and share_keys are duplicated too) yet still defers to the human.</li><li>The agent catches its own small mistakes (a wrong filename at <strong>T12</strong>, a phantom todo entry at <strong>T40–T41</strong>) but the one design-level error was caught only by the human.</li><li>Every human message carries mechanism-level technical content and no emotion — the opposite of the Mind Changer profile.</li></ul></div>
+</div>
+
+<div class="method-note">
+  <strong>How to read this.</strong> Every card below is one step of the session. Amber cards are the human speaking; white cards are the agent working. Cards start collapsed — click a header to open it. Inside an open agent card:<ul><li><em>Observation</em> — what the agent saw before acting (tool output, file contents).</li><li><em>Thought</em> — what the agent said to itself. Underlined phrases here explain <em>why</em> it acted.</li><li><em>Action</em> — what it actually did (commands, code edits). Underlined phrases here show <em>what</em> was done.</li></ul>Each underline carries a color-coded tag from the action codebook on the right. Click any underlined phrase, tag row, or codebook entry — the matching pieces light up together.
+</div>
+
+<div class="legend">
+  <div class="legend-item"><span class="legend-dot obs"></span> Observation</div>
+  <div class="legend-item"><span class="legend-dot thought"></span> Thought</div>
+  <div class="legend-item"><span class="legend-dot action"></span> Action</div>
+  <small>click anything underlined to light up its tag — and the other way around</small>
+</div>
+
+<div class="section-label">trajectory · 43 turns</div>
+
+<div class="turns-controls">
+  <button id="expand-all" type="button">expand all</button>
+  <button id="collapse-all" type="button">collapse all</button>
+</div>
+
+<div id="turns-container"></div>
+
+<div class="summary-footer">
+  <h2>Summary findings</h2>
+  <div class="sub">Patterns that only become visible when every tag points at an exact quote</div>
+  <div class="findings"><div class="finding"><strong>The agent's own checks catch typos; only the human catches the wrong design</strong><span>The agent self-detects two errors in this run — a mismatched learnings filename (T12) and a phantom todo it invented in the state file (T40–T41) — and fixes both without prompting. Both are cosmetic bookkeeping slips. The one substantive error, putting device_approvals into the FullSchema baseline at all, passed the agent's own review: it read the file back (T19), ran the build (T20), and reported success (T21). It took the human's question at H3 to overturn it. The agent can verify that its edits are internally consistent and that the code compiles, but not that the design is right.</span></div><div class="finding"><strong>A built, verified, reported fix reverted by one sentence</strong><span>The pushback-to-concession arc is unusually complete here. The agent fully executed the device_approvals fix — two migrations edited (T16–T17), doc updated (T18), build green (T20), summary delivered (T21) — and then H3 ("why would you repeat creating the table in the full schema if it will be created in the dedicated migration?") triggered an immediate reversal. The flip is explicit: T22 "The user makes a good point" and "The user's argument is sound", then T23 "You're right — that's unnecessary duplication". T22 is the densest reasoning turn in the session (five tags), all of it spent re-evaluating its own work against the human's argument.</span></div><div class="finding"><strong>The agent had a counter-argument and folded anyway</strong><span>At T22 the agent surfaces a real defense of its original change: "there IS a precedent for duplication" — shares and share_keys are defined in both FullSchema and their own incremental migration, so adding device_approvals followed the established pattern. A more assertive agent might have defended the consistency argument. Instead it treats the precedent as itself suspect ("the user is questioning whether that's the right pattern") and reverts. With an Expert Nitpicker, the agent's prior is that the human's technical objection wins.</span></div><div class="finding"><strong>Information asymmetry: every prompt is mechanism-level, none is emotional</strong><span>This persona's leverage is diagnostic content, not pressure. H2 names a specific deployment concern (staging reset). H3 carries the full technical argument (fresh installs run all migrations in order, so the dedicated migration already covers the fresh case). H5 proposes a concrete config change (synchronize:false in dev/CI) with its rationale. There is no escalation, no all-caps, no taste-based rejection. Compared with the Mind Changer worked example — where the agent's best fix only landed after the human finally supplied a class name — here the human supplies mechanism-level content in every message, and the agent responds with its deepest reasoning each time (T15, T22, T36).</span></div><div class="finding"><strong>Self-sufficiency gradient: one autonomous arc, then tight human steering</strong><span>The first cycle is near-autonomous: 14 agent turns on a single prompt (H1), during which the agent discovers the device_approvals gap by itself with no hint. The remaining five prompts each drive short cycles (H2→7 turns, H3→7, H4→7, H5→1, H6→7) where the human redirects, approves, or defers. The contrast mirrors the worked example's "one clean arc vs. several contested ones" pattern — except here the contested arc is contested on design correctness, not on taste.</span></div><div class="finding"><strong>Persona fingerprint matches Expert Nitpicker</strong><span>The human-move sequence is: initial request → (new task + technical challenge) → (technical challenge + diagnostic hint) → commit request → design proposal → defer to backlog. Two of the six moves are technical challenges carrying precise content, the agent writes ~86% of the code, and the human changes the outcome twice by argument rather than instruction (the reversal at H3, the deferral at H6). This is the Expert Nitpicker profile from the reference taxonomy: challenge-dominant, low emotion, high diagnostic ratio. Two labels were coined for moves the taxonomy did not enumerate: design proposal (H5 — proposes a change and asks for the agent's assessment rather than ordering it) and defer to backlog (H6 — directs the agent to capture an idea as a todo instead of building it now).</span></div></div>
+</div>
+
+</main>
+
+<aside class="codebook-panel">
+  <div id="panel-resize-handle" title="Drag to resize · double-click to reset"></div>
+  <div class="panel-title">What the agent did, by category</div>
+  <div class="panel-sub">Counted from the tagged quotes across all 43 agent steps</div>
+
+  <div class="pie-section">
+    <div class="pie-legend"><div style="font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--ink-mute); letter-spacing: 0.08em; text-transform: uppercase; text-align: center; margin-bottom: 10px;">113 tags across 10 groups</div></div>
+    <div class="pie-svg-wrap"><svg width="300" height="228" viewBox="0 0 300 228" xmlns="http://www.w3.org/2000/svg" style="display: block; margin: 0 auto;"><g class="pie-slice" data-grp="Reasoning" style="cursor: pointer;"><title>Reasoning: 32 (28%)</title><rect x="0" y="4" width="300" height="22" fill="transparent"/><text x="96" y="18.5" text-anchor="end" font-family="Inter, sans-serif" font-size="11" font-weight="500" fill="#0f172a">Reasoning</text><rect x="102" y="9" width="164.0" height="12" fill="#f1f5f9" rx="2"/><rect x="102" y="9" width="164.0" height="12" fill="#4f46e5" rx="2"/><text x="298" y="18.5" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="10" fill="#94a3b8">32</text></g><g class="pie-slice" data-grp="Retrieval" style="cursor: pointer;"><title>Retrieval: 19 (17%)</title><rect x="0" y="26" width="300" height="22" fill="transparent"/><text x="96" y="40.5" text-anchor="end" font-family="Inter, sans-serif" font-size="11" font-weight="500" fill="#0f172a">Retrieval</text><rect x="102" y="31" width="164.0" height="12" fill="#f1f5f9" rx="2"/><rect x="102" y="31" width="97.4" height="12" fill="#0891b2" rx="2"/><text x="298" y="40.5" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="10" fill="#94a3b8">19</text></g><g class="pie-slice" data-grp="Planning" style="cursor: pointer;"><title>Planning: 12 (11%)</title><rect x="0" y="48" width="300" height="22" fill="transparent"/><text x="96" y="62.5" text-anchor="end" font-family="Inter, sans-serif" font-size="11" font-weight="500" fill="#0f172a">Planning</text><rect x="102" y="53" width="164.0" height="12" fill="#f1f5f9" rx="2"/><rect x="102" y="53" width="61.5" height="12" fill="#0284c7" rx="2"/><text x="298" y="62.5" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="10" fill="#94a3b8">12</text></g><g class="pie-slice" data-grp="Evaluate" style="cursor: pointer;"><title>Evaluate: 12 (11%)</title><rect x="0" y="70" width="300" height="22" fill="transparent"/><text x="96" y="84.5" text-anchor="end" font-family="Inter, sans-serif" font-size="11" font-weight="500" fill="#0f172a">Evaluate</text><rect x="102" y="75" width="164.0" height="12" fill="#f1f5f9" rx="2"/><rect x="102" y="75" width="61.5" height="12" fill="#0d9488" rx="2"/><text x="298" y="84.5" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="10" fill="#94a3b8">12</text></g><g class="pie-slice" data-grp="Executing" style="cursor: pointer;"><title>Executing: 12 (11%)</title><rect x="0" y="92" width="300" height="22" fill="transparent"/><text x="96" y="106.5" text-anchor="end" font-family="Inter, sans-serif" font-size="11" font-weight="500" fill="#0f172a">Executing</text><rect x="102" y="97" width="164.0" height="12" fill="#f1f5f9" rx="2"/><rect x="102" y="97" width="61.5" height="12" fill="#059669" rx="2"/><text x="298" y="106.5" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="10" fill="#94a3b8">12</text></g><g class="pie-slice" data-grp="Grounding" style="cursor: pointer;"><title>Grounding: 11 (10%)</title><rect x="0" y="114" width="300" height="22" fill="transparent"/><text x="96" y="128.5" text-anchor="end" font-family="Inter, sans-serif" font-size="11" font-weight="500" fill="#0f172a">Grounding</text><rect x="102" y="119" width="164.0" height="12" fill="#f1f5f9" rx="2"/><rect x="102" y="119" width="56.4" height="12" fill="#c026d3" rx="2"/><text x="298" y="128.5" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="10" fill="#94a3b8">11</text></g><g class="pie-slice" data-grp="Reflection" style="cursor: pointer;"><title>Reflection: 9 (8%)</title><rect x="0" y="136" width="300" height="22" fill="transparent"/><text x="96" y="150.5" text-anchor="end" font-family="Inter, sans-serif" font-size="11" font-weight="500" fill="#0f172a">Reflection</text><rect x="102" y="141" width="164.0" height="12" fill="#f1f5f9" rx="2"/><rect x="102" y="141" width="46.1" height="12" fill="#e11d48" rx="2"/><text x="298" y="150.5" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="10" fill="#94a3b8">9</text></g><g class="pie-slice" data-grp="Memory" style="cursor: pointer;"><title>Memory: 3 (3%)</title><rect x="0" y="158" width="300" height="22" fill="transparent"/><text x="96" y="172.5" text-anchor="end" font-family="Inter, sans-serif" font-size="11" font-weight="500" fill="#0f172a">Memory</text><rect x="102" y="163" width="164.0" height="12" fill="#f1f5f9" rx="2"/><rect x="102" y="163" width="15.4" height="12" fill="#d97706" rx="2"/><text x="298" y="172.5" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="10" fill="#94a3b8">3</text></g><g class="pie-slice" data-grp="Learning" style="cursor: pointer;"><title>Learning: 2 (2%)</title><rect x="0" y="180" width="300" height="22" fill="transparent"/><text x="96" y="194.5" text-anchor="end" font-family="Inter, sans-serif" font-size="11" font-weight="500" fill="#0f172a">Learning</text><rect x="102" y="185" width="164.0" height="12" fill="#f1f5f9" rx="2"/><rect x="102" y="185" width="10.2" height="12" fill="#db2777" rx="2"/><text x="298" y="194.5" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="10" fill="#94a3b8">2</text></g><g class="pie-slice" data-grp="Deciding" style="cursor: pointer;"><title>Deciding: 1 (1%)</title><rect x="0" y="202" width="300" height="22" fill="transparent"/><text x="96" y="216.5" text-anchor="end" font-family="Inter, sans-serif" font-size="11" font-weight="500" fill="#0f172a">Deciding</text><rect x="102" y="207" width="164.0" height="12" fill="#f1f5f9" rx="2"/><rect x="102" y="207" width="5.1" height="12" fill="#7c3aed" rx="2"/><text x="298" y="216.5" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="10" fill="#94a3b8">1</text></g></svg></div>
+  </div>
+
+  <div id="signature-container"></div>
+
+  <div id="codebook-container"></div>
+</aside>
+
+</div>
+
+<script>
+const turns = [{"kind": "interaction", "id": "H1", "actor": "human", "label": "initial request", "headline": "Human hands over a detailed plan to write a database migration protocol doc.", "text": "Implement the following plan:\n\n# Plan: Database Schema Evolution Protocol\n\n## Context\n\nPhase 14 exposed a gap: new TypeORM entities were added without a corresponding `CREATE TABLE` migration, breaking the staging deploy. The IPFS metadata side has a formal evolution protocol (`docs/METADATA_EVOLUTION_PROTOCOL.md`) but there's no equivalent for the PostgreSQL database schema. This doc will formalize the rules, conventions, and checklist for database migrations to prevent the same class of error from recurring.\n\n## Approach\n\nCreate `docs/DATABASE_EVOLUTION_PROTOCOL.md` mirroring the structure of the metadata evolution protocol but adapted for relational database concerns (TypeORM entities, migrations, synchronize behavior, CD pipeline).\n\n## File\n\n- **Create:** `docs/DATABASE_EVOLUTION_PROTOCOL.md`\n\n## Structure (mirrors metadata protocol)\n\n1. **Purpose** — Why this doc exists (synchronize:true masks missing migrations, staging/prod rely exclusively on explicit migrations)\n2. **Guiding Principles** — Idempotency, ordering, entity-migration parity, FullSchema baseline maintenance\n3. **Change Classification** — Additive (new table, new nullable column, new index) vs Destructive (drop table, drop column, type change, rename)\n4. **Evolution Checklist** — The actionable section developers use during implementation:\n   - Before implementation (classify change, check dependencies)\n   - Entity changes (TypeORM decorator updates)\n   - Migration file (naming, timestamp, idempotency patterns)\n   - FullSchema baseline update\n   - CD pipeline verification\n   - Downstream checks (API client regen, desktop app if applicable)\n5. **Naming & Timestamp Conventions** — File naming, class naming, index/constraint naming prefixes\n6. **Current Schema Reference** — Table of all 11 tables with purpose, FK relationships, key indices\n7. **Environment Behavior Matrix** — How dev/test/staging/production handle schema changes differently\n8. **Dangerous Patterns** — synchronize:true masking gaps, migration ordering assumptions, down() ownership conflicts\n9. **Historical Incidents** — The Phase 14 shares table incident as a documented case study\n10. **References** — Links to migration files, entity files, deploy workflow, run-migrations.ts\n\n## Key content points\n\n- Every `@Entity()` MUST have a `CREATE TABLE` migration — synchronize cannot be relied upon\n- All DDL statements use `IF NOT EXISTS` / `IF EXISTS` for idempotency\n- FullSchema baseline must always reflect the complete current schema\n- Migration timestamp must be earlier than any migration that modifies the same table\n- The `down()` method must document ownership when tables are created in both FullSchema and incremental migrations\n- Include the actual file paths and patterns from the codebase (not generic advice)\n\n## Verification\n\n- Review the doc for accuracy against actual migration files\n- Ensure all 11 current tables are documented\n- Cross-reference with the metadata evolution protocol for structural consistency\n\n\nIf you need specific details from before exiting plan mode (like exact code snippets, error messages, or content you generated), read the full transcript at: /Users/michael/.REDACTED.jsonl", "quotes": []}, {"n": 1, "phase": "localize", "phaseLabel": "Gather sources", "headline": "Agent gathers the reference protocol, migration files, and entity files.", "obs": "", "thought": "I'll start by gathering the information I need: the existing metadata evolution protocol (for structural reference), the current migration files, and the entity files.", "action": "read REDACTED.md\nglob 'apps/api/src/migrations/*.ts'\nglob 'apps/api/src/**/*.entity.ts'", "quotes": [{"quote": "I'll start by gathering the information I need", "grp": "Planning", "sub": "Formulate a workflow or plan", "leaf": "Formulate a high-level plan", "target": "thought"}, {"quote": "the existing metadata evolution protocol (for structural reference)", "grp": "Planning", "sub": "Formulate a workflow or plan", "leaf": "Formulate plan from template", "target": "thought"}, {"quote": "read REDACTED.md", "grp": "Retrieval", "sub": "Retrieve from local corpus", "leaf": "Retrieve from local corpus", "target": "action"}, {"quote": "glob 'apps/api/src/**/*.entity.ts'", "grp": "Retrieval", "sub": "Retrieve from local corpus", "leaf": "Retrieve from local corpus", "target": "action"}], "insight": ""}, {"n": 2, "phase": "localize", "phaseLabel": "Read schema sources", "headline": "Agent reads migration and entity files to map the full schema.", "obs": "1→# CipherBox Metadata Schema Evolution Protocol\n     2→\n     3→**Version:** 1.0\n     4→**Last Updated:** 2026-02-21\n     5→**Status:** Active\n     6→\n     7→## Table of Contents\n     8→\n     9→1. [Purpose](#1-purpose)\n    10→2. [Guiding Principles](#2-guiding-principles)\n    11→3. [Change Classification](#3-change-classification)\n    12→4. [Evolution Checklist](#4-evolution-checklist)\n    13→5. [Version Field Convention](#5-version-field-convention)\n    14→6. [Testing Requirements](#6-testing-requirements)\n    15→7. [Recovery Tool Compatibility Matrix](#7-recovery-tool-compatibility-matrix)\n    16→8. [References](#8-references)\n    17→\n    18→---\n    19→\n    20→## 1. Purpose\n    21→\n    22→ …[truncated]", "thought": "Now I need to read the migration files and entity files to understand the full schema. Let me read the key files in parallel.", "action": "", "quotes": [{"quote": "Now I need to read the migration files and entity files", "grp": "Planning", "sub": "Formulate a workflow or plan", "leaf": "Formulate a high-level plan", "target": "thought"}, {"quote": "to understand the full schema", "grp": "Reasoning", "sub": "Analysing", "leaf": "Analyse source code", "target": "thought"}], "insight": ""}, {"n": 3, "phase": "localize", "phaseLabel": "Read migrations", "headline": "Agent reads the baseline and incremental migration files.", "obs": "", "thought": "Now let me read the key migration files and entity files to document the schema accurately.", "action": "read apps/api/src/migrations/1700000000000-FullSchema.ts\nread apps/api/src/migrations/1740250000000-AddSharesTables.ts\nread REDACTED.ts\nread apps/api/src/migrations/1740000000000-AddDeviceApprovals.ts", "quotes": [{"quote": "to document the schema accurately", "grp": "Reasoning", "sub": "Analysing", "leaf": "Analyse source code", "target": "thought"}, {"quote": "read apps/api/src/migrations/1700000000000-FullSchema.ts", "grp": "Retrieval", "sub": "Retrieve from local corpus", "leaf": "Retrieve from local corpus", "target": "action"}, {"quote": "read apps/api/src/migrations/1740250000000-AddSharesTables.ts", "grp": "Retrieval", "sub": "Retrieve from local corpus", "leaf": "Retrieve from local corpus", "target": "action"}], "insight": ""}, {"n": 4, "phase": "localize", "phaseLabel": "Read env config", "headline": "Agent turns to the data-source config to learn how each environment behaves.", "obs": "1→import { MigrationInterface, QueryRunner } from 'typeorm';\n     2→\n     3→/**\n     4→ * Full schema baseline migration for CipherBox.\n     5→ *\n     6→ * Creates ALL tables from scratch for fresh database initialization (staging/production).\n     7→ * This migration captures the complete schema state as of Phase 14 (includes sharing tables).\n     8→ *\n     9→ * Timestamp 1700000000000 ensures this runs BEFORE any incremental migrations.\n    10→ * For fresh databases: this creates everything; incremental migrations are idempotent (IF NOT EXISTS).\n    11→ * For existing databases created via synchronize:true: this migration will NOT be skipped\n    12→ *   automatically — you must manually in …[truncated]", "thought": "Now let me read the remaining migration files and the TypeORM data source config to understand the environment behavior.", "action": "", "quotes": [{"quote": "the TypeORM data source config", "grp": "Reasoning", "sub": "Analysing", "leaf": "Analyse source code", "target": "thought"}, {"quote": "to understand the environment behavior", "grp": "Reasoning", "sub": "Inferring", "leaf": "Infer dataflow / control flow", "target": "thought"}], "insight": ""}, {"n": 5, "phase": "localize", "phaseLabel": "Grep synchronize", "headline": "Agent searches for where the auto-sync setting is configured.", "obs": "", "thought": "Let me read the remaining migration files and the data source config.", "action": "read REDACTED.ts\nread REDACTED.ts\nread REDACTED.ts\nread REDACTED.ts\ngrep 'synchronize' (in apps/api/src)", "quotes": [{"quote": "Let me read the remaining migration files", "grp": "Retrieval", "sub": "Retrieve from local corpus", "leaf": "Retrieve from local corpus", "target": "thought"}, {"quote": "grep 'synchronize' (in apps/api/src)", "grp": "Retrieval", "sub": "Retrieve from local corpus", "leaf": "Retrieve from local corpus", "target": "action"}], "insight": ""}, {"n": 6, "phase": "localize", "phaseLabel": "Trace deploy path", "headline": "Agent traces how migrations run through the deploy workflow.", "obs": "1→import { MigrationInterface, QueryRunner } from 'typeorm';\n     2→\n     3→/**\n     4→ * Migration: Make TEE fields nullable in folder_ipns table\n     5→ *\n     6→ * Phase 6 defers TEE integration to Phase 7+, so encrypted_ipns_private_key\n     7→ * and key_epoch columns need to be nullable to allow folder IPNS tracking\n     8→ * without requiring TEE encryption.\n     9→ *\n    10→ * This migration:\n    11→ * 1. Alters encrypted_ipns_private_key to allow NULL\n    12→ * 2. Alters key_epoch to allow NULL\n    13→ *\n    14→ * These columns were originally NOT NULL but are now nullable for Phase 6.\n    15→ * Existing data (if any) with NULL values will remain unchanged.\n    16→ */\n    17→export c …[truncated]", "thought": "Now let me check the app module to see how synchronize is configured, and also look at the deploy workflow and run-migrations.ts file.", "action": "", "quotes": [{"quote": "to see how synchronize is configured", "grp": "Reasoning", "sub": "Inferring", "leaf": "Infer dataflow / control flow", "target": "thought"}, {"quote": "look at the deploy workflow and run-migrations.ts file", "grp": "Retrieval", "sub": "Retrieve from local corpus", "leaf": "Retrieve from local corpus", "target": "thought"}], "insight": ""}, {"n": 7, "phase": "localize", "phaseLabel": "Read runner + CI", "headline": "Agent reads the app module, migration runner, and CI deploy step.", "obs": "", "thought": "Let me get the app module config and the deploy/migration runner files.", "action": "read apps/api/src/app.module.ts:75-100\ngrep 'run-migrations|runMigrations' (in apps/api)\ngrep 'run.*migrat' (in .github)\nread apps/api/src/run-migrations.ts\nread .github/workflows/deploy-staging.yml:275-300", "quotes": [{"quote": "grep 'run-migrations|runMigrations' (in apps/api)", "grp": "Retrieval", "sub": "Retrieve from local corpus", "leaf": "Retrieve from local corpus", "target": "action"}, {"quote": "read apps/api/src/run-migrations.ts", "grp": "Retrieval", "sub": "Retrieve from local corpus", "leaf": "Read code semantics from open file", "target": "action"}, {"quote": "read .github/workflows/deploy-staging.yml:275-300", "grp": "Retrieval", "sub": "Retrieve from local corpus", "leaf": "Retrieve from local corpus", "target": "action"}], "insight": ""}, {"n": 8, "phase": "localize", "phaseLabel": "Probe baseline gap", "headline": "Agent checks whether device_approvals appears in the baseline schema.", "obs": "75→          FolderIpns,\n    76→          TeeKeyState,\n    77→          TeeKeyRotationLog,\n    78→          IpnsRepublishSchedule,\n    79→          DeviceApproval,\n    80→          Share,\n    81→          ShareKey,\n    82→        ],\n    83→        synchronize: ['development', 'test'].includes(\n    84→          configService.get<string>('NODE_ENV', 'development')\n    85→        ),\n    86→        logging:\n    87→          configService.get<string>('NODE_ENV') === 'development'\n    88→            ? ['error', 'warn', 'migration'] // Dev: errors, warnings, migrations only (no SQL query spam)\n    89→            : ['error', 'migration'], // Staging/production: errors and migrations only\n    90→     …[truncated]", "thought": "Now I have all the information I need. Let me also quickly check if `device_approvals` is in the FullSchema baseline (I noticed it's missing from the 11 tables listed in FullSchema but has its own migration).", "action": "grep 'device_approvals' (in apps/api/src/migrations/1700000000000-FullSchema.ts)", "quotes": [{"quote": "Now I have all the information I need", "grp": "Reasoning", "sub": "Inferring", "leaf": "Conclude success from evidence", "target": "thought"}, {"quote": "I noticed it's missing from the 11 tables listed in FullSchema but has its own migration", "grp": "Reasoning", "sub": "Inferring", "leaf": "Form precursor hypothesis about cause", "target": "thought"}, {"quote": "grep 'device_approvals' (in apps/api/src/migrations/1700000000000-FullSchema.ts)", "grp": "Retrieval", "sub": "Retrieve from local corpus", "leaf": "Retrieve from local corpus", "target": "action"}], "insight": ""}, {"n": 9, "phase": "localize", "phaseLabel": "Confirm gap", "headline": "Agent confirms device_approvals is missing from the baseline and flags it as a gap.", "obs": "No matches found", "thought": "Interesting - `device_approvals` is NOT in the FullSchema baseline. That's a gap that should be noted. Let me check if it was intentionally omitted - looking at the entity to understand the table.\n\nLet me now create the document. I have everything I need.\n\nThe 11 tables from FullSchema are:\n1. users\n2. refresh_tokens\n3. auth_methods\n4. vaults\n5. pinned_cids\n6. folder_ipns\n7. tee_key_state\n8. tee_key_rotation_log\n9. ipns_republish_schedule\n10. shares\n\n\n11. share_keys\n\nSo `device_approvals` comes from a separate migration that runs after FullSchema, which means it's not part of the baseline 11 tables - this looks like another case where a table should've been included in FullSchema but wasn't.", "action": "", "quotes": [{"quote": "`device_approvals` is NOT in the FullSchema baseline", "grp": "Reasoning", "sub": "Analysing", "leaf": "Interpret meaning of artifacts", "target": "thought"}, {"quote": "Let me check if it was intentionally omitted", "grp": "Reasoning", "sub": "Inferring", "leaf": "Infer causal relationship", "target": "thought"}, {"quote": "this looks like another case where a table should've been included in FullSchema but wasn't", "grp": "Reasoning", "sub": "Inferring", "leaf": "Diagnose Error Cause", "target": "thought"}, {"quote": "Let me now create the document. I have everything I need.", "grp": "Planning", "sub": "Formulate a workflow or plan", "leaf": "Formulate a high-level plan", "target": "thought"}], "insight": ""}, {"n": 10, "phase": "edit", "phaseLabel": "Write protocol doc", "headline": "Agent writes the database evolution protocol document.", "obs": "", "thought": "Good -- I found another gap: `device_approvals` is missing from the FullSchema baseline. That's worth documenting. Now I have everything to write the protocol.", "action": "write REDACTED.md\n# CipherBox Database Schema Evolution Protocol\n\n**Version:** 1.0\n**Last Updated:** 2026-02-22\n**Status:** Active\n\n## Table of Contents\n\n1. [Purpose](#1-purpose)\n2. [Guiding Principles](#2-guiding-principles)\n3. [Change Classification](#3-change-classification)\n4. [Evolution Checklist](#4-evolution-checklist)\n5. [Naming & Timestamp Conventions](#5-naming--timestamp-conventions)\n6. [Current Schema R …", "quotes": [{"quote": "I found another gap: `device_approvals` is missing from the FullSchema baseline", "grp": "Reasoning", "sub": "Inferring", "leaf": "Infer errors", "target": "thought"}, {"quote": "Now I have everything to write the protocol", "grp": "Reasoning", "sub": "Inferring", "leaf": "Conclude success from evidence", "target": "thought"}, {"quote": "# CipherBox Database Schema Evolution Protocol", "grp": "Reasoning", "sub": "Generating", "leaf": "Generate structured artifacts", "target": "action"}], "insight": ""}, {"n": 11, "phase": "verify", "phaseLabel": "Verify accuracy", "headline": "Agent double-checks the doc against the learnings file and entity list.", "obs": "File created successfully at: REDACTED.md", "thought": "The document is created. Let me verify accuracy by checking a couple of things -- the learnings file reference and making sure entity registration in app.module.ts matches my table.", "action": "glob '.learnings/*staging-migration*'\nread apps/api/src/app.module.ts:60-85", "quotes": [{"quote": "Let me verify accuracy by checking a couple of things", "grp": "Evaluate", "sub": "Evaluating without ground truth", "leaf": "Evaluate internal consistency", "target": "thought"}, {"quote": "making sure entity registration in app.module.ts matches my table", "grp": "Reasoning", "sub": "Comparing & Ranking", "leaf": "Match observation against spec", "target": "thought"}, {"quote": "read apps/api/src/app.module.ts:60-85", "grp": "Retrieval", "sub": "Retrieve from local corpus", "leaf": "Retrieve from local corpus", "target": "action"}], "insight": ""}, {"n": 12, "phase": "edit", "phaseLabel": "Fix learnings ref", "headline": "Agent finds a wrong filename reference and corrects it.", "obs": "60→    TypeOrmModule.forRootAsync({\n    61→      imports: [ConfigModule],\n    62→      useFactory: (configService: ConfigService) => ({\n    63→        type: 'postgres',\n    64→        host: configService.get<string>('DB_HOST', 'localhost'),\n    65→        port: configService.get<number>('DB_PORT', 5432),\n    66→        username: configService.get<string>('DB_USERNAME', 'postgres'),\n    67→        password: configService.get<string>('DB_PASSWORD', 'postgres'),\n    68→        database: configService.get<string>('DB_DATABASE', 'cipherbox'),\n    69→        entities: [\n    70→          User,\n    71→          RefreshToken,\n    72→          AuthMethod,\n    73→          Vault,\n    74→          Pinne …[truncated]", "thought": "Good -- 12 entities registered, matching my table. The learnings file has a slightly different name than what I referenced. Let me fix that reference.", "action": "edit REDACTED.md\n- - **Phase 14 learnings:** `.learnings/2026-02-21-staging-migration-gap.md`\n+ - **Phase 14 learnings:** `.learnings/2026-02-22-staging-migration-missing-create-table.md`", "quotes": [{"quote": "12 entities registered, matching my table", "grp": "Reasoning", "sub": "Comparing & Ranking", "leaf": "Match observation against spec", "target": "thought"}, {"quote": "The learnings file has a slightly different name than what I referenced", "grp": "Reflection", "sub": "Reflect on errors and failures", "leaf": "Detect failed action", "target": "thought"}, {"quote": "2026-02-22-staging-migration-missing-create-table.md", "grp": "Executing", "sub": "Executing plan", "leaf": "Apply patch via edit", "target": "action"}], "insight": ""}, {"n": 13, "phase": "verify", "phaseLabel": "Recheck learnings", "headline": "Agent searches for any other related learnings file.", "obs": "The file REDACTED.md has been updated successfully.", "thought": "Let me also check whether there's a separate learnings file from the earlier commit.", "action": "glob '.learnings/*staging*'", "quotes": [{"quote": "Let me also check whether there's a separate learnings file", "grp": "Reflection", "sub": "Reflect on self-outcomes", "leaf": "Pre-action self-check", "target": "thought"}, {"quote": "glob '.learnings/*staging*'", "grp": "Retrieval", "sub": "Retrieve from local corpus", "leaf": "Retrieve from local corpus", "target": "action"}], "insight": ""}, {"n": 14, "phase": "submit", "phaseLabel": "Report doc done", "headline": "Agent reports the finished protocol and summarizes its ten sections.", "obs": "/Users/michael/Code/cipher-box/.learnings/2026-02-09-staging-deployment-first-deploy.md\n/Users/michael/Code/cipher-box/.learnings/2026-02-13-grafana-loki-token-scopes-and-staging-fixes.md\n/Users/michael/Code/cipher-box/.learnings/2026-02-22-staging-migration-missing-create-table.md", "thought": "Good, the reference is now correct. The document is complete. Here's a summary of what was created:\n\n**`docs/DATABASE_EVOLUTION_PROTOCOL.md`** -- 10 sections mirroring the metadata evolution protocol:\n\n1. **Purpose** -- Explains why `synchronize: true` masks missing migrations in dev/test\n2. **Guiding Principles** -- 6 rules: entity-migration parity, idempotency, timestamp ordering, FullSchema maintenance, `down()` ownership, no data loss\n3. **Change Classification** -- Additive vs Destructive with concrete examples and rules\n4. **Evolution Checklist** -- The actionable section with 6 sub-checklists (before implementation, entity changes, migration file, FullSchema update, CD pipeline verification, downstream checks)\n5. **Naming & Timestamp Conventions** -- File naming patterns, class naming, constraint/index prefixes\n6. **Current Schema Reference** -- All 12 tables with entity files, purposes, FK relationships, plus the complete migration file inventory\n7. **Environment Behavior Matrix** -- How dev/test/staging/production handle schema changes differently (with the `synchronize` config source)\n8. **Dangerous Patterns** -- 5 documented anti-patterns with fixes (synchronize masking, timestamp ordering, `down()` conflicts, non-idempotent DDL, FullSchema drift)\n9. **Historical Incidents** -- Phase 14 shares table incident as a case study, plus the newly discovered `device_approvals` FullSchema gap\n10. **References** -- Links to all relevant files in the codebase", "action": "", "quotes": [{"quote": "the reference is now correct. The document is complete", "grp": "Reasoning", "sub": "Inferring", "leaf": "Conclude success from evidence", "target": "thought"}, {"quote": "Here's a summary of what was created", "grp": "Grounding", "sub": "Interact with users", "leaf": "Communicate task outcome natural language", "target": "thought"}, {"quote": "10 sections mirroring the metadata evolution protocol", "grp": "Reasoning", "sub": "Summarizing/Distilling", "leaf": "Summarize recent observations and trajectories", "target": "thought"}], "insight": ""}, {"kind": "interaction", "id": "H2", "actor": "human", "label": "new task + technical challenge", "headline": "Human asks the agent to fix the device_approvals gap and probes whether it needs a staging reset.", "text": "ok can you fix the device_approvals gap identified? Will this require a staging reset to fix?", "quotes": []}, {"n": 15, "phase": "localize", "phaseLabel": "Answer reset Q", "headline": "Agent answers the staging-reset question and re-reads the two migrations.", "obs": "", "thought": "No staging reset needed. The FullSchema baseline only runs on **fresh** databases, and since `AddDeviceApprovals` already creates the table with `IF NOT EXISTS`, existing staging/production databases already have it. This is purely a correctness fix for the baseline.\n\nLet me make the fix.", "action": "read apps/api/src/migrations/1700000000000-FullSchema.ts\nread apps/api/src/migrations/1740000000000-AddDeviceApprovals.ts", "quotes": [{"quote": "No staging reset needed", "grp": "Reasoning", "sub": "Inferring", "leaf": "Predict patch effect", "target": "thought"}, {"quote": "since `AddDeviceApprovals` already creates the table with `IF NOT EXISTS`, existing staging/production databases already have it", "grp": "Reasoning", "sub": "Inferring", "leaf": "Infer causal relationship", "target": "thought"}, {"quote": "This is purely a correctness fix for the baseline", "grp": "Reasoning", "sub": "Analysing", "leaf": "Interpret meaning of artifacts", "target": "thought"}, {"quote": "read apps/api/src/migrations/1700000000000-FullSchema.ts", "grp": "Retrieval", "sub": "Retrieve from local corpus", "leaf": "Retrieve from local corpus", "target": "action"}], "insight": ""}, {"n": 16, "phase": "edit", "phaseLabel": "Add table to baseline", "headline": "Agent adds the device_approvals table to the baseline schema.", "obs": "1→import { MigrationInterface, QueryRunner } from 'typeorm';\n     2→\n     3→/**\n     4→ * Full schema baseline migration for CipherBox.\n     5→ *\n     6→ * Creates ALL tables from scratch for fresh database initialization (staging/production).\n     7→ * This migration captures the complete schema state as of Phase 14 (includes sharing tables).\n     8→ *\n     9→ * Timestamp 1700000000000 ensures this runs BEFORE any incremental migrations.\n    10→ * For fresh databases: this creates everything; incremental migrations are idempotent (IF NOT EXISTS).\n    11→ * For existing databases created via synchronize:true: this migration will NOT be skipped\n    12→ *   automatically — you must manually in …[truncated]", "thought": "Now I'll make the two edits to FullSchema: update the JSDoc comment and add the `device_approvals` table + index after `ipns_republish_schedule` (table 9) and before `shares` (table 10). I also need to add it to the `down()` method.", "action": "edit apps/api/src/migrations/1700000000000-FullSchema.ts\n- * Tables created (11):\n *   users, refresh_tokens, auth_methods, vaults, pinned_cids,\n *   folder_ipns, tee_key_state, tee_key_rotation_log, ipns_republish_schedule,\n *   shares, share_keys\n+ * Tables created (12):\n *   users, refresh_tokens, auth_methods, vaults, pinned_cids,\n *   folder_ipns, tee_key_state, tee_key_rotation_log, ipns_republish_schedule,\n *   device_approvals, shares, share_keys\nedit apps/api/src/migrations/1700000000000-FullSchema.ts\n- // ──────────────────────────────────────────────\n    // 10. shares (Phase 14 — user-to-user sharing)\n+ // ──────────────────────────────────────────────\n    // 10. device_approvals (MFA device approval flow)\n    // ──────────────────────────────────────────────\n    await queryRunner.query(`\n      CREATE TABLE \"device_approvals\" (\n        \"id\"                    uuid DEFAULT uuid_generate_v4() NOT NULL,\n        \"user_id\"               varchar NOT NULL,\n        \"device_id\"             varchar NOT NULL,\n        \"device_name\"           varchar NOT NULL,\n        \"ephemeral_public_key\"  text NOT NULL,\n        \"status\"                varchar NOT NULL DEFAULT 'pending',\n        \"encrypted_factor_key\"  text,\n        \"created_at\"            TIMESTAMP NOT NULL DEFAULT now(),\n        \"expires_at\"            TIMESTAMP NOT NULL,\n        \"responded_by\"          varchar,\n        CONSTRAINT \"PK_device_approvals\" PRIMARY KEY (\"id\")\n      )\n    `);\n\n    await queryRunner.query(\n      `CREATE INDEX \"idx_device_approvals_user_status\" ON \"device_approvals\" (\"user_id\", \"status\")`\n    );\n\n    // ──────────────────────────────────────────────\n    // 11. shares (Phase 14 — user-to-user sharing)", "quotes": [{"quote": "I'll make the two edits to FullSchema", "grp": "Planning", "sub": "Formulate a workflow or plan", "leaf": "Plan code or artifact structure", "target": "thought"}, {"quote": "I also need to add it to the `down()` method", "grp": "Reasoning", "sub": "Inferring", "leaf": "Infer dataflow / control flow", "target": "thought"}, {"quote": "CREATE TABLE \"device_approvals\"", "grp": "Executing", "sub": "Executing plan", "leaf": "Apply patch via edit", "target": "action"}], "insight": ""}, {"n": 17, "phase": "edit", "phaseLabel": "Update down() + numbering", "headline": "Agent renumbers the comments and adds the drop to the down() method.", "obs": "The file /Users/michael/Code/cipher-box/apps/api/src/migrations/1700000000000-FullSchema.ts has been updated successfully.\nThe file /Users/michael/Code/cipher-box/apps/api/src/migrations/1700000000000-FullSchema.ts has been updated successfully.", "thought": "Now update the share_keys comment number and the `down()` method.", "action": "edit apps/api/src/migrations/1700000000000-FullSchema.ts\n- // 11. share_keys (Phase 14 — per-file/subfolder keys)\n+ // 12. share_keys (Phase 14 — per-file/subfolder keys)\nedit apps/api/src/migrations/1700000000000-FullSchema.ts\n- // Drop tables in reverse dependency order (children before parents)\n    await queryRunner.query(`DROP TABLE IF EXISTS \"share_keys\" CASCADE`);\n    await queryRunner.query(`DROP TABLE IF EXISTS \"shares\" CASCADE`);\n    await queryRunner.query(`DROP TABLE IF EXISTS \"ipns_republish_schedule\" CASCADE`);\n+ // Drop tables in reverse dependency order (children before parents)\n    await queryRunner.query(`DROP TABLE IF EXISTS \"share_keys\" CASCADE`);\n    await queryRunner.query(`DROP TABLE IF EXISTS \"shares\" CASCADE`);\n    await queryRunner.query(`DROP TABLE IF EXISTS \"device_approvals\" CASCADE`);\n    await queryRunner.query(`DROP TABLE IF EXISTS \"ipns_republish_schedule\" CASCADE`);", "quotes": [{"quote": "update the share_keys comment number and the `down()` method", "grp": "Planning", "sub": "Formulate a workflow or plan", "leaf": "Plan code or artifact structure", "target": "thought"}, {"quote": "DROP TABLE IF EXISTS \"device_approvals\" CASCADE", "grp": "Executing", "sub": "Executing plan", "leaf": "Apply patch via edit", "target": "action"}], "insight": ""}, {"n": 18, "phase": "edit", "phaseLabel": "Mark gap resolved", "headline": "Agent updates the doc to record the gap as fixed.", "obs": "The file /Users/michael/Code/cipher-box/apps/api/src/migrations/1700000000000-FullSchema.ts has been updated successfully.\nThe file /Users/michael/Code/cipher-box/apps/api/src/migrations/1700000000000-FullSchema.ts has been updated successfully.", "thought": "Now update the protocol doc to mark the gap as resolved.", "action": "edit REDACTED.md\n- **Known gap:** `device_approvals` (table 12) is created by migration `1740000000000-AddDeviceApprovals.ts` but is NOT included in the FullSchema baseline. A fresh database deploy creates it via the incremental migration, which works due to idempotency, but it should be added to FullSchema for completeness.\n+ **Note:** `device_approvals` (table 12) uses `user_id` as a plain `varchar` rather than a foreign key to `users.id`. This is by design -- device approvals reference users by their Web3Auth identifier string, not the internal UUID.\nedit REDACTED.md\n- | `1700000000000` | `FullSchema.ts` | Baseline | All 11 (missing `device_approvals`) |\n+ | `1700000000000` | `FullSchema.ts` | Baseline | All 12 tables |\nedit REDACTED.md\n- ### 9.2 `device_approvals` Table Not in FullSchema (Known Gap)\n\n**Date:** Discovered 2026-02-22\n**Severity:** Low (functional but inconsistent)\n**Root cause:** `1740000000000-AddDeviceApprovals.ts` creates the `device_approvals` table, but FullSchema was not updated to include it. Fresh database deployments still work because the incremental migration runs after FullSchema and creates the table.\n\n**Impact:** FullSchema does not represent the complete schema. Its JSDoc says \"Tables created (11)\" but there are actually 12 tables in the system.\n\n**Status:** Open. Should be fixed by adding `device_approvals` to FullSchema and updating the table count to 12.\n+ ### 9.2 `device_approvals` Table Not in FullSchema (Fixed)\n\n**Date:** Discovered 2026-02-22\n**Severity:** Low (functional but inconsistent)\n**Root cause:** `1740000000000-AddDeviceApprovals.ts` creates the `device_approvals` table, but FullSchema was not updated to include it. Fresh database deployments still work because the incremental migration runs after FullSchema and creates the table.\n\n**Impact:** FullSchema did not represent the complete schema. Its JSDoc said \"Tables created (11)\" but there were actually 12 tables in the system.\n\n**Resolution:** Added `device_approvals` to FullSchema baseline and updated the table count to 12. No staging reset required -- existing databases already have the table from the incremental migration, and FullSchema only affects fresh deployments.", "quotes": [{"quote": "update the protocol doc to mark the gap as resolved", "grp": "Planning", "sub": "Formulate a workflow or plan", "leaf": "Plan code or artifact structure", "target": "thought"}, {"quote": "### 9.2 `device_approvals` Table Not in FullSchema (Fixed)", "grp": "Executing", "sub": "Executing plan", "leaf": "Apply patch via edit", "target": "action"}], "insight": ""}, {"n": 19, "phase": "verify", "phaseLabel": "Re-read FullSchema", "headline": "Agent re-reads the full schema to confirm the edits.", "obs": "The file REDACTED.md has been updated successfully.\nThe file REDACTED.md has been updated successfully.\nThe file REDACTED.md has been updated successfully.", "thought": "Let me verify the final state of FullSchema looks correct.", "action": "read apps/api/src/migrations/1700000000000-FullSchema.ts", "quotes": [{"quote": "Let me verify the final state of FullSchema looks correct", "grp": "Reflection", "sub": "Reflect on self-outcomes", "leaf": "Pre-action self-check", "target": "thought"}, {"quote": "read apps/api/src/migrations/1700000000000-FullSchema.ts", "grp": "Retrieval", "sub": "Retrieve from local corpus", "leaf": "Retrieve from local corpus", "target": "action"}], "insight": ""}, {"n": 20, "phase": "verify", "phaseLabel": "Build check", "headline": "Agent runs the build to confirm the migration compiles.", "obs": "1→import { MigrationInterface, QueryRunner } from 'typeorm';\n     2→\n     3→/**\n     4→ * Full schema baseline migration for CipherBox.\n     5→ *\n     6→ * Creates ALL tables from scratch for fresh database initialization (staging/production).\n     7→ * This migration captures the complete schema state as of Phase 14 (includes sharing tables).\n     8→ *\n     9→ * Timestamp 1700000000000 ensures this runs BEFORE any incremental migrations.\n    10→ * For fresh databases: this creates everything; incremental migrations are idempotent (IF NOT EXISTS).\n    11→ * For existing databases created via synchronize:true: this migration will NOT be skipped\n    12→ *   automatically — you must manually in …[truncated]", "thought": "Looks correct. Let me verify it compiles.", "action": "$ pnpm --filter api build 2>&1 | tail -5", "quotes": [{"quote": "Looks correct", "grp": "Evaluate", "sub": "Evaluating without ground truth", "leaf": "Evaluate internal consistency", "target": "thought"}, {"quote": "Let me verify it compiles", "grp": "Evaluate", "sub": "Evaluating with gold", "leaf": "Plan verification step", "target": "thought"}, {"quote": "$ pnpm --filter api build 2>&1 | tail -5", "grp": "Grounding", "sub": "Augment with external computation", "leaf": "Execute code", "target": "action"}], "insight": ""}, {"n": 21, "phase": "submit", "phaseLabel": "Report fix", "headline": "Agent reports the build passed and summarizes the changes.", "obs": "> @cipherbox/api@0.15.0 build /Users/michael/Code/cipher-box/apps/api\n> nest build", "thought": "Build succeeds. Here's the summary:\n\n**No staging reset required.** The FullSchema baseline only runs on fresh database initialization. Staging already has `device_approvals` from the incremental migration (`1740000000000-AddDeviceApprovals`). This fix ensures that if a fresh database is ever provisioned (new environment, DB wipe), FullSchema creates all 12 tables instead of 11.\n\nChanges made:\n- **`apps/api/src/migrations/1700000000000-FullSchema.ts`** -- Added `device_approvals` table as #10 (renumbered shares to #11, share_keys to #12), updated JSDoc count from 11 to 12, added `DROP TABLE` in `down()`\n- **`docs/DATABASE_EVOLUTION_PROTOCOL.md`** -- Updated incident 9.2 status from \"Open\" to \"Fixed\", updated migration inventory to say \"All 12 tables\"", "action": "", "quotes": [{"quote": "Build succeeds", "grp": "Evaluate", "sub": "Evaluating with gold", "leaf": "Confirm actual == expected", "target": "thought"}, {"quote": "No staging reset required", "grp": "Grounding", "sub": "Interact with users", "leaf": "Communicate task outcome natural language", "target": "thought"}, {"quote": "Changes made:", "grp": "Reasoning", "sub": "Summarizing/Distilling", "leaf": "Summarize recent observations and trajectories", "target": "thought"}], "insight": ""}, {"kind": "interaction", "id": "H3", "actor": "human", "label": "technical challenge + diagnostic hint", "headline": "Human pushes back: why duplicate the table in the full schema when the dedicated migration already creates it?", "text": "but the fresh install will always run all the available migrations, why would you repeat creating the table in the full schema if it will be created in the dedicated migration?", "quotes": []}, {"n": 22, "phase": "recover", "phaseLabel": "Reconsider after pushback", "headline": "Agent works through the human's objection and decides to revert.", "obs": "", "thought": "The user makes a good point. The FullSchema baseline doesn't use `IF NOT EXISTS` — it uses bare `CREATE TABLE`. So if FullSchema creates `device_approvals`, and then the incremental migration `1740000000000-AddDeviceApprovals` also tries to create it, the second one would fail... except that migration uses `CREATE TABLE IF NOT EXISTS`, so it would be a no-op.\n\nBut the user's point is more fundamental: why duplicate the table definition in two places? The existing pattern in the codebase is that FullSchema DOES include shares and share_keys (which also have their own incremental migration). So there IS a precedent for duplication. But the user is questioning whether that's the right pattern.\n\n\nActually, I'm seeing the real issue now — if we skip adding device_approvals to FullSchema, then fresh installs would only get the 11 original tables, and the incremental migration would add it later. That's cleaner than duplicating the definition, but it breaks the pattern established by shares and share_keys.\n\nThe inconsistency is the real problem here. The user's argument is sound — if incremental migrations already handle creation idempotently with `IF NOT EXISTS`, there's no functional reason to duplicate them in FullSchema. I should revert my change and acknowledge that the current approach creates unnecessary maintenance overhead. The user is right that this is unnecessary duplication — FullSchema documents the original schema state, and incremental migrations handle new additions. I should revert the change and acknowledge their point rather than maintain the same DDL in two places.", "action": "", "quotes": [{"quote": "The user makes a good point", "grp": "Reflection", "sub": "Reflect on external feedback", "leaf": "Receive and integrate external feedback", "target": "thought"}, {"quote": "why duplicate the table definition in two places?", "grp": "Reasoning", "sub": "Analysing", "leaf": "Interpret meaning of artifacts", "target": "thought"}, {"quote": "there IS a precedent for duplication", "grp": "Reasoning", "sub": "Analysing", "leaf": "Detect patterns or trends in data", "target": "thought"}, {"quote": "The user's argument is sound", "grp": "Evaluate", "sub": "Evaluating without ground truth", "leaf": "Provide qualitative judgement", "target": "thought"}, {"quote": "I should revert my change", "grp": "Deciding", "sub": "Make a decision", "leaf": "Pick alternative strategy", "target": "thought"}], "insight": ""}, {"n": 23, "phase": "recover", "phaseLabel": "Revert baseline edit", "headline": "Agent concedes and reverts every change to the baseline schema.", "obs": "", "thought": "You're right — that's unnecessary duplication. The incremental migration already uses `CREATE TABLE IF NOT EXISTS` and will always run after FullSchema. Having it in both places just creates two locations to maintain the same DDL. Let me revert.", "action": "edit apps/api/src/migrations/1700000000000-FullSchema.ts\n- * Tables created (12):\n *   users, refresh_tokens, auth_methods, vaults, pinned_cids,\n *   folder_ipns, tee_key_state, tee_key_rotation_log, ipns_republish_schedule,\n *   device_approvals, shares, share_keys\n+ * Tables created (11):\n *   users, refresh_tokens, auth_methods, vaults, pinned_cids,\n *   folder_ipns, tee_key_state, tee_key_rotation_log, ipns_republish_schedule,\n *   shares, share_keys\nedit apps/api/src/migrations/1700000000000-FullSchema.ts\n- // ──────────────────────────────────────────────\n    // 10. device_approvals (MFA device approval flow)\n    // ──────────────────────────────────────────────\n    await queryRunner.query(`\n      CREATE TABLE \"device_approvals\" (\n        \"id\"                    uuid DEFAULT uuid_generate_v4() NOT NULL,\n        \"user_id\"               varchar NOT NULL,\n        \"device_id\"             varchar NOT NULL,\n        \"device_name\"           varchar NOT NULL,\n        \"ephemeral_public_key\"  text NOT NULL,\n        \"status\"                varchar NOT NULL DEFAULT 'pending',\n        \"encrypted_factor_key\"  text,\n        \"created_at\"            TIMESTAMP NOT NULL DEFAULT now(),\n        \"expires_at\"            TIMESTAMP NOT NULL,\n        \"responded_by\"          varchar,\n        CONSTRAINT \"PK_device_approvals\" PRIMARY KEY (\"id\")\n      )\n    `);\n\n    await queryRunner.query(\n      `CREATE INDEX \"idx_device_approvals_user_status\" ON \"device_approvals\" (\"user_id\", \"status\")`\n    );\n\n    // ──────────────────────────────────────────────\n    // 11. shares (Phase 14 — user-to-user sharing)\n+ // ──────────────────────────────────────────────\n    // 10. shares (Phase 14 — user-to-user sharing)\nedit apps/api/src/migrations/1700000000000-FullSchema.ts\n- // 12. share_keys (Phase 14 — per-file/subfolder keys)\n+ // 11. share_keys (Phase 14 — per-file/subfolder keys)\nedit apps/api/src/migrations/1700000000000-FullSchema.ts\n- await queryRunner.query(`DROP TABLE IF EXISTS \"device_approvals\" CASCADE`);\n    await queryRunner.query(`DROP TABLE IF EXISTS \"ipns_republish_schedule\" CASCADE`);\n+ await queryRunner.query(`DROP TABLE IF EXISTS \"ipns_republish_schedule\" CASCADE`);", "quotes": [{"quote": "You're right", "grp": "Reflection", "sub": "Reflect on external feedback", "leaf": "Receive and integrate external feedback", "target": "thought"}, {"quote": "Having it in both places just creates two locations to maintain the same DDL", "grp": "Reasoning", "sub": "Inferring", "leaf": "Infer causal relationship", "target": "thought"}, {"quote": "Let me revert", "grp": "Planning", "sub": "Modify Plan", "leaf": "Replan dynamically based on feedback", "target": "thought"}, {"quote": "* Tables created (11):", "grp": "Executing", "sub": "Executing plan", "leaf": "Apply patch via edit", "target": "action"}], "insight": ""}, {"n": 24, "phase": "edit", "phaseLabel": "Rewrite principle", "headline": "Agent rewrites the doc's principle to match the corrected understanding.", "obs": "The file /Users/michael/Code/cipher-box/apps/api/src/migrations/1700000000000-FullSchema.ts has been updated successfully.\nThe file /Users/michael/Code/cipher-box/apps/api/src/migrations/1700000000000-FullSchema.ts has been updated successfully.\nThe file /Users/michael/Code/cipher-box/apps/api/src/migrations/1700000000000-FullSchema.ts has been updated successfully.\nThe file /Users/michael/Code/cipher-box/apps/api/src/migrations/1700000000000-FullSchema.ts has been updated successfully.", "thought": "Now update the protocol doc to reflect the corrected understanding — FullSchema is a snapshot baseline, not a living document that must contain every table.", "action": "edit REDACTED.md\n- 4. **The FullSchema baseline must be current.** `1700000000000-FullSchema.ts` is the single-file representation of the entire database. Fresh database deployments run this first, then incremental migrations (which are no-ops due to idempotency). Every new table or column must be added to FullSchema.\n+ 4. **The FullSchema baseline does not need updating for new tables.** `1700000000000-FullSchema.ts` captures the schema at a point in time. Fresh database deployments run FullSchema first, then all incremental migrations in timestamp order. New tables created by incremental migrations (with `IF NOT EXISTS`) do not need to be duplicated into FullSchema -- the incremental migration handles creation on both fresh and existing databases.", "quotes": [{"quote": "FullSchema is a snapshot baseline, not a living document that must contain every table", "grp": "Learning", "sub": "Learning knowledge", "leaf": "Update hypothesis with new evidence", "target": "thought"}, {"quote": "4. **The FullSchema baseline does not need updating for new tables.**", "grp": "Executing", "sub": "Executing plan", "leaf": "Apply patch via edit", "target": "action"}], "insight": ""}, {"n": 25, "phase": "edit", "phaseLabel": "Remove stale sections", "headline": "Agent deletes the checklist and warning the reversal made wrong.", "obs": "The file REDACTED.md has been updated successfully.", "thought": "Now remove the checklist section about FullSchema updates (Section 4.4) and the dangerous pattern about forgetting to update FullSchema (Section 8.5).", "action": "edit REDACTED.md\n- ### 4.4 FullSchema Baseline Update\n\n- [ ] Add the new table/column/index to `apps/api/src/migrations/1700000000000-FullSchema.ts`\n- [ ] Update the tables count in the FullSchema JSDoc comment\n- [ ] Ensure FullSchema creates the structure identically to the incremental migration\n- [ ] Verify constraint and index names match between FullSchema and the incremental migration\n\n### 4.5 CD Pipeline Verification\n+ ### 4.4 CD Pipeline Verification\nedit REDACTED.md\n- ### 4.6 Downstream Checks\n+ ### 4.5 Downstream Checks\nedit REDACTED.md\n- ### 8.5 Forgetting to Update FullSchema\n\n**The problem:** A new table is added via an incremental migration but not added to `FullSchema.ts`. Fresh database deployments work (the incremental migration creates the table), but FullSchema no longer represents the complete schema. Over time, FullSchema drifts from reality.\n\n**The fix:** Every schema change must update FullSchema in the same PR. The FullSchema JSDoc comment lists all tables -- update the count and the list.\n\n---\n+ ---", "quotes": [{"quote": "remove the checklist section about FullSchema updates", "grp": "Planning", "sub": "Modify Plan", "leaf": "Replan dynamically based on feedback", "target": "thought"}, {"quote": "### 4.4 CD Pipeline Verification", "grp": "Executing", "sub": "Executing plan", "leaf": "Apply patch via edit", "target": "action"}], "insight": ""}, {"n": 26, "phase": "edit", "phaseLabel": "Reconcile doc sections", "headline": "Agent reconciles the schema reference and incident write-up.", "obs": "The file REDACTED.md has been updated successfully.\nThe file REDACTED.md has been updated successfully.\nThe file REDACTED.md has been updated successfully.", "thought": "Now update the schema reference and incident sections to be consistent.", "action": "edit REDACTED.md\n- **Note:** `device_approvals` (table 12) uses `user_id` as a plain `varchar` rather than a foreign key to `users.id`. This is by design -- device approvals reference users by their Web3Auth identifier string, not the internal UUID.\n+ **Note:** `device_approvals` uses `user_id` as a plain `varchar` rather than a foreign key to `users.id`. This is by design -- device approvals reference users by their Web3Auth identifier string, not the internal UUID. This table is not in the FullSchema baseline; it is created by its own incremental migration (`1740000000000-AddDeviceApprovals.ts`).\nedit REDACTED.md\n- | `1700000000000` | `FullSchema.ts` | Baseline | All 12 tables |\n+ | `1700000000000` | `FullSchema.ts` | Baseline | 11 tables (all except `device_approvals`) |\nedit REDACTED.md\n- ### 9.2 `device_approvals` Table Not in FullSchema (Fixed)\n\n**Date:** Discovered 2026-02-22\n**Severity:** Low (functional but inconsistent)\n**Root cause:** `1740000000000-AddDeviceApprovals.ts` creates the `device_approvals` table, but FullSchema was not updated to include it. Fresh database deployments still work because the incremental migration runs after FullSchema and creates the table.\n\n**Impact:** FullSchema did not represent the complete schema. Its JSDoc said \"Tables created (11)\" but there were actually 12 tables in the system.\n\n**Resolution:** Added `device_approvals` to FullSchema baseline and updated the table count to 12. No staging reset required -- existing databases already have the table from the incremental migration, and FullSchema only affects fresh deployments.\n+ ### 9.2 Clarification: FullSchema Does Not Need Every Table\n\n**Date:** 2026-02-22\n\nDuring the creation of this protocol, the `device_approvals` table was identified as missing from `FullSchema.ts`. Initial analysis suggested this was a gap, but on review: FullSchema is a point-in-time baseline, not a living document. Fresh database deployments run FullSchema first, then all incremental migrations. The `1740000000000-AddDeviceApprovals.ts` migration uses `CREATE TABLE IF NOT EXISTS` and runs on both fresh and existing databases. There is no need to duplicate the DDL into FullSchema.", "quotes": [{"quote": "update the schema reference and incident sections to be consistent", "grp": "Evaluate", "sub": "Evaluating without ground truth", "leaf": "Evaluate internal consistency", "target": "thought"}, {"quote": "### 9.2 Clarification: FullSchema Does Not Need Every Table", "grp": "Executing", "sub": "Executing plan", "leaf": "Apply patch via edit", "target": "action"}], "insight": ""}, {"n": 27, "phase": "edit", "phaseLabel": "Correct memory rule", "headline": "Agent rewrites the project memory rule about the baseline.", "obs": "The file REDACTED.md has been updated successfully.\nThe file REDACTED.md has been updated successfully.\nThe file REDACTED.md has been updated successfully.", "thought": "Now update the MEMORY.md to correct the rule about FullSchema.", "action": "read /Users/michael/.claude/projects/-Users-michael-Code-cipher-box/memory/MEMORY.md:103-113\nedit /Users/michael/.claude/projects/-Users-michael-Code-cipher-box/memory/MEMORY.md\n- ## CRITICAL: TypeORM Migration Discipline\n- **`synchronize: true` in dev/test hides missing migrations** — tables auto-created from entities, so missing `CREATE TABLE` migrations are invisible until staging/production deploy\n- **Every new `@Entity()` MUST have a corresponding `CREATE TABLE` migration** — check `apps/api/src/migrations/` before merging any PR that adds entities\n- **Also update FullSchema baseline** (`1700000000000-FullSchema.ts`) for fresh database initialization\n- **Use `IF NOT EXISTS`** for idempotency (pattern: `1740000000000-AddDeviceApprovals.ts`)\n- **Migration timestamp ordering matters** — create-table migration must have earlier timestamp than any migration that modifies that table\n- Phase 14 hit this exact bug: `SharesPartialUniqueIndex` tried to modify `shares` table that didn't exist on staging. Fixed in PR #186.\n+ ## CRITICAL: TypeORM Migration Discipline\n- **`synchronize: true` in dev/test hides missing migrations** — tables auto-created from entities, so missing `CREATE TABLE` migrations are invisible until staging/production deploy\n- **Every new `@Entity()` MUST have a corresponding `CREATE TABLE` migration** — check `apps/api/src/migrations/` before merging any PR that adds entities\n- **FullSchema baseline does NOT need updating** — it's a point-in-time snapshot; incremental migrations with `IF NOT EXISTS` run on both fresh and existing databases\n- **Use `IF NOT EXISTS`** for idempotency (pattern: `1740000000000-AddDeviceApprovals.ts`)\n- **Migration timestamp ordering matters** — create-table migration must have earlier timestamp than any migration that modifies that table\n- Phase 14 hit this exact bug: `SharesPartialUniqueIndex` tried to modify `shares` table that didn't exist on staging. Fixed in PR #186.\n- **Full protocol:** `docs/DATABASE_EVOLUTION_PROTOCOL.md`", "quotes": [{"quote": "update the MEMORY.md to correct the rule about FullSchema", "grp": "Memory", "sub": "Update Information", "leaf": "Update memory", "target": "thought"}, {"quote": "FullSchema baseline does NOT need updating", "grp": "Learning", "sub": "Learning instructions", "leaf": "Learning instructions", "target": "action"}], "insight": ""}, {"n": 28, "phase": "submit", "phaseLabel": "Confirm reverted state", "headline": "Agent confirms the schema is back to original and the docs are consistent.", "obs": "103→  - Use GraphQL `reviewThreads` query (not REST) to get `isResolved` status per thread\n   104→  - Reply via REST: `gh api repos/OWNER/REPO/pulls/N/comments --field in_reply_to=COMMENT_ID --raw-field body='...'` (use `--field` not `-f` for `in_reply_to` — it must be sent as integer, `-f` sends string which causes 422)\n   105→  - Resolve via GraphQL: `resolveReviewThread(input: {threadId: \"...\"})` — can batch multiple in one mutation\n   106→  - Always check code state before acting — comments may already be addressed in later commits\n   107→  - For already-addressed comments: reply with explanation of where/how it was fixed, then resolve\n   108→  - For inapplicable comments: reply with rea …[truncated]", "thought": "FullSchema is now back to its original state, the protocol doc no longer prescribes FullSchema updates, and MEMORY.md is corrected. No staging reset needed -- nothing changed on the migration side.", "action": "", "quotes": [{"quote": "FullSchema is now back to its original state", "grp": "Evaluate", "sub": "Evaluating without ground truth", "leaf": "Evaluate internal consistency", "target": "thought"}, {"quote": "nothing changed on the migration side", "grp": "Reasoning", "sub": "Inferring", "leaf": "Conclude success from evidence", "target": "thought"}], "insight": ""}, {"kind": "interaction", "id": "H4", "actor": "human", "label": "commit request", "headline": "Human says to push everything up and get it merged.", "text": "ok push all this up and lets get it merged.", "quotes": []}, {"n": 29, "phase": "submit", "phaseLabel": "Inspect git state", "headline": "Agent checks the working tree and recent history before committing.", "obs": "", "thought": "", "action": "$ git status\n$ git diff\n$ git log --oneline -5", "quotes": [{"quote": "$ git status", "grp": "Grounding", "sub": "Interact with digital environments", "leaf": "Issue operational commands", "target": "action"}, {"quote": "$ git diff", "grp": "Grounding", "sub": "Interact with digital environments", "leaf": "Issue operational commands", "target": "action"}], "insight": ""}, {"n": 30, "phase": "submit", "phaseLabel": "Interpret diff", "headline": "Agent reads the diff and explains why only the doc shows up.", "obs": "On branch fix/staging-shares-migration\nYour branch is up to date with 'origin/fix/staging-shares-migration'.\n\nUntracked files:\n  (use \"git add <file>...\" to include in what will be committed)\n\tdocs/DATABASE_EVOLUTION_PROTOCOL.md\n\nnothing added to commit but untracked files present (use \"git add\" to track)\n7a3078f38 fix(api): address CodeRabbit review — stale phase label, down() comment\ne1d5409b3 docs: add learnings entry for staging migration gap\n277706ac6 fix(api): add missing migration to create shares tables\ncfbbee99e chore: release 0.15.0 (#184)\n84a232db4 feat(14): user-to-user encrypted sharing (#183)", "thought": "The FullSchema file shows no diff because it was reverted to its original state. The only change is the new doc file. The MEMORY.md change won't show up in git since it's outside the repo. Let me commit the new doc and push.", "action": "", "quotes": [{"quote": "The FullSchema file shows no diff because it was reverted to its original state", "grp": "Reasoning", "sub": "Inferring", "leaf": "Infer causal relationship", "target": "thought"}, {"quote": "The MEMORY.md change won't show up in git since it's outside the repo", "grp": "Reasoning", "sub": "Analysing", "leaf": "Interpret meaning of artifacts", "target": "thought"}, {"quote": "Let me commit the new doc and push", "grp": "Planning", "sub": "Formulate a workflow or plan", "leaf": "Plan function or tool use", "target": "thought"}], "insight": ""}, {"n": 31, "phase": "submit", "phaseLabel": "Commit doc", "headline": "Agent moves to commit the single new doc file.", "obs": "", "thought": "Only the new doc file — FullSchema was reverted to its original state so no diff there. Let me commit and push.", "action": "$ git add docs/DATABASE_EVOLUTION_PROTOCOL.md && git commit -m \"$(cat <<'EOF'\ndocs: add database schema evolution protocol\n\nFormalizes migration discipline rules to prevent the class of error\nfrom Phase 14 where new entities lacked CREATE TABLE migrations.\nCovers change classification, evolution checklist, naming conventions,\nenvironment behavior matrix, and historical incidents.\n\nCo-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>\nEOF\n)\"", "quotes": [{"quote": "Let me commit and push", "grp": "Executing", "sub": "Executing plan", "leaf": "Initiate planned action", "target": "thought"}], "insight": ""}, {"n": 32, "phase": "recover", "phaseLabel": "Fix lint failure", "headline": "Agent recovers from a failed commit caused by a markdown lint error.", "obs": "Exit code 1\n[STARTED] Backing up original state...\n[COMPLETED] Backed up original state in git stash (29229f91a)\n[STARTED] Running tasks for staged files...\n[STARTED] package.json — 1 file\n[STARTED] *.{ts,tsx,js,jsx} — 0 files\n[STARTED] *.{json,yml,yaml} — 0 files\n[STARTED] *.md — 1 file\n[SKIPPED] *.{ts,tsx,js,jsx} — no files\n[SKIPPED] *.{json,yml,yaml} — no files\n[STARTED] markdownlint --fix\n[FAILED] markdownlint --fix [FAILED]\n[FAILED] markdownlint --fix [FAILED]\n[COMPLETED] Running tasks for staged files...\n[STARTED] Applying modifications from tasks...\n[SKIPPED] Skipped because of errors from tasks.\n[STARTED] Reverting to original state because of errors...\n[COMPLETED] Reverting to origi …[truncated]", "thought": "Markdown lint issue — a fenced code block missing a language specifier. Let me fix it.", "action": "read REDACTED.md:145-155\nedit REDACTED.md\n- ```\n{unix_ms_timestamp}-{PascalCaseDescription}.ts\n```\n+ ```text\n{unix_ms_timestamp}-{PascalCaseDescription}.ts\n```\n$ git add docs/DATABASE_EVOLUTION_PROTOCOL.md && git commit -m \"$(cat <<'EOF'\ndocs: add database schema evolution protocol\n\nFormalizes migration discipline rules to prevent the class of error\nfrom Phase 14 where new entities lacked CREATE TABLE migrations.\nCovers change classification, evolution checklist, naming conventions,\nenvironment behavior matrix, and historical incidents.\n\nCo-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>\nEOF\n)\"", "quotes": [{"quote": "Markdown lint issue — a fenced code block missing a language specifier", "grp": "Reflection", "sub": "Reflect on errors and failures", "leaf": "Inspect Error Pattern", "target": "thought"}, {"quote": "read REDACTED.md:145-155", "grp": "Retrieval", "sub": "Retrieve from local corpus", "leaf": "Retrieve from local corpus", "target": "action"}, {"quote": "```text", "grp": "Executing", "sub": "Executing plan", "leaf": "Apply patch via edit", "target": "action"}], "insight": ""}, {"n": 33, "phase": "submit", "phaseLabel": "Push + check PR", "headline": "Agent pushes the branch and checks for an existing PR.", "obs": "145→\n   146→### Migration File Naming\n   147→\n   148→```\n   149→{unix_ms_timestamp}-{PascalCaseDescription}.ts\n   150→```\n   151→\n   152→**Timestamp:** Use a Unix timestamp in milliseconds. Choose a value that:\n   153→- Is later than all existing migration timestamps\n   154→- Is earlier than any planned follow-up migration that depends on this one\nThe file REDACTED.md has been updated successfully.\n[STARTED] Backing up original state...\n[COMPLETED] Backed up original state in git stash (7fe7a4af7)\n[STARTED] Running tasks for staged files...\n[STARTED] package.json — 1 file\n[STARTED] *.{ts,tsx,js,jsx} — 0 files\n[STARTED] *.{json,yml,yaml} — 0 files\n[STARTED] *.md — 1 file\n[SKIPPED] *.{ts,tsx,j …[truncated]", "thought": "Now push and create the PR.", "action": "$ git push origin fix/staging-shares-migration\n$ gh pr view fix/staging-shares-migration --json number,title,url 2>/dev/null || echo \"NO_PR\"", "quotes": [{"quote": "Now push and create the PR", "grp": "Planning", "sub": "Formulate a workflow or plan", "leaf": "Plan function or tool use", "target": "thought"}, {"quote": "$ git push origin fix/staging-shares-migration", "grp": "Grounding", "sub": "Interact with digital environments", "leaf": "Issue operational commands", "target": "action"}], "insight": ""}, {"n": 34, "phase": "submit", "phaseLabel": "Verify PR commit", "headline": "Agent finds PR #186 already exists and checks the new commit landed.", "obs": "[entire] Pushing session logs to origin...\nTo https://github.com/FSM1/cipher-box.git\n   7a3078f38..900916eb4  fix/staging-shares-migration -> fix/staging-shares-migration\n{\"number\":186,\"title\":\"fix(api): add missing migration to create shares tables\",\"url\":\"https://github.com/FSM1/cipher-box/pull/186\"}", "thought": "PR #186 already exists for this branch. The new commit is pushed — it'll show up in the existing PR. Let me check it.", "action": "$ gh pr view 186 --json title,state,commits --jq '{title: .title, state: .state, commits: [.commits[] | .oid[:7] + \" \" + .messageHeadline]}'", "quotes": [{"quote": "PR #186 already exists for this branch", "grp": "Reasoning", "sub": "Analysing", "leaf": "Interpret meaning of artifacts", "target": "thought"}, {"quote": "it'll show up in the existing PR", "grp": "Reasoning", "sub": "Inferring", "leaf": "Predict patch effect", "target": "thought"}, {"quote": "$ gh pr view 186 --json title,state,commits", "grp": "Grounding", "sub": "Interact with digital environments", "leaf": "Issue operational commands", "target": "action"}], "insight": ""}, {"n": 35, "phase": "submit", "phaseLabel": "Report PR ready", "headline": "Agent confirms all four commits are on the PR and ready to merge.", "obs": "{\"commits\":[\"277706a fix(api): add missing migration to create shares tables\",\"e1d5409 docs: add learnings entry for staging migration gap\",\"7a3078f fix(api): address CodeRabbit review — stale phase label, down() comment\",\"900916e docs: add database schema evolution protocol\"],\"state\":\"OPEN\",\"title\":\"fix(api): add missing migration to create shares tables\"}", "thought": "The new commit is on PR #186: https://github.com/FSM1/cipher-box/pull/186\n\nAll 4 commits are there — the original migration fix plus the new protocol doc. Ready to merge.", "action": "", "quotes": [{"quote": "All 4 commits are there", "grp": "Evaluate", "sub": "Evaluating with goals/requirements/constraints", "leaf": "Goal-completion check", "target": "thought"}, {"quote": "Ready to merge", "grp": "Grounding", "sub": "Interact with users", "leaf": "Communicate task outcome natural language", "target": "thought"}], "insight": ""}, {"kind": "interaction", "id": "H5", "actor": "human", "label": "design proposal", "headline": "Human floats turning off auto-sync in dev and CI to catch missing migrations earlier, and asks for the agent's take.", "text": "also what are thoughts on updating the dev and ci env to also use synchronize: false. this will surface issues with the missing migrations early enough in the dev process to prevent a whole lot of problems", "quotes": []}, {"n": 36, "phase": "other", "phaseLabel": "Weigh proposal", "headline": "Agent weighs the auto-sync proposal and lays out trade-offs and a middle path.", "obs": "", "thought": "That's a great idea. It would have caught the Phase 14 issue immediately in dev instead of waiting for staging to fail.\n\nThe main trade-off is developer friction — every new entity or column change requires writing a migration before you can even test it locally. But given this project's history, that friction is exactly the guardrail you want.\n\nA few considerations:\n\n**What changes:**\n- `app.module.ts`: remove the `synchronize: true` conditional, set it to `false` always\n- Dev workflow: `pnpm --filter api dev` would need migrations run first (or auto-run on startup)\n- Tests: the test database setup would need migrations too, not just entity auto-sync\n\n**What could break:**\n- Existing dev databases created by `synchronize: true` won't have the `migrations` table populated correctly — they'd need a one-time reset (`DROP DATABASE` + recreate + run migrations)\n- Test setup in `jest.config.js` / test harness might rely on synchronize for ephemeral test databases — worth checking how that's wired\n\n**A middle-ground option:**\n- Keep `synchronize: false` in dev, but add a startup check or npm script (`pnpm --filter api migrate:dev`) that runs pending migrations automatically, so the DX stays smooth\n\nWant me to go ahead and implement this? I'd check the test setup first to understand the impact there.", "action": "", "quotes": [{"quote": "That's a great idea", "grp": "Evaluate", "sub": "Evaluating without ground truth", "leaf": "Provide qualitative judgement", "target": "thought"}, {"quote": "It would have caught the Phase 14 issue immediately in dev", "grp": "Evaluate", "sub": "Evaluating without ground truth", "leaf": "Simulate counterfactual outcomes", "target": "thought"}, {"quote": "Existing dev databases created by `synchronize: true` won't have the `migrations` table populated correctly", "grp": "Reasoning", "sub": "Inferring", "leaf": "Predict patch effect", "target": "thought"}, {"quote": "A middle-ground option", "grp": "Reasoning", "sub": "Generating", "leaf": "Generate candidate options", "target": "thought"}, {"quote": "Want me to go ahead and implement this?", "grp": "Grounding", "sub": "Interact with users", "leaf": "Ask for clarification from people", "target": "thought"}], "insight": ""}, {"kind": "interaction", "id": "H6", "actor": "human", "label": "defer to backlog", "headline": "Human decides to capture the idea as a backlog todo instead of building it now.", "text": "i think lets add a gsd todo for this", "quotes": []}, {"n": 37, "phase": "other", "phaseLabel": "Start todo creation", "headline": "Agent invokes the todo skill and checks for duplicate todos.", "obs": "", "thought": "", "action": "Skill {\"skill\": \"gsd:add-todo\", \"args\": \"Disable synchronize:true in dev and CI environments to surface missing migrations early. Change app.module.ts to set synchron\n$ mkdir -p .planning/todos/pending .planning/todos/done\n$ ls .planning/todos/pending/*.md 2>/dev/null | xargs -I {} grep \"^area:\" {} 2>/dev/null | cut -d' ' -f2 | sort -u\n$ grep -l -i \"synchronize\" .planning/todos/pending/*.md 2>/dev/null", "quotes": [{"quote": "Skill {\"skill\": \"gsd:add-todo\"", "grp": "Retrieval", "sub": "Retrieve from skill library", "leaf": "Retrieve from skill library", "target": "action"}, {"quote": "grep -l -i \"synchronize\" .planning/todos/pending/*.md", "grp": "Retrieval", "sub": "Retrieve from local corpus", "leaf": "Retrieve from local corpus", "target": "action"}], "insight": ""}, {"n": 38, "phase": "other", "phaseLabel": "Create todo", "headline": "Agent confirms no duplicate and writes the todo file.", "obs": "Launching skill: gsd:add-todo\napi\nauth\ncrypto\ndesktop\nshares\nui", "thought": "No duplicates. Creating the todo.", "action": "write .planning/todos/pending/2026-02-22-disable-synchronize-true-all-envs.md\n---\ncreated: 2026-02-22T14:30\ntitle: Disable synchronize:true in dev and CI to surface missing migrations\narea: api\nfiles:\n  - apps/api/src/app.module.ts:83-85\n  - apps/api/jest.config.js\n  - apps/api/src/run-migrations.ts\n---\n\n## Problem\n\nTypeORM `synchronize: true` in dev and test environments auto-creates tables from entity decorators, hiding missing `CREATE TABLE` migrations until staging/prod …", "quotes": [{"quote": "No duplicates", "grp": "Evaluate", "sub": "Evaluating without ground truth", "leaf": "Evaluate internal consistency", "target": "thought"}, {"quote": "write .planning/todos/pending/2026-02-22-disable-synchronize-true-all-envs.md", "grp": "Memory", "sub": "Store Information", "leaf": "Store information in long-term memory", "target": "action"}], "insight": ""}, {"n": 39, "phase": "edit", "phaseLabel": "Update state count", "headline": "Agent updates the project state file's todo count.", "obs": "File created successfully at: /Users/michael/Code/cipher-box/.planning/todos/pending/2026-02-22-disable-synchronize-true-all-envs.md", "thought": "Now update STATE.md pending todos count.", "action": "$ ls .planning/todos/pending/*.md 2>/dev/null | wc -l\nread .planning/STATE.md:184-198\nedit .planning/STATE.md\n- 8 pending todo(s):\n\n- `2026-02-07-web-worker-large-file-encryption.md` -- Offload large file encryption to Web Worker (area: ui)\n- `2026-02-14-bring-your-own-ipfs-node.md` -- Add bring-your-own IPFS node support (area: api)\n- `2026-02-14-erc-1271-contract-wallet-authentication.md` -- Add ERC-1271 contract wallet authentication support (area: auth)\n- `2026-02-15-security-review-medium-term-fixes.md` -- Security review medium-term fixes: H-08, M-07, M-11 (area: auth)\n- `2026-02-20-desktop-auto-update.md` -- Add auto-update to desktop app via Tauri updater plugin (area: desktop)\n- `2026-02-21-move-root-folder-key-to-ipfs.md` -- Move rootFolderKey to IPFS vault record, eliminate server-side key storage (area: crypto)\n- `2026-02-21-ipns-resolution-alternatives.md` -- Investigate alternatives to delegated-ipfs.dev for IPNS resolution (area: api)\n- `2026-02-21-desktop-tee-enrollment-for-new-files.md` -- Desktop TEE enrollment for new files (area: desktop)\n+ 10 pending todo(s):\n\n- `2026-02-07-web-worker-large-file-encryption.md` -- Offload large file encryption to Web Worker (area: ui)\n- `2026-02-14-bring-your-own-ipfs-node.md` -- Add bring-your-own IPFS node support (area: api)\n- `2026-02-14-erc-1271-contract-wallet-authentication.md` -- Add ERC-1271 contract wallet authentication support (area: auth)\n- `2026-02-15-security-review-medium-term-fixes.md` -- Security review medium-term fixes: H-08, M-07, M-11 (area: auth)\n- `2026-02-20-desktop-auto-update.md` -- Add auto-update to desktop app via Tauri updater plugin (area: desktop)\n- `2026-02-21-move-root-folder-key-to-ipfs.md` -- Move rootFolderKey to IPFS vault record, eliminate server-side key storage (area: crypto)\n- `2026-02-21-ipns-resolution-alternatives.md` -- Investigate alternatives to delegated-ipfs.dev for IPNS resolution (area: api)\n- `2026-02-21-desktop-tee-enrollment-for-new-files.md` -- Desktop TEE enrollment for new files (area: desktop)\n- `2026-02-22-disable-synchronize-true-all-envs.md` -- Disable synchronize:true in dev and CI to surface missing migrations (area: api)\n- `2026-02-22-shares-migration-gap-learnings.md` -- Shares migration gap learnings from Phase 14 (area: shares)", "quotes": [{"quote": "update STATE.md pending todos count", "grp": "Memory", "sub": "Update Information", "leaf": "Update memory", "target": "thought"}, {"quote": "10 pending todo(s):", "grp": "Executing", "sub": "Executing plan", "leaf": "Apply patch via edit", "target": "action"}], "insight": ""}, {"n": 40, "phase": "recover", "phaseLabel": "Catch own error", "headline": "Agent catches that it added a phantom second todo and re-checks the folder.", "obs": "10\n184→### Pending Todos\n   185→\n   186→8 pending todo(s):\n   187→\n   188→- `2026-02-07-web-worker-large-file-encryption.md` -- Offload large file encryption to Web Worker (area: ui)\n   189→- `2026-02-14-bring-your-own-ipfs-node.md` -- Add bring-your-own IPFS node support (area: api)\n   190→- `2026-02-14-erc-1271-contract-wallet-authentication.md` -- Add ERC-1271 contract wallet authentication support (area: auth)\n   191→- `2026-02-15-security-review-medium-term-fixes.md` -- Security review medium-term fixes: H-08, M-07, M-11 (area: auth)\n   192→- `2026-02-20-desktop-auto-update.md` -- Add auto-update to desktop app via Tauri updater plugin (area: desktop)\n   193→- `2026-02-21-move-root-fold …[truncated]", "thought": "Wait, let me check — there should only be the new one I just added, not a second one. Let me verify what's actually in pending.", "action": "$ ls .planning/todos/pending/*.md", "quotes": [{"quote": "Wait, let me check", "grp": "Reflection", "sub": "Reflect on self-outcomes", "leaf": "Pre-action self-check", "target": "thought"}, {"quote": "there should only be the new one I just added, not a second one", "grp": "Reflection", "sub": "Reflect on errors and failures", "leaf": "Detect failed action", "target": "thought"}, {"quote": "$ ls .planning/todos/pending/*.md", "grp": "Retrieval", "sub": "Retrieve from local corpus", "leaf": "Retrieve from local corpus", "target": "action"}], "insight": ""}, {"n": 41, "phase": "recover", "phaseLabel": "Fix state listing", "headline": "Agent corrects the wrong entry it invented in the state file.", "obs": ".planning/todos/pending/2026-02-07-web-worker-large-file-encryption.md\n.planning/todos/pending/2026-02-14-bring-your-own-ipfs-node.md\n.planning/todos/pending/2026-02-14-erc-1271-contract-wallet-authentication.md\n.planning/todos/pending/2026-02-15-security-review-medium-term-fixes.md\n.planning/todos/pending/2026-02-20-desktop-auto-update.md\n.planning/todos/pending/2026-02-21-desktop-tee-enrollment-for-new-files.md\n.planning/todos/pending/2026-02-21-ipns-resolution-alternatives.md\n.planning/todos/pending/2026-02-21-move-root-folder-key-to-ipfs.md\n.planning/todos/pending/2026-02-21-phase14-security-review-deferred.md\n.planning/todos/pending/2026-02-22-disable-synchronize-true-all-envs.md", "thought": "There are 10 pending, but the 9th is `phase14-security-review-deferred`, not what I wrote. Let me fix STATE.md.", "action": "$ grep \"^title:\" .planning/todos/pending/2026-02-21-phase14-security-review-deferred.md\nedit .planning/STATE.md\n- - `2026-02-22-disable-synchronize-true-all-envs.md` -- Disable synchronize:true in dev and CI to surface missing migrations (area: api)\n- `2026-02-22-shares-migration-gap-learnings.md` -- Shares migration gap learnings from Phase 14 (area: shares)\n+ - `2026-02-21-phase14-security-review-deferred.md` -- Phase 14 security review: deferred findings M1, M5, L1, L4 (area: shares)\n- `2026-02-22-disable-synchronize-true-all-envs.md` -- Disable synchronize:true in dev and CI to surface missing migrations (area: api)", "quotes": [{"quote": "the 9th is `phase14-security-review-deferred`, not what I wrote", "grp": "Reflection", "sub": "Reflect on errors and failures", "leaf": "Detect failed action", "target": "thought"}, {"quote": "edit .planning/STATE.md", "grp": "Executing", "sub": "Executing plan", "leaf": "Apply patch via edit", "target": "action"}], "insight": ""}, {"n": 42, "phase": "submit", "phaseLabel": "Commit todo", "headline": "Agent commits the todo and state update and pushes.", "obs": "title: 'Phase 14 security review: deferred findings (M1, M5, L1, L4)'\nThe file /Users/michael/Code/cipher-box/.planning/STATE.md has been updated successfully.", "thought": "Now commit and push.", "action": "$ git add .planning/todos/pending/2026-02-22-disable-synchronize-true-all-envs.md .planning/STATE.md && git commit -m \"$(cat <<'EOF'\ndocs: capture todo - disable synchronize:true in dev and CI\n\nArea: api\n\nCo-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>\nEOF\n)\"\n$ git push origin fix/staging-shares-migration", "quotes": [{"quote": "Now commit and push", "grp": "Planning", "sub": "Formulate a workflow or plan", "leaf": "Plan function or tool use", "target": "thought"}, {"quote": "$ git push origin fix/staging-shares-migration", "grp": "Grounding", "sub": "Interact with digital environments", "leaf": "Issue operational commands", "target": "action"}], "insight": ""}, {"n": 43, "phase": "submit", "phaseLabel": "Report todo saved", "headline": "Agent reports the todo saved and both commits pushed to the PR.", "obs": "[STARTED] Backing up original state...\n[COMPLETED] Backed up original state in git stash (293998619)\n[STARTED] Running tasks for staged files...\n[STARTED] package.json — 2 files\n[STARTED] *.{ts,tsx,js,jsx} — 0 files\n[STARTED] *.{json,yml,yaml} — 0 files\n[STARTED] *.md — 2 files\n[SKIPPED] *.{ts,tsx,js,jsx} — no files\n[SKIPPED] *.{json,yml,yaml} — no files\n[STARTED] markdownlint --fix\n[COMPLETED] markdownlint --fix\n[STARTED] prettier --write\n[COMPLETED] prettier --write\n[COMPLETED] *.md — 2 files\n[COMPLETED] package.json — 2 files\n[COMPLETED] Running tasks for staged files...\n[STARTED] Applying modifications from tasks...\n[COMPLETED] Applying modifications from tasks...\n[STARTED] Cleaning up t …[truncated]", "thought": "Todo saved: `.planning/todos/pending/2026-02-22-disable-synchronize-true-all-envs.md`\n\n  **Disable synchronize:true in dev and CI to surface missing migrations**\n  Area: api\n  Files: 3 referenced\n\nBoth commits pushed to PR #186: https://github.com/FSM1/cipher-box/pull/186", "action": "", "quotes": [{"quote": "Todo saved", "grp": "Grounding", "sub": "Interact with users", "leaf": "Communicate task outcome natural language", "target": "thought"}, {"quote": "Both commits pushed to PR #186", "grp": "Evaluate", "sub": "Evaluating with goals/requirements/constraints", "leaf": "Goal-completion check", "target": "thought"}], "insight": ""}];
+const segments = [{"start": 1, "end": 14, "title": "Human commissions a migration protocol · Agent researches the schema and writes it", "summary": "<strong>Human</strong> hands over a detailed plan to write a database schema evolution protocol doc (H1). <strong>Agent</strong> reads the reference protocol, every migration file, the entity registry, and the deploy pipeline (T1–T7), notices on its own that <code>device_approvals</code> is missing from the FullSchema baseline (T8–T9), writes the ten-section document (T10), and verifies its references before reporting done (T11–T14)."}, {"start": 15, "end": 21, "title": "Human asks to fix the gap and probes the blast radius · Agent patches the baseline and verifies", "summary": "<strong>Human</strong> asks the agent to fix the device_approvals gap and whether it will need a staging reset (H2). <strong>Agent</strong> reasons that no reset is needed (T15), adds the table to the baseline and the <code>down()</code> method (T16–T17), updates the doc (T18), confirms the build compiles (T19–T20), and reports the change (T21)."}, {"start": 22, "end": 28, "title": "Human challenges the duplication · Agent concedes and reverts the whole patch", "summary": "<strong>Human</strong> challenges why the table should be duplicated in the baseline when the dedicated migration already creates it (H3). <strong>Agent</strong> works through the objection, recalls a precedent but still agrees (T22), reverts every code change (T23), rewrites the doc's guiding principle and incident note (T24–T26), and corrects the project memory rule (T27–T28)."}, {"start": 29, "end": 35, "title": "Human says ship it · Agent commits, recovers from a lint failure, and lands it on the PR", "summary": "<strong>Human</strong> says to push everything up and get it merged (H4). <strong>Agent</strong> inspects the working tree (T29–T30), hits a markdown-lint failure on commit and fixes the offending code fence (T31–T32), then pushes and confirms all four commits are on PR #186 (T33–T35)."}, {"start": 36, "end": 36, "title": "Human floats turning off auto-sync · Agent weighs trade-offs and asks before building", "summary": "<strong>Human</strong> proposes disabling auto-sync in dev and CI to surface missing migrations earlier and asks for the agent's view (H5). <strong>Agent</strong> endorses the idea, lays out what changes, what could break, and a middle-ground option, then asks whether to implement it (T36)."}, {"start": 37, "end": 43, "title": "Human defers it to the backlog · Agent files a todo and fixes its own bookkeeping slip", "summary": "<strong>Human</strong> decides to capture the proposal as a backlog todo rather than build it now (H6). <strong>Agent</strong> checks for duplicates and writes the todo (T37–T38), updates the state file's count but miscounts (T39), catches and corrects its own phantom entry (T40–T41), and commits and pushes the result (T42–T43)."}];
+const QUOTE_TARGET = "both"; // "thought" | "action"
+
+// Actor icons — Google Material Design icons (Apache 2.0):
+// "person" (social) for human turns, "smart_toy" (hardware) for agent turns.
+const ICON_HUMAN = '<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24" fill="currentColor"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>';
+const ICON_AGENT = '<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24" fill="currentColor"><g><rect fill="none" height="24" width="24" y="0"/></g><g><path d="M20,9V7c0-1.1-0.9-2-2-2h-3c0-1.66-1.34-3-3-3S9,3.34,9,5H6C4.9,5,4,5.9,4,7v2c-1.66,0-3,1.34-3,3c0,1.66,1.34,3,3,3v4 c0,1.1,0.9,2,2,2h12c1.1,0,2-0.9,2-2v-4c1.66,0,3-1.34,3-3C23,10.34,21.66,9,20,9z M7.5,11.5C7.5,10.67,8.17,10,9,10 s1.5,0.67,1.5,1.5S9.83,13,9,13S7.5,12.33,7.5,11.5z M16,17H8v-2h8V17z M15,13c-0.83,0-1.5-0.67-1.5-1.5S14.17,10,15,10 s1.5,0.67,1.5,1.5S15.83,13,15,13z"/></g></svg>';
+
+function buildCodebook() {
+  const cb = {};
+  turns.forEach(t => {
+    t.quotes.forEach(q => {
+      if (!cb[q.grp]) cb[q.grp] = { items: {}, total: 0 };
+      const key = q.sub + ' › ' + q.leaf;
+      if (!cb[q.grp].items[key]) cb[q.grp].items[key] = { sub: q.sub, leaf: q.leaf, turns: [] };
+      cb[q.grp].items[key].turns.push(t.n);
+      cb[q.grp].total += 1;
+    });
+  });
+  return cb;
+}
+
+const codebook = buildCodebook();
+
+const grpDisplayName = {};
+function displayGrp(g) { return grpDisplayName[g] || g; }
+
+function escapeHTML(s) { return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+function highlightAction(s) {
+  let out = escapeHTML(s);
+  out = out.replace(/^(edit|create|open|search_dir|search_file|find_file|goto|scroll_down|scroll_up|submit|rm|pylint|python|pytest|cat|ls|cd|grep|sed|find|end_of_edit)(\b)/gm, '<span class="kw">$1</span>$2');
+  out = out.replace(/(#[^\n]*)/g, '<span class="cmt">$1</span>');
+  return out;
+}
+
+function renderThoughtWithQuotes(thought, quotes, turnNum) {
+  const positioned = quotes.map((q, idx) => {
+    const pos = thought.indexOf(q.quote);
+    return { ...q, idx, pos };
+  }).filter(q => q.pos !== -1).sort((a, b) => a.pos - b.pos);
+
+  const filtered = [];
+  let lastEnd = -1;
+  for (const q of positioned) {
+    if (q.pos >= lastEnd) {
+      filtered.push(q);
+      lastEnd = q.pos + q.quote.length;
+    }
+  }
+
+  let out = '';
+  let cursor = 0;
+  for (const q of filtered) {
+    out += escapeHTML(thought.slice(cursor, q.pos));
+    out += `<span class="qmark" data-turn="${turnNum}" data-qidx="${q.idx}" data-grp="${q.grp}" data-key="${q.sub} › ${q.leaf}" style="--qcolor: var(--grp-${q.grp}); --qbg: var(--grp-${q.grp}-bg);">${escapeHTML(q.quote)}<sup>${q.idx + 1}</sup></span>`;
+    cursor = q.pos + q.quote.length;
+  }
+  out += escapeHTML(thought.slice(cursor));
+  return out;
+}
+
+function renderTurns() {
+  const container = document.getElementById('turns-container');
+  container.innerHTML = turns.map(t => {
+    // Human interaction events render as distinct verbatim-prompt cards.
+    if (t.kind === 'interaction') {
+      const intHeadline = t.headline || `${t.actor === 'human' ? 'Human' : escapeHTML(t.actor)} prompt`;
+      return `
+      <div class="turn interaction" data-turn="${t.id}">
+        <div class="interaction-header">
+          <span class="actor-icon actor-human" title="Human">${ICON_HUMAN}</span>
+          <div class="int-num"><small>prompt</small>${t.id}</div>
+          <div class="int-title">${escapeHTML(intHeadline)}</div>
+          ${t.label ? `<span class="int-label">${escapeHTML(t.label)}</span>` : ''}
+          <span class="turn-chevron">▶</span>
+        </div>
+        <div class="turn-body">
+          <div class="interaction-text">${escapeHTML(t.text)}</div>
+        </div>
+      </div>`;
+    }
+    const annotCount = t.quotes.length;
+    const annotRows = t.quotes.map((q, idx) => `
+      <div class="annot-row" data-turn="${t.n}" data-qidx="${idx}" data-grp="${q.grp}" data-key="${q.sub} › ${q.leaf}" style="--qcolor: var(--grp-${q.grp}); --qbg: var(--grp-${q.grp}-bg);">
+        <div class="annot-quote"><span class="qnum">${idx + 1}</span>${escapeHTML(q.quote)}</div>
+        <div class="annot-arrow">→</div>
+        <div class="annot-tag"><span class="annot-grp">${displayGrp(q.grp)}</span><span class="annot-sep">›</span>${q.sub}<span class="annot-sep">›</span><span class="annot-leaf">${q.leaf}</span></div>
+      </div>
+    `).join('');
+
+    let thoughtBlock, actionBlock, thoughtAnnotBlock = '', actionAnnotBlock = '', annotBlock = '';
+    if (QUOTE_TARGET === "action") {
+      // Action surface is the host: quote highlights live in the <code> action block.
+      // Thought becomes plain context.
+      const actionHTML = renderThoughtWithQuotes(t.action, t.quotes, t.n);
+      thoughtBlock = `
+        <div class="oat-block oat-thought">
+          <span class="lbl">Thought <span class="small">context · not annotated</span></span>
+          <div class="thought-text">${escapeHTML(t.thought)}</div>
+        </div>`;
+      actionBlock = `
+        <div class="oat-block oat-action">
+          <span class="lbl">Action <span class="small">verbatim · ${annotCount} annotation${annotCount === 1 ? '' : 's'}</span></span>
+          <code class="content">${actionHTML}</code>
+        </div>`;
+      annotBlock = annotCount > 0 ? `
+        <div class="annotations">
+          <div class="annotations-header">Quote-grounded annotations</div>
+          ${annotRows}
+        </div>` : '';
+    } else if (QUOTE_TARGET === "both") {
+      // Dual annotation: each quote carries its own target ("thought" | "action").
+      // Render both surfaces with their respective highlights, and put a small
+      // annotation table under each surface (so the reader can scan the surface,
+      // then immediately see what was tagged on it).
+      const thoughtQuotes = t.quotes.filter(q => (q.target || 'action') === 'thought');
+      const actionQuotes = t.quotes.filter(q => (q.target || 'action') === 'action');
+      const thoughtHTML = renderThoughtWithQuotes(t.thought, thoughtQuotes, t.n);
+      const actionHTML = renderThoughtWithQuotes(t.action, actionQuotes, t.n);
+      const tCount = thoughtQuotes.length;
+      const aCount = actionQuotes.length;
+      thoughtBlock = `
+        <div class="oat-block oat-thought">
+          <span class="lbl">Thought <span class="small">verbatim · ${tCount} meta annotation${tCount === 1 ? '' : 's'}</span></span>
+          <div class="thought-text">${thoughtHTML}</div>
+        </div>`;
+      actionBlock = `
+        <div class="oat-block oat-action">
+          <span class="lbl">Action <span class="small">verbatim · ${aCount} surface annotation${aCount === 1 ? '' : 's'}</span></span>
+          <code class="content">${actionHTML}</code>
+        </div>`;
+      // Two sub-tables, each grouping the rows for its host surface.
+      const buildRows = (quotes) => quotes.map((q) => {
+        const idx = t.quotes.indexOf(q);
+        return `
+          <div class="annot-row" data-turn="${t.n}" data-qidx="${idx}" data-grp="${q.grp}" data-key="${q.sub} › ${q.leaf}" style="--qcolor: var(--grp-${q.grp}); --qbg: var(--grp-${q.grp}-bg);">
+            <div class="annot-quote"><span class="qnum">${idx + 1}</span>${escapeHTML(q.quote)}</div>
+            <div class="annot-arrow">→</div>
+            <div class="annot-tag"><span class="annot-grp">${displayGrp(q.grp)}</span><span class="annot-sep">›</span>${q.sub}<span class="annot-sep">›</span><span class="annot-leaf">${q.leaf}</span></div>
+          </div>`;
+      }).join('');
+      thoughtAnnotBlock = tCount > 0 ? `
+        <div class="annotations">
+          <div class="annotations-header">Thought · meta-move annotations</div>
+          ${buildRows(thoughtQuotes)}
+        </div>` : '';
+      actionAnnotBlock = aCount > 0 ? `
+        <div class="annotations">
+          <div class="annotations-header">Action · surface annotations</div>
+          ${buildRows(actionQuotes)}
+        </div>` : '';
+    } else {
+      // Default: thought is the host (SWE-agent style).
+      const thoughtHTML = renderThoughtWithQuotes(t.thought, t.quotes, t.n);
+      thoughtBlock = `
+        <div class="oat-block oat-thought">
+          <span class="lbl">Thought <span class="small">verbatim · ${annotCount} annotation${annotCount === 1 ? '' : 's'}</span></span>
+          <div class="thought-text">${thoughtHTML}</div>
+        </div>`;
+      actionBlock = `
+        <div class="oat-block oat-action">
+          <span class="lbl">Action</span>
+          <code class="content">${highlightAction(t.action)}</code>
+        </div>`;
+      annotBlock = annotCount > 0 ? `
+        <div class="annotations">
+          <div class="annotations-header">Quote-grounded annotations</div>
+          ${annotRows}
+        </div>` : '';
+    }
+
+    // Layout per mode:
+    //   action mode  : Thought (context) → Action (highlighted) → annot table
+    //   both mode    : Thought (highlighted) → thought-table → Action (highlighted) → action-table
+    //   thought mode : Thought (highlighted) → annot table → Action (plain code)
+    let body;
+    if (QUOTE_TARGET === "action") {
+      body = `${thoughtBlock}${actionBlock}${annotBlock}`;
+    } else if (QUOTE_TARGET === "both") {
+      body = `${thoughtBlock}${thoughtAnnotBlock}${actionBlock}${actionAnnotBlock}`;
+    } else {
+      body = `${thoughtBlock}${annotBlock}${actionBlock}`;
+    }
+
+    const obsBlock = t.obs ? `
+        <div class="oat-block oat-obs">
+          <span class="lbl">Observation</span>
+          <div class="content">${escapeHTML(t.obs)}</div>
+        </div>` : '';
+    return `
+      <div class="turn" data-turn="${t.n}">
+        <div class="turn-header">
+          <span class="actor-icon actor-agent" title="Agent">${ICON_AGENT}</span>
+          <div class="turn-num"><small>turn</small>${String(t.n).padStart(2,'0')}</div>
+          <div class="turn-tag-line">${escapeHTML(t.headline || '')}</div>
+          <div class="turn-phase phase-${t.phase || 'other'}">${t.phaseLabel || 'Step'}</div>
+          <span class="turn-chevron">▶</span>
+        </div>
+        <div class="turn-body">
+          ${obsBlock}
+          ${body}
+          ${t.insight ? `<div class="insight">${t.insight}</div>` : ''}
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function renderSignature() {
+  // Build the codebook-group signature for the right panel.
+  // For each turn, list the groups of its quotes in firing order; show both a
+  // copy-pasteable flat block and a clickable per-turn row list. Sessions
+  // restarts are auto-detected as turns whose verbatim thought equals an
+  // earlier turn's thought, and shown as a `↺` divider.
+  const container = document.getElementById('signature-container');
+  if (!container) return;
+
+  // Detect restart points: turn n is a restart if t.thought has appeared earlier.
+  const seenThoughts = new Map(); // thought-text -> first turn index
+  const restartAtTurnN = new Set();
+  turns.forEach((t, i) => {
+    if (t.kind === 'interaction') return;
+    if (t.thought && seenThoughts.has(t.thought)) {
+      restartAtTurnN.add(t.n);
+    } else if (t.thought) {
+      seenThoughts.set(t.thought, i);
+    }
+  });
+
+  const pad2 = (n) => String(n).padStart(2, '0');
+
+  // Index segments by their `start` turn so we can interleave segment
+  // summaries both into the flat copy-paste block (as plain-text headers)
+  // and above the first row of each segment in the clickable list.
+  const segByStart = new Map();
+  (segments || []).forEach((s, i) => {
+    segByStart.set(s.start, { ...s, _idx: i + 1 });
+  });
+
+  // Strip inline HTML so segment summaries render cleanly inside the
+  // <pre> copy-paste block.  We unescape a small set of named entities
+  // (mdash/ndash/strong tags etc.) and drop everything else.
+  const stripHTML = (s) => {
+    if (!s) return '';
+    return s
+      .replace(/<[^>]+>/g, '')
+      .replace(/&amp;/g, '&')
+      .replace(/&lt;/g, '<')
+      .replace(/&gt;/g, '>')
+      .replace(/&quot;/g, '"')
+      .replace(/&mdash;/g, '—')
+      .replace(/&ndash;/g, '–')
+      .replace(/&rarr;/g, '→')
+      .replace(/&middot;/g, '·')
+      .replace(/&nbsp;/g, ' ');
+  };
+
+  // Word-wrap a paragraph to ~78 cols so it copy-pastes cleanly into
+  // notebooks / chat panes without horizontal scrolling.
+  const wrap = (text, width = 78) => {
+    const words = text.split(/\s+/);
+    const out = [];
+    let line = '';
+    for (const w of words) {
+      if (line.length === 0) { line = w; continue; }
+      if (line.length + 1 + w.length > width) { out.push(line); line = w; }
+      else line += ' ' + w;
+    }
+    if (line) out.push(line);
+    return out.join('\n');
+  };
+
+  // Flat copy-pasteable signature block. Each segment gets a plain-text
+  // header ("=== SEQ 01 · T01–T05 · Title ===" + wrapped summary), then
+  // its turns are listed `T01 = [Group › Sub › Leaf, ...]` so the full
+  // codebook triple plus narrative context survive a copy/paste.
+  // A segment whose start turn directly follows an interaction should open
+  // BEFORE that interaction (the human prompt is what opens the cycle), so
+  // look ahead from interaction entries and mark consumed segments.
+  const segEmitted = new Set();
+  const emitSegFlat = (seg, i) => {
+    if (segEmitted.has(seg._idx)) return;
+    segEmitted.add(seg._idx);
+    if (i > 0) flatLines.push('');  // blank line before each segment except the first
+    const titleStr = stripHTML(seg.title || '');
+    flatLines.push(`=== SEQ ${String(seg._idx).padStart(2,'0')} · T${pad2(seg.start)}–T${pad2(seg.end)}${titleStr ? ' · ' + titleStr : ''} ===`);
+    if (seg.summary) {
+      flatLines.push(wrap(stripHTML(seg.summary)));
+    }
+    flatLines.push('');  // blank line between header and first turn
+  };
+  const flatLines = [];
+  turns.forEach((t, i) => {
+    if (t.kind === 'interaction') {
+      const nxt = turns[i + 1];
+      const nxtSeg = nxt && nxt.kind !== 'interaction' ? segByStart.get(nxt.n) : null;
+      if (nxtSeg) emitSegFlat(nxtSeg, i);
+      const txt = t.text.replace(/\s+/g, ' ');
+      flatLines.push(`${t.id} ▸ HUMAN${t.label ? ' (' + t.label + ')' : ''}: ${txt.length > 64 ? txt.slice(0, 64) + '…' : txt}`);
+      return;
+    }
+    const seg = segByStart.get(t.n);
+    if (seg) emitSegFlat(seg, i);
+    if (restartAtTurnN.has(t.n)) flatLines.push('↺');
+    const tags = t.quotes.map(q => `${displayGrp(q.grp)} › ${q.sub} › ${q.leaf}`);
+    flatLines.push(`T${pad2(t.n)} = [${tags.join(', ')}]`);
+  });
+  const flatStr = flatLines.join('\n');
+
+  // Per-turn rows.
+  // Chips show the full Group › Sub › Leaf triple, colored by group. Group
+  // is a small uppercase tag; sub is the dominant text; leaf trails in a
+  // muted italic. Full triple is also in the tooltip for hover affordance.
+  const segRowEmitted = new Set();
+  const segCardHTML = (seg) => {
+    if (!seg || segRowEmitted.has(seg._idx)) return '';
+    segRowEmitted.add(seg._idx);
+    return `
+      <div class="sig-segment">
+        <div class="sig-segment-tag">SEQ ${String(seg._idx).padStart(2,'0')} · T${pad2(seg.start)}–T${pad2(seg.end)}</div>
+        ${seg.title ? `<div class="sig-segment-title">${seg.title}</div>` : ''}
+        ${seg.summary ? `<div class="sig-segment-body">${seg.summary}</div>` : ''}
+      </div>
+    `;
+  };
+  const rowsHTML = turns.map((t, i) => {
+    if (t.kind === 'interaction') {
+      const nxt = turns[i + 1];
+      const nxtSeg = nxt && nxt.kind !== 'interaction' ? segByStart.get(nxt.n) : null;
+      const txt = t.text.replace(/\s+/g, ' ');
+      const short = txt.length > 56 ? txt.slice(0, 56) + '…' : txt;
+      const tipI = `${t.id} · human prompt${t.label ? ' · ' + t.label : ''}`;
+      return segCardHTML(nxtSeg) + `
+      <button class="sig-row sig-interaction" data-turn="${t.id}" title="${escapeHTML(tipI)}">
+        <span class="sig-num sig-num-h">${t.id}</span>
+        <span class="sig-int-text">${ICON_HUMAN}${escapeHTML(short)}</span>
+      </button>
+    `;
+    }
+    const segHTML = segCardHTML(segByStart.get(t.n));
+    const restartHTML = restartAtTurnN.has(t.n)
+      ? '<div class="sig-restart-row" title="Session restart — Planner thought matches an earlier turn verbatim"><span class="sig-restart-glyph">↺</span><span class="sig-restart-text">session restart · thought matches an earlier turn verbatim</span></div>'
+      : '';
+    const chipsHTML = t.quotes.length === 0
+      ? '<span class="sig-chip-empty">∅</span>'
+      : t.quotes.map(q => {
+          const tip = `${displayGrp(q.grp)} › ${q.sub} › ${q.leaf}`;
+          return `<span class="sig-chip grp-${q.grp}" title="${escapeHTML(tip)}"><span class="sig-chip-grp">${displayGrp(q.grp)}</span><span class="sig-chip-sub">${escapeHTML(q.sub)}</span><span class="sig-chip-sep">›</span><span class="sig-chip-leaf">${escapeHTML(q.leaf)}</span></span>`;
+        }).join('');
+    const flag = (t.phase === 'submit') ? '<span class="sig-flag">‡</span>' : '';
+    const headline = (t.headline || '').replace(/"/g, '&quot;');
+    const tip = `T${pad2(t.n)} · ${t.phaseLabel} · ${headline}`;
+    return segHTML + restartHTML + `
+      <button class="sig-row" data-turn="${t.n}" title="${tip}">
+        <span class="sig-num">T${pad2(t.n)}${flag}</span>
+        <span class="sig-chips">${chipsHTML}</span>
+      </button>
+    `;
+  }).join('');
+
+  container.innerHTML = `
+    <div class="signature-section">
+      <div class="sig-section-title">Trajectory signature</div>
+      <div class="sig-section-sub">One row per step, listing its tags in the order they appear. Amber rows are the human speaking. Click any row to jump to that step.</div>
+      <pre class="sig-flat" title="copy-paste signature">${escapeHTML(flatStr)}</pre>
+      <div class="sig-rows">${rowsHTML}</div>
+    </div>
+  `;
+}
+
+function renderCodebook() {
+  const container = document.getElementById('codebook-container');
+  const sorted = Object.entries(codebook).sort((a,b) => b[1].total - a[1].total);
+  if (sorted.length === 0) { container.innerHTML = '<em style="color: var(--ink-mute)">No annotations.</em>'; return; }
+  const maxCount = Math.max(...sorted.map(([,g]) => g.total));
+
+  container.innerHTML = sorted.map(([grpName, grp]) => {
+    const pct = (grp.total / maxCount) * 100;
+    const items = Object.values(grp.items).sort((a,b) => b.turns.length - a.turns.length);
+    return `
+      <div class="cb-group" data-group="${grpName}" style="--qcolor: var(--grp-${grpName}); --qbg: var(--grp-${grpName}-bg);">
+        <div class="cb-group-header">
+          <div class="cb-group-name">${displayGrp(grpName)}</div>
+          <div class="cb-count">${grp.total}</div>
+        </div>
+        <div class="cb-bar"><div class="cb-bar-fill" style="width: ${pct}%; background: var(--grp-${grpName});"></div></div>
+        <div class="cb-items">
+          ${items.map(item => `
+            <div class="cb-item" data-grp="${grpName}" data-key="${item.sub} › ${item.leaf}" data-turns="${item.turns.join(',')}" style="--qcolor: var(--grp-${grpName}); --qbg: var(--grp-${grpName}-bg);">
+              <span class="cb-item-text">${item.sub} <span style="opacity:0.5">›</span> ${item.leaf}</span>
+              <span class="turn-refs">[${item.turns.map(n => 'T'+n).join(',')}]</span>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function clearActive() {
+  document.querySelectorAll('.turn.active').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.cb-item.fired').forEach(el => el.classList.remove('fired', 'flash'));
+  document.querySelectorAll('.qmark.flash-pulse').forEach(el => el.classList.remove('flash-pulse'));
+  document.querySelectorAll('.annot-row.flash').forEach(el => el.classList.remove('flash'));
+  document.querySelectorAll('.pie-slice.dimmed').forEach(el => el.classList.remove('dimmed'));
+}
+
+function flashAnnotationLink(turnN, qidx, grp, key) {
+  document.querySelectorAll('.qmark.flash-pulse').forEach(el => el.classList.remove('flash-pulse'));
+  document.querySelectorAll('.annot-row.flash').forEach(el => el.classList.remove('flash'));
+  document.querySelectorAll('.cb-item.fired').forEach(el => el.classList.remove('fired', 'flash'));
+
+  const qm = document.querySelector(`.qmark[data-turn="${turnN}"][data-qidx="${qidx}"]`);
+  const row = document.querySelector(`.annot-row[data-turn="${turnN}"][data-qidx="${qidx}"]`);
+  const item = document.querySelector(`.cb-item[data-grp="${grp}"][data-key="${key}"]`);
+  if (qm) qm.classList.add('flash-pulse');
+  if (row) row.classList.add('flash');
+  if (item) item.classList.add('fired', 'flash');
+}
+
+function scrollToTurn(turnEl) {
+  if (!turnEl) return;
+  // Programmatic navigation always expands the target so highlights are visible.
+  turnEl.classList.add('expanded');
+  // Snapshot the right-side panel's internal scroll position BEFORE we touch
+  // the main page scroll. Some browsers will auto-scroll the focused element
+  // into view, which can cause the codebook panel to drift. We restore the
+  // exact position right after.
+  const panel = document.querySelector('aside.codebook-panel');
+  const panelScrollTop = panel ? panel.scrollTop : 0;
+
+  const rect = turnEl.getBoundingClientRect();
+  const targetY = window.scrollY + rect.top - 24;
+  window.scrollTo({ top: targetY, behavior: 'smooth' });
+
+  // Restore panel scroll on the next animation frame, and again after the
+  // smooth-scroll likely finishes. Both are cheap and cover edge cases.
+  if (panel) {
+    requestAnimationFrame(() => { panel.scrollTop = panelScrollTop; });
+    setTimeout(() => { panel.scrollTop = panelScrollTop; }, 50);
+    setTimeout(() => { panel.scrollTop = panelScrollTop; }, 500);
+  }
+}
+
+function activateCodebookItem(grp, key) {
+  clearActive();
+  const item = codebook[grp] && codebook[grp].items[key];
+  if (!item) return;
+  const itemEl = document.querySelector(`.cb-item[data-grp="${grp}"][data-key="${key}"]`);
+  if (itemEl) itemEl.classList.add('fired', 'flash');
+  item.turns.forEach(n => {
+    const turnEl = document.querySelector(`.turn[data-turn="${n}"]`);
+    if (turnEl) turnEl.classList.add('active', 'expanded');
+    document.querySelectorAll(`.qmark[data-turn="${n}"][data-grp="${grp}"][data-key="${key}"]`).forEach(qm => qm.classList.add('flash-pulse'));
+    document.querySelectorAll(`.annot-row[data-turn="${n}"][data-grp="${grp}"][data-key="${key}"]`).forEach(r => r.classList.add('flash'));
+  });
+  if (item.turns.length > 0) {
+    scrollToTurn(document.querySelector(`.turn[data-turn="${item.turns[0]}"]`));
+  }
+}
+
+function activateGroup(grp) {
+  clearActive();
+  document.querySelectorAll(`.cb-item[data-grp="${grp}"]`).forEach(el => el.classList.add('fired'));
+  document.querySelectorAll(`.qmark[data-grp="${grp}"]`).forEach(qm => qm.classList.add('flash-pulse'));
+  document.querySelectorAll(`.annot-row[data-grp="${grp}"]`).forEach(r => r.classList.add('flash'));
+  const turnsHit = new Set();
+  document.querySelectorAll(`.qmark[data-grp="${grp}"]`).forEach(qm => turnsHit.add(parseInt(qm.dataset.turn)));
+  turnsHit.forEach(n => {
+    const turnEl = document.querySelector(`.turn[data-turn="${n}"]`);
+    if (turnEl) turnEl.classList.add('active', 'expanded');
+  });
+  if (turnsHit.size > 0) {
+    const firstTurn = Math.min(...turnsHit);
+    scrollToTurn(document.querySelector(`.turn[data-turn="${firstTurn}"]`));
+  }
+}
+
+function setupInteractions() {
+  // Collapsible turns: header click toggles; expand/collapse-all controls.
+  document.querySelectorAll('.turn-header, .interaction-header').forEach(h => {
+    h.addEventListener('click', () => h.closest('.turn').classList.toggle('expanded'));
+  });
+  const exAll = document.getElementById('expand-all');
+  const coAll = document.getElementById('collapse-all');
+  if (exAll) exAll.addEventListener('click', () =>
+    document.querySelectorAll('.turn').forEach(el => el.classList.add('expanded')));
+  if (coAll) coAll.addEventListener('click', () =>
+    document.querySelectorAll('.turn').forEach(el => el.classList.remove('expanded')));
+
+  document.querySelectorAll('.qmark').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      flashAnnotationLink(parseInt(el.dataset.turn), parseInt(el.dataset.qidx), el.dataset.grp, el.dataset.key);
+    });
+  });
+  document.querySelectorAll('.annot-row').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      flashAnnotationLink(parseInt(el.dataset.turn), parseInt(el.dataset.qidx), el.dataset.grp, el.dataset.key);
+    });
+  });
+  document.querySelectorAll('.cb-item').forEach(el => {
+    el.addEventListener('click', () => {
+      activateCodebookItem(el.dataset.grp, el.dataset.key);
+    });
+  });
+  document.querySelectorAll('.pie-slice').forEach(el => {
+    el.addEventListener('click', () => {
+      activateGroup(el.dataset.grp);
+    });
+  });
+  document.querySelectorAll('.pie-legend-row').forEach(el => {
+    el.addEventListener('click', () => {
+      activateGroup(el.dataset.grp);
+    });
+  });
+  document.querySelectorAll('.sig-row').forEach(el => {
+    el.addEventListener('click', () => {
+      const n = el.dataset.turn; // agent turns are numeric, interactions are "H<k>"
+      const turnEl = document.querySelector(`.turn[data-turn="${n}"]`);
+      if (!turnEl) return;
+      document.querySelectorAll('.turn.active').forEach(x => x.classList.remove('active'));
+      turnEl.classList.add('active');
+      scrollToTurn(turnEl);
+    });
+  });
+}
+
+// Drag-to-resize handle on the left edge of the codebook panel.
+// The panel is `position: fixed; right: 0; width: 360px;` and the main has a
+// matching `margin-right: 360px`. We drive both off a single CSS variable
+// `--panel-w` so they stay in sync, and persist the user's last width in
+// localStorage so it sticks across reloads.
+function setupPanelResize() {
+  const panel = document.querySelector('aside.codebook-panel');
+  const main  = document.querySelector('main.trajectory');
+  const handle = document.getElementById('panel-resize-handle');
+  if (!panel || !main || !handle) return;
+
+  const MIN = 280;
+  const MAX_FRAC = 0.7;  // never let the panel eat more than 70% of the viewport
+  const STORAGE_KEY = 'tta.panel-width';
+
+  const apply = (w) => {
+    const cap = Math.max(MIN, Math.min(w, window.innerWidth * MAX_FRAC));
+    panel.style.width = cap + 'px';
+    main.style.marginRight = cap + 'px';
+  };
+
+  // Restore persisted width on load.
+  const saved = parseInt(localStorage.getItem(STORAGE_KEY) || '', 10);
+  if (!Number.isNaN(saved) && saved >= MIN) apply(saved);
+
+  let dragging = false;
+  let startX = 0;
+  let startW = 0;
+
+  handle.addEventListener('mousedown', (e) => {
+    dragging = true;
+    startX = e.clientX;
+    startW = panel.getBoundingClientRect().width;
+    document.body.style.cursor = 'col-resize';
+    document.body.style.userSelect = 'none';
+    e.preventDefault();
+  });
+
+  window.addEventListener('mousemove', (e) => {
+    if (!dragging) return;
+    // Drag left = wider panel; drag right = narrower.
+    const w = startW + (startX - e.clientX);
+    apply(w);
+  });
+
+  window.addEventListener('mouseup', () => {
+    if (!dragging) return;
+    dragging = false;
+    document.body.style.cursor = '';
+    document.body.style.userSelect = '';
+    localStorage.setItem(STORAGE_KEY, String(panel.getBoundingClientRect().width));
+  });
+
+  // Double-click the handle to reset to the default 360px.
+  handle.addEventListener('dblclick', () => {
+    apply(360);
+    localStorage.removeItem(STORAGE_KEY);
+  });
+}
+
+renderTurns();
+renderSignature();
+renderCodebook();
+setupInteractions();
+setupPanelResize();
+
+</script>
+</body>
+</html>

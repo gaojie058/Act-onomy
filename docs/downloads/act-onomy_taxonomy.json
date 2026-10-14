@@ -1,0 +1,953 @@
+{
+  "name": "Act-onomy Taxonomy",
+  "version": "v1.0",
+  "derived_from": "data/corpus/act-onomy_codebook.csv (V4.2)",
+  "tier_names": [
+    "Action",
+    "Subaction",
+    "Instance"
+  ],
+  "summary": {
+    "tier_1": 10,
+    "tier_2": 46,
+    "tier_3": 120
+  },
+  "taxonomy": [
+    {
+      "code": "T1.1",
+      "name": "Retrieval",
+      "subactions": [
+        {
+          "code": "T1.1.1",
+          "name": "Retrieve from skill library",
+          "instances": [
+            {
+              "code": "T1.1.1.1",
+              "name": "Retrieve from skill library",
+              "definition": "Grab pre-built skill snippet (Minecraft “chop tree”)"
+            }
+          ]
+        },
+        {
+          "code": "T1.1.2",
+          "name": "Retrieve from local corpus",
+          "instances": [
+            {
+              "code": "T1.1.2.1",
+              "name": "Retrieve from local corpus",
+              "definition": "Diverse filetype reading; read between 1 to 15 documents and/or tables”"
+            }
+          ]
+        },
+        {
+          "code": "T1.1.3",
+          "name": "Retrieve from external knowledge base",
+          "instances": [
+            {
+              "code": "T1.1.3.1",
+              "name": "Retrieve from external knowledge base",
+              "definition": "Recall three relevant distinct problems (P28): “Recall three (03) relevant and distinct problems (different from the user task)”"
+            }
+          ]
+        },
+        {
+          "code": "T1.1.4",
+          "name": "Retrieve from open web",
+          "instances": [
+            {
+              "code": "T1.1.4.1",
+              "name": "Retrieve from open web",
+              "definition": "High reliance on web search to offload knowledge retrieval to external sources\""
+            }
+          ]
+        },
+        {
+          "code": "T1.1.5",
+          "name": "Retrieve relevant context",
+          "instances": [
+            {
+              "code": "T1.1.5.1",
+              "name": "Retrieve relevant context",
+              "definition": "LLM leverages retrieved HLS-related context to transform input C algorithms or natural language descriptions”"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "code": "T1.2",
+      "name": "Memory",
+      "subactions": [
+        {
+          "code": "T1.2.1",
+          "name": "Store Information",
+          "instances": [
+            {
+              "code": "T1.2.1.1",
+              "name": "Store information in working memory",
+              "definition": "Scratchpad for current inputs and intermediate results."
+            },
+            {
+              "code": "T1.2.1.2",
+              "name": "Store episodic trajectories",
+              "definition": "Record full action sequences for later training."
+            },
+            {
+              "code": "T1.2.1.3",
+              "name": "Store knowledge in semantic memory",
+              "definition": "Save general world facts."
+            },
+            {
+              "code": "T1.2.1.4",
+              "name": "Store experiences in episodic memory",
+              "definition": "Save events as episodes."
+            },
+            {
+              "code": "T1.2.1.5",
+              "name": "Store information in long-term memory",
+              "definition": "Store information in external storage."
+            },
+            {
+              "code": "T1.2.1.6",
+              "name": "Maintain curriculum library",
+              "definition": "Keep a syllabus of mastered and upcoming skills, arranged by difficulty, so the agent learns in a sensible order."
+            }
+          ]
+        },
+        {
+          "code": "T1.2.2",
+          "name": "Update Information",
+          "instances": [
+            {
+              "code": "T1.2.2.1",
+              "name": "Update memory",
+              "definition": "Update experiences."
+            }
+          ]
+        },
+        {
+          "code": "T1.2.3",
+          "name": "Discard information",
+          "instances": [
+            {
+              "code": "T1.2.3.1",
+              "name": "Discard information from working memory",
+              "definition": "Discard local memory after subtask completion."
+            },
+            {
+              "code": "T1.2.3.2",
+              "name": "Discard redundant game state, keep summaries",
+              "definition": "Automatic context compaction to manage thousands of reasoning steps, preserving only LLM responses and action summaries while discarding redundant game state”"
+            }
+          ]
+        },
+        {
+          "code": "T1.2.4",
+          "name": "Consolidate memory",
+          "instances": [
+            {
+              "code": "T1.2.4.1",
+              "name": "Consolidate working memory into long-term memory",
+              "definition": "Retain only successful analysis path to global memory."
+            },
+            {
+              "code": "T1.2.4.2",
+              "name": "Compact context window",
+              "definition": "Automatic context compaction to manage the thousands of reasoning steps required, preserving only LLM responses and action summaries while discarding redundant game state\""
+            }
+          ]
+        },
+        {
+          "code": "T1.2.5",
+          "name": "Read memory",
+          "instances": [
+            {
+              "code": "T1.2.5.1",
+              "name": "Read from working memory",
+              "definition": "Grab intermediate results from scratchpad."
+            },
+            {
+              "code": "T1.2.5.2",
+              "name": "Read from long-term memory",
+              "definition": "Importance-weighted retrieval of discoveries."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "code": "T2.1",
+      "name": "Planning",
+      "subactions": [
+        {
+          "code": "T2.1.1",
+          "name": "Decompose task",
+          "instances": [
+            {
+              "code": "T2.1.1.1",
+              "name": "Decompose into subtasks",
+              "definition": "Todo_write tool (15 invocations by GPT-5.2)"
+            },
+            {
+              "code": "T2.1.1.2",
+              "name": "Decompose into subgoals with success conditions",
+              "definition": "LLM decomposes the task into a sequence of subgoals, each paired with an executable success-condition function”"
+            },
+            {
+              "code": "T2.1.1.3",
+              "name": "Decompose by role specialization",
+              "definition": "Splitting the instruction-following challenge into distinct reasoning and grounding roles handled by a reasoner agent and an actor agent\""
+            }
+          ]
+        },
+        {
+          "code": "T2.1.2",
+          "name": "Formulate a workflow or plan",
+          "instances": [
+            {
+              "code": "T2.1.2.1",
+              "name": "Formulate a high-level plan",
+              "definition": "METRO starts with the identification of the strategic action a_i for every expert utterance u_i in transcript D\""
+            },
+            {
+              "code": "T2.1.2.2",
+              "name": "Formulate an analysis workflow",
+              "definition": "The Planner accurately interprets user intent and formulates a comprehensive analysis workflow”"
+            },
+            {
+              "code": "T2.1.2.3",
+              "name": "Plan navigation through environment",
+              "definition": "Planning to navigate the web; tasks require navigation through an average of 4.2 web pages”"
+            },
+            {
+              "code": "T2.1.2.4",
+              "name": "Plan function or tool use",
+              "definition": "I can use the pandas method corr() to calculate the Pearson correlation coefficient\""
+            },
+            {
+              "code": "T2.1.2.5",
+              "name": "Plan Code or artifact structure",
+              "definition": "Planning: HTML Structure, CSS Styling, JavaScript Functionality\""
+            },
+            {
+              "code": "T2.1.2.6",
+              "name": "Formulate plan from template",
+              "definition": "HLSTuner formulates a detailed plan that specifies: (1) the combination of HLS directives, (2) target code segments, and (3) the insertion actions\""
+            }
+          ]
+        },
+        {
+          "code": "T2.1.3",
+          "name": "Select Strategy",
+          "instances": [
+            {
+              "code": "T2.1.3.1",
+              "name": "Select among candidate strategies",
+              "definition": "Selects effective HLS directive combination strategies and inserts directives within the specific structure (e.g., loops and arrays)”"
+            },
+            {
+              "code": "T2.1.3.2",
+              "name": "Switch to fallback strategy",
+              "definition": "Incorporating a dummy score prediction as a fallback mechanism\""
+            }
+          ]
+        },
+        {
+          "code": "T2.1.4",
+          "name": "Modify Plan",
+          "instances": [
+            {
+              "code": "T2.1.4.1",
+              "name": "Replan dynamically based on feedback",
+              "definition": "RequireReplan provides the LLM-based executor with the capability to dynamically adjust the plan\""
+            },
+            {
+              "code": "T2.1.4.2",
+              "name": "Refine Requirements",
+              "definition": "Refine requirement based on validated test cases to ensure alignment”"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "code": "T2.2",
+      "name": "Reasoning",
+      "subactions": [
+        {
+          "code": "T2.2.1",
+          "name": "Generating",
+          "instances": [
+            {
+              "code": "T2.2.1.1",
+              "name": "Generate candidate options",
+              "definition": "Brainstorm possible next moves."
+            },
+            {
+              "code": "T2.2.1.2",
+              "name": "Generate structured artifacts",
+              "definition": "Each agent then emits a set of initial codes; cluster semantically similar codes and generate preliminary themes\""
+            },
+            {
+              "code": "T2.2.1.3",
+              "name": "Generate evaluations",
+              "definition": "LLM Group for multifaceted evaluation generates diverse debugging instructions”"
+            }
+          ]
+        },
+        {
+          "code": "T2.2.2",
+          "name": "Analysing",
+          "instances": [
+            {
+              "code": "T2.2.2.1",
+              "name": "Analyse artifact structure and behavior",
+              "definition": "Analyze frontend framework and interactive components”"
+            },
+            {
+              "code": "T2.2.2.2",
+              "name": "Detect patterns or trends in data",
+              "definition": "Identifying patterns, directions, or changes in data over time or across contexts”"
+            },
+            {
+              "code": "T2.2.2.3",
+              "name": "Interpret meaning of artifacts",
+              "definition": "Logical reasoning to interpret papers and code; mathematical reasoning to modify and run code; causal reasoning to infer scientific insights from results\""
+            },
+            {
+              "code": "T2.2.2.4",
+              "name": "Classify inputs into categories",
+              "definition": "Delegator can determine which of the k tasks the input string belongs to by observing only a constant number of metadata tokens."
+            }
+          ]
+        },
+        {
+          "code": "T2.2.3",
+          "name": "Explaining",
+          "instances": [
+            {
+              "code": "T2.2.3.1",
+              "name": "Explain reasoning or outcomes",
+              "definition": "Explain the failure from a user requirement perspective\""
+            }
+          ]
+        },
+        {
+          "code": "T2.2.4",
+          "name": "Summarizing/Distilling",
+          "instances": [
+            {
+              "code": "T2.2.4.1",
+              "name": "Summarize recent observations and trajectories",
+              "definition": "Condense recent observations and trajectories into key takeaways."
+            }
+          ]
+        },
+        {
+          "code": "T2.2.5",
+          "name": "Inferring",
+          "instances": [
+            {
+              "code": "T2.2.5.1",
+              "name": "Infer hidden state from observable evidence",
+              "definition": "Damage calculation reveals stat distributions."
+            },
+            {
+              "code": "T2.2.5.2",
+              "name": "Infer causal relationship",
+              "definition": "Determine plausible causal factor."
+            },
+            {
+              "code": "T2.2.5.3",
+              "name": "Infer structure from indirect evidence",
+              "definition": "Agents must infer the directory layout by inspecting package structures and README files\""
+            },
+            {
+              "code": "T2.2.5.4",
+              "name": "Infer errors",
+              "definition": "M_q has the capacity to identify exactly one bug at a time."
+            }
+          ]
+        },
+        {
+          "code": "T2.2.6",
+          "name": "Comparing & Ranking",
+          "instances": [
+            {
+              "code": "T2.2.6.1",
+              "name": "Compare values across sources",
+              "definition": "Quantify and compare across sources."
+            },
+            {
+              "code": "T2.2.6.2",
+              "name": "Rank items by criteria",
+              "definition": "Order items by importance."
+            }
+          ]
+        },
+        {
+          "code": "T2.2.7",
+          "name": "Contextualizing",
+          "instances": [
+            {
+              "code": "T2.2.7.1",
+              "name": "Package prior reasoning as context for subsequent calls",
+              "definition": "Feed reasoning so far as context to next LLM call."
+            },
+            {
+              "code": "T2.2.7.2",
+              "name": "Construct structured context object",
+              "definition": "Global interactive multi-behavior overlapping network is constructed based on the simulated behaviors of reposting and reposting with a comment, as well as following”"
+            },
+            {
+              "code": "T2.2.7.3",
+              "name": "Configure agent persona or role-conditioning",
+              "definition": "I want you to play as {role}, imitating {role}’s personality and values”"
+            },
+            {
+              "code": "T2.2.7.4",
+              "name": "Assign roles in a multi-agent team",
+              "definition": "Specifying a scope, or role, for an agent allows it to be treated as a computational object. map each one to an employee in a human organization."
+            }
+          ]
+        },
+        {
+          "code": "T2.2.8",
+          "name": "Combining & Synthesis",
+          "instances": [
+            {
+              "code": "T2.2.8.1",
+              "name": "Combine information from multiple sources",
+              "definition": "Combine information from multiple sources... to produce a coherent solution”"
+            },
+            {
+              "code": "T2.2.8.2",
+              "name": "Aggregate observations into a structured representation",
+              "definition": "Supplementary semantic map M't, which aggregates the information from Mt over successive time steps. The intuition resembles a form of majority voting\""
+            }
+          ]
+        },
+        {
+          "code": "T2.2.9",
+          "name": "Filtering",
+          "instances": [
+            {
+              "code": "T2.2.9.1",
+              "name": "Filter information by threshold",
+              "definition": "Selecting relevant information based on criteria, quality, or thresholds”"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "code": "T2.3",
+      "name": "Evaluate",
+      "subactions": [
+        {
+          "code": "T2.3.1",
+          "name": "Evaluating with gold",
+          "instances": [
+            {
+              "code": "T2.3.1.1",
+              "name": "Compare against gold reference",
+              "definition": "We prompt LLM to review the correct HLS-C code, pairing buggy code segments with corresponding error messages to construct debugging CoT”"
+            },
+            {
+              "code": "T2.3.1.2",
+              "name": "Score on gold criteria",
+              "definition": "The Gold Checker evaluates each annotation on three binary criteria: equivalence, completeness, and correctness, where a score of 1 indicates the criterion is met”"
+            }
+          ]
+        },
+        {
+          "code": "T2.3.2",
+          "name": "Evaluating with goals/requirements/constraints",
+          "instances": [
+            {
+              "code": "T2.3.2.1",
+              "name": "goal-completion check",
+              "definition": "Independently checks whether objectives are truly complete, preventing the orchestrator from advancing when the main agent incorrectly believes a task is finished”"
+            },
+            {
+              "code": "T2.3.2.2",
+              "name": "Requirement-satisfaction check",
+              "definition": "The final results from all subtasks are synthesized to meet the user's requirements”"
+            },
+            {
+              "code": "T2.3.2.3",
+              "name": "Constraint / budget check",
+              "definition": "HLSTuner enables QoR-aware reasoning to align optimization goals with hardware constraints”"
+            },
+            {
+              "code": "T2.3.2.4",
+              "name": "Domain-rule / best-practice check",
+              "definition": "Codified best-practices, such as the standard order of operations (e.g., quality control must precede normalization)\""
+            }
+          ]
+        },
+        {
+          "code": "T2.3.3",
+          "name": "Evaluating without ground truth",
+          "instances": [
+            {
+              "code": "T2.3.3.1",
+              "name": "Score on quality dimensions",
+              "definition": "We use GPT-4o as the default evaluator, each dimension scored on a scale of 0 to 2”"
+            },
+            {
+              "code": "T2.3.3.2",
+              "name": "Check rubric compliance",
+              "definition": "Verify the implementation of every item listed in {Rubrics}\""
+            },
+            {
+              "code": "T2.3.3.3",
+              "name": "Evaluate visual/behavioral correctness",
+              "definition": "Evaluates dynamic behavior and visual correctness based on screenshots\""
+            },
+            {
+              "code": "T2.3.3.4",
+              "name": "Evaluate internal consistency",
+              "definition": "Task an evaluator agent with determining whether each theme is consistent with its supporting quotes”"
+            },
+            {
+              "code": "T2.3.3.5",
+              "name": "Evaluate intermediate results",
+              "definition": "Agents with domain expertise verify intermediate results and reduce errors”"
+            },
+            {
+              "code": "T2.3.3.6",
+              "name": "Provide qualitative judgement",
+              "definition": "Upon successful generation of a result, the Evaluator agent, ALLMe assesses the outcome and provides natural language feedback if it deems revisions are necessary.”"
+            },
+            {
+              "code": "T2.3.3.7",
+              "name": "Simulate counterfactual outcomes",
+              "definition": "Mentally simulate an alternative scenario — either before acting (imagine 'if I do X, what happens?') or post-hoc (imagine 'what would have happened if action X had been different?'). Includes counterfactual trajectory generation for causal analysis."
+            },
+            {
+              "code": "T2.3.3.8",
+              "name": "Validate predicted issues",
+              "definition": "The agent assesses the contextual applicability of potential bugs, reducing the probability that the LLM forcibly generates trivial results”"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "code": "T2.4",
+      "name": "Deciding",
+      "subactions": [
+        {
+          "code": "T2.4.1",
+          "name": "Make a decision",
+          "instances": [
+            {
+              "code": "T2.4.1.1",
+              "name": "Make a decision according to memory",
+              "definition": "The agent conditions its decisions on I, the current observation st, and a history buffer of n past state-action pairs."
+            }
+          ]
+        },
+        {
+          "code": "T2.4.2",
+          "name": "Pick scores",
+          "instances": [
+            {
+              "code": "T2.4.2.1",
+              "name": "Select action by score",
+              "definition": "Argmax = highest score; softmax = probabilistic sample; majority vote across evaluators."
+            }
+          ]
+        },
+        {
+          "code": "T2.4.3",
+          "name": "Decide accept or not",
+          "instances": [
+            {
+              "code": "T2.4.3.1",
+              "name": "Decline out-of-scope queries",
+              "definition": "Appropriately reject queries that exceed their knowledge boundaries or conflict with their role settings”"
+            }
+          ]
+        },
+        {
+          "code": "T2.4.4",
+          "name": "Decide under uncertainty",
+          "instances": [
+            {
+              "code": "T2.4.4.1",
+              "name": "Fork trajectory at uncertainty",
+              "definition": "Fork the current generative state and generate a new parallel trajectory from this point of high uncertainty”"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "code": "T3.1",
+      "name": "Grounding",
+      "subactions": [
+        {
+          "code": "T3.1.1",
+          "name": "Interact with users",
+          "instances": [
+            {
+              "code": "T3.1.1.1",
+              "name": "Accept instructions from humans",
+              "definition": "Receive task or command from human user."
+            },
+            {
+              "code": "T3.1.1.2",
+              "name": "Ask for clarification from people",
+              "definition": "Proactively ask human when unclear."
+            },
+            {
+              "code": "T3.1.1.3",
+              "name": "Communicate task outcome natural language",
+              "definition": "Agent informs the user: ‘Buy a nice rich navy bathing dress’."
+            },
+            {
+              "code": "T3.1.1.4",
+              "name": "Communicate via visualization",
+              "definition": "CellAgent generated differential expression and marker gene visualizations, enabling intuitive interpretation of cluster identities”"
+            },
+            {
+              "code": "T3.1.1.5",
+              "name": "Communicate via structured format",
+              "definition": "Generate outputs in a JSON format (or lists of JSON objects)”"
+            },
+            {
+              "code": "T3.1.1.6",
+              "name": "Communicate refusal/inability",
+              "definition": "Recognize and refuse queries that conflict with their role knowledge\""
+            },
+            {
+              "code": "T3.1.1.7",
+              "name": "Express tone to user",
+              "definition": "Models exhibit a strong default tendency to excessively affirm, apologize, and express gratitude”"
+            },
+            {
+              "code": "T3.1.1.8",
+              "name": "Disclose self-information to user",
+              "definition": "Identity disclosure, S2S systems often proactively mention that they are intelligent assistants."
+            }
+          ]
+        },
+        {
+          "code": "T3.1.2",
+          "name": "Interact with physical environments",
+          "instances": [
+            {
+              "code": "T3.1.2.1",
+              "name": "Perceive physical environment",
+              "definition": "Convert images to text via VLMs."
+            },
+            {
+              "code": "T3.1.2.2",
+              "name": "Affect physical environments",
+              "definition": "Send language commands to robot arm."
+            }
+          ]
+        },
+        {
+          "code": "T3.1.3",
+          "name": "Interact with digital environments",
+          "instances": [
+            {
+              "code": "T3.1.3.1",
+              "name": "Navigate digital interfaces",
+              "definition": "Browse websites, scroll pages, navigate menus, move within apps."
+            },
+            {
+              "code": "T3.1.3.2",
+              "name": "Modify digital objects",
+              "definition": "Annotate UI Components."
+            },
+            {
+              "code": "T3.1.3.3",
+              "name": "Issue operational commands",
+              "definition": "Invoke structured API or data endpoint."
+            }
+          ]
+        },
+        {
+          "code": "T3.1.4",
+          "name": "Interact with other agents",
+          "instances": [
+            {
+              "code": "T3.1.4.1",
+              "name": "Monitor peer agent's state or decision",
+              "definition": "Observe another agent's chosen action before making one's own decision — a prerequisite for oversight, override, or trust-based deference in multi-agent systems."
+            },
+            {
+              "code": "T3.1.4.2",
+              "name": "Receive feedback from peer agent",
+              "definition": "Evaluator provides natural-language feedback."
+            },
+            {
+              "code": "T3.1.4.3",
+              "name": "Send message to peer agent",
+              "definition": "Agent engages in multi-turn interactions...to generate deliverables\""
+            },
+            {
+              "code": "T3.1.4.4",
+              "name": "Recommend action to peer agent",
+              "definition": "Communicate a proposed action to a peer agent for their consideration, knowing the peer may accept or override it — agent-to-agent advisory communication."
+            },
+            {
+              "code": "T3.1.4.5",
+              "name": "Override peer agent's decision",
+              "definition": "Replace another agent's selected action with one's own decision — the active side of human-in-the-loop oversight or hierarchical agent control."
+            },
+            {
+              "code": "T3.1.4.6",
+              "name": "Dispatch task to sub-agent",
+              "definition": "A central orchestrator maintains a high-level route plan while dynamically dispatching sub-agents based on game context”"
+            },
+            {
+              "code": "T3.1.4.7",
+              "name": "Argue or debate with peer agent",
+              "definition": "Multi-agent argumentation toward better answer."
+            }
+          ]
+        },
+        {
+          "code": "T3.1.5",
+          "name": "Augment with external computation",
+          "instances": [
+            {
+              "code": "T3.1.5.1",
+              "name": "Execute code",
+              "definition": "Test Runner detects logic inconsistencies."
+            },
+            {
+              "code": "T3.1.5.2",
+              "name": "Invoke specialized computation tool",
+              "definition": "Use calculator / heavy compute tools."
+            },
+            {
+              "code": "T3.1.5.3",
+              "name": "Invoke visual inspection tool",
+              "definition": "Zoom-in tool for region-of-interest."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "code": "T3.2",
+      "name": "Executing",
+      "subactions": [
+        {
+          "code": "T3.2.1",
+          "name": "Executing plan",
+          "instances": [
+            {
+              "code": "T3.2.1.1",
+              "name": "Execute strategy",
+              "definition": "An insertion agent executes this plan for HLS-C optimization”"
+            }
+          ]
+        },
+        {
+          "code": "T3.2.2",
+          "name": "Executing debug",
+          "instances": [
+            {
+              "code": "T3.2.2.1",
+              "name": "Adopt debugging instructions",
+              "definition": "Operating under strict instruction adherence, this agent adopts the instructions to implement debugging”"
+            },
+            {
+              "code": "T3.2.2.2",
+              "name": "Rewrite code after bug fix",
+              "definition": "Debugging specialist rewrites the entire code every time it fixes a bug."
+            }
+          ]
+        },
+        {
+          "code": "T3.2.3",
+          "name": "Terminating",
+          "instances": [
+            {
+              "code": "T3.2.3.1",
+              "name": "Provide final answer",
+              "definition": "Final Answer: The average number of lines per scene in the ep_7.csv dataset is approximately 6.02\" (p32)"
+            },
+            {
+              "code": "T3.2.3.2",
+              "name": "Generate refusal",
+              "definition": "Providing clear refusal responses with appropriate explanations”"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "code": "T4.1",
+      "name": "Learning",
+      "subactions": [
+        {
+          "code": "T4.1.1",
+          "name": "Learning reasoning",
+          "instances": [
+            {
+              "code": "T4.1.1.1",
+              "name": "Update reasoning via prompt update",
+              "definition": "Rewrite own prompt template."
+            }
+          ]
+        },
+        {
+          "code": "T4.1.2",
+          "name": "Learning grounding",
+          "instances": [
+            {
+              "code": "T4.1.2.1",
+              "name": "Update grounding via code-based skills",
+              "definition": "Improve web-navigation code snippets."
+            },
+            {
+              "code": "T4.1.2.2",
+              "name": "Update retrieval procedures",
+              "definition": "Improve how the agent searches for information."
+            }
+          ]
+        },
+        {
+          "code": "T4.1.3",
+          "name": "Learning knowledge",
+          "instances": [
+            {
+              "code": "T4.1.3.1",
+              "name": "Update source code as procedural memory",
+              "definition": "Self-patch agent's own source code."
+            },
+            {
+              "code": "T4.1.3.2",
+              "name": "Update semantic memory with knowledge",
+              "definition": "Expand Error Repository with new mnemonic."
+            },
+            {
+              "code": "T4.1.3.3",
+              "name": "Update memory from new experiences",
+              "definition": "Refinement of memories (represented in text) as the system encounters new scenarios."
+            },
+            {
+              "code": "T4.1.3.4",
+              "name": "Update hypothesis with new evidence",
+              "definition": "Allowing the model to update its textual understanding, refine its hypothesis, or even trigger further visual exploration”"
+            }
+          ]
+        },
+        {
+          "code": "T4.1.4",
+          "name": "Learning LLM parameters",
+          "instances": [
+            {
+              "code": "T4.1.4.1",
+              "name": "Update parametric policy",
+              "definition": "Change the model's internal weights through training."
+            },
+            {
+              "code": "T4.1.4.2",
+              "name": "Update LLM parameters via SL/RL/RLHF",
+              "definition": "SL/RL/RLHF weight adjustment."
+            },
+            {
+              "code": "T4.1.4.3",
+              "name": "Update action parameters based on feedback",
+              "definition": "Auto-adjust params from exception info."
+            }
+          ]
+        },
+        {
+          "code": "T4.1.5",
+          "name": "Learning instructions",
+          "instances": [
+            {
+              "code": "T4.1.5.1",
+              "name": "Learning instructions",
+              "definition": "Extract rule from examples for future use."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "code": "T4.2",
+      "name": "Reflection",
+      "subactions": [
+        {
+          "code": "T4.2.1",
+          "name": "Reflect on errors and failures",
+          "instances": [
+            {
+              "code": "T4.2.1.1",
+              "name": "Diagnose failure against ground truth",
+              "definition": "Analyzes stuck states by comparing current situation against ground truth sources (porymap data, knowledge base) to diagnose navigation failures”"
+            },
+            {
+              "code": "T4.2.1.2",
+              "name": "Inspect Error Pattern",
+              "definition": "An inspection agent examines the erroneous code and error messages parsed from the HLS tool test results”"
+            },
+            {
+              "code": "T4.2.1.3",
+              "name": "Analyze log to formulate fix instructions",
+              "definition": "Reasoning-to-instruction on HLS log."
+            },
+            {
+              "code": "T4.2.1.4",
+              "name": "Reflect on failed episodes for prior knowledge",
+              "definition": "RequireReplan...dynamically adjust the plan, improving the robustness to exceptions\""
+            },
+            {
+              "code": "T4.2.1.5",
+              "name": "Self-Correct Step Implementation",
+              "definition": "Modify step implementation based on error message”"
+            }
+          ]
+        },
+        {
+          "code": "T4.2.2",
+          "name": "Reflect on self-outcomes",
+          "instances": [
+            {
+              "code": "T4.2.2.1",
+              "name": "Self-reflect",
+              "definition": "The results of the execution are fed back, enabling GPT-4 to refine its responses and propose further iterations\""
+            },
+            {
+              "code": "T4.2.2.2",
+              "name": "Reflect on proposed fix",
+              "definition": "Reflects on the code after assuming the fix to ensure the modification is reasonable”"
+            },
+            {
+              "code": "T4.2.2.3",
+              "name": "Pre-action self-check",
+              "definition": "These steps are labeled as reflective, indicating the model is engaging in self-monitoring or explicit reasoning before issuing commands”"
+            },
+            {
+              "code": "T4.2.2.4",
+              "name": "Refine Strategy Iteratively",
+              "definition": "Iterative refinement using current QoR."
+            }
+          ]
+        },
+        {
+          "code": "T4.2.3",
+          "name": "Reflect on external feedback",
+          "instances": [
+            {
+              "code": "T4.2.3.1",
+              "name": "Receive and integrate external feedback",
+              "definition": "The Evaluator drives a self-reflective optimization mechanism, which leverages automated evaluation methods for various analysis tasks to iteratively refine outcomes, replacing subjective manual assessments."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

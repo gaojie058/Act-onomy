@@ -12,7 +12,8 @@
   <strong>How to Interpret Agent Behavior</strong><br>
   <a href="https://gaojie058.github.io/">Jie Gao</a> et al.<br>
   Accepted at <strong>NeurIPS 2026</strong><br>
-  <a href="https://arxiv.org/abs/2605.13625">Paper (arXiv:2605.13625)</a>
+  <a href="https://arxiv.org/abs/2605.13625">Paper (arXiv:2605.13625)</a> ·
+  <a href="https://gaojie058.github.io/Act-onomy/">Project website</a>
 </p>
 
 **Actonomy** is an extensible taxonomy for **describing and analyzing agent behavior** at runtime. This official repository for [*How to Interpret Agent Behavior*](https://arxiv.org/abs/2605.13625) provides the codebook, datasets of behavior descriptions, and tools for automated agent trajectory analysis.
@@ -21,7 +22,13 @@ The name combines **action** and **taxonomy**. **Actonomy** is styled **ACT\*ONO
 
 Developed through Grounded Theory, the taxonomy comprises **10 actions, 46 subactions, and 120 leaf categories**. Use it to annotate agent traces, compare behavioral profiles across agents, and examine patterns associated with successes and failures.
 
-**Explore:** [Taxonomy and codebook](1_data/2_taxonomy/taxonomy.md) · [Automated trace analysis](2_tools/trace-qualitative-analyst/) · [Case studies](3_case_studies/) · [Contributing](CONTRIBUTING.md)
+**Explore:** [Interactive website](https://gaojie058.github.io/Act-onomy/) · [Taxonomy and codebook](1_data/2_taxonomy/taxonomy.md) · [Automated trace analysis](2_tools/trace-qualitative-analyst/) · [Case studies](3_case_studies/) · [Contributing](CONTRIBUTING.md)
+
+---
+
+## Website
+
+The [project website](https://gaojie058.github.io/Act-onomy/) includes the taxonomy explorer, two SWE-agent case studies, and a SWE-chat example with human feedback. GitHub Pages serves the static files in [`docs/`](docs/) from `main`; see [website maintenance notes](docs/README.md).
 
 ---
 

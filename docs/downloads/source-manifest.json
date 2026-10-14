@@ -1,0 +1,9 @@
+{
+  "1_data/2_taxonomy/act-onomy_taxonomy.json": "761f649efe6f74937d36bacdfd9f1a4b4f197831df9ad77b63fd0d2238b81a05",
+  "1_data/2_taxonomy/act-onomy_codebook.csv": "a6d254aeb22e2886ce5ce4dd33dd256e240081531efaf9665692d630fce577a5",
+  "3_case_studies/case2_swe_agent_two_traces/trace1_psf__requests-2317.annotated.json": "617fe25ff3d07459b47de195f29e3ec1942b58d1a86d801e435a038508aec19b",
+  "3_case_studies/case2_swe_agent_two_traces/trace2_django__django-14411.annotated.json": "761a06553c785f186959e5968ae3c799d567acf38465cb59b1a98df61167694f",
+  "supplemental/swe-chat/c621c551/c621c551.annotated.json": "38d34fafd68be91b4eec403f78e828321302c4b764eb1ace068e7d723467b5d1",
+  "supplemental/swe-chat/c621c551/c621c551.skeleton.json": "b92ab2d4992c5c14d22c7be9408014b1ea34db6bafec3aa2e5e77310cd87bfce",
+  "supplemental/swe-chat/c621c551/c621c551.report.html": "97e63da0eada01316146a36c57d485ce3674bd949c5c4a79d6378b393c46caef"
+}

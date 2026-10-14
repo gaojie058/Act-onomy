@@ -1,0 +1,488 @@
+{
+ "instance_id": "FSM1/cipher-box · session c621c551 (Expert Nitpicker)",
+ "model": "Claude Code (human-in-the-loop, persona: Expert Nitpicker)",
+ "outcome": "resolved",
+ "issue_text": "TODO",
+ "summary": "TODO",
+ "quote_target": "both",
+ "turns": [
+  {
+   "kind": "interaction",
+   "id": "H1",
+   "actor": "human",
+   "label": "TODO",
+   "headline": "TODO",
+   "text": "Implement the following plan:\n\n# Plan: Database Schema Evolution Protocol\n\n## Context\n\nPhase 14 exposed a gap: new TypeORM entities were added without a corresponding `CREATE TABLE` migration, breaking the staging deploy. The IPFS metadata side has a formal evolution protocol (`docs/METADATA_EVOLUTION_PROTOCOL.md`) but there's no equivalent for the PostgreSQL database schema. This doc will formalize the rules, conventions, and checklist for database migrations to prevent the same class of error from recurring.\n\n## Approach\n\nCreate `docs/DATABASE_EVOLUTION_PROTOCOL.md` mirroring the structure of the metadata evolution protocol but adapted for relational database concerns (TypeORM entities, migrations, synchronize behavior, CD pipeline).\n\n## File\n\n- **Create:** `docs/DATABASE_EVOLUTION_PROTOCOL.md`\n\n## Structure (mirrors metadata protocol)\n\n1. **Purpose** — Why this doc exists (synchronize:true masks missing migrations, staging/prod rely exclusively on explicit migrations)\n2. **Guiding Principles** — Idempotency, ordering, entity-migration parity, FullSchema baseline maintenance\n3. **Change Classification** — Additive (new table, new nullable column, new index) vs Destructive (drop table, drop column, type change, rename)\n4. **Evolution Checklist** — The actionable section developers use during implementation:\n   - Before implementation (classify change, check dependencies)\n   - Entity changes (TypeORM decorator updates)\n   - Migration file (naming, timestamp, idempotency patterns)\n   - FullSchema baseline update\n   - CD pipeline verification\n   - Downstream checks (API client regen, desktop app if applicable)\n5. **Naming & Timestamp Conventions** — File naming, class naming, index/constraint naming prefixes\n6. **Current Schema Reference** — Table of all 11 tables with purpose, FK relationships, key indices\n7. **Environment Behavior Matrix** — How dev/test/staging/production handle schema changes differently\n8. **Dangerous Patterns** — synchronize:true masking gaps, migration ordering assumptions, down() ownership conflicts\n9. **Historical Incidents** — The Phase 14 shares table incident as a documented case study\n10. **References** — Links to migration files, entity files, deploy workflow, run-migrations.ts\n\n## Key content points\n\n- Every `@Entity()` MUST have a `CREATE TABLE` migration — synchronize cannot be relied upon\n- All DDL statements use `IF NOT EXISTS` / `IF EXISTS` for idempotency\n- FullSchema baseline must always reflect the complete current schema\n- Migration timestamp must be earlier than any migration that modifies the same table\n- The `down()` method must document ownership when tables are created in both FullSchema and incremental migrations\n- Include the actual file paths and patterns from the codebase (not generic advice)\n\n## Verification\n\n- Review the doc for accuracy against actual migration files\n- Ensure all 11 current tables are documented\n- Cross-reference with the metadata evolution protocol for structural consistency\n\n\nIf you need specific details from before exiting plan mode (like exact code snippets, error messages, or content you generated), read the full transcript at: /Users/michael/.REDACTED.jsonl"
+  },
+  {
+   "n": 1,
+   "phase": "TODO",
+   "phase_label": "TODO",
+   "headline": "TODO",
+   "obs": "",
+   "thought": "I'll start by gathering the information I need: the existing metadata evolution protocol (for structural reference), the current migration files, and the entity files.",
+   "action": "read REDACTED.md\nglob 'apps/api/src/migrations/*.ts'\nglob 'apps/api/src/**/*.entity.ts'",
+   "quotes": []
+  },
+  {
+   "n": 2,
+   "phase": "TODO",
+   "phase_label": "TODO",
+   "headline": "TODO",
+   "obs": "1→# CipherBox Metadata Schema Evolution Protocol\n     2→\n     3→**Version:** 1.0\n     4→**Last Updated:** 2026-02-21\n     5→**Status:** Active\n     6→\n     7→## Table of Contents\n     8→\n     9→1. [Purpose](#1-purpose)\n    10→2. [Guiding Principles](#2-guiding-principles)\n    11→3. [Change Classification](#3-change-classification)\n    12→4. [Evolution Checklist](#4-evolution-checklist)\n    13→5. [Version Field Convention](#5-version-field-convention)\n    14→6. [Testing Requirements](#6-testing-requirements)\n    15→7. [Recovery Tool Compatibility Matrix](#7-recovery-tool-compatibility-matrix)\n    16→8. [References](#8-references)\n    17→\n    18→---\n    19→\n    20→## 1. Purpose\n    21→\n    22→ …[truncated]",
+   "thought": "Now I need to read the migration files and entity files to understand the full schema. Let me read the key files in parallel.",
+   "action": "",
+   "quotes": []
+  },
+  {
+   "n": 3,
+   "phase": "TODO",
+   "phase_label": "TODO",
+   "headline": "TODO",
+   "obs": "",
+   "thought": "Now let me read the key migration files and entity files to document the schema accurately.",
+   "action": "read apps/api/src/migrations/1700000000000-FullSchema.ts\nread apps/api/src/migrations/1740250000000-AddSharesTables.ts\nread REDACTED.ts\nread apps/api/src/migrations/1740000000000-AddDeviceApprovals.ts",
+   "quotes": []
+  },
+  {
+   "n": 4,
+   "phase": "TODO",
+   "phase_label": "TODO",
+   "headline": "TODO",
+   "obs": "1→import { MigrationInterface, QueryRunner } from 'typeorm';\n     2→\n     3→/**\n     4→ * Full schema baseline migration for CipherBox.\n     5→ *\n     6→ * Creates ALL tables from scratch for fresh database initialization (staging/production).\n     7→ * This migration captures the complete schema state as of Phase 14 (includes sharing tables).\n     8→ *\n     9→ * Timestamp 1700000000000 ensures this runs BEFORE any incremental migrations.\n    10→ * For fresh databases: this creates everything; incremental migrations are idempotent (IF NOT EXISTS).\n    11→ * For existing databases created via synchronize:true: this migration will NOT be skipped\n    12→ *   automatically — you must manually in …[truncated]",
+   "thought": "Now let me read the remaining migration files and the TypeORM data source config to understand the environment behavior.",
+   "action": "",
+   "quotes": []
+  },
+  {
+   "n": 5,
+   "phase": "TODO",
+   "phase_label": "TODO",
+   "headline": "TODO",
+   "obs": "",
+   "thought": "Let me read the remaining migration files and the data source config.",
+   "action": "read REDACTED.ts\nread REDACTED.ts\nread REDACTED.ts\nread REDACTED.ts\ngrep 'synchronize' (in apps/api/src)",
+   "quotes": []
+  },
+  {
+   "n": 6,
+   "phase": "TODO",
+   "phase_label": "TODO",
+   "headline": "TODO",
+   "obs": "1→import { MigrationInterface, QueryRunner } from 'typeorm';\n     2→\n     3→/**\n     4→ * Migration: Make TEE fields nullable in folder_ipns table\n     5→ *\n     6→ * Phase 6 defers TEE integration to Phase 7+, so encrypted_ipns_private_key\n     7→ * and key_epoch columns need to be nullable to allow folder IPNS tracking\n     8→ * without requiring TEE encryption.\n     9→ *\n    10→ * This migration:\n    11→ * 1. Alters encrypted_ipns_private_key to allow NULL\n    12→ * 2. Alters key_epoch to allow NULL\n    13→ *\n    14→ * These columns were originally NOT NULL but are now nullable for Phase 6.\n    15→ * Existing data (if any) with NULL values will remain unchanged.\n    16→ */\n    17→export c …[truncated]",
+   "thought": "Now let me check the app module to see how synchronize is configured, and also look at the deploy workflow and run-migrations.ts file.",
+   "action": "",
+   "quotes": []
+  },
+  {
+   "n": 7,
+   "phase": "TODO",
+   "phase_label": "TODO",
+   "headline": "TODO",
+   "obs": "",
+   "thought": "Let me get the app module config and the deploy/migration runner files.",
+   "action": "read apps/api/src/app.module.ts:75-100\ngrep 'run-migrations|runMigrations' (in apps/api)\ngrep 'run.*migrat' (in .github)\nread apps/api/src/run-migrations.ts\nread .github/workflows/deploy-staging.yml:275-300",
+   "quotes": []
+  },
+  {
+   "n": 8,
+   "phase": "TODO",
+   "phase_label": "TODO",
+   "headline": "TODO",
+   "obs": "75→          FolderIpns,\n    76→          TeeKeyState,\n    77→          TeeKeyRotationLog,\n    78→          IpnsRepublishSchedule,\n    79→          DeviceApproval,\n    80→          Share,\n    81→          ShareKey,\n    82→        ],\n    83→        synchronize: ['development', 'test'].includes(\n    84→          configService.get<string>('NODE_ENV', 'development')\n    85→        ),\n    86→        logging:\n    87→          configService.get<string>('NODE_ENV') === 'development'\n    88→            ? ['error', 'warn', 'migration'] // Dev: errors, warnings, migrations only (no SQL query spam)\n    89→            : ['error', 'migration'], // Staging/production: errors and migrations only\n    90→     …[truncated]",
+   "thought": "Now I have all the information I need. Let me also quickly check if `device_approvals` is in the FullSchema baseline (I noticed it's missing from the 11 tables listed in FullSchema but has its own migration).",
+   "action": "grep 'device_approvals' (in apps/api/src/migrations/1700000000000-FullSchema.ts)",
+   "quotes": []
+  },
+  {
+   "n": 9,
+   "phase": "TODO",
+   "phase_label": "TODO",
+   "headline": "TODO",
+   "obs": "No matches found",
+   "thought": "Interesting - `device_approvals` is NOT in the FullSchema baseline. That's a gap that should be noted. Let me check if it was intentionally omitted - looking at the entity to understand the table.\n\nLet me now create the document. I have everything I need.\n\nThe 11 tables from FullSchema are:\n1. users\n2. refresh_tokens\n3. auth_methods\n4. vaults\n5. pinned_cids\n6. folder_ipns\n7. tee_key_state\n8. tee_key_rotation_log\n9. ipns_republish_schedule\n10. shares\n\n\n11. share_keys\n\nSo `device_approvals` comes from a separate migration that runs after FullSchema, which means it's not part of the baseline 11 tables - this looks like another case where a table should've been included in FullSchema but wasn't.",
+   "action": "",
+   "quotes": []
+  },
+  {
+   "n": 10,
+   "phase": "TODO",
+   "phase_label": "TODO",
+   "headline": "TODO",
+   "obs": "",
+   "thought": "Good -- I found another gap: `device_approvals` is missing from the FullSchema baseline. That's worth documenting. Now I have everything to write the protocol.",
+   "action": "write REDACTED.md\n# CipherBox Database Schema Evolution Protocol\n\n**Version:** 1.0\n**Last Updated:** 2026-02-22\n**Status:** Active\n\n## Table of Contents\n\n1. [Purpose](#1-purpose)\n2. [Guiding Principles](#2-guiding-principles)\n3. [Change Classification](#3-change-classification)\n4. [Evolution Checklist](#4-evolution-checklist)\n5. [Naming & Timestamp Conventions](#5-naming--timestamp-conventions)\n6. [Current Schema R …",
+   "quotes": []
+  },
+  {
+   "n": 11,
+   "phase": "TODO",
+   "phase_label": "TODO",
+   "headline": "TODO",
+   "obs": "File created successfully at: REDACTED.md",
+   "thought": "The document is created. Let me verify accuracy by checking a couple of things -- the learnings file reference and making sure entity registration in app.module.ts matches my table.",
+   "action": "glob '.learnings/*staging-migration*'\nread apps/api/src/app.module.ts:60-85",
+   "quotes": []
+  },
+  {
+   "n": 12,
+   "phase": "TODO",
+   "phase_label": "TODO",
+   "headline": "TODO",
+   "obs": "60→    TypeOrmModule.forRootAsync({\n    61→      imports: [ConfigModule],\n    62→      useFactory: (configService: ConfigService) => ({\n    63→        type: 'postgres',\n    64→        host: configService.get<string>('DB_HOST', 'localhost'),\n    65→        port: configService.get<number>('DB_PORT', 5432),\n    66→        username: configService.get<string>('DB_USERNAME', 'postgres'),\n    67→        password: configService.get<string>('DB_PASSWORD', 'postgres'),\n    68→        database: configService.get<string>('DB_DATABASE', 'cipherbox'),\n    69→        entities: [\n    70→          User,\n    71→          RefreshToken,\n    72→          AuthMethod,\n    73→          Vault,\n    74→          Pinne …[truncated]",
+   "thought": "Good -- 12 entities registered, matching my table. The learnings file has a slightly different name than what I referenced. Let me fix that reference.",
+   "action": "edit REDACTED.md\n- - **Phase 14 learnings:** `.learnings/2026-02-21-staging-migration-gap.md`\n+ - **Phase 14 learnings:** `.learnings/2026-02-22-staging-migration-missing-create-table.md`",
+   "quotes": []
+  },
+  {
+   "n": 13,
+   "phase": "TODO",
+   "phase_label": "TODO",
+   "headline": "TODO",
+   "obs": "The file REDACTED.md has been updated successfully.",
+   "thought": "Let me also check whether there's a separate learnings file from the earlier commit.",
+   "action": "glob '.learnings/*staging*'",
+   "quotes": []
+  },
+  {
+   "n": 14,
+   "phase": "TODO",
+   "phase_label": "TODO",
+   "headline": "TODO",
+   "obs": "/Users/michael/Code/cipher-box/.learnings/2026-02-09-staging-deployment-first-deploy.md\n/Users/michael/Code/cipher-box/.learnings/2026-02-13-grafana-loki-token-scopes-and-staging-fixes.md\n/Users/michael/Code/cipher-box/.learnings/2026-02-22-staging-migration-missing-create-table.md",
+   "thought": "Good, the reference is now correct. The document is complete. Here's a summary of what was created:\n\n**`docs/DATABASE_EVOLUTION_PROTOCOL.md`** -- 10 sections mirroring the metadata evolution protocol:\n\n1. **Purpose** -- Explains why `synchronize: true` masks missing migrations in dev/test\n2. **Guiding Principles** -- 6 rules: entity-migration parity, idempotency, timestamp ordering, FullSchema maintenance, `down()` ownership, no data loss\n3. **Change Classification** -- Additive vs Destructive with concrete examples and rules\n4. **Evolution Checklist** -- The actionable section with 6 sub-checklists (before implementation, entity changes, migration file, FullSchema update, CD pipeline verification, downstream checks)\n5. **Naming & Timestamp Conventions** -- File naming patterns, class naming, constraint/index prefixes\n6. **Current Schema Reference** -- All 12 tables with entity files, purposes, FK relationships, plus the complete migration file inventory\n7. **Environment Behavior Matrix** -- How dev/test/staging/production handle schema changes differently (with the `synchronize` config source)\n8. **Dangerous Patterns** -- 5 documented anti-patterns with fixes (synchronize masking, timestamp ordering, `down()` conflicts, non-idempotent DDL, FullSchema drift)\n9. **Historical Incidents** -- Phase 14 shares table incident as a case study, plus the newly discovered `device_approvals` FullSchema gap\n10. **References** -- Links to all relevant files in the codebase",
+   "action": "",
+   "quotes": []
+  },
+  {
+   "kind": "interaction",
+   "id": "H2",
+   "actor": "human",
+   "label": "TODO",
+   "headline": "TODO",
+   "text": "ok can you fix the device_approvals gap identified? Will this require a staging reset to fix?"
+  },
+  {
+   "n": 15,
+   "phase": "TODO",
+   "phase_label": "TODO",
+   "headline": "TODO",
+   "obs": "",
+   "thought": "No staging reset needed. The FullSchema baseline only runs on **fresh** databases, and since `AddDeviceApprovals` already creates the table with `IF NOT EXISTS`, existing staging/production databases already have it. This is purely a correctness fix for the baseline.\n\nLet me make the fix.",
+   "action": "read apps/api/src/migrations/1700000000000-FullSchema.ts\nread apps/api/src/migrations/1740000000000-AddDeviceApprovals.ts",
+   "quotes": []
+  },
+  {
+   "n": 16,
+   "phase": "TODO",
+   "phase_label": "TODO",
+   "headline": "TODO",
+   "obs": "1→import { MigrationInterface, QueryRunner } from 'typeorm';\n     2→\n     3→/**\n     4→ * Full schema baseline migration for CipherBox.\n     5→ *\n     6→ * Creates ALL tables from scratch for fresh database initialization (staging/production).\n     7→ * This migration captures the complete schema state as of Phase 14 (includes sharing tables).\n     8→ *\n     9→ * Timestamp 1700000000000 ensures this runs BEFORE any incremental migrations.\n    10→ * For fresh databases: this creates everything; incremental migrations are idempotent (IF NOT EXISTS).\n    11→ * For existing databases created via synchronize:true: this migration will NOT be skipped\n    12→ *   automatically — you must manually in …[truncated]",
+   "thought": "Now I'll make the two edits to FullSchema: update the JSDoc comment and add the `device_approvals` table + index after `ipns_republish_schedule` (table 9) and before `shares` (table 10). I also need to add it to the `down()` method.",
+   "action": "edit apps/api/src/migrations/1700000000000-FullSchema.ts\n- * Tables created (11):\n *   users, refresh_tokens, auth_methods, vaults, pinned_cids,\n *   folder_ipns, tee_key_state, tee_key_rotation_log, ipns_republish_schedule,\n *   shares, share_keys\n+ * Tables created (12):\n *   users, refresh_tokens, auth_methods, vaults, pinned_cids,\n *   folder_ipns, tee_key_state, tee_key_rotation_log, ipns_republish_schedule,\n *   device_approvals, shares, share_keys\nedit apps/api/src/migrations/1700000000000-FullSchema.ts\n- // ──────────────────────────────────────────────\n    // 10. shares (Phase 14 — user-to-user sharing)\n+ // ──────────────────────────────────────────────\n    // 10. device_approvals (MFA device approval flow)\n    // ──────────────────────────────────────────────\n    await queryRunner.query(`\n      CREATE TABLE \"device_approvals\" (\n        \"id\"                    uuid DEFAULT uuid_generate_v4() NOT NULL,\n        \"user_id\"               varchar NOT NULL,\n        \"device_id\"             varchar NOT NULL,\n        \"device_name\"           varchar NOT NULL,\n        \"ephemeral_public_key\"  text NOT NULL,\n        \"status\"                varchar NOT NULL DEFAULT 'pending',\n        \"encrypted_factor_key\"  text,\n        \"created_at\"            TIMESTAMP NOT NULL DEFAULT now(),\n        \"expires_at\"            TIMESTAMP NOT NULL,\n        \"responded_by\"          varchar,\n        CONSTRAINT \"PK_device_approvals\" PRIMARY KEY (\"id\")\n      )\n    `);\n\n    await queryRunner.query(\n      `CREATE INDEX \"idx_device_approvals_user_status\" ON \"device_approvals\" (\"user_id\", \"status\")`\n    );\n\n    // ──────────────────────────────────────────────\n    // 11. shares (Phase 14 — user-to-user sharing)",
+   "quotes": []
+  },
+  {
+   "n": 17,
+   "phase": "TODO",
+   "phase_label": "TODO",
+   "headline": "TODO",
+   "obs": "The file /Users/michael/Code/cipher-box/apps/api/src/migrations/1700000000000-FullSchema.ts has been updated successfully.\nThe file /Users/michael/Code/cipher-box/apps/api/src/migrations/1700000000000-FullSchema.ts has been updated successfully.",
+   "thought": "Now update the share_keys comment number and the `down()` method.",
+   "action": "edit apps/api/src/migrations/1700000000000-FullSchema.ts\n- // 11. share_keys (Phase 14 — per-file/subfolder keys)\n+ // 12. share_keys (Phase 14 — per-file/subfolder keys)\nedit apps/api/src/migrations/1700000000000-FullSchema.ts\n- // Drop tables in reverse dependency order (children before parents)\n    await queryRunner.query(`DROP TABLE IF EXISTS \"share_keys\" CASCADE`);\n    await queryRunner.query(`DROP TABLE IF EXISTS \"shares\" CASCADE`);\n    await queryRunner.query(`DROP TABLE IF EXISTS \"ipns_republish_schedule\" CASCADE`);\n+ // Drop tables in reverse dependency order (children before parents)\n    await queryRunner.query(`DROP TABLE IF EXISTS \"share_keys\" CASCADE`);\n    await queryRunner.query(`DROP TABLE IF EXISTS \"shares\" CASCADE`);\n    await queryRunner.query(`DROP TABLE IF EXISTS \"device_approvals\" CASCADE`);\n    await queryRunner.query(`DROP TABLE IF EXISTS \"ipns_republish_schedule\" CASCADE`);",
+   "quotes": []
+  },
+  {
+   "n": 18,
+   "phase": "TODO",
+   "phase_label": "TODO",
+   "headline": "TODO",
+   "obs": "The file /Users/michael/Code/cipher-box/apps/api/src/migrations/1700000000000-FullSchema.ts has been updated successfully.\nThe file /Users/michael/Code/cipher-box/apps/api/src/migrations/1700000000000-FullSchema.ts has been updated successfully.",
+   "thought": "Now update the protocol doc to mark the gap as resolved.",
+   "action": "edit REDACTED.md\n- **Known gap:** `device_approvals` (table 12) is created by migration `1740000000000-AddDeviceApprovals.ts` but is NOT included in the FullSchema baseline. A fresh database deploy creates it via the incremental migration, which works due to idempotency, but it should be added to FullSchema for completeness.\n+ **Note:** `device_approvals` (table 12) uses `user_id` as a plain `varchar` rather than a foreign key to `users.id`. This is by design -- device approvals reference users by their Web3Auth identifier string, not the internal UUID.\nedit REDACTED.md\n- | `1700000000000` | `FullSchema.ts` | Baseline | All 11 (missing `device_approvals`) |\n+ | `1700000000000` | `FullSchema.ts` | Baseline | All 12 tables |\nedit REDACTED.md\n- ### 9.2 `device_approvals` Table Not in FullSchema (Known Gap)\n\n**Date:** Discovered 2026-02-22\n**Severity:** Low (functional but inconsistent)\n**Root cause:** `1740000000000-AddDeviceApprovals.ts` creates the `device_approvals` table, but FullSchema was not updated to include it. Fresh database deployments still work because the incremental migration runs after FullSchema and creates the table.\n\n**Impact:** FullSchema does not represent the complete schema. Its JSDoc says \"Tables created (11)\" but there are actually 12 tables in the system.\n\n**Status:** Open. Should be fixed by adding `device_approvals` to FullSchema and updating the table count to 12.\n+ ### 9.2 `device_approvals` Table Not in FullSchema (Fixed)\n\n**Date:** Discovered 2026-02-22\n**Severity:** Low (functional but inconsistent)\n**Root cause:** `1740000000000-AddDeviceApprovals.ts` creates the `device_approvals` table, but FullSchema was not updated to include it. Fresh database deployments still work because the incremental migration runs after FullSchema and creates the table.\n\n**Impact:** FullSchema did not represent the complete schema. Its JSDoc said \"Tables created (11)\" but there were actually 12 tables in the system.\n\n**Resolution:** Added `device_approvals` to FullSchema baseline and updated the table count to 12. No staging reset required -- existing databases already have the table from the incremental migration, and FullSchema only affects fresh deployments.",
+   "quotes": []
+  },
+  {
+   "n": 19,
+   "phase": "TODO",
+   "phase_label": "TODO",
+   "headline": "TODO",
+   "obs": "The file REDACTED.md has been updated successfully.\nThe file REDACTED.md has been updated successfully.\nThe file REDACTED.md has been updated successfully.",
+   "thought": "Let me verify the final state of FullSchema looks correct.",
+   "action": "read apps/api/src/migrations/1700000000000-FullSchema.ts",
+   "quotes": []
+  },
+  {
+   "n": 20,
+   "phase": "TODO",
+   "phase_label": "TODO",
+   "headline": "TODO",
+   "obs": "1→import { MigrationInterface, QueryRunner } from 'typeorm';\n     2→\n     3→/**\n     4→ * Full schema baseline migration for CipherBox.\n     5→ *\n     6→ * Creates ALL tables from scratch for fresh database initialization (staging/production).\n     7→ * This migration captures the complete schema state as of Phase 14 (includes sharing tables).\n     8→ *\n     9→ * Timestamp 1700000000000 ensures this runs BEFORE any incremental migrations.\n    10→ * For fresh databases: this creates everything; incremental migrations are idempotent (IF NOT EXISTS).\n    11→ * For existing databases created via synchronize:true: this migration will NOT be skipped\n    12→ *   automatically — you must manually in …[truncated]",
+   "thought": "Looks correct. Let me verify it compiles.",
+   "action": "$ pnpm --filter api build 2>&1 | tail -5",
+   "quotes": []
+  },
+  {
+   "n": 21,
+   "phase": "TODO",
+   "phase_label": "TODO",
+   "headline": "TODO",
+   "obs": "> @cipherbox/api@0.15.0 build /Users/michael/Code/cipher-box/apps/api\n> nest build",
+   "thought": "Build succeeds. Here's the summary:\n\n**No staging reset required.** The FullSchema baseline only runs on fresh database initialization. Staging already has `device_approvals` from the incremental migration (`1740000000000-AddDeviceApprovals`). This fix ensures that if a fresh database is ever provisioned (new environment, DB wipe), FullSchema creates all 12 tables instead of 11.\n\nChanges made:\n- **`apps/api/src/migrations/1700000000000-FullSchema.ts`** -- Added `device_approvals` table as #10 (renumbered shares to #11, share_keys to #12), updated JSDoc count from 11 to 12, added `DROP TABLE` in `down()`\n- **`docs/DATABASE_EVOLUTION_PROTOCOL.md`** -- Updated incident 9.2 status from \"Open\" to \"Fixed\", updated migration inventory to say \"All 12 tables\"",
+   "action": "",
+   "quotes": []
+  },
+  {
+   "kind": "interaction",
+   "id": "H3",
+   "actor": "human",
+   "label": "TODO",
+   "headline": "TODO",
+   "text": "but the fresh install will always run all the available migrations, why would you repeat creating the table in the full schema if it will be created in the dedicated migration?"
+  },
+  {
+   "n": 22,
+   "phase": "TODO",
+   "phase_label": "TODO",
+   "headline": "TODO",
+   "obs": "",
+   "thought": "The user makes a good point. The FullSchema baseline doesn't use `IF NOT EXISTS` — it uses bare `CREATE TABLE`. So if FullSchema creates `device_approvals`, and then the incremental migration `1740000000000-AddDeviceApprovals` also tries to create it, the second one would fail... except that migration uses `CREATE TABLE IF NOT EXISTS`, so it would be a no-op.\n\nBut the user's point is more fundamental: why duplicate the table definition in two places? The existing pattern in the codebase is that FullSchema DOES include shares and share_keys (which also have their own incremental migration). So there IS a precedent for duplication. But the user is questioning whether that's the right pattern.\n\n\nActually, I'm seeing the real issue now — if we skip adding device_approvals to FullSchema, then fresh installs would only get the 11 original tables, and the incremental migration would add it later. That's cleaner than duplicating the definition, but it breaks the pattern established by shares and share_keys.\n\nThe inconsistency is the real problem here. The user's argument is sound — if incremental migrations already handle creation idempotently with `IF NOT EXISTS`, there's no functional reason to duplicate them in FullSchema. I should revert my change and acknowledge that the current approach creates unnecessary maintenance overhead. The user is right that this is unnecessary duplication — FullSchema documents the original schema state, and incremental migrations handle new additions. I should revert the change and acknowledge their point rather than maintain the same DDL in two places.",
+   "action": "",
+   "quotes": []
+  },
+  {
+   "n": 23,
+   "phase": "TODO",
+   "phase_label": "TODO",
+   "headline": "TODO",
+   "obs": "",
+   "thought": "You're right — that's unnecessary duplication. The incremental migration already uses `CREATE TABLE IF NOT EXISTS` and will always run after FullSchema. Having it in both places just creates two locations to maintain the same DDL. Let me revert.",
+   "action": "edit apps/api/src/migrations/1700000000000-FullSchema.ts\n- * Tables created (12):\n *   users, refresh_tokens, auth_methods, vaults, pinned_cids,\n *   folder_ipns, tee_key_state, tee_key_rotation_log, ipns_republish_schedule,\n *   device_approvals, shares, share_keys\n+ * Tables created (11):\n *   users, refresh_tokens, auth_methods, vaults, pinned_cids,\n *   folder_ipns, tee_key_state, tee_key_rotation_log, ipns_republish_schedule,\n *   shares, share_keys\nedit apps/api/src/migrations/1700000000000-FullSchema.ts\n- // ──────────────────────────────────────────────\n    // 10. device_approvals (MFA device approval flow)\n    // ──────────────────────────────────────────────\n    await queryRunner.query(`\n      CREATE TABLE \"device_approvals\" (\n        \"id\"                    uuid DEFAULT uuid_generate_v4() NOT NULL,\n        \"user_id\"               varchar NOT NULL,\n        \"device_id\"             varchar NOT NULL,\n        \"device_name\"           varchar NOT NULL,\n        \"ephemeral_public_key\"  text NOT NULL,\n        \"status\"                varchar NOT NULL DEFAULT 'pending',\n        \"encrypted_factor_key\"  text,\n        \"created_at\"            TIMESTAMP NOT NULL DEFAULT now(),\n        \"expires_at\"            TIMESTAMP NOT NULL,\n        \"responded_by\"          varchar,\n        CONSTRAINT \"PK_device_approvals\" PRIMARY KEY (\"id\")\n      )\n    `);\n\n    await queryRunner.query(\n      `CREATE INDEX \"idx_device_approvals_user_status\" ON \"device_approvals\" (\"user_id\", \"status\")`\n    );\n\n    // ──────────────────────────────────────────────\n    // 11. shares (Phase 14 — user-to-user sharing)\n+ // ──────────────────────────────────────────────\n    // 10. shares (Phase 14 — user-to-user sharing)\nedit apps/api/src/migrations/1700000000000-FullSchema.ts\n- // 12. share_keys (Phase 14 — per-file/subfolder keys)\n+ // 11. share_keys (Phase 14 — per-file/subfolder keys)\nedit apps/api/src/migrations/1700000000000-FullSchema.ts\n- await queryRunner.query(`DROP TABLE IF EXISTS \"device_approvals\" CASCADE`);\n    await queryRunner.query(`DROP TABLE IF EXISTS \"ipns_republish_schedule\" CASCADE`);\n+ await queryRunner.query(`DROP TABLE IF EXISTS \"ipns_republish_schedule\" CASCADE`);",
+   "quotes": []
+  },
+  {
+   "n": 24,
+   "phase": "TODO",
+   "phase_label": "TODO",
+   "headline": "TODO",
+   "obs": "The file /Users/michael/Code/cipher-box/apps/api/src/migrations/1700000000000-FullSchema.ts has been updated successfully.\nThe file /Users/michael/Code/cipher-box/apps/api/src/migrations/1700000000000-FullSchema.ts has been updated successfully.\nThe file /Users/michael/Code/cipher-box/apps/api/src/migrations/1700000000000-FullSchema.ts has been updated successfully.\nThe file /Users/michael/Code/cipher-box/apps/api/src/migrations/1700000000000-FullSchema.ts has been updated successfully.",
+   "thought": "Now update the protocol doc to reflect the corrected understanding — FullSchema is a snapshot baseline, not a living document that must contain every table.",
+   "action": "edit REDACTED.md\n- 4. **The FullSchema baseline must be current.** `1700000000000-FullSchema.ts` is the single-file representation of the entire database. Fresh database deployments run this first, then incremental migrations (which are no-ops due to idempotency). Every new table or column must be added to FullSchema.\n+ 4. **The FullSchema baseline does not need updating for new tables.** `1700000000000-FullSchema.ts` captures the schema at a point in time. Fresh database deployments run FullSchema first, then all incremental migrations in timestamp order. New tables created by incremental migrations (with `IF NOT EXISTS`) do not need to be duplicated into FullSchema -- the incremental migration handles creation on both fresh and existing databases.",
+   "quotes": []
+  },
+  {
+   "n": 25,
+   "phase": "TODO",
+   "phase_label": "TODO",
+   "headline": "TODO",
+   "obs": "The file REDACTED.md has been updated successfully.",
+   "thought": "Now remove the checklist section about FullSchema updates (Section 4.4) and the dangerous pattern about forgetting to update FullSchema (Section 8.5).",
+   "action": "edit REDACTED.md\n- ### 4.4 FullSchema Baseline Update\n\n- [ ] Add the new table/column/index to `apps/api/src/migrations/1700000000000-FullSchema.ts`\n- [ ] Update the tables count in the FullSchema JSDoc comment\n- [ ] Ensure FullSchema creates the structure identically to the incremental migration\n- [ ] Verify constraint and index names match between FullSchema and the incremental migration\n\n### 4.5 CD Pipeline Verification\n+ ### 4.4 CD Pipeline Verification\nedit REDACTED.md\n- ### 4.6 Downstream Checks\n+ ### 4.5 Downstream Checks\nedit REDACTED.md\n- ### 8.5 Forgetting to Update FullSchema\n\n**The problem:** A new table is added via an incremental migration but not added to `FullSchema.ts`. Fresh database deployments work (the incremental migration creates the table), but FullSchema no longer represents the complete schema. Over time, FullSchema drifts from reality.\n\n**The fix:** Every schema change must update FullSchema in the same PR. The FullSchema JSDoc comment lists all tables -- update the count and the list.\n\n---\n+ ---",
+   "quotes": []
+  },
+  {
+   "n": 26,
+   "phase": "TODO",
+   "phase_label": "TODO",
+   "headline": "TODO",
+   "obs": "The file REDACTED.md has been updated successfully.\nThe file REDACTED.md has been updated successfully.\nThe file REDACTED.md has been updated successfully.",
+   "thought": "Now update the schema reference and incident sections to be consistent.",
+   "action": "edit REDACTED.md\n- **Note:** `device_approvals` (table 12) uses `user_id` as a plain `varchar` rather than a foreign key to `users.id`. This is by design -- device approvals reference users by their Web3Auth identifier string, not the internal UUID.\n+ **Note:** `device_approvals` uses `user_id` as a plain `varchar` rather than a foreign key to `users.id`. This is by design -- device approvals reference users by their Web3Auth identifier string, not the internal UUID. This table is not in the FullSchema baseline; it is created by its own incremental migration (`1740000000000-AddDeviceApprovals.ts`).\nedit REDACTED.md\n- | `1700000000000` | `FullSchema.ts` | Baseline | All 12 tables |\n+ | `1700000000000` | `FullSchema.ts` | Baseline | 11 tables (all except `device_approvals`) |\nedit REDACTED.md\n- ### 9.2 `device_approvals` Table Not in FullSchema (Fixed)\n\n**Date:** Discovered 2026-02-22\n**Severity:** Low (functional but inconsistent)\n**Root cause:** `1740000000000-AddDeviceApprovals.ts` creates the `device_approvals` table, but FullSchema was not updated to include it. Fresh database deployments still work because the incremental migration runs after FullSchema and creates the table.\n\n**Impact:** FullSchema did not represent the complete schema. Its JSDoc said \"Tables created (11)\" but there were actually 12 tables in the system.\n\n**Resolution:** Added `device_approvals` to FullSchema baseline and updated the table count to 12. No staging reset required -- existing databases already have the table from the incremental migration, and FullSchema only affects fresh deployments.\n+ ### 9.2 Clarification: FullSchema Does Not Need Every Table\n\n**Date:** 2026-02-22\n\nDuring the creation of this protocol, the `device_approvals` table was identified as missing from `FullSchema.ts`. Initial analysis suggested this was a gap, but on review: FullSchema is a point-in-time baseline, not a living document. Fresh database deployments run FullSchema first, then all incremental migrations. The `1740000000000-AddDeviceApprovals.ts` migration uses `CREATE TABLE IF NOT EXISTS` and runs on both fresh and existing databases. There is no need to duplicate the DDL into FullSchema.",
+   "quotes": []
+  },
+  {
+   "n": 27,
+   "phase": "TODO",
+   "phase_label": "TODO",
+   "headline": "TODO",
+   "obs": "The file REDACTED.md has been updated successfully.\nThe file REDACTED.md has been updated successfully.\nThe file REDACTED.md has been updated successfully.",
+   "thought": "Now update the MEMORY.md to correct the rule about FullSchema.",
+   "action": "read /Users/michael/.claude/projects/-Users-michael-Code-cipher-box/memory/MEMORY.md:103-113\nedit /Users/michael/.claude/projects/-Users-michael-Code-cipher-box/memory/MEMORY.md\n- ## CRITICAL: TypeORM Migration Discipline\n- **`synchronize: true` in dev/test hides missing migrations** — tables auto-created from entities, so missing `CREATE TABLE` migrations are invisible until staging/production deploy\n- **Every new `@Entity()` MUST have a corresponding `CREATE TABLE` migration** — check `apps/api/src/migrations/` before merging any PR that adds entities\n- **Also update FullSchema baseline** (`1700000000000-FullSchema.ts`) for fresh database initialization\n- **Use `IF NOT EXISTS`** for idempotency (pattern: `1740000000000-AddDeviceApprovals.ts`)\n- **Migration timestamp ordering matters** — create-table migration must have earlier timestamp than any migration that modifies that table\n- Phase 14 hit this exact bug: `SharesPartialUniqueIndex` tried to modify `shares` table that didn't exist on staging. Fixed in PR #186.\n+ ## CRITICAL: TypeORM Migration Discipline\n- **`synchronize: true` in dev/test hides missing migrations** — tables auto-created from entities, so missing `CREATE TABLE` migrations are invisible until staging/production deploy\n- **Every new `@Entity()` MUST have a corresponding `CREATE TABLE` migration** — check `apps/api/src/migrations/` before merging any PR that adds entities\n- **FullSchema baseline does NOT need updating** — it's a point-in-time snapshot; incremental migrations with `IF NOT EXISTS` run on both fresh and existing databases\n- **Use `IF NOT EXISTS`** for idempotency (pattern: `1740000000000-AddDeviceApprovals.ts`)\n- **Migration timestamp ordering matters** — create-table migration must have earlier timestamp than any migration that modifies that table\n- Phase 14 hit this exact bug: `SharesPartialUniqueIndex` tried to modify `shares` table that didn't exist on staging. Fixed in PR #186.\n- **Full protocol:** `docs/DATABASE_EVOLUTION_PROTOCOL.md`",
+   "quotes": []
+  },
+  {
+   "n": 28,
+   "phase": "TODO",
+   "phase_label": "TODO",
+   "headline": "TODO",
+   "obs": "103→  - Use GraphQL `reviewThreads` query (not REST) to get `isResolved` status per thread\n   104→  - Reply via REST: `gh api repos/OWNER/REPO/pulls/N/comments --field in_reply_to=COMMENT_ID --raw-field body='...'` (use `--field` not `-f` for `in_reply_to` — it must be sent as integer, `-f` sends string which causes 422)\n   105→  - Resolve via GraphQL: `resolveReviewThread(input: {threadId: \"...\"})` — can batch multiple in one mutation\n   106→  - Always check code state before acting — comments may already be addressed in later commits\n   107→  - For already-addressed comments: reply with explanation of where/how it was fixed, then resolve\n   108→  - For inapplicable comments: reply with rea …[truncated]",
+   "thought": "FullSchema is now back to its original state, the protocol doc no longer prescribes FullSchema updates, and MEMORY.md is corrected. No staging reset needed -- nothing changed on the migration side.",
+   "action": "",
+   "quotes": []
+  },
+  {
+   "kind": "interaction",
+   "id": "H4",
+   "actor": "human",
+   "label": "TODO",
+   "headline": "TODO",
+   "text": "ok push all this up and lets get it merged."
+  },
+  {
+   "n": 29,
+   "phase": "TODO",
+   "phase_label": "TODO",
+   "headline": "TODO",
+   "obs": "",
+   "thought": "",
+   "action": "$ git status\n$ git diff\n$ git log --oneline -5",
+   "quotes": []
+  },
+  {
+   "n": 30,
+   "phase": "TODO",
+   "phase_label": "TODO",
+   "headline": "TODO",
+   "obs": "On branch fix/staging-shares-migration\nYour branch is up to date with 'origin/fix/staging-shares-migration'.\n\nUntracked files:\n  (use \"git add <file>...\" to include in what will be committed)\n\tdocs/DATABASE_EVOLUTION_PROTOCOL.md\n\nnothing added to commit but untracked files present (use \"git add\" to track)\n7a3078f38 fix(api): address CodeRabbit review — stale phase label, down() comment\ne1d5409b3 docs: add learnings entry for staging migration gap\n277706ac6 fix(api): add missing migration to create shares tables\ncfbbee99e chore: release 0.15.0 (#184)\n84a232db4 feat(14): user-to-user encrypted sharing (#183)",
+   "thought": "The FullSchema file shows no diff because it was reverted to its original state. The only change is the new doc file. The MEMORY.md change won't show up in git since it's outside the repo. Let me commit the new doc and push.",
+   "action": "",
+   "quotes": []
+  },
+  {
+   "n": 31,
+   "phase": "TODO",
+   "phase_label": "TODO",
+   "headline": "TODO",
+   "obs": "",
+   "thought": "Only the new doc file — FullSchema was reverted to its original state so no diff there. Let me commit and push.",
+   "action": "$ git add docs/DATABASE_EVOLUTION_PROTOCOL.md && git commit -m \"$(cat <<'EOF'\ndocs: add database schema evolution protocol\n\nFormalizes migration discipline rules to prevent the class of error\nfrom Phase 14 where new entities lacked CREATE TABLE migrations.\nCovers change classification, evolution checklist, naming conventions,\nenvironment behavior matrix, and historical incidents.\n\nCo-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>\nEOF\n)\"",
+   "quotes": []
+  },
+  {
+   "n": 32,
+   "phase": "TODO",
+   "phase_label": "TODO",
+   "headline": "TODO",
+   "obs": "Exit code 1\n[STARTED] Backing up original state...\n[COMPLETED] Backed up original state in git stash (29229f91a)\n[STARTED] Running tasks for staged files...\n[STARTED] package.json — 1 file\n[STARTED] *.{ts,tsx,js,jsx} — 0 files\n[STARTED] *.{json,yml,yaml} — 0 files\n[STARTED] *.md — 1 file\n[SKIPPED] *.{ts,tsx,js,jsx} — no files\n[SKIPPED] *.{json,yml,yaml} — no files\n[STARTED] markdownlint --fix\n[FAILED] markdownlint --fix [FAILED]\n[FAILED] markdownlint --fix [FAILED]\n[COMPLETED] Running tasks for staged files...\n[STARTED] Applying modifications from tasks...\n[SKIPPED] Skipped because of errors from tasks.\n[STARTED] Reverting to original state because of errors...\n[COMPLETED] Reverting to origi …[truncated]",
+   "thought": "Markdown lint issue — a fenced code block missing a language specifier. Let me fix it.",
+   "action": "read REDACTED.md:145-155\nedit REDACTED.md\n- ```\n{unix_ms_timestamp}-{PascalCaseDescription}.ts\n```\n+ ```text\n{unix_ms_timestamp}-{PascalCaseDescription}.ts\n```\n$ git add docs/DATABASE_EVOLUTION_PROTOCOL.md && git commit -m \"$(cat <<'EOF'\ndocs: add database schema evolution protocol\n\nFormalizes migration discipline rules to prevent the class of error\nfrom Phase 14 where new entities lacked CREATE TABLE migrations.\nCovers change classification, evolution checklist, naming conventions,\nenvironment behavior matrix, and historical incidents.\n\nCo-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>\nEOF\n)\"",
+   "quotes": []
+  },
+  {
+   "n": 33,
+   "phase": "TODO",
+   "phase_label": "TODO",
+   "headline": "TODO",
+   "obs": "145→\n   146→### Migration File Naming\n   147→\n   148→```\n   149→{unix_ms_timestamp}-{PascalCaseDescription}.ts\n   150→```\n   151→\n   152→**Timestamp:** Use a Unix timestamp in milliseconds. Choose a value that:\n   153→- Is later than all existing migration timestamps\n   154→- Is earlier than any planned follow-up migration that depends on this one\nThe file REDACTED.md has been updated successfully.\n[STARTED] Backing up original state...\n[COMPLETED] Backed up original state in git stash (7fe7a4af7)\n[STARTED] Running tasks for staged files...\n[STARTED] package.json — 1 file\n[STARTED] *.{ts,tsx,js,jsx} — 0 files\n[STARTED] *.{json,yml,yaml} — 0 files\n[STARTED] *.md — 1 file\n[SKIPPED] *.{ts,tsx,j …[truncated]",
+   "thought": "Now push and create the PR.",
+   "action": "$ git push origin fix/staging-shares-migration\n$ gh pr view fix/staging-shares-migration --json number,title,url 2>/dev/null || echo \"NO_PR\"",
+   "quotes": []
+  },
+  {
+   "n": 34,
+   "phase": "TODO",
+   "phase_label": "TODO",
+   "headline": "TODO",
+   "obs": "[entire] Pushing session logs to origin...\nTo https://github.com/FSM1/cipher-box.git\n   7a3078f38..900916eb4  fix/staging-shares-migration -> fix/staging-shares-migration\n{\"number\":186,\"title\":\"fix(api): add missing migration to create shares tables\",\"url\":\"https://github.com/FSM1/cipher-box/pull/186\"}",
+   "thought": "PR #186 already exists for this branch. The new commit is pushed — it'll show up in the existing PR. Let me check it.",
+   "action": "$ gh pr view 186 --json title,state,commits --jq '{title: .title, state: .state, commits: [.commits[] | .oid[:7] + \" \" + .messageHeadline]}'",
+   "quotes": []
+  },
+  {
+   "n": 35,
+   "phase": "TODO",
+   "phase_label": "TODO",
+   "headline": "TODO",
+   "obs": "{\"commits\":[\"277706a fix(api): add missing migration to create shares tables\",\"e1d5409 docs: add learnings entry for staging migration gap\",\"7a3078f fix(api): address CodeRabbit review — stale phase label, down() comment\",\"900916e docs: add database schema evolution protocol\"],\"state\":\"OPEN\",\"title\":\"fix(api): add missing migration to create shares tables\"}",
+   "thought": "The new commit is on PR #186: https://github.com/FSM1/cipher-box/pull/186\n\nAll 4 commits are there — the original migration fix plus the new protocol doc. Ready to merge.",
+   "action": "",
+   "quotes": []
+  },
+  {
+   "kind": "interaction",
+   "id": "H5",
+   "actor": "human",
+   "label": "TODO",
+   "headline": "TODO",
+   "text": "also what are thoughts on updating the dev and ci env to also use synchronize: false. this will surface issues with the missing migrations early enough in the dev process to prevent a whole lot of problems"
+  },
+  {
+   "n": 36,
+   "phase": "TODO",
+   "phase_label": "TODO",
+   "headline": "TODO",
+   "obs": "",
+   "thought": "That's a great idea. It would have caught the Phase 14 issue immediately in dev instead of waiting for staging to fail.\n\nThe main trade-off is developer friction — every new entity or column change requires writing a migration before you can even test it locally. But given this project's history, that friction is exactly the guardrail you want.\n\nA few considerations:\n\n**What changes:**\n- `app.module.ts`: remove the `synchronize: true` conditional, set it to `false` always\n- Dev workflow: `pnpm --filter api dev` would need migrations run first (or auto-run on startup)\n- Tests: the test database setup would need migrations too, not just entity auto-sync\n\n**What could break:**\n- Existing dev databases created by `synchronize: true` won't have the `migrations` table populated correctly — they'd need a one-time reset (`DROP DATABASE` + recreate + run migrations)\n- Test setup in `jest.config.js` / test harness might rely on synchronize for ephemeral test databases — worth checking how that's wired\n\n**A middle-ground option:**\n- Keep `synchronize: false` in dev, but add a startup check or npm script (`pnpm --filter api migrate:dev`) that runs pending migrations automatically, so the DX stays smooth\n\nWant me to go ahead and implement this? I'd check the test setup first to understand the impact there.",
+   "action": "",
+   "quotes": []
+  },
+  {
+   "kind": "interaction",
+   "id": "H6",
+   "actor": "human",
+   "label": "TODO",
+   "headline": "TODO",
+   "text": "i think lets add a gsd todo for this"
+  },
+  {
+   "n": 37,
+   "phase": "TODO",
+   "phase_label": "TODO",
+   "headline": "TODO",
+   "obs": "",
+   "thought": "",
+   "action": "Skill {\"skill\": \"gsd:add-todo\", \"args\": \"Disable synchronize:true in dev and CI environments to surface missing migrations early. Change app.module.ts to set synchron\n$ mkdir -p .planning/todos/pending .planning/todos/done\n$ ls .planning/todos/pending/*.md 2>/dev/null | xargs -I {} grep \"^area:\" {} 2>/dev/null | cut -d' ' -f2 | sort -u\n$ grep -l -i \"synchronize\" .planning/todos/pending/*.md 2>/dev/null",
+   "quotes": []
+  },
+  {
+   "n": 38,
+   "phase": "TODO",
+   "phase_label": "TODO",
+   "headline": "TODO",
+   "obs": "Launching skill: gsd:add-todo\napi\nauth\ncrypto\ndesktop\nshares\nui",
+   "thought": "No duplicates. Creating the todo.",
+   "action": "write .planning/todos/pending/2026-02-22-disable-synchronize-true-all-envs.md\n---\ncreated: 2026-02-22T14:30\ntitle: Disable synchronize:true in dev and CI to surface missing migrations\narea: api\nfiles:\n  - apps/api/src/app.module.ts:83-85\n  - apps/api/jest.config.js\n  - apps/api/src/run-migrations.ts\n---\n\n## Problem\n\nTypeORM `synchronize: true` in dev and test environments auto-creates tables from entity decorators, hiding missing `CREATE TABLE` migrations until staging/prod …",
+   "quotes": []
+  },
+  {
+   "n": 39,
+   "phase": "TODO",
+   "phase_label": "TODO",
+   "headline": "TODO",
+   "obs": "File created successfully at: /Users/michael/Code/cipher-box/.planning/todos/pending/2026-02-22-disable-synchronize-true-all-envs.md",
+   "thought": "Now update STATE.md pending todos count.",
+   "action": "$ ls .planning/todos/pending/*.md 2>/dev/null | wc -l\nread .planning/STATE.md:184-198\nedit .planning/STATE.md\n- 8 pending todo(s):\n\n- `2026-02-07-web-worker-large-file-encryption.md` -- Offload large file encryption to Web Worker (area: ui)\n- `2026-02-14-bring-your-own-ipfs-node.md` -- Add bring-your-own IPFS node support (area: api)\n- `2026-02-14-erc-1271-contract-wallet-authentication.md` -- Add ERC-1271 contract wallet authentication support (area: auth)\n- `2026-02-15-security-review-medium-term-fixes.md` -- Security review medium-term fixes: H-08, M-07, M-11 (area: auth)\n- `2026-02-20-desktop-auto-update.md` -- Add auto-update to desktop app via Tauri updater plugin (area: desktop)\n- `2026-02-21-move-root-folder-key-to-ipfs.md` -- Move rootFolderKey to IPFS vault record, eliminate server-side key storage (area: crypto)\n- `2026-02-21-ipns-resolution-alternatives.md` -- Investigate alternatives to delegated-ipfs.dev for IPNS resolution (area: api)\n- `2026-02-21-desktop-tee-enrollment-for-new-files.md` -- Desktop TEE enrollment for new files (area: desktop)\n+ 10 pending todo(s):\n\n- `2026-02-07-web-worker-large-file-encryption.md` -- Offload large file encryption to Web Worker (area: ui)\n- `2026-02-14-bring-your-own-ipfs-node.md` -- Add bring-your-own IPFS node support (area: api)\n- `2026-02-14-erc-1271-contract-wallet-authentication.md` -- Add ERC-1271 contract wallet authentication support (area: auth)\n- `2026-02-15-security-review-medium-term-fixes.md` -- Security review medium-term fixes: H-08, M-07, M-11 (area: auth)\n- `2026-02-20-desktop-auto-update.md` -- Add auto-update to desktop app via Tauri updater plugin (area: desktop)\n- `2026-02-21-move-root-folder-key-to-ipfs.md` -- Move rootFolderKey to IPFS vault record, eliminate server-side key storage (area: crypto)\n- `2026-02-21-ipns-resolution-alternatives.md` -- Investigate alternatives to delegated-ipfs.dev for IPNS resolution (area: api)\n- `2026-02-21-desktop-tee-enrollment-for-new-files.md` -- Desktop TEE enrollment for new files (area: desktop)\n- `2026-02-22-disable-synchronize-true-all-envs.md` -- Disable synchronize:true in dev and CI to surface missing migrations (area: api)\n- `2026-02-22-shares-migration-gap-learnings.md` -- Shares migration gap learnings from Phase 14 (area: shares)",
+   "quotes": []
+  },
+  {
+   "n": 40,
+   "phase": "TODO",
+   "phase_label": "TODO",
+   "headline": "TODO",
+   "obs": "10\n184→### Pending Todos\n   185→\n   186→8 pending todo(s):\n   187→\n   188→- `2026-02-07-web-worker-large-file-encryption.md` -- Offload large file encryption to Web Worker (area: ui)\n   189→- `2026-02-14-bring-your-own-ipfs-node.md` -- Add bring-your-own IPFS node support (area: api)\n   190→- `2026-02-14-erc-1271-contract-wallet-authentication.md` -- Add ERC-1271 contract wallet authentication support (area: auth)\n   191→- `2026-02-15-security-review-medium-term-fixes.md` -- Security review medium-term fixes: H-08, M-07, M-11 (area: auth)\n   192→- `2026-02-20-desktop-auto-update.md` -- Add auto-update to desktop app via Tauri updater plugin (area: desktop)\n   193→- `2026-02-21-move-root-fold …[truncated]",
+   "thought": "Wait, let me check — there should only be the new one I just added, not a second one. Let me verify what's actually in pending.",
+   "action": "$ ls .planning/todos/pending/*.md",
+   "quotes": []
+  },
+  {
+   "n": 41,
+   "phase": "TODO",
+   "phase_label": "TODO",
+   "headline": "TODO",
+   "obs": ".planning/todos/pending/2026-02-07-web-worker-large-file-encryption.md\n.planning/todos/pending/2026-02-14-bring-your-own-ipfs-node.md\n.planning/todos/pending/2026-02-14-erc-1271-contract-wallet-authentication.md\n.planning/todos/pending/2026-02-15-security-review-medium-term-fixes.md\n.planning/todos/pending/2026-02-20-desktop-auto-update.md\n.planning/todos/pending/2026-02-21-desktop-tee-enrollment-for-new-files.md\n.planning/todos/pending/2026-02-21-ipns-resolution-alternatives.md\n.planning/todos/pending/2026-02-21-move-root-folder-key-to-ipfs.md\n.planning/todos/pending/2026-02-21-phase14-security-review-deferred.md\n.planning/todos/pending/2026-02-22-disable-synchronize-true-all-envs.md",
+   "thought": "There are 10 pending, but the 9th is `phase14-security-review-deferred`, not what I wrote. Let me fix STATE.md.",
+   "action": "$ grep \"^title:\" .planning/todos/pending/2026-02-21-phase14-security-review-deferred.md\nedit .planning/STATE.md\n- - `2026-02-22-disable-synchronize-true-all-envs.md` -- Disable synchronize:true in dev and CI to surface missing migrations (area: api)\n- `2026-02-22-shares-migration-gap-learnings.md` -- Shares migration gap learnings from Phase 14 (area: shares)\n+ - `2026-02-21-phase14-security-review-deferred.md` -- Phase 14 security review: deferred findings M1, M5, L1, L4 (area: shares)\n- `2026-02-22-disable-synchronize-true-all-envs.md` -- Disable synchronize:true in dev and CI to surface missing migrations (area: api)",
+   "quotes": []
+  },
+  {
+   "n": 42,
+   "phase": "TODO",
+   "phase_label": "TODO",
+   "headline": "TODO",
+   "obs": "title: 'Phase 14 security review: deferred findings (M1, M5, L1, L4)'\nThe file /Users/michael/Code/cipher-box/.planning/STATE.md has been updated successfully.",
+   "thought": "Now commit and push.",
+   "action": "$ git add .planning/todos/pending/2026-02-22-disable-synchronize-true-all-envs.md .planning/STATE.md && git commit -m \"$(cat <<'EOF'\ndocs: capture todo - disable synchronize:true in dev and CI\n\nArea: api\n\nCo-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>\nEOF\n)\"\n$ git push origin fix/staging-shares-migration",
+   "quotes": []
+  },
+  {
+   "n": 43,
+   "phase": "TODO",
+   "phase_label": "TODO",
+   "headline": "TODO",
+   "obs": "[STARTED] Backing up original state...\n[COMPLETED] Backed up original state in git stash (293998619)\n[STARTED] Running tasks for staged files...\n[STARTED] package.json — 2 files\n[STARTED] *.{ts,tsx,js,jsx} — 0 files\n[STARTED] *.{json,yml,yaml} — 0 files\n[STARTED] *.md — 2 files\n[SKIPPED] *.{ts,tsx,js,jsx} — no files\n[SKIPPED] *.{json,yml,yaml} — no files\n[STARTED] markdownlint --fix\n[COMPLETED] markdownlint --fix\n[STARTED] prettier --write\n[COMPLETED] prettier --write\n[COMPLETED] *.md — 2 files\n[COMPLETED] package.json — 2 files\n[COMPLETED] Running tasks for staged files...\n[STARTED] Applying modifications from tasks...\n[COMPLETED] Applying modifications from tasks...\n[STARTED] Cleaning up t …[truncated]",
+   "thought": "Todo saved: `.planning/todos/pending/2026-02-22-disable-synchronize-true-all-envs.md`\n\n  **Disable synchronize:true in dev and CI to surface missing migrations**\n  Area: api\n  Files: 3 referenced\n\nBoth commits pushed to PR #186: https://github.com/FSM1/cipher-box/pull/186",
+   "action": "",
+   "quotes": []
+  }
+ ]
+}
