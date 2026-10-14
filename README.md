@@ -6,6 +6,12 @@
   An extensible codebook for describing AI-agent behavior at runtime.
 </p>
 
+<p align="center">
+  <strong>How to Interpret Agent Behavior</strong><br>
+  Accepted at <strong>NeurIPS 2026</strong><br>
+  <a href="https://arxiv.org/abs/2605.13625">Paper (arXiv:2605.13625)</a>
+</p>
+
 ---
 
 ## Data
