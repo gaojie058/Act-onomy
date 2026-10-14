@@ -2,7 +2,7 @@
   <img src="assets/actonomy_logo.png" alt="Actonomy logo, styled as ACT*ONOMY" width="440">
 </p>
 
-<h1 align="center">Actonomy: Describing and Analyzing Agent Behavior</h1>
+<h1 align="center">Actonomy: A Taxonomy for Describing and Analyzing Agent Behavior</h1>
 
 <p align="center">
   A taxonomy, codebook, and tools for understanding what AI agents do.
@@ -10,6 +10,7 @@
 
 <p align="center">
   <strong>How to Interpret Agent Behavior</strong><br>
+  <a href="https://gaojie058.github.io/">Jie Gao</a> et al.<br>
   Accepted at <strong>NeurIPS 2026</strong><br>
   <a href="https://arxiv.org/abs/2605.13625">Paper (arXiv:2605.13625)</a>
 </p>
@@ -56,6 +57,25 @@ Files for reproducing the case studies in the paper.
 |--------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `3_case_studies/case1_three_agents/`         | Does Actonomy surface distinct behavioral profiles across agents that vary in architecture and task?                                | 300 trajectories across three agent collections (AG2/AutoGen, HyperAgent, SWE-Agent). Ships the aggregated `analysis_report.md` and `run_summaries.md` only; raw trajectories not included. |
 | `3_case_studies/case2_swe_agent_two_traces/` | Within a single agent, does the behavior profile change with the task (e.g., the same SWE-agent on two different SWE-bench tickets)? | Two `swe_agent` trajectories on SWE-bench (`psf/requests-2317`, `django/django-14411`), each with raw JSON, annotated JSON, and a rendered HTML report.                                     |
+
+---
+
+## Citation
+
+If you use the Actonomy taxonomy, datasets, or analysis tools, please cite the accompanying paper:
+
+```bibtex
+@article{gao2026interpret,
+  title   = {How to Interpret Agent Behavior},
+  author  = {Gao, Jie and Sun, Kaiser and Huang, Jen-tse and Van Koevering, Katherine and Ji, Sijie and Huang, Heyuan and Shi, Weiyan and Lu, Zhuoran and Xiao, Ziang and Khashabi, Daniel and Dredze, Mark},
+  journal = {arXiv preprint arXiv:2605.13625},
+  year    = {2026},
+  doi     = {10.48550/arXiv.2605.13625},
+  url     = {https://arxiv.org/abs/2605.13625}
+}
+```
+
+Machine-readable citation metadata is available in [CITATION.cff](CITATION.cff).
 
 ---
 

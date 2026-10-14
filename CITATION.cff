@@ -1,0 +1,68 @@
+cff-version: 1.2.0
+message: "If you use the Actonomy taxonomy, datasets, or analysis tools, please cite the paper in preferred-citation."
+title: "Actonomy: A Taxonomy for Describing and Analyzing Agent Behavior"
+abstract: >-
+  Actonomy (ACT*ONOMY / Act-onomy) is a taxonomy for describing and analyzing
+  agent behavior at runtime. This repository contains the codebook, datasets,
+  and automated trajectory analysis tools accompanying How to Interpret
+  Agent Behavior by Gao et al., accepted at NeurIPS 2026.
+url: "https://github.com/gaojie058/Act-onomy"
+repository-code: "https://github.com/gaojie058/Act-onomy"
+keywords:
+  - Actonomy
+  - agent behavior taxonomy
+  - agent trajectory analysis
+  - AI agents
+authors:
+  - family-names: Gao
+    given-names: Jie
+  - family-names: Sun
+    given-names: Kaiser
+  - family-names: Huang
+    given-names: Jen-tse
+  - family-names: Van Koevering
+    given-names: Katherine
+  - family-names: Ji
+    given-names: Sijie
+  - family-names: Huang
+    given-names: Heyuan
+  - family-names: Shi
+    given-names: Weiyan
+  - family-names: Lu
+    given-names: Zhuoran
+  - family-names: Xiao
+    given-names: Ziang
+  - family-names: Khashabi
+    given-names: Daniel
+  - family-names: Dredze
+    given-names: Mark
+preferred-citation:
+  type: article
+  title: "How to Interpret Agent Behavior"
+  journal: "arXiv preprint arXiv:2605.13625"
+  year: 2026
+  doi: "10.48550/arXiv.2605.13625"
+  url: "https://arxiv.org/abs/2605.13625"
+  authors:
+    - family-names: Gao
+      given-names: Jie
+    - family-names: Sun
+      given-names: Kaiser
+    - family-names: Huang
+      given-names: Jen-tse
+    - family-names: Van Koevering
+      given-names: Katherine
+    - family-names: Ji
+      given-names: Sijie
+    - family-names: Huang
+      given-names: Heyuan
+    - family-names: Shi
+      given-names: Weiyan
+    - family-names: Lu
+      given-names: Zhuoran
+    - family-names: Xiao
+      given-names: Ziang
+    - family-names: Khashabi
+      given-names: Daniel
+    - family-names: Dredze
+      given-names: Mark
